@@ -15,5 +15,5 @@ import javax.inject.Scope;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD })
-public @interface TestCaseScope {
+public @interface TestCaseScoped {
 }

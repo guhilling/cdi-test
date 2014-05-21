@@ -10,7 +10,7 @@ public class TestCaseContext extends AbstractScopeContext implements Context, Se
 
 	@Override
 	public Class<? extends Annotation> getScope() {
-		return TestCaseScope.class;
+		return TestCaseScoped.class;
 	}
 
 }

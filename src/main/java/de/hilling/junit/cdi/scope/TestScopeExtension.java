@@ -10,6 +10,6 @@ public class TestScopeExtension implements Extension, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public void registerContext(@Observes final AfterBeanDiscovery event) {
-		event.addContext(new TestScopeContext());
+		event.addContext(new TestSuiteContext());
 	}
 }

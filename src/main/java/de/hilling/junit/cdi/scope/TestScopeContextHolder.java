@@ -8,15 +8,10 @@ import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 
 public class TestScopeContextHolder {
-	private static TestScopeContextHolder INSTANCE = new TestScopeContextHolder();
 	private Map<Class<?>, TestScopeInstance<?>> beans;
 
-	private TestScopeContextHolder() {
+	public TestScopeContextHolder() {
 		beans = Collections.synchronizedMap(new HashMap<Class<?>, TestScopeInstance<?>>());
-	}
-
-	public synchronized static TestScopeContextHolder getInstance() {
-		return INSTANCE;
 	}
 
 	public Map<Class<?>, TestScopeInstance<?>> getBeans() {

@@ -1,7 +1,6 @@
 package de.hilling.junit.cdi.scope;
 
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.spi.Context;
@@ -11,23 +10,23 @@ import javax.enterprise.inject.spi.Bean;
 
 import de.hilling.junit.cdi.scope.TestScopeContextHolder.TestScopeInstance;
 
-public class TestScopeContext implements Context, Serializable {
+public abstract class AbstractScopeContext implements Context, Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = Logger.getLogger(TestScopeContext.class.getCanonicalName());
+	private static final Logger LOG = Logger.getLogger(AbstractScopeContext.class.getCanonicalName());
 
-	private TestScopeContextHolder customScopeContextHolder;
+	private TestScopeContextHolder scopeContextHolder;
 
-	public TestScopeContext() {
-		this.customScopeContextHolder = TestScopeContextHolder.getInstance();
+	public AbstractScopeContext() {
+		scopeContextHolder = new TestScopeContextHolder();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T get(final Contextual<T> contextual) {
 		Bean<T> bean = (Bean<T>) contextual;
-		if (customScopeContextHolder.getBeans().containsKey(bean.getBeanClass())) {
-			return (T) customScopeContextHolder.getBean(bean.getBeanClass()).instance;
+		if (scopeContextHolder.getBeans().containsKey(bean.getBeanClass())) {
+			return (T) scopeContextHolder.getBean(bean.getBeanClass()).instance;
 		} else {
 			return null;
 		}
@@ -37,8 +36,8 @@ public class TestScopeContext implements Context, Serializable {
 	@Override
 	public <T> T get(final Contextual<T> contextual, final CreationalContext<T> creationalContext) {
 		Bean<T> bean = (Bean<T>) contextual;
-		if (customScopeContextHolder.getBeans().containsKey(bean.getBeanClass())) {
-			return (T) customScopeContextHolder.getBean(bean.getBeanClass()).instance;
+		if (scopeContextHolder.getBeans().containsKey(bean.getBeanClass())) {
+			return (T) scopeContextHolder.getBean(bean.getBeanClass()).instance;
 		} else {
 			return createNewInstance(creationalContext, bean);
 		}
@@ -51,18 +50,9 @@ public class TestScopeContext implements Context, Serializable {
 		customInstance.bean = bean;
 		customInstance.ctx = creationalContext;
 		customInstance.instance = t;
-		customScopeContextHolder.putBean(customInstance);
+		scopeContextHolder.putBean(customInstance);
 		return t;
 	}
 
-	@Override
-	public Class<? extends Annotation> getScope() {
-		return TestSuiteScope.class;
-	}
-
-	@Override
-	public boolean isActive() {
-		return true;
-	}
 
 }

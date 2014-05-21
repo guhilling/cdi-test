@@ -18,18 +18,8 @@
 			<version>4.11</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.weld.se</groupId>
-			<artifactId>weld-se-core</artifactId>
-			<version>${weld.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.deltaspike.cdictrl</groupId>
 			<artifactId>deltaspike-cdictrl-api</artifactId>
-			<version>${deltaspike.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.deltaspike.cdictrl</groupId>
-			<artifactId>deltaspike-cdictrl-weld</artifactId>
 			<version>${deltaspike.version}</version>
 		</dependency>
 		<dependency>
@@ -42,6 +32,20 @@
 			<artifactId>deltaspike-core-impl</artifactId>
 			<version>${deltaspike.version}</version>
 		</dependency>
+		
+		<!-- Test dependencies -->
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-weld</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se-core</artifactId>
+            <version>${weld.version}</version>
+            <scope>test</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>

@@ -8,15 +8,11 @@ import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 
 public class TestScopeContextHolder {
-
 	private static TestScopeContextHolder INSTANCE = new TestScopeContextHolder();
-	private Map<Class<?>, TestScopeInstance<?>> beans;// we will have only one
-													// instance of a type so
-													// the key is a class
+	private Map<Class<?>, TestScopeInstance<?>> beans;
 
 	private TestScopeContextHolder() {
-		beans = Collections
-				.synchronizedMap(new HashMap<Class<?>, TestScopeInstance<?>>());
+		beans = Collections.synchronizedMap(new HashMap<Class<?>, TestScopeInstance<?>>());
 	}
 
 	public synchronized static TestScopeContextHolder getInstance() {
@@ -36,11 +32,6 @@ public class TestScopeContextHolder {
 		getBeans().put(customInstance.bean.getBeanClass(), customInstance);
 	}
 
-	/**
-	 * wrap necessary properties so we can destroy the bean later:
-	 * 
-	 * @see CustomScopeContextHolder#destroyBean(custom.scope.extension.CustomScopeContextHolder.TestScopeInstance)
-	 */
 	public static class TestScopeInstance<T> {
 		Bean<T> bean;
 		CreationalContext<T> ctx;

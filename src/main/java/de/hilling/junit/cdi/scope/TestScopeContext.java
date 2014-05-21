@@ -14,13 +14,11 @@ import de.hilling.junit.cdi.scope.TestScopeContextHolder.TestScopeInstance;
 public class TestScopeContext implements Context, Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = Logger.getLogger(TestScopeContext.class
-			.getCanonicalName());
+	private static final Logger LOG = Logger.getLogger(TestScopeContext.class.getCanonicalName());
 
 	private TestScopeContextHolder customScopeContextHolder;
 
 	public TestScopeContext() {
-		LOG.info("Init");
 		this.customScopeContextHolder = TestScopeContextHolder.getInstance();
 	}
 
@@ -28,8 +26,7 @@ public class TestScopeContext implements Context, Serializable {
 	@Override
 	public <T> T get(final Contextual<T> contextual) {
 		Bean<T> bean = (Bean<T>) contextual;
-		if (customScopeContextHolder.getBeans()
-				.containsKey(bean.getBeanClass())) {
+		if (customScopeContextHolder.getBeans().containsKey(bean.getBeanClass())) {
 			return (T) customScopeContextHolder.getBean(bean.getBeanClass()).instance;
 		} else {
 			return null;
@@ -38,28 +35,32 @@ public class TestScopeContext implements Context, Serializable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T get(final Contextual<T> contextual,
-			final CreationalContext<T> creationalContext) {
+	public <T> T get(final Contextual<T> contextual, final CreationalContext<T> creationalContext) {
 		Bean<T> bean = (Bean<T>) contextual;
-		if (customScopeContextHolder.getBeans()
-				.containsKey(bean.getBeanClass())) {
+		if (customScopeContextHolder.getBeans().containsKey(bean.getBeanClass())) {
 			return (T) customScopeContextHolder.getBean(bean.getBeanClass()).instance;
 		} else {
-			T t = (T) bean.create(creationalContext);
-			TestScopeInstance<T> customInstance = new TestScopeInstance<>();
-			customInstance.bean = bean;
-			customInstance.ctx = creationalContext;
-			customInstance.instance = t;
-			customScopeContextHolder.putBean(customInstance);
-			return t;
+			return createNewInstance(creationalContext, bean);
 		}
+	}
+
+	private <T> T createNewInstance(final CreationalContext<T> creationalContext, Bean<T> bean) {
+		LOG.fine("creating new bean");
+		T t = (T) bean.create(creationalContext);
+		TestScopeInstance<T> customInstance = new TestScopeInstance<>();
+		customInstance.bean = bean;
+		customInstance.ctx = creationalContext;
+		customInstance.instance = t;
+		customScopeContextHolder.putBean(customInstance);
+		return t;
 	}
 
 	@Override
 	public Class<? extends Annotation> getScope() {
-		return TestScope.class;
+		return TestSuiteScope.class;
 	}
 
+	@Override
 	public boolean isActive() {
 		return true;
 	}

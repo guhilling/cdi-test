@@ -5,12 +5,12 @@ import java.lang.annotation.Annotation;
 
 import javax.enterprise.context.spi.Context;
 
-public class TestSuiteContext extends AbstractScopeContext implements Context, Serializable {
+public class TestCaseContext extends AbstractScopeContext implements Context, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Class<? extends Annotation> getScope() {
-		return TestSuiteScope.class;
+		return TestCaseScope.class;
 	}
 
 }

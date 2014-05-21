@@ -54,5 +54,10 @@ public abstract class AbstractScopeContext implements Context, Serializable {
 		return t;
 	}
 
+	@Override
+	public boolean isActive() {
+		return true;
+	}
+
 
 }

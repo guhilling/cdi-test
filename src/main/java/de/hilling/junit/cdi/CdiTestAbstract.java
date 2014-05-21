@@ -1,9 +1,5 @@
 package de.hilling.junit.cdi;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-
 import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.apache.deltaspike.cdise.api.ContextControl;
 import org.junit.After;
@@ -18,16 +14,12 @@ public abstract class CdiTestAbstract {
 
     @Before
     public void _testSetUp() {
-        contextControl.startContext(ApplicationScoped.class);
-        contextControl.startContext(SessionScoped.class);
-        contextControl.startContext(RequestScoped.class);
+		contextControl.startContexts();
     }
 
     @After
     public void _testTearDown() {
-        contextControl.stopContext(RequestScoped.class);
-        contextControl.stopContext(SessionScoped.class);
-        contextControl.stopContext(ApplicationScoped.class);
+		contextControl.stopContexts();
     }
 
     public ContextControl getContextControl() {

@@ -44,11 +44,11 @@ public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
 	@Override
 	protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
 		LOG.fine("starting " + method.getName());
-		lifecycleNotifier.notify(TestCaseLifecycle.TEST_STARTS);
 		contextControl.startContexts();
+		lifecycleNotifier.notify(TestCaseLifecycle.TEST_STARTS);
 		super.runChild(method, notifier);
-		contextControl.stopContexts();
 		lifecycleNotifier.notify(TestCaseLifecycle.TEST_FINISHED);
+		contextControl.stopContexts();
 		LOG.fine("finished " + method.getName());
 	}
 

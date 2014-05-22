@@ -1,4 +1,4 @@
-package de.hilling.junit.cdi.scope;
+package de.hilling.junit.cdi.scope.context;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,7 +24,19 @@ public class TestScopeContextHolder {
 	}
 
 	public <T> void putBean(TestScopeInstance<T> customInstance) {
-		getBeans().put(customInstance.bean.getBeanClass(), customInstance);
+		beans.put(customInstance.bean.getBeanClass(), customInstance);
+	}
+
+	public void clear() {
+		for (TestScopeInstance<?> scopeInstance : beans.values()) {
+			destroy(scopeInstance);
+		}
+		beans.clear();
+	}
+
+	private <T> void destroy(TestScopeInstance<T> scopeInstance) {
+		Bean<T> bean = scopeInstance.bean;
+		bean.destroy(scopeInstance.instance, scopeInstance.ctx);
 	}
 
 	public static class TestScopeInstance<T> {
@@ -32,4 +44,5 @@ public class TestScopeContextHolder {
 		CreationalContext<T> ctx;
 		T instance;
 	}
+
 }

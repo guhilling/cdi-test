@@ -1,7 +1,10 @@
 package de.hilling.junit.cdi;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import org.apache.deltaspike.cdise.api.CdiContainer;
@@ -18,13 +21,18 @@ import de.hilling.junit.cdi.scope.TestCaseLifecycle;
 public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
 	private static final Logger LOG = Logger.getLogger(CdiMockitoRunner.class.getCanonicalName());
 
-	private static final CdiContainer cdiContainer;
-	private static final ContextControl contextControl;
-	private static final Map<Class<?>, Object> testCases = new HashMap<>();
+	private static CdiContainer cdiContainer;
+	private static ContextControl contextControl;
+	private static Map<Class<?>, Object> testCases = new HashMap<>();
 
 	private LifecycleNotifier lifecycleNotifier;
 
 	static {
+		configureLogger();
+		startCdiContainer();
+	}
+
+	private static void startCdiContainer() {
 		cdiContainer = CdiContainerLoader.getCdiContainer();
 		cdiContainer.boot();
 		contextControl = cdiContainer.getContextControl();
@@ -33,6 +41,16 @@ public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
 	public CdiMockitoRunner(Class<?> klass) throws InitializationError {
 		super(klass);
 		lifecycleNotifier = BeanProvider.getContextualReference(LifecycleNotifier.class, false);
+	}
+
+	private static void configureLogger() {
+		try (InputStream inputStream = CdiMockitoRunner.class.getResourceAsStream("/logging.properties")) {
+			LogManager logManager = LogManager.getLogManager();
+			logManager.readConfiguration(inputStream);
+		} catch (final IOException e) {
+			Logger.getAnonymousLogger().severe("Could not load default logging.properties file");
+			Logger.getAnonymousLogger().severe(e.getMessage());
+		}
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public abstract class AbstractTestScopesTest extends CdiTestAbstract {
 	private SuiteScopedBean suiteScopedBean;
 
 	@Test
-	public void dummy() {
+	public void showInfo() {
 		LOG.info("case: " + caseScopedBean.getIdentifier());
 		LOG.info("suite: " + suiteScopedBean.getIdentifier());
 	}

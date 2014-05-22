@@ -16,7 +16,7 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 
-import de.hilling.junit.cdi.scope.TestCaseLifecycle;
+import de.hilling.junit.cdi.scope.TestLifecycle;
 
 public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
 	private static final Logger LOG = Logger.getLogger(CdiMockitoRunner.class.getCanonicalName());
@@ -63,9 +63,9 @@ public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
 	protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
 		LOG.fine("starting " + method.getName());
 		contextControl.startContexts();
-		lifecycleNotifier.notify(TestCaseLifecycle.TEST_STARTS);
+		lifecycleNotifier.notify(TestLifecycle.TEST_STARTS);
 		super.runChild(method, notifier);
-		lifecycleNotifier.notify(TestCaseLifecycle.TEST_FINISHED);
+		lifecycleNotifier.notify(TestLifecycle.TEST_FINISHED);
 		contextControl.stopContexts();
 		LOG.fine("finished " + method.getName());
 	}

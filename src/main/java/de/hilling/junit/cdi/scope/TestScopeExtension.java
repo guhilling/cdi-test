@@ -11,6 +11,6 @@ public class TestScopeExtension implements Extension, Serializable {
 
 	public void registerContext(@Observes final AfterBeanDiscovery event) {
 		event.addContext(new TestSuiteContext());
-		event.addContext(new TestCaseContext());
+		event.addContext(new TestContext());
 	}
 }

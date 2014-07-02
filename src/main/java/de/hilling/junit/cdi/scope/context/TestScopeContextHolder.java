@@ -20,7 +20,7 @@ public class TestScopeContextHolder {
 
 	@SuppressWarnings("unchecked")
 	public <T> TestScopeInstance<T> getBean(Class<T> type) {
-		return (TestScopeInstance<T>) getBeans().get(type);
+		return (TestScopeInstance<T>) beans.get(type);
 	}
 
 	public <T> void putBean(TestScopeInstance<T> customInstance) {

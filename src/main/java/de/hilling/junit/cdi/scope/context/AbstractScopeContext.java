@@ -38,7 +38,7 @@ public abstract class AbstractScopeContext implements Context, Serializable {
 	}
 
 	private <T> T createNewInstance(final CreationalContext<T> creationalContext, Bean<T> bean) {
-		LOG.fine("creating new bean");
+		LOG.fine("creating new bean of type " + bean.getBeanClass());
 		T t = (T) bean.create(creationalContext);
 		TestScopeInstance<T> customInstance = new TestScopeInstance<>();
 		customInstance.bean = bean;

@@ -13,7 +13,7 @@ import de.hilling.junit.cdi.proxy.ProxyInjectionTarget;
 
 public class TestScopeExtension implements Extension, Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * add contexts after bean discovery.
 	 * @param afterBeanDiscovery

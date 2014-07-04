@@ -2,6 +2,7 @@ package de.hilling.junit.cdi;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.LogManager;
@@ -15,7 +16,9 @@ import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
+import org.mockito.Mock;
 
+import de.hilling.junit.cdi.scope.MockManager;
 import de.hilling.junit.cdi.scope.TestLifecycle;
 
 public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
@@ -26,6 +29,7 @@ public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
 	private static Map<Class<?>, Object> testCases = new HashMap<>();
 
 	private LifecycleNotifier lifecycleNotifier;
+	private MockManager mockManager = MockManager.getInstance();
 
 	static {
 		configureLogger();
@@ -56,7 +60,35 @@ public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
 	@Override
 	protected Object createTest() {
 		final Class<?> testClass = getTestClass().getJavaClass();
-		return resolveTest(testClass);
+		Object test = resolveTest(testClass);
+		assignMocks(test);
+		return test;
+	}
+
+	private void assignMocks(Object test) {
+		for (Field field : test.getClass().getDeclaredFields()) {
+			if(field.isAnnotationPresent(Mock.class)) {
+				assignMockAndActivateProxy(field, test);
+			}
+		};
+	}
+
+	private void assignMockAndActivateProxy(Field field, Object test) {
+		final boolean accessible = field.isAccessible();
+		if(!accessible) {
+			field.setAccessible(true);
+		}
+		try {
+			Object mock = mockManager.mock(field.getType());
+			field.set(test, mock);
+			mockManager.activateProxyMocks(mock);
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if(!accessible) {
+				field.setAccessible(false);
+			}
+		}
 	}
 
 	@Override
@@ -64,6 +96,7 @@ public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
 		LOG.fine("starting " + method.getName());
 		contextControl.startContexts();
 		lifecycleNotifier.notify(TestLifecycle.TEST_STARTS);
+		mockManager.resetMocks();
 		super.runChild(method, notifier);
 		lifecycleNotifier.notify(TestLifecycle.TEST_FINISHED);
 		contextControl.stopContexts();

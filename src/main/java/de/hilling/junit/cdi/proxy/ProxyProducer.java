@@ -17,7 +17,7 @@ public class ProxyProducer {
 	private static final Logger LOG = Logger.getLogger(ProxyProducer.class.getCanonicalName());
 
 	@SuppressWarnings("unchecked")
-	public <T> T createProxy(final Class<T> _clazz, final MethodHandler handler) {
+	public <T> T createProxy(final Class<T> _clazz, final ProxyMethodHandler<T> handler) {
 		Class<?> clazz;
  		ProxyFactory factory = new ProxyFactory();
 		String name = _clazz.getCanonicalName();

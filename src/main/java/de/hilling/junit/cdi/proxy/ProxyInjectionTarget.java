@@ -10,6 +10,16 @@ import javax.enterprise.inject.spi.InjectionTarget;
 
 import org.mockito.Mockito;
 
+/**
+ * Replace injections with proxies.
+ * 
+ * Work is done in {@link #inject(Object, CreationalContext)}.
+ * 
+ * @author gunnar
+ *
+ * @param <X>
+ *            type of target bean.
+ */
 public class ProxyInjectionTarget<X> implements InjectionTarget<X> {
 
 	private ProxyProducer proxyProducer = new ProxyProducer();
@@ -51,24 +61,27 @@ public class ProxyInjectionTarget<X> implements InjectionTarget<X> {
 			InjectionPoint point) {
 		Member member = point.getMember();
 		if (member instanceof Field) {
-			proxyFieldInjectionPoint(instance, ctx, member);
+			proxyFieldInjectionPoint(instance, ctx, (Field) member);
 		}
 	}
 
 	private void proxyFieldInjectionPoint(X instance, CreationalContext<X> ctx,
-			Member member) {
-		Field field = (Field) member;
+			Field field) {
 		try {
 			Object object = field.get(instance);
 			if (object != null) {
 				Class<?> javaClass = object.getClass();
 				if (proxyType(javaClass)) {
-					@SuppressWarnings({ "unchecked", "rawtypes" })
-					Object proxy = proxyProducer.createProxy(
-							javaClass,
-							new ProxyMethodHandler(object, Mockito
-									.mock(javaClass)));
-					field.set(instance, proxy);
+					try {
+						@SuppressWarnings({ "unchecked", "rawtypes" })
+						Object proxy = proxyProducer.createProxy(
+								javaClass,
+								new ProxyMethodHandler(object, Mockito
+										.mock(javaClass)));
+						field.set(instance, proxy);
+					} catch (ProxyNotPossibleException pnpe) {
+
+					}
 				}
 			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {

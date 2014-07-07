@@ -13,10 +13,15 @@ import de.hilling.junit.cdi.proxy.ProxyInjectionTarget;
 
 public class TestScopeExtension implements Extension, Serializable {
 	private static final long serialVersionUID = 1L;
-
-	public void afterBeanDiscovery(@Observes AfterBeanDiscovery abd,
-			BeanManager bm) {
-		addContexts(abd);
+	
+	/**
+	 * add contexts after bean discovery.
+	 * @param afterBeanDiscovery
+	 * @param beanManager
+	 */
+	public void afterBeanDiscovery(@Observes AfterBeanDiscovery afterBeanDiscovery,
+			BeanManager beanManager) {
+		addContexts(afterBeanDiscovery);
 	}
 
 	private void addContexts(AfterBeanDiscovery abd) {
@@ -24,11 +29,15 @@ public class TestScopeExtension implements Extension, Serializable {
 		abd.addContext(new TestContext());
 	}
 
+	/**
+	 * replace injections with proxies.
+	 * @param injectionTarget
+	 */
 	public <X> void processInjectionTarget(
-			@Observes ProcessInjectionTarget<X> pit) {
-		InjectionTarget<X> wrapper = new ProxyInjectionTarget<X>(pit.getInjectionTarget());
+			@Observes ProcessInjectionTarget<X> injectionTarget) {
+		InjectionTarget<X> wrapper = new ProxyInjectionTarget<X>(injectionTarget.getInjectionTarget());
 
-		pit.setInjectionTarget(wrapper);
+		injectionTarget.setInjectionTarget(wrapper);
 	}
 
 }

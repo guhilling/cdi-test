@@ -8,8 +8,18 @@ import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.enterprise.inject.spi.InjectionTarget;
 
-import org.mockito.Mockito;
+import de.hilling.junit.cdi.scope.MockManager;
 
+/**
+ * Replace injections with proxies.
+ * 
+ * Work is done in {@link #inject(Object, CreationalContext)}.
+ * 
+ * @author gunnar
+ *
+ * @param <X>
+ *            type of target bean.
+ */
 public class ProxyInjectionTarget<X> implements InjectionTarget<X> {
 
 	private ProxyProducer proxyProducer = new ProxyProducer();
@@ -51,28 +61,34 @@ public class ProxyInjectionTarget<X> implements InjectionTarget<X> {
 			InjectionPoint point) {
 		Member member = point.getMember();
 		if (member instanceof Field) {
-			proxyFieldInjectionPoint(instance, ctx, member);
+			proxyFieldInjectionPoint(instance, ctx, (Field) member);
 		}
 	}
 
 	private void proxyFieldInjectionPoint(X instance, CreationalContext<X> ctx,
-			Member member) {
-		Field field = (Field) member;
+			Field field) {
 		try {
 			Object object = field.get(instance);
 			if (object != null) {
-				Class<?> javaClass = object.getClass();
-				if (proxyType(javaClass)) {
-					@SuppressWarnings({ "unchecked", "rawtypes" })
-					Object proxy = proxyProducer.createProxy(
-							javaClass,
-							new ProxyMethodHandler(object, Mockito
-									.mock(javaClass)));
-					field.set(instance, proxy);
+				if (proxyType(object.getClass())) {
+					replaceWithMock(instance, field, object);
 				}
 			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void replaceWithMock(X instance, Field field, Object object)
+			throws IllegalAccessException {
+		try {
+			ProxyMethodHandler<Object> handler = new ProxyMethodHandler(object);
+			Object proxy = proxyProducer.createProxy(
+					(Class<Object>) object.getClass(), handler);
+			field.set(instance, proxy);
+			MockManager.getInstance().registerProxyMethodHandler(handler);
+		} catch (ProxyNotPossibleException pnpe) {
 		}
 	}
 

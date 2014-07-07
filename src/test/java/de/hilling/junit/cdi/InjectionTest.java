@@ -12,7 +12,7 @@ public class InjectionTest extends CdiTestAbstract {
 
 	@Inject
 	private Person person;
-
+	
 	@Test
 	public void testInjection() {
 		assertNotNull(person);

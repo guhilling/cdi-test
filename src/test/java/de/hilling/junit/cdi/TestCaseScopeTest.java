@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.hilling.junit.cdi.scopedbeans.ApplicationScopedBean;
+import de.hilling.junit.cdi.scopedbeans.DependentScopedBean;
 import de.hilling.junit.cdi.scopedbeans.RequestScopedBean;
 import de.hilling.junit.cdi.scopedbeans.ScopedBean;
 import de.hilling.junit.cdi.scopedbeans.SessionScopedBean;
@@ -45,6 +46,13 @@ public class TestCaseScopeTest extends CdiTestAbstract {
 	@Test
 	public void testTwo() {
 		assertInstances();
+	}
+	
+	@Test
+	public void testDependents() {
+		DependentScopedBean dependent1 = requestScopedBean.getDependentScopedBean();
+		DependentScopedBean dependent2 = applicationScopedBean.getDependentScopedBean();
+		Assert.assertNotSame(dependent1, dependent2);
 	}
 
 	private void assertInstances() {

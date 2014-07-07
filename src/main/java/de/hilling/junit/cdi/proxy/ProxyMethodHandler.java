@@ -2,6 +2,7 @@ package de.hilling.junit.cdi.proxy;
 
 import java.lang.reflect.Method;
 
+import de.hilling.junit.cdi.scope.MockManager;
 import javassist.util.proxy.MethodHandler;
 
 public class ProxyMethodHandler<T> implements MethodHandler {
@@ -9,9 +10,10 @@ public class ProxyMethodHandler<T> implements MethodHandler {
     private final T mock;
     private boolean mockEnabled;
 
-    ProxyMethodHandler(T delegate, T mock) {
+    @SuppressWarnings("unchecked")
+	public ProxyMethodHandler(T delegate) {
         this.delegate = delegate;
-        this.mock = mock;
+        this.mock = (T) MockManager.getInstance().mock(delegate.getClass());
     }
 
     public Object invoke(Object self, Method proxiedMethod, Method proceed,
@@ -31,4 +33,12 @@ public class ProxyMethodHandler<T> implements MethodHandler {
     public void setMockEnabled(boolean mockEnabled) {
         this.mockEnabled = mockEnabled;
     }
+
+	public T getDelegate() {
+		return delegate;
+	}
+
+	public T getMock() {
+		return mock;
+	}
 }

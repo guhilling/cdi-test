@@ -8,6 +8,8 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
+import de.hilling.junit.cdi.ReflectionsUtils;
+
 @Mockable
 @Interceptor
 @Dependent
@@ -21,7 +23,8 @@ public class MockInterceptor implements Serializable {
 
 	@AroundInvoke
 	public Object manageTransaction(InvocationContext ctx) throws Throwable {
-		Class<? extends Object> javaClass = ctx.getTarget().getClass();
+		Class<? extends Object> javaClass = ReflectionsUtils
+				.getOriginalClass(ctx.getTarget().getClass());
 		if (!initialized) {
 			initialized = true;
 			mock = mockManager.mock(javaClass);

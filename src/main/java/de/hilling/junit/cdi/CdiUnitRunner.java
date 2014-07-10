@@ -21,8 +21,9 @@ import org.mockito.Mock;
 import de.hilling.junit.cdi.scope.MockManager;
 import de.hilling.junit.cdi.scope.TestLifecycle;
 
-public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
-	private static final Logger LOG = Logger.getLogger(CdiMockitoRunner.class.getCanonicalName());
+public class CdiUnitRunner extends BlockJUnit4ClassRunner {
+	private static final Logger LOG = Logger.getLogger(CdiUnitRunner.class
+			.getCanonicalName());
 
 	private static CdiContainer cdiContainer;
 	private static ContextControl contextControl;
@@ -42,17 +43,20 @@ public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
 		contextControl = cdiContainer.getContextControl();
 	}
 
-	public CdiMockitoRunner(Class<?> klass) throws InitializationError {
+	public CdiUnitRunner(Class<?> klass) throws InitializationError {
 		super(klass);
-		lifecycleNotifier = BeanProvider.getContextualReference(LifecycleNotifier.class, false);
+		lifecycleNotifier = BeanProvider.getContextualReference(
+				LifecycleNotifier.class, false);
 	}
 
 	private static void configureLogger() {
-		try (InputStream inputStream = CdiMockitoRunner.class.getResourceAsStream("/logging.properties")) {
+		try (InputStream inputStream = CdiUnitRunner.class
+				.getResourceAsStream("/logging.properties")) {
 			LogManager logManager = LogManager.getLogManager();
 			logManager.readConfiguration(inputStream);
 		} catch (final IOException e) {
-			Logger.getAnonymousLogger().severe("Could not load default logging.properties file");
+			Logger.getAnonymousLogger().severe(
+					"Could not load default logging.properties file");
 			Logger.getAnonymousLogger().severe(e.getMessage());
 		}
 	}
@@ -66,26 +70,27 @@ public class CdiMockitoRunner extends BlockJUnit4ClassRunner {
 	}
 
 	private void assignMocks(Object test) {
-		for (Field field : test.getClass().getDeclaredFields()) {
-			if(field.isAnnotationPresent(Mock.class)) {
+		for (Field field : ReflectionsUtils.getAllFields(test.getClass())) {
+			if (field.isAnnotationPresent(Mock.class)) {
 				assignMockAndActivateProxy(field, test);
 			}
-		};
+		}
 	}
 
 	private void assignMockAndActivateProxy(Field field, Object test) {
 		final boolean accessible = field.isAccessible();
-		if(!accessible) {
+		if (!accessible) {
 			field.setAccessible(true);
 		}
 		try {
-			Object mock = mockManager.mock(field.getType());
+			Class<?> type = field.getType();
+			Object mock = mockManager.mock(type);
 			field.set(test, mock);
-			mockManager.activateProxyMocks(mock);
+			mockManager.activateMock(type);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			throw new RuntimeException(e);
 		} finally {
-			if(!accessible) {
+			if (!accessible) {
 				field.setAccessible(false);
 			}
 		}

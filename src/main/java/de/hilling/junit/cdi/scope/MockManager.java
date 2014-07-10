@@ -21,7 +21,7 @@ public class MockManager {
 
 	@SuppressWarnings("unchecked")
 	public <T> T mock(Class<T> javaClass) {
-		if (!activeMocks.containsKey(javaClass)) {
+		if (!isEnabled(javaClass)) {
 			activeMocks.put(javaClass, Mockito.mock(javaClass));
 		}
 		return (T) activeMocks.get(javaClass);
@@ -56,5 +56,9 @@ public class MockManager {
 				handler.setMockEnabled(false);
 			}
 		}
+	}
+
+	public boolean isEnabled(Class<?> javaClass) {
+		return activeMocks.containsKey(javaClass);
 	}
 }

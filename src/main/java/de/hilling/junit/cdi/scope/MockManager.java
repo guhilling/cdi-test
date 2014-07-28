@@ -5,56 +5,68 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.enterprise.inject.Vetoed;
+
 import org.mockito.Mockito;
 
-import de.hilling.junit.cdi.proxy.ProxyMethodHandler;
-
+@Vetoed
 public class MockManager {
 
 	private static final MockManager instance = new MockManager();
 
-	private Map<Class<?>, Object> activeMocks = new HashMap<>();
-	private Map<Object, Set<ProxyMethodHandler<?>>> handlerMap = new HashMap<>();
+	private Map<Class<?>, Object> mocks = new HashMap<>();
+	private Set<Class<?>> activeMocks = new HashSet<>();
 
 	private MockManager() {
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T mock(Class<T> javaClass) {
-		if (!activeMocks.containsKey(javaClass)) {
-			activeMocks.put(javaClass, Mockito.mock(javaClass));
+		if (!mocks.containsKey(javaClass)) {
+			mocks.put(javaClass, Mockito.mock(javaClass));
 		}
-		return (T) activeMocks.get(javaClass);
+		return (T) mocks.get(javaClass);
 	}
 
 	public static MockManager getInstance() {
 		return instance;
 	}
 
+	/**
+	 * Deactivate all mocks. Call before new test case starts.
+	 */
+	public void clearActivations() {
+		activeMocks.clear();
+	}
+
+	/**
+	 * Reset all {@link Mockito} mocks. See {@link Mockito#reset(Object...)}
+	 */
 	public void resetMocks() {
-		Mockito.reset(activeMocks.values().toArray());
+		Mockito.reset(mocks.values().toArray());
 	}
 
-	public void registerProxyMethodHandler(
-			ProxyMethodHandler<Object> handler) {
-		Object mock = handler.getMock();
-		if(!handlerMap.containsKey(mock)) {
-			handlerMap.put(mock, new HashSet<ProxyMethodHandler<?>>());
-		}
-		handlerMap.get(mock).add(handler);
+	/**
+	 * Check if mock for the given class is enabled.
+	 * 
+	 * @param javaClass
+	 * @return true if {@link #activateMock(Object)} was called before.
+	 */
+	public boolean isEnabled(Class<?> javaClass) {
+		return activeMocks.contains(javaClass);
 	}
 
-	public void activateProxyMocks(Object mock) {
-		for (ProxyMethodHandler<?> handler : handlerMap.get(mock)) {
-			handler.setMockEnabled(true);
+	/**
+	 * Activate mock for given class.
+	 * 
+	 * @param mock
+	 */
+	public void activateMock(Class<?> clazz) {
+		if (mocks.containsKey(clazz)) {
+			activeMocks.add(clazz);
+		} else {
+			throw new IllegalArgumentException("not registered: " + clazz);
 		}
 	}
-	
-	public void deactivateAllProxyMocks() {
-		for (Set<ProxyMethodHandler<?>> handlerSet : handlerMap.values()) {
-			for (ProxyMethodHandler<?> handler : handlerSet) {
-				handler.setMockEnabled(false);
-			}
-		}
-	}
+
 }

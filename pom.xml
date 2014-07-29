@@ -8,7 +8,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<weld.version>2.2.2.Final</weld.version>
-		<deltaspike.version>1.0.0</deltaspike.version>
+		<deltaspike.version>1.0.1</deltaspike.version>
 	</properties>
 
 	<dependencies>

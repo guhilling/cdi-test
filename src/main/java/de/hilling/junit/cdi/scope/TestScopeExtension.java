@@ -1,6 +1,8 @@
 package de.hilling.junit.cdi.scope;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
@@ -14,6 +16,8 @@ import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
 public class TestScopeExtension implements Extension, Serializable {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(TestScopeExtension.class
+			.getCanonicalName());
 
 	/**
 	 * add contexts after bean discovery.
@@ -35,14 +39,23 @@ public class TestScopeExtension implements Extension, Serializable {
 	public <X> void processBean(@Observes ProcessAnnotatedType<X> pat) {
 		AnnotatedType<X> type = pat.getAnnotatedType();
 		Class<X> javaClass = type.getJavaClass();
-		if (javaClass.getName().startsWith("de.hilling")) {
+		if (shouldProxyCdiType(javaClass)) {
 			AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<X>();
 			builder.readFromType(type);
 			builder.addToClass(new AnnotationLiteral<Mockable>() {
 				private static final long serialVersionUID = 1L;
 			});
-			pat.setAnnotatedType(builder.create());
+			try {
+				pat.setAnnotatedType(builder.create());
+			} catch (RuntimeException e) {
+				LOG.log(Level.SEVERE, "unable to process type " + pat, e);
+			}
 		}
+	}
+
+	private <X> boolean shouldProxyCdiType(Class<X> javaClass) {
+		return !javaClass.isAnonymousClass()
+				&& javaClass.getName().startsWith("de.hilling");
 	}
 
 }

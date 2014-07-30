@@ -52,13 +52,21 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
 	private static void configureLogger() {
 		try (InputStream inputStream = CdiUnitRunner.class
 				.getResourceAsStream("/logging.properties")) {
-			LogManager logManager = LogManager.getLogManager();
-			logManager.readConfiguration(inputStream);
+			if (inputStream == null) {
+				warnLoggerNotConfigured("file not found");
+			} else {
+				LogManager logManager = LogManager.getLogManager();
+				logManager.readConfiguration(inputStream);
+			}
 		} catch (final IOException e) {
-			Logger.getAnonymousLogger().severe(
-					"Could not load default logging.properties file");
-			Logger.getAnonymousLogger().severe(e.getMessage());
+			warnLoggerNotConfigured(e.getMessage());
 		}
+	}
+
+	private static void warnLoggerNotConfigured(String message) {
+		Logger.getAnonymousLogger().severe(
+				"Could not load default logging.properties file");
+		Logger.getAnonymousLogger().severe(message);
 	}
 
 	@Override

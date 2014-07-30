@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 
 import javax.inject.Inject;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import de.hilling.junit.cdi.beans.ConstructorInjected;
@@ -15,22 +14,22 @@ public class InjectionTest extends CdiTestAbstract {
 
 	@Inject
 	private Person person;
-	
+
 	@Inject
 	private ConstructorInjected constructorInjected;
-	
+
 	@Test
 	public void testInjection() {
 		assertNotNull(person);
 		assertNotNull(constructorInjected);
 	}
-	
+
 	@Test
 	public void testProxiedCostructorInjection() {
 		assertNotNull(constructorInjected.getPerson());
 		assertNotNull(constructorInjected.getRequest());
 	}
-	
+
 	@Test
 	public void testPersons() {
 		checkPersonWorks(person);
@@ -41,5 +40,5 @@ public class InjectionTest extends CdiTestAbstract {
 		person.setName("test");
 		assertEquals("test", person.getName());
 	}
-	
+
 }

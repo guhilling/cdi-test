@@ -15,6 +15,7 @@
 
 	<modules>
 		<module>cdi-test-core</module>
+		<module>test-project</module>
 	</modules>
 
 	<dependencyManagement>

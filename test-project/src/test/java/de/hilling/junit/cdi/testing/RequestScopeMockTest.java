@@ -1,10 +1,11 @@
 package de.hilling.junit.cdi.testing;
 
+import static org.mockito.Mockito.verify;
+
 import javax.inject.Inject;
 
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 public class RequestScopeMockTest extends BaseTest {
 
@@ -19,7 +20,7 @@ public class RequestScopeMockTest extends BaseTest {
 	@Test
 	public void setAttributeTransitive() {
 		requestBean.setAttribute(SAMPLE);
-		Mockito.verify(applicationBean).setAttribute(SAMPLE);
+		verify(applicationBean).setAttribute(SAMPLE);
 	}
 
 }

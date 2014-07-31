@@ -107,11 +107,13 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
 	@Override
 	protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
 		LOG.fine("starting " + method.getName());
+		// activate mocks based on test case (per thread?)
 		contextControl.startContexts();
 		lifecycleNotifier.notify(TestLifecycle.TEST_STARTS);
 		mockManager.resetMocks();
 		super.runChild(method, notifier);
 		lifecycleNotifier.notify(TestLifecycle.TEST_FINISHED);
+		// deactivate mocks
 		contextControl.stopContexts();
 		LOG.fine("finished " + method.getName());
 	}

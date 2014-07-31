@@ -12,7 +12,7 @@
 	<packaging>jar</packaging>
 
 	<properties>
-		<weld.version>2.1.2.Final</weld.version>
+		<weld.version>${cdi-1.2-weld.version}</weld.version>
 	</properties>
 
 	<dependencies>

@@ -22,7 +22,7 @@ public class MockInterceptor implements Serializable {
 	private MockManager mockManager = MockManager.getInstance();
 
 	@AroundInvoke
-	public Object manageTransaction(InvocationContext ctx) throws Throwable {
+	public Object invokeMockableBean(InvocationContext ctx) throws Throwable {
 		Class<? extends Object> javaClass = ReflectionsUtils
 				.getOriginalClass(ctx.getTarget().getClass());
 		if (!initialized) {

@@ -3,6 +3,7 @@ package de.hilling.junit.cdi.scope;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -13,6 +14,7 @@ import de.hilling.junit.cdi.ReflectionsUtils;
 @Mockable
 @Interceptor
 @Dependent
+@Priority(0)
 public class MockInterceptor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +31,7 @@ public class MockInterceptor implements Serializable {
 			initialized = true;
 			mock = mockManager.mock(javaClass);
 		}
-		if (mockManager.isEnabled(javaClass)) {
+		if (mockManager.isMockEnabled(javaClass)) {
 			return callMock(ctx);
 		} else {
 			return ctx.proceed();

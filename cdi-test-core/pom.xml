@@ -1,18 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
 		<groupId>de.hilling.junit.cdi</groupId>
 		<artifactId>cdi-test</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
+
 	<artifactId>cdi-test-core</artifactId>
 	<packaging>jar</packaging>
 
 	<properties>
-		<weld.version>2.2.2.Final</weld.version>
+		<weld.version>${cdi-1.2-weld.version}</weld.version>
 	</properties>
 
 	<dependencies>
@@ -23,6 +23,14 @@
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>

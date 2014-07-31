@@ -1,5 +1,7 @@
 package de.hilling.junit.cdi;
 
+import static org.mockito.Mockito.verify;
+
 import javax.inject.Inject;
 
 import org.junit.Test;
@@ -22,7 +24,7 @@ public class MockProxyTest extends CdiTestAbstract {
 	public void createPerson() {
 		Person person = new Person();
 		sampleService.storePerson(person);
-		Mockito.verify(backendService).storePerson(person);
+		verify(backendService).storePerson(person);
 	}
 
 	@Test

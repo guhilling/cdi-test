@@ -16,7 +16,13 @@
 		<cdi-1.2-weld.version>2.2.4.Final</cdi-1.2-weld.version>
 	</properties>
 
-	<modules>
+    <scm>
+        <connection>scm:git:https://github.com/guhilling/cdi-test.git</connection>
+        <developerConnection>scm:git:https://github.com/guhilling/cdi-test.git</developerConnection>
+        <url>https://github.com/guhilling/cdi-test.git</url>
+    </scm>
+
+    <modules>
 		<module>cdi-test-core</module>
 		<module>test-project</module>
 	</modules>

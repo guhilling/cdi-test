@@ -19,6 +19,13 @@ import org.mockito.Mock;
 import de.hilling.junit.cdi.scope.MockManager;
 import de.hilling.junit.cdi.scope.TestLifecycle;
 
+/**
+ * Runner for cdi tests providing:
+ * <ul>
+ *     <li>test creation via cdi using deltaspike</li>
+ *     <li>injection and activation of mocks using MockManager</li>
+ * </ul>
+ */
 public class CdiUnitRunner extends BlockJUnit4ClassRunner {
 	private static final Logger LOG = Logger.getLogger(CdiUnitRunner.class
 			.getCanonicalName());

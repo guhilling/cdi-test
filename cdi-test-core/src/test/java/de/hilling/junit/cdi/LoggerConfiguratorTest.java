@@ -1,5 +1,6 @@
 package de.hilling.junit.cdi;
 
+import de.hilling.junit.cdi.util.LoggerConfigurator;
 import org.junit.After;
 import org.junit.Test;
 

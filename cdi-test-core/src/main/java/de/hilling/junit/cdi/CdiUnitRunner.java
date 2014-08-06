@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
+import de.hilling.junit.cdi.util.LoggerConfigurator;
+import de.hilling.junit.cdi.util.ReflectionsUtils;
 import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.apache.deltaspike.cdise.api.CdiContainerLoader;
 import org.apache.deltaspike.cdise.api.ContextControl;
@@ -17,7 +20,7 @@ import org.junit.runners.model.InitializationError;
 import org.mockito.Mock;
 
 import de.hilling.junit.cdi.scope.MockManager;
-import de.hilling.junit.cdi.scope.TestLifecycle;
+import de.hilling.junit.cdi.scope.EventType;
 
 /**
  * Runner for cdi tests providing:
@@ -91,9 +94,9 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
 		mockManager.addAndActivateTest(description.getTestClass());
 		mockManager.resetMocks();
 		contextControl.startContexts();
-		lifecycleNotifier.notify(TestLifecycle.TEST_STARTS);
+		lifecycleNotifier.notify(EventType.STARTING, description);
 		super.runChild(method, notifier);
-		lifecycleNotifier.notify(TestLifecycle.TEST_FINISHED);
+		lifecycleNotifier.notify(EventType.FINISHING, description);
 		contextControl.stopContexts();
 		mockManager.deactivateTest();
 		LOG.fine("finished " + description);

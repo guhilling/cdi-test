@@ -1,4 +1,6 @@
-package de.hilling.junit.cdi;
+package de.hilling.junit.cdi.util;
+
+import de.hilling.junit.cdi.CdiUnitRunner;
 
 import java.io.IOException;
 import java.io.InputStream;

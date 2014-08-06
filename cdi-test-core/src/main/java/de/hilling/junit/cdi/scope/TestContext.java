@@ -1,14 +1,15 @@
 package de.hilling.junit.cdi.scope;
 
-import java.io.Serializable;
-import java.lang.annotation.Annotation;
-import java.util.logging.Logger;
+import de.hilling.junit.cdi.lifecycle.TestEvent;
+import de.hilling.junit.cdi.scope.context.AbstractScopeContext;
+import de.hilling.junit.cdi.scope.context.TestScopeContextHolder;
+import org.junit.runner.Description;
 
 import javax.enterprise.context.spi.Context;
 import javax.enterprise.event.Observes;
-
-import de.hilling.junit.cdi.scope.context.AbstractScopeContext;
-import de.hilling.junit.cdi.scope.context.TestScopeContextHolder;
+import java.io.Serializable;
+import java.lang.annotation.Annotation;
+import java.util.logging.Logger;
 
 @TestSuiteScoped
 public class TestContext extends AbstractScopeContext implements Context, Serializable {
@@ -27,19 +28,14 @@ public class TestContext extends AbstractScopeContext implements Context, Serial
 		return TestScoped.class;
 	}
 
-	protected void lifecycle(@Observes TestLifecycle testCaseLifecycle) {
-		switch (testCaseLifecycle) {
-		case TEST_STARTS:
-			active = true;
-			break;
-		case TEST_FINISHED:
-			getScopeContextHolder().clear();
-			active = false;
-			break;
-		default:
-			throw new IllegalStateException("unhandled state " + testCaseLifecycle);
-		}
-	}
+    protected void activate(@Observes @TestEvent(EventType.STARTING) Description description) {
+        active = true;
+    }
+
+    protected void deactivate(@Observes @TestEvent(EventType.FINISHING) Description description) {
+        getScopeContextHolder().clear();
+        active = false;
+    }
 
 	@Override
 	public boolean isActive() {

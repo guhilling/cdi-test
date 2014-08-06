@@ -9,7 +9,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
-import de.hilling.junit.cdi.ReflectionsUtils;
+import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 @Mockable
 @Interceptor

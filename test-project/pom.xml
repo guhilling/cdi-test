@@ -10,9 +10,6 @@
 	<artifactId>test-project</artifactId>
 	<packaging>jar</packaging>
 
-	<properties>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.deltaspike.cdictrl</groupId>
@@ -36,15 +33,18 @@
 		<dependency>
 			<groupId>org.apache.deltaspike.cdictrl</groupId>
 			<artifactId>deltaspike-cdictrl-api</artifactId>
+            <scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.deltaspike.core</groupId>
 			<artifactId>deltaspike-core-api</artifactId>
+            <scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.deltaspike.core</groupId>
 			<artifactId>deltaspike-core-impl</artifactId>
-		</dependency>
+            <scope>test</scope>
+        </dependency>
 
 		<!-- Test dependencies -->
 		<dependency>

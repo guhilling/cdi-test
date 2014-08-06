@@ -32,7 +32,8 @@
     <modules>
 		<module>cdi-test-core</module>
 		<module>test-project</module>
-	</modules>
+        <module>cdi-test-db</module>
+    </modules>
 
 	<dependencyManagement>
 		<dependencies>

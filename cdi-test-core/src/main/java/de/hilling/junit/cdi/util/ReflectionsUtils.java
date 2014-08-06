@@ -1,4 +1,4 @@
-package de.hilling.junit.cdi;
+package de.hilling.junit.cdi.util;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

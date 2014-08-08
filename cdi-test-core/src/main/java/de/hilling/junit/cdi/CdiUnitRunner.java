@@ -1,11 +1,8 @@
 package de.hilling.junit.cdi;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
-
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
+import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.MockManager;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 import org.apache.deltaspike.cdise.api.CdiContainer;
@@ -19,8 +16,10 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.mockito.Mock;
 
-import de.hilling.junit.cdi.scope.MockManager;
-import de.hilling.junit.cdi.scope.EventType;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Runner for cdi tests providing:
@@ -89,17 +88,19 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
 
 	@Override
 	protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
-		Description description = describeChild(method);
-		LOG.fine("starting " + description);
+		final Description description = describeChild(method);
+		LOG.fine("> preparing " + description);
 		mockManager.addAndActivateTest(description.getTestClass());
 		mockManager.resetMocks();
 		contextControl.startContexts();
 		lifecycleNotifier.notify(EventType.STARTING, description);
-		super.runChild(method, notifier);
+        LOG.fine(">> starting " + description);
+        super.runChild(method, notifier);
+        LOG.fine("<< finishing " + description);
 		lifecycleNotifier.notify(EventType.FINISHING, description);
 		contextControl.stopContexts();
 		mockManager.deactivateTest();
-		LOG.fine("finished " + description);
+		LOG.fine("< finished " + description);
 	}
 
 	@SuppressWarnings("unchecked")

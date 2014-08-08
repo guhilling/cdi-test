@@ -42,6 +42,40 @@
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
+    <build>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>h2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <testdb.url>jdbc:h2:mem:test-db</testdb.url>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>1.3.176</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

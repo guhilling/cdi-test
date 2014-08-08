@@ -7,6 +7,6 @@ import java.util.logging.Logger;
 
 @RunWith(CdiUnitRunner.class)
 public abstract class DbTestAbstract {
-	protected static final Logger LOG = Logger.getLogger(DbTestAbstract.class.getName());
+    protected static final Logger LOG = Logger.getLogger(DbTestAbstract.class.getName());
 
 }

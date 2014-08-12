@@ -12,36 +12,36 @@ import java.util.logging.Logger;
  */
 public class LoggerConfigurator {
 
-	public static final String LOGCONFIG_KEY = "junit.cdi.logconfig";
-	public static final String LOGCONFIG_DEFAULT = "/logging.properties";
+    public static final String LOGCONFIG_KEY = "junit.cdi.logconfig";
+    public static final String LOGCONFIG_DEFAULT = "/logging.properties";
 
-	private LoggerConfigurator() {
-	}
+    private LoggerConfigurator() {
+    }
 
-	/**
-	 * Configure logging using the resource logging.properties or the file set
-	 * in the system property junit.cdi.logconfig
-	 */
-	public static void configure() {
-		final String configurationFile = System.getProperty(LOGCONFIG_KEY,
-				LOGCONFIG_DEFAULT);
-		try (InputStream inputStream = CdiUnitRunner.class
-				.getResourceAsStream(configurationFile)) {
-			if (inputStream == null) {
-				warnLoggerNotConfigured("file not found");
-			} else {
-				LogManager logManager = LogManager.getLogManager();
-				logManager.readConfiguration(inputStream);
-			}
-		} catch (final IOException e) {
-			warnLoggerNotConfigured(e.getMessage());
-		}
-	}
+    /**
+     * Configure logging using the resource logging.properties or the file set
+     * in the system property junit.cdi.logconfig
+     */
+    public static void configure() {
+        final String configurationFile = System.getProperty(LOGCONFIG_KEY,
+                LOGCONFIG_DEFAULT);
+        try (InputStream inputStream = CdiUnitRunner.class
+                .getResourceAsStream(configurationFile)) {
+            if (inputStream == null) {
+                warnLoggerNotConfigured("file not found");
+            } else {
+                LogManager logManager = LogManager.getLogManager();
+                logManager.readConfiguration(inputStream);
+            }
+        } catch (final IOException e) {
+            warnLoggerNotConfigured(e.getMessage());
+        }
+    }
 
-	private static void warnLoggerNotConfigured(String message) {
-		Logger.getAnonymousLogger().severe(
-				"Could not load default logging.properties file");
-		Logger.getAnonymousLogger().severe(message);
-	}
+    private static void warnLoggerNotConfigured(String message) {
+        Logger.getAnonymousLogger().severe(
+                "Could not load default logging.properties file");
+        Logger.getAnonymousLogger().severe(message);
+    }
 
 }

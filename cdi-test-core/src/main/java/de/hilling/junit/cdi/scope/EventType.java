@@ -5,8 +5,12 @@ package de.hilling.junit.cdi.scope;
  */
 public enum EventType {
 
-    /** Unit test is about to start */
+    /**
+     * Unit test is about to start
+     */
     STARTING,
-    /** Unit test is finishing */
+    /**
+     * Unit test is finishing
+     */
     FINISHING
 }

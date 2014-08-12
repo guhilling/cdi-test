@@ -22,10 +22,11 @@ public class DatabaseCleaner {
     private Instance<Connection> connections;
 
     public void beforeTestStarts(@Observes @TestEvent(EventType.STARTING) Description testDescription) {
-        for(Connection connection: connections) {
-             LOG.fine("cleaning connection " + connection);
+        for (Connection connection : connections) {
+            LOG.fine("cleaning connection " + connection);
         }
     }
+
     public void beforeTestFinishes(@Observes @TestEvent(EventType.FINISHING) Description testDescription) {
     }
 }

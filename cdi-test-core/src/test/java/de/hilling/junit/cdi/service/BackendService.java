@@ -4,7 +4,7 @@ import de.hilling.junit.cdi.beans.Person;
 
 public class BackendService {
 
-	public void storePerson(Person person) {
-	}
+    public void storePerson(Person person) {
+    }
 
 }

@@ -4,14 +4,14 @@ import java.util.UUID;
 
 public abstract class IdentifiablePojo {
 
-	private final UUID identifier = UUID.randomUUID();
+    private final UUID identifier = UUID.randomUUID();
 
-	public IdentifiablePojo() {
-		super();
-	}
+    public IdentifiablePojo() {
+        super();
+    }
 
-	public UUID getIdentifier() {
-		return identifier;
-	}
+    public UUID getIdentifier() {
+        return identifier;
+    }
 
 }

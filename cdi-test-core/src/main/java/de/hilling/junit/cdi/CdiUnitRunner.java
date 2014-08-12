@@ -24,94 +24,94 @@ import java.util.logging.Logger;
 /**
  * Runner for cdi tests providing:
  * <ul>
- *     <li>test creation via cdi using deltaspike</li>
- *     <li>injection and activation of mocks using MockManager</li>
+ * <li>test creation via cdi using deltaspike</li>
+ * <li>injection and activation of mocks using MockManager</li>
  * </ul>
  */
 public class CdiUnitRunner extends BlockJUnit4ClassRunner {
-	private static final Logger LOG = Logger.getLogger(CdiUnitRunner.class
-			.getCanonicalName());
+    private static final Logger LOG = Logger.getLogger(CdiUnitRunner.class
+            .getCanonicalName());
 
-	private static CdiContainer cdiContainer;
-	private static ContextControl contextControl;
-	private static Map<Class<?>, Object> testCases = new HashMap<>();
+    private static CdiContainer cdiContainer;
+    private static ContextControl contextControl;
+    private static Map<Class<?>, Object> testCases = new HashMap<>();
 
-	private LifecycleNotifier lifecycleNotifier;
-	private MockManager mockManager = MockManager.getInstance();
+    private LifecycleNotifier lifecycleNotifier;
+    private MockManager mockManager = MockManager.getInstance();
 
-	static {
-		LoggerConfigurator.configure();
-		startCdiContainer();
-	}
+    static {
+        LoggerConfigurator.configure();
+        startCdiContainer();
+    }
 
-	private static void startCdiContainer() {
-		cdiContainer = CdiContainerLoader.getCdiContainer();
-		cdiContainer.boot();
-		contextControl = cdiContainer.getContextControl();
-	}
+    public CdiUnitRunner(Class<?> klass) throws InitializationError {
+        super(klass);
+        lifecycleNotifier = BeanProvider.getContextualReference(
+                LifecycleNotifier.class, false);
+    }
 
-	public CdiUnitRunner(Class<?> klass) throws InitializationError {
-		super(klass);
-		lifecycleNotifier = BeanProvider.getContextualReference(
-				LifecycleNotifier.class, false);
-	}
+    private static void startCdiContainer() {
+        cdiContainer = CdiContainerLoader.getCdiContainer();
+        cdiContainer.boot();
+        contextControl = cdiContainer.getContextControl();
+    }
 
-	@Override
-	protected Object createTest() {
-		final Class<?> testClass = getTestClass().getJavaClass();
-		Object test = resolveTest(testClass);
-		assignMocks(test);
-		return test;
-	}
+    @Override
+    protected Object createTest() {
+        final Class<?> testClass = getTestClass().getJavaClass();
+        Object test = resolveTest(testClass);
+        assignMocks(test);
+        return test;
+    }
 
-	private void assignMocks(Object test) {
-		for (Field field : ReflectionsUtils.getAllFields(test.getClass())) {
-			if (field.isAnnotationPresent(Mock.class)) {
-				assignMockAndActivateProxy(field, test);
-			}
-		}
-	}
+    private void assignMocks(Object test) {
+        for (Field field : ReflectionsUtils.getAllFields(test.getClass())) {
+            if (field.isAnnotationPresent(Mock.class)) {
+                assignMockAndActivateProxy(field, test);
+            }
+        }
+    }
 
-	private void assignMockAndActivateProxy(Field field, Object test) {
-		field.setAccessible(true);
-		try {
-			Class<?> type = field.getType();
-			Object mock = mockManager.mock(type);
-			field.set(test, mock);
-			mockManager.activateMock(type);
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			throw new RuntimeException(e);
-		} finally {
-			field.setAccessible(false);
-		}
-	}
+    private void assignMockAndActivateProxy(Field field, Object test) {
+        field.setAccessible(true);
+        try {
+            Class<?> type = field.getType();
+            Object mock = mockManager.mock(type);
+            field.set(test, mock);
+            mockManager.activateMock(type);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } finally {
+            field.setAccessible(false);
+        }
+    }
 
-	@Override
-	protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
-		final Description description = describeChild(method);
-		LOG.fine("> preparing " + description);
-		mockManager.addAndActivateTest(description.getTestClass());
-		mockManager.resetMocks();
-		contextControl.startContexts();
-		lifecycleNotifier.notify(EventType.STARTING, description);
+    @Override
+    protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
+        final Description description = describeChild(method);
+        LOG.fine("> preparing " + description);
+        mockManager.addAndActivateTest(description.getTestClass());
+        mockManager.resetMocks();
+        contextControl.startContexts();
+        lifecycleNotifier.notify(EventType.STARTING, description);
         LOG.fine(">> starting " + description);
         super.runChild(method, notifier);
         LOG.fine("<< finishing " + description);
-		lifecycleNotifier.notify(EventType.FINISHING, description);
-		contextControl.stopContexts();
-		mockManager.deactivateTest();
-		LOG.fine("< finished " + description);
-	}
+        lifecycleNotifier.notify(EventType.FINISHING, description);
+        contextControl.stopContexts();
+        mockManager.deactivateTest();
+        LOG.fine("< finished " + description);
+    }
 
-	@SuppressWarnings("unchecked")
-	protected <T> T resolveTest(Class<T> clazz) {
-		if (testCases.containsKey(clazz)) {
-			return (T) testCases.get(clazz);
-		} else {
-			T testCase = BeanProvider.getContextualReference(clazz, false);
-			testCases.put(clazz, testCase);
-			return testCase;
-		}
-	}
+    @SuppressWarnings("unchecked")
+    protected <T> T resolveTest(Class<T> clazz) {
+        if (testCases.containsKey(clazz)) {
+            return (T) testCases.get(clazz);
+        } else {
+            T testCase = BeanProvider.getContextualReference(clazz, false);
+            testCases.put(clazz, testCase);
+            return testCase;
+        }
+    }
 
 }

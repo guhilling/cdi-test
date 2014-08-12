@@ -6,10 +6,10 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class ApplicationScopedBean extends ScopedBean {
 
-	@Inject
-	private DependentScopedBean dependentScopedBean;
+    @Inject
+    private DependentScopedBean dependentScopedBean;
 
-	public DependentScopedBean getDependentScopedBean() {
-		return dependentScopedBean;
-	}
+    public DependentScopedBean getDependentScopedBean() {
+        return dependentScopedBean;
+    }
 }

@@ -1,12 +1,7 @@
 package de.hilling.junit.cdi.scope;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import javax.inject.Scope;
+import java.lang.annotation.*;
 
 /**
  * custom scope for cdi unit test suite.
@@ -14,6 +9,6 @@ import javax.inject.Scope;
 @Scope
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD })
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD})
 public @interface TestSuiteScoped {
 }

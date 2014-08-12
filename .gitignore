@@ -5,6 +5,8 @@
 
 .settings
 
-.settings/*
+.idea
 
-target
+*.iml
+
+atlassian-ide-plugin.xml

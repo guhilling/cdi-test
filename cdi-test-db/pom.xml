@@ -19,7 +19,7 @@
         <dependency>
             <groupId>de.hilling.junit.cdi</groupId>
             <artifactId>cdi-test-core</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

@@ -8,4 +8,4 @@ env:
   - CDI='cdi-1.1'
   - CDI='cdi-1.2'
 
-script: "mvn test -P ${CDI}"
+script: "mvn test -P$CDI"

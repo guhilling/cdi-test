@@ -1,19 +1,29 @@
 package de.hilling.junit.cdi.db;
 
+import de.hilling.junit.cdi.lifecycle.TestEvent;
+import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.TestSuiteScoped;
+import org.junit.runner.Description;
+
 import javax.annotation.PostConstruct;
+import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import java.sql.Connection;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
+import java.util.logging.Logger;
 
+@TestSuiteScoped
 public class ConnectionAnalyzer {
+    private static final Logger LOG = Logger.getLogger(ConnectionAnalyzer.class.getCanonicalName());
+
     @Inject
     @Cleanup
     private Instance<Connection> connections;
 
-    private Map<Connection, ConnectionInfo> connectionMap = new HashMap<>();
+    private List<ConnectionInfo> connectionInfos = new ArrayList<>();
 
     @PostConstruct
     public void init() {
@@ -22,11 +32,14 @@ public class ConnectionAnalyzer {
             final Connection connection = iter.next();
             final ConnectionInfo info = new ConnectionInfo();
             info.parse(connection);
-            connectionMap.put(connection, info);
+            connectionInfos.add(info);
         }
     }
 
-    public ConnectionInfo getInfoForConnection(Connection connection) {
-        return connectionMap.get(connection);
+    public void beforeTestStarts(@Observes @TestEvent(EventType.STARTING) Description testDescription) {
+        for (ConnectionInfo info : connectionInfos) {
+            new ConnectionCleaner(info).cleanUp();
+        }
     }
+
 }

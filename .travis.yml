@@ -4,8 +4,6 @@ jdk:
   - oraclejdk8
   - openjdk7
 
-
 env:
-  matrix:
-    - TARGET='-Pcdi-1.1'
-    - TARGET='-Pcdi-1.2'
+  - TARGET='-Pcdi-1.1'
+  - TARGET='-Pcdi-1.2'

@@ -5,5 +5,7 @@ jdk:
   - openjdk7
 
 env:
-  - TARGET='-Pcdi-1.1'
-  - TARGET='-Pcdi-1.2'
+  - CDI_PROFILE='cdi-1.1'
+  - CDI_PROFILE='cdi-1.2'
+
+script: "mvn clean install -P${CDI_PROFILE}"

@@ -8,4 +8,5 @@ env:
     - CDIPROFILE="-Pcdi-1.1"
     - CDIPROFILE="-Pcdi-1.2"
 
-script: "mvn test $CDIPROFILE"
+script:
+  - "mvn test $CDIPROFILE"

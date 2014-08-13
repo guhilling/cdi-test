@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionInfo {
-    private DatabaseType type;
+    private final DatabaseType type;
+    private final Connection connection;
+    private final List<String> tableNames = new ArrayList<>();
 
-    private List<String> tableNames = new ArrayList<>();
-
-    public void parse(Connection connection) {
+    public ConnectionInfo(Connection connection) {
+        this.connection = connection;
         try {
             final DatabaseMetaData metaData = connection.getMetaData();
             type = DatabaseType.byType(metaData.getDatabaseProductName());

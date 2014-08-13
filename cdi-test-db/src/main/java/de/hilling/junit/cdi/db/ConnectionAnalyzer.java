@@ -30,8 +30,7 @@ public class ConnectionAnalyzer {
         Iterator<Connection> iter = connections.iterator();
         while (iter.hasNext()) {
             final Connection connection = iter.next();
-            final ConnectionInfo info = new ConnectionInfo();
-            info.parse(connection);
+            final ConnectionInfo info = new ConnectionInfo(connection);
             connectionInfos.add(info);
         }
     }

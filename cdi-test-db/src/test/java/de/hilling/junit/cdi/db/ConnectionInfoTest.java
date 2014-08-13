@@ -27,14 +27,9 @@ public class ConnectionInfoTest {
         util.execute("INSERT INTO SAMPLE VALUES('one', 'description-1')");
         util.execute("INSERT INTO SAMPLE VALUES('one', 'description-2')");
         index++;
-        connectionInfo = new ConnectionInfo();
+        connectionInfo = new ConnectionInfo(connection);
     }
 
-
-    @Test
-    public void testParse() throws Exception {
-        connectionInfo.parse(connection);
-    }
 
     @Test
     public void testDeleteTable() {

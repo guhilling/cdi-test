@@ -131,4 +131,23 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>cdi-1.1</id>
+            <properties>
+                <weld.version>${cdi-1.1-weld.version}</weld.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>cdi-1.2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <weld.version>${cdi-1.2-weld.version}</weld.version>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>

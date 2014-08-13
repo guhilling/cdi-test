@@ -11,10 +11,6 @@
 
     <artifactId>cdi-test-db</artifactId>
 
-    <properties>
-        <weld.version>${cdi-1.2-weld.version}</weld.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>de.hilling.junit.cdi</groupId>

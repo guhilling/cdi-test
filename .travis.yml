@@ -4,9 +4,8 @@ jdk:
   - oraclejdk8
 
 env:
-  matrix:
-    - CDI=cdi-1.1
-    - CDI=cdi-1.2
+  - CDI=cdi-1.1
+  - CDI=cdi-1.2
 
 script:
   - mvn test -P${CDI}

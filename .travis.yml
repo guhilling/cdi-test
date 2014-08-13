@@ -5,8 +5,8 @@ jdk:
 
 env:
   matrix:
-    - CDIPROFILE="-Pcdi-1.1"
-    - CDIPROFILE="-Pcdi-1.2"
+    - CDI=cdi-1.1
+    - CDI=cdi-1.2
 
 script:
-  - mvn test $CDIPROFILE
+  - mvn test -P${CDI}

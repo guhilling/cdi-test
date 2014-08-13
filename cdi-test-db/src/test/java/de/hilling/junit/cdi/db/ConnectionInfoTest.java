@@ -1,38 +1,43 @@
 package de.hilling.junit.cdi.db;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionInfoTest {
-    private static int index;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
-    private Connection connection;
+public class ConnectionInfoTest {
+
     private ConnectionInfo connectionInfo;
-    private ConnectionUtil util;
+    private ConnectionUtil util = new ConnectionUtil();
 
     @Before
     public void setUp() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:h2:mem:db-" + index);
-        util = new ConnectionUtil();
-        util.setConnection(connection);
-        util.execute("CREATE TABLE SAMPLE\n" +
-                "(\n" +
-                "   `ID`              varchar(63),\n" +
-                "   `DESCRIPTION`     varchar(255),\n" +
-                ")");
-        util.execute("INSERT INTO SAMPLE VALUES('one', 'description-1')");
-        util.execute("INSERT INTO SAMPLE VALUES('one', 'description-2')");
-        index++;
+        Connection connection = H2ConnectionCreator.create();
         connectionInfo = new ConnectionInfo(connection);
+        util.setConnection(connection);
     }
 
+    @After
+    public void tearDown() throws SQLException {
+        connectionInfo.getConnection().close();
+    }
 
     @Test
-    public void testDeleteTable() {
+    public void testDeleteTableContents() {
+        assertNotEquals(0, util.countRows("SAMPLE"));
+        new ConnectionCleaner(connectionInfo).cleanUp();
+        assertEquals(0, util.countRows("SAMPLE"));
+    }
 
+    @Test
+    public void testDeleteTableContentsSampleDb() {
+        assertNotEquals(0, util.countRows("SAMPLE"));
+        new ConnectionCleaner(connectionInfo).cleanUp();
+        assertEquals(0, util.countRows("SAMPLE"));
     }
 }

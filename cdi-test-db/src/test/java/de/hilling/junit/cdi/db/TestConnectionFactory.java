@@ -18,15 +18,20 @@ public class TestConnectionFactory {
 
     @PostConstruct
     protected void init() {
-        Properties dbProperties = new Properties();
+        testConnection = create();
+    }
+
+    private static Connection create() {
         try {
+            Properties dbProperties = new Properties();
             dbProperties.load(DbTestAbstract.class.getResourceAsStream("/properties/db.properties"));
             String url = dbProperties.getProperty("testdb.url");
             String user = dbProperties.getProperty("testdb.user");
             String password = dbProperties.getProperty("testdb.password");
-            testConnection = getConnection(url, user, password);
+            return getConnection(url, user, password);
         } catch (IOException | SQLException e) {
             Assert.fail(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 

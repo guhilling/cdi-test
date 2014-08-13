@@ -9,6 +9,7 @@ import java.util.List;
 
 public class ConnectionInfo {
     private final DatabaseType type;
+
     private final Connection connection;
     private final List<String> tableNames = new ArrayList<>();
 
@@ -25,4 +26,18 @@ public class ConnectionInfo {
             throw new RuntimeException("unable to create connection info", e);
         }
     }
+
+    public DatabaseType getType() {
+        return type;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public List<String> getTableNames() {
+        return tableNames;
+    }
+
+
 }

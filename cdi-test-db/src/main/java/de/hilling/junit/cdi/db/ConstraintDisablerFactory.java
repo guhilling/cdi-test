@@ -7,6 +7,11 @@ public class ConstraintDisablerFactory {
      * @return ConstraintDisabler or null if not available.
      */
     public static ConstraintDisabler create(ConnectionInfo info) {
-        return null;
+        switch (info.getType()) {
+            case H2:
+                return new H2ConstraintDisabler(info);
+            default:
+                return null;
+        }
     }
 }

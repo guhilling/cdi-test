@@ -7,6 +7,9 @@ import java.sql.SQLException;
 public class H2ConnectionCreator {
     private static int index;
 
+    private H2ConnectionCreator() {
+    }
+
     public static Connection create() {
         try {
             Connection connection = DriverManager.getConnection("jdbc:h2:mem:db-" + index++);

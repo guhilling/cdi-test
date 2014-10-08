@@ -1,7 +1,8 @@
 package de.hilling.junit.cdi.db;
 
 public enum DatabaseType {
-    H2("H2");
+    H2("H2"),
+    MYSQL("MySQL");
 
     private final String typeString;
 

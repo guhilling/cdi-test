@@ -10,6 +10,8 @@ public class ConstraintDisablerFactory {
         switch (info.getType()) {
             case H2:
                 return new H2ConstraintDisabler(info);
+            case MYSQL:
+                return new MysqlConstraintDisabler(info);
             default:
                 return null;
         }

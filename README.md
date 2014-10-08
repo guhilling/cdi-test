@@ -10,6 +10,18 @@ junit-addon for easy and quick testing of cdi projects.
 * Now uses interceptors for on-the-fly switching between mockito-mocks and real implementations.
 * Basic jdbc support.
 
+## Usage
+
+Use maven to pull dependency on basic features:
+
+```xml
+    <dependency>
+        <groupId>de.hilling.junit.cdi</groupId>
+        <artifactId>cdi-test-core</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+```
+
 ## TODO
 
 * add database cleanup support.

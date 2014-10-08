@@ -12,14 +12,43 @@ junit-addon for easy and quick testing of cdi projects.
 
 ## Usage
 
+### Dependencies
+
 Use maven to pull dependency on basic features:
 
 ```xml
     <dependency>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-core</artifactId>
-        <version>${project.version}</version>
+        <version>0.0.2-SNAPSHOT</version>
     </dependency>
+```
+
+### Writing Tests
+
+In the following example, `ApplicationBean` will automatically be replaced by a mockito mock in all cdi
+beans, see the full example in the code for details.
+
+```java
+@RunWith(CdiUnitRunner.class)
+public class RequestScopeMockTest extends BaseTest {
+
+    private static final String SAMPLE = "sample";
+
+    @Mock
+    private ApplicationBean applicationBean;
+
+    @Inject
+    private RequestBean requestBean;
+
+    @Test
+    public void setAttributeTransitive() {
+        requestBean.setAttribute(SAMPLE);
+        verify(applicationBean).setAttribute(SAMPLE);
+    }
+
+}
+
 ```
 
 ## TODO

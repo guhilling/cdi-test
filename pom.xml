@@ -55,6 +55,7 @@
         <module>cdi-test-core</module>
         <module>cdi-test-db</module>
         <module>integration-tests</module>
+        <module>cdi-test-cucumber</module>
     </modules>
 
     <dependencyManagement>

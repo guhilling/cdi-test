@@ -1,14 +1,10 @@
 package de.hilling.junit.cdi.cucumber;
 
-import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 
-public class BackendService {
+@ApplicationScoped
+public class BankingBackendService {
     private int balance;
-
-    @PostConstruct
-    public void postConstruct() {
-        System.out.println("post");
-    }
 
     public void deposit(int amount) {
         balance += amount;

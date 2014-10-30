@@ -15,7 +15,7 @@ public class BankingStepDefinitions {
     private BankService bank;
 
     @Given("^a User has no money in their account$")
-    public void a_User_has_no_money_in_their_current_account() {
+    public void init() {
     }
 
     @When("^£(\\d+) is deposited in to the account$")
@@ -28,7 +28,7 @@ public class BankingStepDefinitions {
         bank.withdraw(amount);
     }
 
-    @Then("^the balance should be £(\\d+)$")
+    @Then("^the balance should be £(-*\\d+)$")
     public void balanceEquals(int amount) {
         Assert.assertEquals(amount, bank.getBalance());
     }

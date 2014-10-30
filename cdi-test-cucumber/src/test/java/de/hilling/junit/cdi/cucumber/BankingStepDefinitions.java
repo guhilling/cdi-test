@@ -3,12 +3,12 @@ package de.hilling.junit.cdi.cucumber;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import de.hilling.junit.cdi.scope.TestScoped;
 import org.junit.Assert;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-@TestScoped
+@ApplicationScoped
 public class BankingStepDefinitions {
 
     @Inject

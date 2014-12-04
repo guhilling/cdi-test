@@ -1,7 +1,6 @@
 package de.hilling.junit.cdi.db;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,11 +29,6 @@ public class ConnectionCleanerTest extends DbTestAbstract {
         util.execute(sql);
         info = new ConnectionInfo(testConnection);
         cleaner = new ConnectionCleaner(info);
-    }
-
-    @After
-    public void tearDown() throws SQLException {
-        testConnection.close();
     }
 
     @Test

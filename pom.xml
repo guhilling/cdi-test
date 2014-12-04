@@ -13,7 +13,7 @@
         <deltaspike.version>1.0.3</deltaspike.version>
         <cdi-1.0-weld.version>1.1.23.Final</cdi-1.0-weld.version>
         <cdi-1.1-weld.version>2.1.2.Final</cdi-1.1-weld.version>
-        <cdi-1.2-weld.version>2.2.4.Final</cdi-1.2-weld.version>
+        <cdi-1.2-weld.version>2.2.7.Final</cdi-1.2-weld.version>
         <cdi-2.0-weld.version>3.0.0.Alpha2</cdi-2.0-weld.version>
     </properties>
 

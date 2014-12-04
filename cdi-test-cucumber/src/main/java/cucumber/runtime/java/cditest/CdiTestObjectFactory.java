@@ -1,7 +1,6 @@
 package cucumber.runtime.java.cditest;
 
 import cucumber.runtime.java.ObjectFactory;
-import de.hilling.junit.cdi.CdiContainerWrapper;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
 import de.hilling.junit.cdi.scope.EventType;
 import org.apache.deltaspike.cdise.api.CdiContainer;
@@ -18,19 +17,18 @@ import java.util.logging.Logger;
 public class CdiTestObjectFactory implements ObjectFactory {
     private static final Logger LOG = Logger.getLogger(CdiTestObjectFactory.class.getCanonicalName());
 
-    private CdiContainer cdiContainer;
     private ContextControl contextControl;
     private LifecycleNotifier notifier;
 
     {
-        cdiContainer = CdiContainerLoader.getCdiContainer();
-        contextControl = cdiContainer.createContextControl();
+        contextControl = BeanProvider.getContextualReference(ContextControl.class);
         notifier = BeanProvider.getContextualReference(
                 LifecycleNotifier.class, false);
     }
 
     static {
-        CdiContainerWrapper.startCdiContainer();
+        CdiContainer cdiContainer = CdiContainerLoader.getCdiContainer();
+        cdiContainer.boot();
     }
 
     private Map<Class, Object> definitions = new HashMap<>();
@@ -38,8 +36,8 @@ public class CdiTestObjectFactory implements ObjectFactory {
     @Override
     public void start() {
         LOG.info("starting");
-        notifier.notify(EventType.STARTING, Description.createSuiteDescription("cucumber"));
         contextControl.startContexts();
+        notifier.notify(EventType.STARTING, Description.createSuiteDescription("cucumber"));
     }
 
     @Override

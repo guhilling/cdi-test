@@ -49,8 +49,16 @@ public class TestScopeExtension implements Extension, Serializable {
     }
 
     private <X> boolean shouldProxyCdiType(Class<X> javaClass) {
-        return !javaClass.isAnonymousClass()
-                && javaClass.getName().startsWith("de.hilling");
+        if(javaClass.isAnonymousClass()) {
+            return false;
+        }
+        if(!javaClass.getName().startsWith("de.hilling")) {
+            return false;
+        }
+        if(javaClass.isEnum()) {
+            return false;
+        }
+        return true;
     }
 
 }

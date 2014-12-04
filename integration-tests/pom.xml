@@ -13,7 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>test-project</module>
+        <module>test-core</module>
+        <module>test-db</module>
     </modules>
 
 </project>

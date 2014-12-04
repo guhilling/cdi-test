@@ -9,9 +9,7 @@ import org.junit.Test;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class ConnectionCleanerTest extends DbTestAbstract {
 
@@ -19,13 +17,17 @@ public class ConnectionCleanerTest extends DbTestAbstract {
     private ConnectionInfo info;
 
     @Inject
+    private ConnectionUtil util;
+
+    @Inject
     @Cleanup
     private Connection testConnection;
 
     @Before
     public void setUp() throws SQLException, IOException {
+        util.setConnection(testConnection);
         String sql = IOUtils.toString(getClass().getResourceAsStream("/properties/test-db.sql"));
-        statement().execute(sql);
+        util.execute(sql);
         info = new ConnectionInfo(testConnection);
         cleaner = new ConnectionCleaner(info);
     }
@@ -37,18 +39,9 @@ public class ConnectionCleanerTest extends DbTestAbstract {
 
     @Test
     public void testCleanUp() throws Exception {
-        Assert.assertEquals(1, countRows("Person"));
+        Assert.assertEquals(1, util.countRows("Person"));
         cleaner.cleanUp();
-        Assert.assertEquals(0, countRows("Person"));
+        Assert.assertEquals(0, util.countRows("Person"));
     }
 
-    private int countRows(String table) throws SQLException {
-        ResultSet result = statement().executeQuery("select count(*) from " + table);
-        result.next();
-        return result.getInt(1);
-    }
-
-    private Statement statement() throws SQLException {
-        return testConnection.createStatement();
-    }
 }

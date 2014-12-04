@@ -55,4 +55,5 @@ public class RequestScopeMockTest extends BaseTest {
 
 * add database cleanup support.
 * add jpa support.
+* add ejb support at least for some features.
 * allow switchable test implementations instead of mocks.

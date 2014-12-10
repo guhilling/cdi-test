@@ -6,7 +6,6 @@
         <artifactId>integration-tests</artifactId>
         <groupId>de.hilling.junit.cdi</groupId>
         <version>0.0.2-SNAPSHOT</version>
-        <relativePath>../integration-tests/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

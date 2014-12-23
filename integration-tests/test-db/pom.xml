@@ -8,7 +8,7 @@
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>test-project</artifactId>
+    <artifactId>test-db</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

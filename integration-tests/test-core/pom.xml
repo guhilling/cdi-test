@@ -21,6 +21,7 @@
             <groupId>de.hilling.junit.cdi</groupId>
             <artifactId>cdi-test-core</artifactId>
             <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.cdictrl</groupId>

@@ -11,7 +11,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.7</java.version>
         <deltaspike.version>1.2.0</deltaspike.version>
-        <cdi-1.0-weld.version>1.1.23.Final</cdi-1.0-weld.version>
         <cdi-1.1-weld.version>2.1.2.Final</cdi-1.1-weld.version>
         <cdi-1.2-weld.version>2.2.8.Final</cdi-1.2-weld.version>
         <cdi-2.0-weld.version>3.0.0.Alpha3</cdi-2.0-weld.version>
@@ -23,6 +22,14 @@
         <url>https://github.com/guhilling/cdi-test.git</url>
         <tag>HEAD</tag>
     </scm>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <ciManagement>
         <system>Travis CI</system>

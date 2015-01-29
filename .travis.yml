@@ -7,7 +7,8 @@ env:
   - CDI=cdi-1.1
   - CDI=cdi-1.2
   - CDI=cdi-2.0
-  global:
+
+global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
    - secure: "MuFf7aXjK4tff5NvKxrm/CH7P95uFjGllPF1kKBtlxit2EO6rf7vwqKkDjAon4sbyYHn1td/TvWb8urUL89sS/Vbc+80GjBvz5UcjZg7P52/g9kHmCtvrxiJuLudCXtFgE31EyQiK4ks6qfvkWSHNNVtobeZMxc+YqsAPfs8bX0="

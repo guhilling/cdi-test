@@ -12,8 +12,8 @@
         <java.version>1.7</java.version>
         <deltaspike.version>1.2.0</deltaspike.version>
         <cdi-1.1-weld.version>2.1.2.Final</cdi-1.1-weld.version>
-        <cdi-1.2-weld.version>2.2.8.Final</cdi-1.2-weld.version>
-        <cdi-2.0-weld.version>3.0.0.Alpha3</cdi-2.0-weld.version>
+        <cdi-1.2-weld.version>2.2.9.Final</cdi-1.2-weld.version>
+        <cdi-2.0-weld.version>3.0.0.Alpha6</cdi-2.0-weld.version>
     </properties>
 
     <scm>

@@ -14,4 +14,4 @@ matrix:
       env: CDI=cdi-2.0
 
 script:
-  - mvn test -P${CDI}
+  - mvn test -P${CDI} branch_pattern: coverity_scan

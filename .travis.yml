@@ -8,27 +8,10 @@ env:
   - CDI=cdi-1.2
   - CDI=cdi-2.0
 
-global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "CfMtUFWbi6R12pgckPTWio88CBRLGP3S8RN8ttQqK654zZy58Qy92MqlOA9ORmSyhotkp+XX6gboqlazZClZWsmQyYlqhmnBQl/CmonX36bpUauxxIsNMLnk1ySkoCxQXWrv+h6DE4JOh73CLBbecTKM0h/MCn/wYE0WmJhbw7g="
-
 matrix:
   exclude:
     - jdk: oraclejdk7
       env: CDI=cdi-2.0
 
 script:
-  - mvn test -P${CDI}
-
-env:
-
-addons:
-  coverity_scan:
-    project:
-      name: "guhilling/cdi-test"
-      description: "Build submitted via Travis CI"
-    notification_email: gunnar@hilling.de
-    build_command_prepend: "mvn clean"
-    build_command:   "mvn -DskipTests=true compile"
-    branch_pattern: coverity_scan
+  - mvn test -P${CDI} branch_pattern: coverity_scan

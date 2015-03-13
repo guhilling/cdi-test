@@ -142,8 +142,8 @@
                 <version>2.5</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <releaseProfiles>release</releaseProfiles>
+                    <useReleaseProfile>true</useReleaseProfile>
+                    <releaseProfiles>release,cdi-1.2</releaseProfiles>
                     <goals>deploy</goals>
                 </configuration>
             </plugin>
@@ -224,6 +224,29 @@
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <id>enforce-versions</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireMavenVersion>
+                                            <version>3.2</version>
+                                        </requireMavenVersion>
+                                        <requireJavaVersion>
+                                            <version>1.7</version>
+                                        </requireJavaVersion>
+                                    </rules>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>

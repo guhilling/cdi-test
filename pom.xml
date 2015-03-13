@@ -14,6 +14,7 @@
         <cdi-1.1-weld.version>2.1.2.Final</cdi-1.1-weld.version>
         <cdi-1.2-weld.version>2.2.9.Final</cdi-1.2-weld.version>
         <cdi-2.0-weld.version>3.0.0.Alpha6</cdi-2.0-weld.version>
+        <github.global.server>github</github.global.server>
     </properties>
 
     <scm>

@@ -5,6 +5,8 @@
     <artifactId>cdi-test</artifactId>
     <version>0.0.6-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <url>https://github.com/guhilling/cdi-test</url>
+    <inceptionYear>2014</inceptionYear>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,8 +38,6 @@
         <url>https://travis-ci.org/guhilling/cdi-test</url>
         <notifiers />
     </ciManagement>
-
-    <inceptionYear>2014</inceptionYear>
 
     <developers>
         <developer>

@@ -2,6 +2,7 @@ package de.hilling.junit.cdi;
 
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
 import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.MockManager;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.junit.runner.Description;
@@ -52,8 +53,9 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
     protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
         final Description description = describeChild(method);
         LOG.fine("> preparing " + description);
-        CdiContainerWrapper.mockManager.addAndActivateTest(description.getTestClass());
-        CdiContainerWrapper.mockManager.resetMocks();
+        MockManager mockManager = MockManager.getInstance();
+        mockManager.addAndActivateTest(description.getTestClass());
+        mockManager.resetMocks();
         CdiContainerWrapper.contextControl.startContexts();
         lifecycleNotifier.notify(EventType.STARTING, description);
         LOG.fine(">> starting " + description);
@@ -61,7 +63,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
         LOG.fine("<< finishing " + description);
         lifecycleNotifier.notify(EventType.FINISHING, description);
         CdiContainerWrapper.contextControl.stopContexts();
-        CdiContainerWrapper.mockManager.deactivateTest();
+        mockManager.deactivateTest();
         LOG.fine("< finished " + description);
     }
 

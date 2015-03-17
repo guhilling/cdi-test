@@ -15,7 +15,6 @@ import java.lang.reflect.Field;
 public class CdiContainerWrapper {
     private static CdiContainer cdiContainer;
     static ContextControl contextControl;
-    static MockManager mockManager = MockManager.getInstance();
 
     private CdiContainerWrapper() {
     }
@@ -38,9 +37,9 @@ public class CdiContainerWrapper {
         field.setAccessible(true);
         try {
             Class<?> type = field.getType();
-            Object mock = mockManager.mock(type);
+            Object mock = MockManager.getInstance().mock(type);
             field.set(test, mock);
-            mockManager.activateMock(type);
+            MockManager.getInstance().activateMock(type);
         } catch (IllegalArgumentException | IllegalAccessException e) {
             throw new RuntimeException(e);
         } finally {

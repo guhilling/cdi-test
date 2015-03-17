@@ -5,7 +5,9 @@ import javax.inject.Scope;
 import java.lang.annotation.*;
 
 /**
- * custom scope for cdi unit test.
+ * Unit test scope valid for for the execution of one test.
+ *
+ * @see de.hilling.junit.cdi.scope.TestSuiteScoped
  */
 @Scope
 @NormalScope

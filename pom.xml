@@ -35,6 +35,11 @@
         </license>
     </licenses>
 
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://hilling.atlassian.net/secure/RapidBoard.jspa?rapidView=1&amp;projectKey=CDIT&amp;view=planning.nodetail</url>
+    </issueManagement>
+
     <ciManagement>
         <system>Travis CI</system>
         <url>https://travis-ci.org/guhilling/cdi-test</url>

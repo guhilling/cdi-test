@@ -63,6 +63,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
         LOG.fine("<< finishing " + description);
         lifecycleNotifier.notify(EventType.FINISHING, description);
         CdiContainerWrapper.getContextControl().stopContexts();
+        lifecycleNotifier.notify(EventType.FINISHED, description);
         mockManager.deactivateTest();
         LOG.fine("< finished " + description);
     }

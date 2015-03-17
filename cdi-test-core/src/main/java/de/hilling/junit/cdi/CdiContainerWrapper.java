@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
  */
 public class CdiContainerWrapper {
     private static CdiContainer cdiContainer;
-    static ContextControl contextControl;
+    private static ContextControl contextControl;
 
     private CdiContainerWrapper() {
     }
@@ -47,4 +47,7 @@ public class CdiContainerWrapper {
         }
     }
 
+    public static ContextControl getContextControl() {
+        return contextControl;
+    }
 }

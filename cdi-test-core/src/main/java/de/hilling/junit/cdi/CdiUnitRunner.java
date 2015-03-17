@@ -56,13 +56,13 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
         MockManager mockManager = MockManager.getInstance();
         mockManager.addAndActivateTest(description.getTestClass());
         mockManager.resetMocks();
-        CdiContainerWrapper.contextControl.startContexts();
+        CdiContainerWrapper.getContextControl().startContexts();
         lifecycleNotifier.notify(EventType.STARTING, description);
         LOG.fine(">> starting " + description);
         super.runChild(method, notifier);
         LOG.fine("<< finishing " + description);
         lifecycleNotifier.notify(EventType.FINISHING, description);
-        CdiContainerWrapper.contextControl.stopContexts();
+        CdiContainerWrapper.getContextControl().stopContexts();
         mockManager.deactivateTest();
         LOG.fine("< finished " + description);
     }

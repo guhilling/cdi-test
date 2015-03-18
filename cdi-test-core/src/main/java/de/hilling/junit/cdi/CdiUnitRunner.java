@@ -73,7 +73,6 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
         if (testCases.containsKey(clazz)) {
             return (T) testCases.get(clazz);
         } else {
-
             T testCase = BeanProvider.getContextualReference(clazz, false);
             testCases.put(clazz, testCase);
             return testCase;

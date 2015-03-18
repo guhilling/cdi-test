@@ -1,7 +1,9 @@
 package de.hilling.junit.cdi.cucumber;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+@RequestScoped
 public class BankService {
 
     @Inject

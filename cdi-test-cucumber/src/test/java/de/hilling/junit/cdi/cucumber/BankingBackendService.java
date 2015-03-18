@@ -1,5 +1,8 @@
 package de.hilling.junit.cdi.cucumber;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class BankingBackendService {
     private int balance;
 

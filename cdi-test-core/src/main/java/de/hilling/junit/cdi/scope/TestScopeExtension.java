@@ -1,10 +1,13 @@
 package de.hilling.junit.cdi.scope;
 
+import de.hilling.junit.cdi.util.ReflectionsUtils;
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
-import org.junit.runner.RunWith;
 
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.spi.*;
+import javax.enterprise.inject.spi.AfterBeanDiscovery;
+import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.Extension;
+import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.enterprise.util.AnnotationLiteral;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -23,12 +26,10 @@ public class TestScopeExtension implements Extension, Serializable {
     /**
      * Add contexts after bean discovery.
      *
-     * @param afterBeanDiscovery
-     * @param beanManager
+     * @param afterBeanDiscovery AfterBeanDiscovery
      */
     public void afterBeanDiscovery(
-            @Observes AfterBeanDiscovery afterBeanDiscovery,
-            BeanManager beanManager) {
+            @Observes AfterBeanDiscovery afterBeanDiscovery) {
         afterBeanDiscovery.addContext(new TestSuiteContext());
         afterBeanDiscovery.addContext(new TestContext());
     }
@@ -36,7 +37,7 @@ public class TestScopeExtension implements Extension, Serializable {
     public <X> void processBean(@Observes ProcessAnnotatedType<X> pat) {
         AnnotatedType<X> type = pat.getAnnotatedType();
         Class<X> javaClass = type.getJavaClass();
-        if (isTestClass(javaClass)) {
+        if (ReflectionsUtils.isTestClass(javaClass)) {
             AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();
             builder.readFromType(type);
             builder.addToClass(new AnnotationLiteral<TestSuiteScoped>() {
@@ -47,32 +48,20 @@ public class TestScopeExtension implements Extension, Serializable {
             } catch (RuntimeException e) {
                 LOG.log(Level.SEVERE, "unable to process type " + pat, e);
             }
-        } else if (shouldProxyCdiType(javaClass)) {
+        } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
             AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();
             builder.readFromType(type);
             builder.addToClass(new AnnotationLiteral<Mockable>() {
                 private static final long serialVersionUID = 1L;
             });
             try {
+                {
+                    pat.setAnnotatedType(builder.create());
+                }
                 pat.setAnnotatedType(builder.create());
             } catch (RuntimeException e) {
                 LOG.log(Level.SEVERE, "unable to process type " + pat, e);
             }
         }
     }
-
-    private <X> boolean isTestClass(Class<X> javaClass) {
-        return javaClass.isAnnotationPresent(RunWith.class);
-    }
-
-    private <X> boolean shouldProxyCdiType(Class<X> javaClass) {
-        if (javaClass.isAnonymousClass()) {
-            return false;
-        }
-        if (!javaClass.getName().startsWith("de.hilling")) {
-            return false;
-        }
-        return !javaClass.isEnum();
-    }
-
 }

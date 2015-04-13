@@ -35,6 +35,9 @@ public class ReflectionsUtils {
         String canonicalName = clazz.getCanonicalName();
         if (canonicalName.contains("$")) {
             try {
+                if (clazz.getPackage() == null)
+                    return Class.forName(canonicalName.substring(canonicalName.lastIndexOf(".") + 1,
+                                                                 canonicalName.indexOf("$")));
                 return Class.forName(canonicalName.substring(0,
                         canonicalName.indexOf("$")));
             } catch (ClassNotFoundException e) {
@@ -119,7 +122,9 @@ public class ReflectionsUtils {
     private static <X> boolean hasFinalMethods(Class<X> javaClass) {
         Method[] methods = javaClass.getMethods();
         for (Method method : methods) {
-            if (method.getDeclaringClass().getPackage().getName().startsWith("java.lang")) {
+            if (method.getDeclaringClass().getPackage() != null &&
+                method.getDeclaringClass().getPackage()
+                      .getName().startsWith("java.lang")) {
                 continue;
             }
             if (Modifier.isFinal(method.getModifiers())) {

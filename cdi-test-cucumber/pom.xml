@@ -10,7 +10,7 @@
     <artifactId>cdi-test-cucumber</artifactId>
 
     <properties>
-        <cucumber.version>1.1.4</cucumber.version>
+        <cucumber.version>1.2.2</cucumber.version>
     </properties>
 
 

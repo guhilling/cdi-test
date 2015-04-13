@@ -82,6 +82,9 @@ public class ReflectionsUtils {
     }
 
     private static <X> boolean isSystemClass(Class<X> javaClass) {
+        if (javaClass.getPackage() == null)
+            return false;
+
         String packageName = javaClass.getPackage().getName();
         for(String packagePrefix: SYSTEM_PACKAGES) {
             if(packageName.startsWith(packagePrefix)) {

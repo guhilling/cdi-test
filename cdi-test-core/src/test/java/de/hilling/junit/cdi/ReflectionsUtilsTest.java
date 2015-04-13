@@ -52,6 +52,11 @@ public class ReflectionsUtilsTest {
     @Test
     public void proxyStandardClass() {
         assertTrue(ReflectionsUtils.shouldProxyCdiType(ReflectionsUtilsTest.class));
+        try {
+            assertTrue(ReflectionsUtils.shouldProxyCdiType(Class.forName("NoPackage")));
+        } catch (ClassNotFoundException e) {
+            assertFalse(true);
+        }
     }
 
     @Test

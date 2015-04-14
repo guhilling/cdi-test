@@ -49,7 +49,6 @@ public class CdiTestObjectFactory implements ObjectFactory {
 
     @Override
     public void addClass(Class<?> clazz) {
-
     }
 
     @Override

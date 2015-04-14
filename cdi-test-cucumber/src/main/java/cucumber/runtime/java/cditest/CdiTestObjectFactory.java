@@ -49,12 +49,14 @@ public class CdiTestObjectFactory implements ObjectFactory {
 
     @Override
     public void addClass(Class<?> clazz) {
-        LOG.info("adding " + clazz);
-        definitions.put(clazz, BeanProvider.getContextualReference(clazz, false));
     }
 
     @Override
     public <T> T getInstance(Class<T> clazz) {
+        if (definitions.get(clazz) == null){
+            LOG.info("adding " + clazz);
+            definitions.put(clazz, BeanProvider.getContextualReference(clazz, false));
+        }
         return (T) definitions.get(clazz);
     }
 }

@@ -1,14 +1,21 @@
-package de.hilling.junit.cdi.scope.context;
+package de.hilling.junit.cdi.cucumber.scope.context;
 
-import javax.enterprise.inject.spi.Bean;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestScopeContextHolder implements ScopeContextHolder{
+import javax.enterprise.inject.spi.Bean;
+
+import de.hilling.junit.cdi.scope.context.CustomScopeInstance;
+import de.hilling.junit.cdi.scope.context.ScopeContextHolder;
+
+/**
+ * author: fseemann on 29.04.2015.
+ */
+public class ScenarioScopedContextHolder implements ScopeContextHolder{
     private Map<Class<?>, CustomScopeInstance<?>> beans;
 
-    public TestScopeContextHolder() {
+    public ScenarioScopedContextHolder() {
         beans = Collections.synchronizedMap(new HashMap<Class<?>, CustomScopeInstance<?>>());
     }
 
@@ -20,12 +27,12 @@ public class TestScopeContextHolder implements ScopeContextHolder{
     @Override
     @SuppressWarnings("unchecked")
     public <T> CustomScopeInstance<T> getBean(Class<T> type) {
-        return (CustomScopeInstance<T>) beans.get(type);
+        return (CustomScopeInstance<T>) getBeans().get(type);
     }
 
     @Override
-    public <T> void putBean(CustomScopeInstance<?> customInstance) {
-        beans.put(customInstance.bean.getBeanClass(), customInstance);
+    public void putBean(CustomScopeInstance customInstance) {
+        getBeans().put(customInstance.bean.getBeanClass(), customInstance);
     }
 
     @Override
@@ -40,5 +47,4 @@ public class TestScopeContextHolder implements ScopeContextHolder{
         Bean<T> bean = scopeInstance.bean;
         bean.destroy(scopeInstance.instance, scopeInstance.ctx);
     }
-
 }

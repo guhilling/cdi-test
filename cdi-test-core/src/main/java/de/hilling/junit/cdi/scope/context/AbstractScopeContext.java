@@ -1,13 +1,12 @@
 package de.hilling.junit.cdi.scope.context;
 
-import de.hilling.junit.cdi.scope.context.TestScopeContextHolder.TestScopeInstance;
+import java.io.Serializable;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.spi.Context;
 import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
-import java.io.Serializable;
-import java.util.logging.Logger;
 
 public abstract class AbstractScopeContext implements Context, Serializable {
     private static final long serialVersionUID = 1L;
@@ -36,10 +35,11 @@ public abstract class AbstractScopeContext implements Context, Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T createNewInstance(final CreationalContext<T> creationalContext, Bean<T> bean) {
         LOG.fine("creating new bean of type " + bean.getBeanClass());
-        T t = (T) bean.create(creationalContext);
-        TestScopeInstance<T> customInstance = new TestScopeInstance<>();
+        T t = bean.create(creationalContext);
+        CustomScopeInstance<T> customInstance = new CustomScopeInstance<>();
         customInstance.bean = bean;
         customInstance.ctx = creationalContext;
         customInstance.instance = t;
@@ -52,6 +52,6 @@ public abstract class AbstractScopeContext implements Context, Serializable {
         return true;
     }
 
-    protected abstract TestScopeContextHolder getScopeContextHolder();
+    protected abstract ScopeContextHolder getScopeContextHolder();
 
 }

@@ -1,7 +1,6 @@
-package de.hilling.junit.cdi.scope;
+package de.hilling.junit.cdi.scope.context;
 
-import de.hilling.junit.cdi.scope.context.AbstractScopeContext;
-import de.hilling.junit.cdi.scope.context.TestScopeContextHolder;
+import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 import javax.enterprise.context.spi.Context;
 import java.io.Serializable;

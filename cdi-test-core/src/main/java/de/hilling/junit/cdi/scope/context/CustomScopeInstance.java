@@ -5,8 +5,6 @@ import javax.enterprise.inject.spi.Bean;
 
 /**
  * Container with necessary information to destroy cached beans.
- * <p/>
- * author: fseemann on 29.04.2015.
  */
 public class CustomScopeInstance<T> {
     public Bean<T> bean;

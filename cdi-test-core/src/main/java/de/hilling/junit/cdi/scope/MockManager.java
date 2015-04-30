@@ -43,8 +43,8 @@ public class MockManager {
     /**
      * Check if mock for the given class is enabled.
      *
-     * @param javaClass
-     * @return true if {@link #activateMock(Object)} was called before.
+     * @param javaClass clazz for which check is performed.
+     * @return true if {@link #activateMock} was called before.
      */
     public boolean isMockEnabled(Class<?> javaClass) {
         if (activeTest == null) {
@@ -62,7 +62,7 @@ public class MockManager {
     /**
      * Activate mock for given class.
      *
-     * @param mock
+     * @param clazz class to activate mock for
      */
     public void activateMock(Class<?> clazz) {
         mock(clazz);

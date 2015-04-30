@@ -1,5 +1,7 @@
 package de.hilling.junit.cdi.scope;
 
+import de.hilling.junit.cdi.scope.annotationreplacement.AnnotatedTypeAdapter;
+import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
@@ -18,7 +20,7 @@ import java.util.logging.Logger;
 /**
  * CDI {@link javax.enterprise.inject.spi.Extension} to enable proxying of (nearly) all method invocations. <p> By
  * default, these are all classes, except: <ul> <li>Anonymous classes.</li> <li>Enums.</li> </ul> To preventing
- * <em>everything</em> from being proxied it is possible to define explicit packages. </p>
+ * <em>everything</em> from being proxied it is possible to define explicit packages.
  */
 public class TestScopeExtension implements Extension, Serializable {
     private static final long serialVersionUID = 1L;
@@ -35,6 +37,13 @@ public class TestScopeExtension implements Extension, Serializable {
         afterBeanDiscovery.addContext(new TestSuiteContext());
         afterBeanDiscovery.addContext(new TestContext());
     }
+
+    public <T> void processAnnotatedType(@Observes ProcessAnnotatedType<T> pat) {
+        LOG.log(Level.FINE, "processing type " + pat);
+        AnnotatedTypeAdapter<T> enhancedAnnotatedType = new AnnotationReplacementAdapter<>(pat.getAnnotatedType());
+        pat.setAnnotatedType(enhancedAnnotatedType);
+    }
+
 
     public <X> void processBean(@Observes ProcessAnnotatedType<X> pat) {
         AnnotatedType<X> type = pat.getAnnotatedType();

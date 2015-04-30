@@ -53,8 +53,8 @@ public class ReflectionsUtils {
      * <p>
      *     This is done by checking for the annotation {@link RunWith} annotation.
      * </p>
-     * @param javaClass
-     * @param <X>
+     * @param javaClass class to verify
+     * @param <X> type of class
      * @return true if it is a junit test.
      */
     public static <X> boolean isTestClass(Class<X> javaClass) {
@@ -68,16 +68,13 @@ public class ReflectionsUtils {
 
     /**
      * Determine if a proxy should be created for the given class.
-     * <p>
-     *     The following classes will be excluded:
+     * <p>The following classes will be excluded:</p>
      *     <ul>
      *         <li>System classes, including those from weld and deltaspike.</li>
      *         <li>Classes that are not proxyable.</li>
      *     </ul>
-     * </p>
-     *
-     * @param javaClass
-     * @param <X>
+     * @param javaClass class to verify
+     * @param <X> type of class
      * @return true if a cdi proxy should be created.
      */
     public static <X> boolean shouldProxyCdiType(Class<X> javaClass) {

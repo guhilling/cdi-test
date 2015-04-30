@@ -1,5 +1,7 @@
 package de.hilling.junit.cdi.scope;
 
+import de.hilling.junit.cdi.scope.context.TestContext;
+import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotatedTypeAdapter;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
 import de.hilling.junit.cdi.util.ReflectionsUtils;

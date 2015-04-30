@@ -1,15 +1,15 @@
-package de.hilling.junit.cdi.scope;
+package de.hilling.junit.cdi.scope.context;
 
-import de.hilling.junit.cdi.scope.context.AbstractScopeContext;
-import de.hilling.junit.cdi.scope.context.TestScopeContextHolder;
-
-import javax.enterprise.context.spi.Context;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 
+import javax.enterprise.context.spi.Context;
+
+import de.hilling.junit.cdi.scope.TestSuiteScoped;
+
 public class TestSuiteContext extends AbstractScopeContext implements Context, Serializable {
     private static final long serialVersionUID = 1L;
-    private static final TestScopeContextHolder CONTEXT_HOLDER = new TestScopeContextHolder();
+    private static final CustomScopeContextHolder CONTEXT_HOLDER = new CustomScopeContextHolder();
 
     @Override
     public Class<? extends Annotation> getScope() {
@@ -17,7 +17,7 @@ public class TestSuiteContext extends AbstractScopeContext implements Context, S
     }
 
     @Override
-    protected TestScopeContextHolder getScopeContextHolder() {
+    protected CustomScopeContextHolder getScopeContextHolder() {
         return CONTEXT_HOLDER;
     }
 }

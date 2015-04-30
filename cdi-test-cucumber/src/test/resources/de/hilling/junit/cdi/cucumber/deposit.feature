@@ -1,6 +1,7 @@
-# language: en
-
 Feature: Depositing money in to a User account
+
+  Background:
+    Given a User has no money in their account
 
   Scenario: Depositing money in to User's account should add money to the User's current balance
     When £100 is deposited in to the account

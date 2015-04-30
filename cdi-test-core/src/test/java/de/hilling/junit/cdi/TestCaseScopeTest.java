@@ -28,6 +28,8 @@ public class TestCaseScopeTest extends CdiTestAbstract {
     private RequestScopedBean requestScopedBean;
     @Inject
     private SessionScopedBean sessionScopedBean;
+    @Inject
+    private SampleScopedBean sampleScopedBean;
 
     @Test
     public void testOne() {

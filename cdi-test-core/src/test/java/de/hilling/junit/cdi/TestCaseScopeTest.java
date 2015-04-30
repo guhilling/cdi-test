@@ -30,6 +30,8 @@ public class TestCaseScopeTest extends CdiTestAbstract {
     private SessionScopedBean sessionScopedBean;
     @Inject
     private SampleScopedBean sampleScopedBean;
+    @Inject
+    private DependentScopedBean dependentScopedBean;
 
     @Test
     public void testOne() {
@@ -54,6 +56,8 @@ public class TestCaseScopeTest extends CdiTestAbstract {
         assertInstanceNotSame(requestScopedBean);
         assertInstanceNotSame(sessionScopedBean);
         assertInstanceSame(testSuiteScopedBean);
+        assertInstanceSame(dependentScopedBean);
+        assertInstanceSame(sampleScopedBean);
     }
 
     private void assertInstanceNotSame(ScopedBean bean) {

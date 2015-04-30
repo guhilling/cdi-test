@@ -5,10 +5,7 @@ import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
 
 import javax.enterprise.context.spi.Context;
-import javax.enterprise.context.spi.Contextual;
-import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.spi.Bean;
 
 import org.junit.runner.Description;
 
@@ -16,7 +13,7 @@ import de.hilling.junit.cdi.cucumber.scope.ScenarioScoped;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.EventType;
 import de.hilling.junit.cdi.scope.context.AbstractScopeContext;
-import de.hilling.junit.cdi.scope.context.CustomScopeInstance;
+import de.hilling.junit.cdi.scope.context.CustomScopeContextHolder;
 
 /**
  * author: fseemann on 29.04.2015.
@@ -25,14 +22,14 @@ public class ScenarioScopedContext extends AbstractScopeContext implements Conte
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = Logger.getLogger(ScenarioScopedContext.class
                                                        .getCanonicalName());
-    private static final ScenarioScopedContextHolder CONTEXT_HOLDER = new ScenarioScopedContextHolder();
+    private static final CustomScopeContextHolder CONTEXT_HOLDER = new CustomScopeContextHolder();
     private static boolean active = false;
 
     public ScenarioScopedContext() {
     }
 
     @Override
-    protected ScenarioScopedContextHolder getScopeContextHolder() {
+    protected CustomScopeContextHolder getScopeContextHolder() {
         return CONTEXT_HOLDER;
     }
 
@@ -47,34 +44,6 @@ public class ScenarioScopedContext extends AbstractScopeContext implements Conte
     protected void deactivate(@Observes @TestEvent(EventType.FINISHING) Description description) {
         getScopeContextHolder().clear();
         active = false;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Contextual<T> contextual, CreationalContext<T> creationalContext) {
-        Bean bean = (Bean) contextual;
-        if (getScopeContextHolder().getBeans().containsKey(bean.getBeanClass())) {
-            return (T) getScopeContextHolder().getBean(bean.getBeanClass()).instance;
-        } else {
-            T t = (T) bean.create(creationalContext);
-            CustomScopeInstance customInstance = new CustomScopeInstance();
-            customInstance.bean = bean;
-            customInstance.ctx = creationalContext;
-            customInstance.instance = t;
-            getScopeContextHolder().putBean(customInstance);
-            return t;
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Contextual<T> contextual) {
-        Bean bean = (Bean) contextual;
-        if (getScopeContextHolder().getBeans().containsKey(bean.getBeanClass())) {
-            return (T) getScopeContextHolder().getBean(bean.getBeanClass()).instance;
-        } else {
-            return null;
-        }
     }
 
     @Override

@@ -11,6 +11,9 @@ import javax.enterprise.inject.spi.Extension;
 import de.hilling.junit.cdi.cucumber.scope.context.ScenarioScopedContext;
 
 /**
+ * Declares {@link ScenarioScoped} as a scope type and
+ * registers {@link ScenarioScopedContext} with the container.
+ * <p/>
  * author: fseemann on 29.04.2015.
  */
 public class ScenarioScopedExtension implements Extension, Serializable {

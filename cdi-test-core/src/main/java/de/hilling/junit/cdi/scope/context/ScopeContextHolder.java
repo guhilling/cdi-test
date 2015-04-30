@@ -7,11 +7,10 @@ import java.util.Map;
  * context holder. The context holder is a cache for beans.
  * Via an implementation of this interface the user can define the
  * storage of beans of the specific context.
- * <p/>
+ * <p>
  * Context classes use implementations of this holder and provide
  * beans to this holder.
- * <p/>
- * author: fseemann on 29.04.2015.
+ * </p>
  */
 public interface ScopeContextHolder {
     /**

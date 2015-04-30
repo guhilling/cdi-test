@@ -15,9 +15,9 @@ public class AnnotationReplacementAdapter<T>
         extends AnnotatedTypeAdapter<T> {
     private final Map<Class<? extends Annotation>, Annotation> replacementMap;
 
-    public AnnotationReplacementAdapter(AnnotatedType<T> delegate, Map<Class<? extends Annotation>, Annotation> replacementMap) {
+    public AnnotationReplacementAdapter(AnnotatedType<T> delegate) {
         super(delegate);
-        this.replacementMap = replacementMap;
+        this.replacementMap = AnnotationReplacementHolder.getInstance().getReplacementMap();
     }
 
     @SuppressWarnings("unchecked")

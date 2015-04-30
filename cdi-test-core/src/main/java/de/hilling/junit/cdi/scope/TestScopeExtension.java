@@ -1,9 +1,9 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.scope.context.TestContext;
-import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotatedTypeAdapter;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
+import de.hilling.junit.cdi.scope.context.TestContext;
+import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
@@ -14,10 +14,6 @@ import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.enterprise.util.AnnotationLiteral;
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +26,6 @@ public class TestScopeExtension implements Extension, Serializable {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = Logger.getLogger(TestScopeExtension.class
             .getCanonicalName());
-    private final Map<Class<? extends Annotation>, Annotation> replacementMap = new HashMap<>();
 
     /**
      * Add contexts after bean discovery.
@@ -45,8 +40,7 @@ public class TestScopeExtension implements Extension, Serializable {
 
     public <T> void processAnnotatedType(@Observes ProcessAnnotatedType<T> pat) {
         LOG.log(Level.FINE, "processing type " + pat);
-        AnnotatedTypeAdapter<T> enhancedAnnotatedType = new AnnotationReplacementAdapter<>(pat.getAnnotatedType(),
-                Collections.unmodifiableMap(replacementMap));
+        AnnotatedTypeAdapter<T> enhancedAnnotatedType = new AnnotationReplacementAdapter<>(pat.getAnnotatedType());
         pat.setAnnotatedType(enhancedAnnotatedType);
     }
 

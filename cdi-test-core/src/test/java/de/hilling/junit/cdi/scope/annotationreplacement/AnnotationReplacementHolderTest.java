@@ -30,6 +30,16 @@ public class AnnotationReplacementHolderTest {
         assertTrue(annotationEntry.getValue() instanceof ApplicationScoped);
     }
 
+    @Test(expected = RuntimeException.class)
+    public void noSuchClass() {
+        createHolder("test-nosuchclass.properties");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void classNotAnAnnotation() {
+        createHolder("test-noannotation.properties");
+    }
+
     private void createHolder(String resourceName) {
         holder = new AnnotationReplacementHolder(resourceName);
     }

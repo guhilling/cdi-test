@@ -16,7 +16,11 @@
  */
 package org.jboss.as.quickstarts.ejbinwar.ejb;
 
+import org.jboss.as.quickstarts.ejbinwar.GreetingEntity;
+
 import javax.ejb.Stateful;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * A simple Hello World EJB. The EJB does not use an interface.
@@ -25,6 +29,10 @@ import javax.ejb.Stateful;
  */
 @Stateful
 public class GreeterEJB {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
     /**
      * This method takes a name and returns a personalised greeting.
      * 
@@ -32,6 +40,10 @@ public class GreeterEJB {
      * @return the personalised greeting.
      */
     public String sayHello(String name) {
-        return "Hello " + name;
+        GreetingEntity greetingEntity = new GreetingEntity();
+        String greeting = "Hello " + name;
+        greetingEntity.setGreeting(greeting);
+        entityManager.persist(greetingEntity);
+        return greeting;
     }
 }

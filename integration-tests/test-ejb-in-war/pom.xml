@@ -26,7 +26,6 @@
 
 
     <artifactId>test-ejb-in-war</artifactId>
-    <version>9.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Unit Test Example for: WildFly Quickstarts: EJB in a War</name>
     <description>Sample tests for: WildFly Quickstarts: EJB in War</description>
@@ -90,18 +89,20 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>de.hilling.junit.cdi</groupId>
+            <artifactId>cdi-test-jee</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.hilling.junit.cdi</groupId>
+            <artifactId>cdi-test-core</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.protocol</groupId>
-            <artifactId>arquillian-protocol-servlet</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -123,51 +124,4 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <!-- The default profile skips all tests, though you can tune 
-                it to run just unit tests based on a custom pattern -->
-            <!-- Seperate profiles are provided for running all tests, including 
-                Arquillian tests that execute in the specified container -->
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${version.surefire.plugin}</version>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <!--
-        <profile>
-            <id>arq-wildfly-managed</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.wildfly</groupId>
-                    <artifactId>wildfly-arquillian-container-managed</artifactId>
-                    <version>${version.arquillian.container}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>arq-wildfly-remote</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.wildfly</groupId>
-                    <artifactId>wildfly-arquillian-container-remote</artifactId>
-                    <version>${version.arquillian.container}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-        -->
-    </profiles>
 </project>

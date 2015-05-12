@@ -23,5 +23,17 @@
             <version>1.0.0.Final</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.3.9.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa</artifactId>
+            <version>2.6.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -1,5 +1,6 @@
 package de.hilling.junit.cdi.scope;
 
+import de.hilling.junit.cdi.annotations.TestImplementation;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotatedTypeAdapter;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
 import de.hilling.junit.cdi.scope.context.TestContext;
@@ -8,10 +9,7 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.spi.AfterBeanDiscovery;
-import javax.enterprise.inject.spi.AnnotatedType;
-import javax.enterprise.inject.spi.Extension;
-import javax.enterprise.inject.spi.ProcessAnnotatedType;
+import javax.enterprise.inject.spi.*;
 import javax.enterprise.util.AnnotationLiteral;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -38,14 +36,18 @@ public class TestScopeExtension implements Extension, Serializable {
         afterBeanDiscovery.addContext(new TestContext());
     }
 
-    public <T> void processAnnotatedType(@Observes ProcessAnnotatedType<T> pat) {
+    public void afterTypeDiscovery(@Observes AfterTypeDiscovery afterTypeDiscovery) {
+        afterTypeDiscovery.getAlternatives().add(TestImplementation.class);
+    }
+
+    public <T> void replaceAnnotations(@Observes ProcessAnnotatedType<T> pat) {
         LOG.log(Level.FINE, "processing type " + pat);
         AnnotatedTypeAdapter<T> enhancedAnnotatedType = new AnnotationReplacementAdapter<>(pat.getAnnotatedType());
         pat.setAnnotatedType(enhancedAnnotatedType);
     }
 
 
-    public <X> void processBean(@Observes ProcessAnnotatedType<X> pat) {
+    public <X> void makeTypesMockable(@Observes ProcessAnnotatedType<X> pat) {
         AnnotatedType<X> type = pat.getAnnotatedType();
         Class<X> javaClass = type.getJavaClass();
         if (ReflectionsUtils.isTestClass(javaClass)) {

@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 @RunWith(CdiUnitRunner.class)
 public class GreeterEJBUnitTest {
@@ -12,8 +13,12 @@ public class GreeterEJBUnitTest {
     @Inject
     private GreeterEJB greeterEJB;
 
+    @Inject
+    private EntityManager entityManager;
+
     @Test
     public void testSayHello() throws Exception {
-         greeterEJB.sayHello("Gunnar");
+        greeterEJB.sayHello("Gunnar");
+        entityManager.flush();
     }
 }

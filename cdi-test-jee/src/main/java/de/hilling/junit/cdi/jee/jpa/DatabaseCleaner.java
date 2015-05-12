@@ -10,7 +10,7 @@ import java.sql.SQLException;
  *
  * <p>
  * Brute force implementation. You might replace this by subclassing this implementation
- * and adding #Test
+ * and adding {#de.hilling.junit.cdi.annotations.TestImplementation}.
  * </p>
  */
 public class DatabaseCleaner implements Work {

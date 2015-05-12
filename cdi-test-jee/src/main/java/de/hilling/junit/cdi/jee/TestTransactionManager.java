@@ -39,7 +39,9 @@ public class TestTransactionManager {
     private void cleanDatabase() {
         try {
             for (ConnectionWrapper wrapper : connectionWrappers) {
-                wrapper.runWithConnection(databaseCleaner);
+                if(wrapper.runWithConnection(databaseCleaner)) {
+                    break;
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("error cleaning db", e);

@@ -12,5 +12,5 @@ public interface ConnectionWrapper {
      * @param work
      * @throws SQLException
      */
-    boolean runWithConnection(Work work) throws SQLException;
+    boolean runWithConnection(DatabaseCleaner work) throws SQLException;
 }

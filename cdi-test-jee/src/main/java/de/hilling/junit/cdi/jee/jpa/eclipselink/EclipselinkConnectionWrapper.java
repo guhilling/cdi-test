@@ -1,7 +1,7 @@
 package de.hilling.junit.cdi.jee.jpa.eclipselink;
 
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
-import de.hilling.junit.cdi.jee.jpa.Work;
+import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -17,7 +17,7 @@ public class EclipselinkConnectionWrapper implements ConnectionWrapper {
     private EntityManager entityManager;
 
     @Override
-    public boolean runWithConnection(final Work work) throws SQLException {
+    public boolean runWithConnection(final DatabaseCleaner work) throws SQLException {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();

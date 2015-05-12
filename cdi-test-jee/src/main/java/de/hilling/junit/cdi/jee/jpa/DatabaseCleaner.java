@@ -13,11 +13,10 @@ import java.sql.SQLException;
  * and adding {#de.hilling.junit.cdi.annotations.TestImplementation}.
  * </p>
  */
-public class DatabaseCleaner implements Work {
+public class DatabaseCleaner {
 
     public static final String USER_TABLE_IDENTIFIER = "TABLE";
 
-    @Override
     public void run(Connection connection) throws SQLException {
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet tables = metaData.getTables(null, null, null, new String[]{USER_TABLE_IDENTIFIER});

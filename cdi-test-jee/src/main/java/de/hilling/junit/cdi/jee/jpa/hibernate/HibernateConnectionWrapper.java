@@ -1,7 +1,7 @@
 package de.hilling.junit.cdi.jee.jpa.hibernate;
 
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
-import de.hilling.junit.cdi.jee.jpa.Work;
+import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 import org.hibernate.internal.SessionImpl;
 
 import javax.enterprise.context.RequestScoped;
@@ -16,7 +16,7 @@ public class HibernateConnectionWrapper implements ConnectionWrapper {
     @Inject
     private EntityManager entityManager;
 
-    public boolean runWithConnection(final Work work) {
+    public boolean runWithConnection(final DatabaseCleaner work) {
         Object delegate = entityManager.getDelegate();
         if (delegate instanceof SessionImpl) {
             SessionImpl session = (SessionImpl) delegate;

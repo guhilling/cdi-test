@@ -16,13 +16,19 @@ public class HibernateConnectionWrapper implements ConnectionWrapper {
     @Inject
     private EntityManager entityManager;
 
-    public void runWithConnection(final Work work) {
-        SessionImpl session = (SessionImpl) entityManager.getDelegate();
-        session.doWork(new org.hibernate.jdbc.Work() {
-            @Override
-            public void execute(Connection connection) throws SQLException {
-                work.run(connection);
-            }
-        });
+    public boolean runWithConnection(final Work work) {
+        Object delegate = entityManager.getDelegate();
+        if (delegate instanceof SessionImpl) {
+            SessionImpl session = (SessionImpl) delegate;
+            session.doWork(new org.hibernate.jdbc.Work() {
+                @Override
+                public void execute(Connection connection) throws SQLException {
+                    work.run(connection);
+                }
+            });
+            return true;
+        } else {
+            return false;
+        }
     }
 }

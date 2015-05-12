@@ -6,6 +6,8 @@ import de.hilling.junit.cdi.scope.TestSuiteScoped;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -15,12 +17,17 @@ import javax.persistence.Persistence;
  */
 @TestSuiteScoped
 public class EntityManagerTestProducer {
+    public static final String PERSISTENCE_UNIT_PROPERTY="persistence-unit";
 
     private EntityManagerFactory entityManagerFactory;
 
+    @Inject
+    @Named(PERSISTENCE_UNIT_PROPERTY)
+    private String persistenceUnit;
+
     @PostConstruct
     protected void createEntityManagerFactory() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("cdi-test-unit");
+        entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit);
     }
 
     @Produces

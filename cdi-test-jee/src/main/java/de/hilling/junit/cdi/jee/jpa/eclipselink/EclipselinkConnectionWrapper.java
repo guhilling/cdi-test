@@ -6,6 +6,7 @@ import de.hilling.junit.cdi.jee.jpa.Work;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -16,8 +17,22 @@ public class EclipselinkConnectionWrapper implements ConnectionWrapper {
     private EntityManager entityManager;
 
     @Override
-    public void runWithConnection(final Work work) throws SQLException {
-        Connection connection = (Connection) entityManager.unwrap(Connection.class);
-        work.run(connection);
+    public boolean runWithConnection(final Work work) throws SQLException {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            Connection connection = (Connection) entityManager.unwrap(Connection.class);
+            if (connection == null) {
+                transaction.rollback();
+                return false;
+            } else {
+                work.run(connection);
+                transaction.commit();
+                return true;
+            }
+        } catch (RuntimeException re) {
+            transaction.rollback();
+            return false;
+        }
     }
 }

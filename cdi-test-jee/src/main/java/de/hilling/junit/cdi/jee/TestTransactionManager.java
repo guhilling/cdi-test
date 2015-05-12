@@ -1,8 +1,7 @@
 package de.hilling.junit.cdi.jee;
 
+import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
 import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
-import de.hilling.junit.cdi.jee.jpa.eclipselink.EclipselinkConnectionWrapper;
-import de.hilling.junit.cdi.jee.jpa.hibernate.HibernateConnectionWrapper;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.EventType;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
@@ -24,9 +23,7 @@ public class TestTransactionManager {
     @Inject
     private Instance<EntityManager> entityManagerReference;
     @Inject
-    private Instance<HibernateConnectionWrapper> hibernateConnectionResolver;
-    @Inject
-    private Instance<EclipselinkConnectionWrapper> eclipselinkConnectionWrapper;
+    private Instance<ConnectionWrapper> connectionWrappers;
     @Inject
     private DatabaseCleaner databaseCleaner;
     private EntityManager entityManager;
@@ -40,18 +37,9 @@ public class TestTransactionManager {
     }
 
     private void cleanDatabase() {
-        Object delegate = entityManager.getDelegate();
-        String delegateClassName = delegate.getClass().getCanonicalName();
         try {
-            switch (delegateClassName) {
-                case HIBERNATE_DELEGATE:
-                    hibernateConnectionResolver.get().runWithConnection(databaseCleaner);
-                    break;
-                case ECLIPSELINK_DELEGATE:
-                    eclipselinkConnectionWrapper.get().runWithConnection(databaseCleaner);
-                    break;
-                default:
-                    throw new RuntimeException("no wrapper for delegate " + delegateClassName);
+            for (ConnectionWrapper wrapper : connectionWrappers) {
+                wrapper.runWithConnection(databaseCleaner);
             }
         } catch (SQLException e) {
             throw new RuntimeException("error cleaning db", e);

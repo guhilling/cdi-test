@@ -7,6 +7,11 @@ import java.sql.SQLException;
 
 /**
  * Cleanup database.
+ *
+ * <p>
+ * Brute force implementation. You might replace this by subclassing this implementation
+ * and adding #Test
+ * </p>
  */
 public class DatabaseCleaner implements Work {
 
@@ -18,7 +23,9 @@ public class DatabaseCleaner implements Work {
         ResultSet tables = metaData.getTables(null, null, null, new String[]{USER_TABLE_IDENTIFIER});
         while (tables.next()) {
             String tableName = tables.getString(3);
-            connection.prepareStatement("delete from " + tableName).execute();
+            if (!tableName.equals("SEQUENCE")) {
+                connection.prepareStatement("delete from " + tableName).execute();
+            }
         }
         connection.commit();
     }

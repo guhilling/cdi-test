@@ -5,6 +5,8 @@ import de.hilling.junit.cdi.scope.annotationreplacement.AnnotatedTypeAdapter;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
+import de.hilling.junit.cdi.util.MavenVersion;
+import de.hilling.junit.cdi.util.MavenVersionResolver;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
@@ -21,9 +23,12 @@ import java.util.logging.Logger;
  * <em>everything</em> from being proxied it is possible to define explicit packages.
  */
 public class TestScopeExtension implements Extension, Serializable {
+    public static final MavenVersion MINIMUM_WELD_VERSION_FOR_AFTER_TYPE_DISCOVERY = new MavenVersion(2, 2);
+
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = Logger.getLogger(TestScopeExtension.class
             .getCanonicalName());
+    private final MavenVersionResolver versionResolver = MavenVersionResolver.getInstance();
 
     /**
      * Add contexts after bean discovery.
@@ -36,8 +41,17 @@ public class TestScopeExtension implements Extension, Serializable {
         afterBeanDiscovery.addContext(new TestContext());
     }
 
+    /**
+     * Use {@link javax.enterprise.inject.spi.AfterTypeDiscovery} to add Stereotype. <p> This is <a
+     * href="https://issues.jboss.org/browse/WELD-1660">not possible in older weld versions</a>. </p>
+     *
+     * @param afterTypeDiscovery
+     */
     public void afterTypeDiscovery(@Observes AfterTypeDiscovery afterTypeDiscovery) {
-        afterTypeDiscovery.getAlternatives().add(TestImplementation.class);
+        MavenVersion version = versionResolver.getVersion("org.jboss.weld", "weld-api");
+        if (version != null && version.compareTo(MINIMUM_WELD_VERSION_FOR_AFTER_TYPE_DISCOVERY) >= 0) {
+            afterTypeDiscovery.getAlternatives().add(TestImplementation.class);
+        }
     }
 
     public <T> void replaceAnnotations(@Observes ProcessAnnotatedType<T> pat) {

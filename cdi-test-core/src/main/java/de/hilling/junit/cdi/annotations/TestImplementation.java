@@ -8,11 +8,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Stereotype
 @Alternative
+@Stereotype
 @Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Priority(1000)
+@Priority(100)
 /**
  * Use this annotation to mark Alternatives that should globally replace
  * production implementations.

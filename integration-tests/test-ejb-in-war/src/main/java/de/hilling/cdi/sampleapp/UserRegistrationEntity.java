@@ -1,4 +1,4 @@
-package org.jboss.as.quickstarts.ejbinwar;
+package de.hilling.cdi.sampleapp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,12 +6,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class GreetingEntity {
+public class UserRegistrationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String greeting;
+    private String userName;
 
     public long getId() {
         return id;
@@ -21,11 +21,11 @@ public class GreetingEntity {
         this.id = id;
     }
 
-    public String getGreeting() {
-        return greeting;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setGreeting(String greeting) {
-        this.greeting = greeting;
+    public void setUserName(String greeting) {
+        this.userName = greeting;
     }
 }

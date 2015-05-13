@@ -14,36 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.as.quickstarts.ejbinwar.ejb;
+package de.hilling.cdi.sampleapp.ejb;
 
-import org.jboss.as.quickstarts.ejbinwar.GreetingEntity;
+import de.hilling.cdi.sampleapp.UserRegistrationEntity;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- * A simple Hello World EJB. The EJB does not use an interface.
- * 
- * @author paul.robinson@redhat.com, 2011-12-21
- */
-@Stateful
-public class GreeterEJB {
+@Stateless
+public class RegistrationService {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     /**
      * This method takes a name and returns a personalised greeting.
-     * 
+     *
      * @param name the name of the person to be greeted
      * @return the personalised greeting.
      */
     public String sayHello(String name) {
-        GreetingEntity greetingEntity = new GreetingEntity();
+        UserRegistrationEntity userRegistrationEntity = new UserRegistrationEntity();
         String greeting = "Hello " + name;
-        greetingEntity.setGreeting(greeting);
-        entityManager.persist(greetingEntity);
+        userRegistrationEntity.setUserName(greeting);
+        entityManager.persist(userRegistrationEntity);
         return greeting;
     }
 }

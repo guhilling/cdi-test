@@ -1,4 +1,4 @@
-package org.jboss.as.quickstarts.ejbinwar.ejb;
+package de.hilling.cdi.sampleapp.ejb;
 
 import de.hilling.junit.cdi.CdiUnitRunner;
 import de.hilling.junit.cdi.annotations.TestImplementation;
@@ -15,10 +15,10 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(CdiUnitRunner.class)
-public class GreeterEJBUnitTest {
+public class RegistrationServiceUnitTest {
 
     @Inject
-    private GreeterEJB greeterEJB;
+    private RegistrationService registrationService;
 
     @Inject
     private EntityManager entityManager;
@@ -29,14 +29,14 @@ public class GreeterEJBUnitTest {
     private String persistencUnit = "cdi-test-unit-eclipselink";
 
     private void assertDatabaseSize(int expectedSize) {
-        List list = entityManager.createQuery("select e from GreetingEntity e").getResultList();
+        List list = entityManager.createQuery("select e from UserRegistrationEntity e").getResultList();
         assertEquals(expectedSize, list.size());
     }
 
     @Test
     public void testSayHello() throws Exception {
         assertDatabaseSize(0);
-        greeterEJB.sayHello("Gunnar");
+        registrationService.sayHello("Gunnar");
         entityManager.flush();
         assertDatabaseSize(1);
     }
@@ -44,7 +44,7 @@ public class GreeterEJBUnitTest {
     @Test
     public void testSayHelloTwice() throws Exception {
         assertDatabaseSize(0);
-        greeterEJB.sayHello("Gunnar");
+        registrationService.sayHello("Gunnar");
         entityManager.flush();
         assertDatabaseSize(1);
     }

@@ -17,7 +17,7 @@ public class ReflectionsUtils {
             "javax",
             "com.sun",
             "org.apache.deltaspike",
-            "org.jboss.weld"
+            "org.jboss"
     };
 
     public static List<Field> getAllFields(Class<?> clazz) {

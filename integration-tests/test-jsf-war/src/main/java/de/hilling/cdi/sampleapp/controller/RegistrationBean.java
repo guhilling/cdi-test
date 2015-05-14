@@ -23,17 +23,17 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 
-@Named("greeter")
+@Named("registration")
 @SessionScoped
-public class Greeter implements Serializable {
+public class RegistrationBean implements Serializable {
 
     @EJB
-    private RegistrationService greeterEJB;
+    private RegistrationService registrationService;
 
     private String message;
 
     public void setName(String name) {
-        message = greeterEJB.sayHello(name);
+        message = registrationService.sayHello(name);
     }
 
     public String getMessage() {

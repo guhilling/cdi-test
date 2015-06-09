@@ -8,7 +8,6 @@
         <version>0.9.1-SNAPSHOT</version>
     </parent>
 
-
     <artifactId>test-jsf-war</artifactId>
     <packaging>war</packaging>
 
@@ -40,6 +39,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>de.larmic.butterfaces</groupId>
+            <artifactId>components-mojarra</artifactId>
+            <version>1.7.19</version>
+        </dependency>
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
             <artifactId>jboss-annotations-api_1.2_spec</artifactId>
@@ -126,13 +130,37 @@
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>${project.artifactId}.war</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.jasig.maven</groupId>
+                <artifactId>sass-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <id>generate-css</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>update-stylesheets</goal>
+                        </goals>
+                        <configuration>
+                            <useCompass>true</useCompass>
+                            <sassSourceDirectory>src/main/scss</sassSourceDirectory>
+                            <destination>${project.build.directory}/resources/css</destination>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${version.war.plugin}</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <directory>target/resources</directory>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>

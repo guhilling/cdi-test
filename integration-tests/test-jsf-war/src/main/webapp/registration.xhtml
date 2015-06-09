@@ -1,34 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://butterfaces.larmic.de/components">
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>User Registration</title>
-</head>
-
-<body>
-
-<h1>User Registration</h1>
-
-<div id="container">
-    <h:form id="response">
-        <h:panelGrid columns="2">
-            <h:outputLabel>Response:</h:outputLabel>
-            <h:outputLabel value="#{greeter.message}"/>
-        </h:panelGrid>
-    </h:form>
-    <h:form id="greetForm">
-        <h:panelGrid columns="3">
-            <h:outputLabel>Name:</h:outputLabel>
-            <h:inputText value="#{name}"/>
-            <h:commandButton id="add" value="Greet"
-                             action="#{greeter.setName(name)}">
-            </h:commandButton>
-        </h:panelGrid>
-    </h:form>
-</div>
-
-</body>
+<h:body>
+    <ui:composition template="/WEB-INF/templates/base.xhtml">
+        <ui:define name="content">
+            <div>
+                <h:form id="registrationForm">
+                    <b:number id="input"
+                              label="Age"
+                              value="#{registration.age}"
+                              placeholder="Age ..."
+                              min="18"
+                              max="120"
+                              styleClass="null"
+                              readonly="false"
+                              required="true"
+                              autoFocus="false"
+                              rendered="true">
+                        <b:tooltip>
+                            Please enter Your age (>= 18)
+                        </b:tooltip>
+                    </b:number>
+                    <b:text id="name"
+                            label="Name"
+                            value="#{registration.name}"
+                            placeholder="Name ..."/>
+                    <b:commandLink id="register"
+                                   action="#{registration.register}"
+                                   value="Register">
+                        <f:ajax execute="@form" render="@form"/>
+                        <b:defaultAction rendered="true"/>
+                    </b:commandLink>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition></h:body>
 </html>

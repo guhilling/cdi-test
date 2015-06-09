@@ -30,14 +30,27 @@ public class RegistrationBean implements Serializable {
     @EJB
     private RegistrationService registrationService;
 
-    private String message;
+    private String name;
+    private int age;
 
     public void setName(String name) {
-        message = registrationService.sayHello(name);
+        this.name = name;
     }
 
-    public String getMessage() {
-        return message;
+    public String getName() {
+        return name;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String register() {
+        registrationService.register(name);
+        return "ok";
+    }
 }

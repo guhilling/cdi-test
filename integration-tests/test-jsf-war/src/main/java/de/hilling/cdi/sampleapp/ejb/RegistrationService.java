@@ -34,7 +34,7 @@ public class RegistrationService {
      * @param name the name of the person to be greeted
      * @return the personalised greeting.
      */
-    public String sayHello(String name) {
+    public String register(String name) {
         UserRegistrationEntity userRegistrationEntity = new UserRegistrationEntity();
         String greeting = "Hello " + name;
         userRegistrationEntity.setUserName(greeting);

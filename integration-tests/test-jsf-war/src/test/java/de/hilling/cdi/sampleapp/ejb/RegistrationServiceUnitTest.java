@@ -36,7 +36,7 @@ public class RegistrationServiceUnitTest {
     @Test
     public void testSayHello() throws Exception {
         assertDatabaseSize(0);
-        registrationService.sayHello("Gunnar");
+        registrationService.register("Gunnar");
         entityManager.flush();
         assertDatabaseSize(1);
     }
@@ -44,7 +44,7 @@ public class RegistrationServiceUnitTest {
     @Test
     public void testSayHelloTwice() throws Exception {
         assertDatabaseSize(0);
-        registrationService.sayHello("Gunnar");
+        registrationService.register("Gunnar");
         entityManager.flush();
         assertDatabaseSize(1);
     }

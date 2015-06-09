@@ -144,7 +144,7 @@
                             <goal>update-stylesheets</goal>
                         </goals>
                         <configuration>
-                            <useCompass>true</useCompass>
+                            <useCompass>false</useCompass>
                             <sassSourceDirectory>src/main/scss</sassSourceDirectory>
                             <destination>${project.build.directory}/resources/css</destination>
                         </configuration>

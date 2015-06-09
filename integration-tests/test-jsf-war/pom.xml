@@ -132,6 +132,7 @@
     <build>
         <finalName>${project.artifactId}.war</finalName>
         <plugins>
+            <!--
             <plugin>
                 <groupId>org.jasig.maven</groupId>
                 <artifactId>sass-maven-plugin</artifactId>
@@ -144,22 +145,25 @@
                             <goal>update-stylesheets</goal>
                         </goals>
                         <configuration>
-                            <useCompass>false</useCompass>
+                            <useCompass>true</useCompass>
                             <sassSourceDirectory>src/main/scss</sassSourceDirectory>
                             <destination>${project.build.directory}/resources/css</destination>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+            -->
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${version.war.plugin}</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <webResources>
+                        <!--
                         <resource>
                             <directory>target/resources</directory>
                         </resource>
+                        -->
                     </webResources>
                 </configuration>
             </plugin>

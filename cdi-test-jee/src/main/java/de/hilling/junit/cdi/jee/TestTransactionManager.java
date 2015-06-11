@@ -21,16 +21,14 @@ public class TestTransactionManager {
     public static final String ECLIPSELINK_DELEGATE = "org.eclipse.persistence.jpa.JpaEntityManager";
 
     @Inject
-    private Instance<EntityManager> entityManagerReference;
-    @Inject
     private Instance<ConnectionWrapper> connectionWrappers;
     @Inject
     private DatabaseCleaner databaseCleaner;
+    @Inject
     private EntityManager entityManager;
     private EntityTransaction transaction;
 
     protected void beginTransaction(@Observes @TestEvent(EventType.STARTING) Description description) {
-        checkEntityManager();
         cleanDatabase();
         transaction = entityManager.getTransaction();
         transaction.begin();
@@ -49,7 +47,6 @@ public class TestTransactionManager {
     }
 
     protected void finishTransaction(@Observes @TestEvent(EventType.FINISHING) Description description) {
-        checkEntityManager();
         if (transaction.getRollbackOnly()) {
             transaction.rollback();
         } else {
@@ -57,13 +54,4 @@ public class TestTransactionManager {
         }
     }
 
-    private void checkEntityManager() {
-        if (entityManagerReference.isUnsatisfied()) {
-            throw new RuntimeException("entity manager not active");
-        } else if (entityManagerReference.isAmbiguous()) {
-            throw new RuntimeException("more than one entity manager found");
-        } else {
-            entityManager = entityManagerReference.get();
-        }
-    }
 }

@@ -23,7 +23,7 @@ Use maven to pull dependency on basic features:
     <dependency>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-core</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.10.0</version>
     </dependency>
 ```
 

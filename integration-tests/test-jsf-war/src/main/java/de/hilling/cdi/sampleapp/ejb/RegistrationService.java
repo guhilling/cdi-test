@@ -19,13 +19,13 @@ package de.hilling.cdi.sampleapp.ejb;
 import de.hilling.cdi.sampleapp.UserRegistrationEntity;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Stateless
 public class RegistrationService {
 
-    @PersistenceContext
+    @Inject
     private EntityManager entityManager;
 
     /**

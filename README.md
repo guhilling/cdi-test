@@ -1,4 +1,4 @@
-cdi-test [![Build Status](https://travis-ci.org/guhilling/cdi-test.svg?branch=master)](https://travis-ci.org/guhilling/cdi-test) [![Coverage Status](https://coveralls.io/repos/guhilling/cdi-test/badge.svg)](https://coveralls.io/r/guhilling/cdi-test)
+cdi-test [![Build Status](https://travis-ci.org/guhilling/cdi-test.svg?branch=master)](https://travis-ci.org/guhilling/cdi-test) [![Coverage Status](https://coveralls.io/repos/guhilling/cdi-test/badge.svg)](https://coveralls.io/r/guhilling/cdi-test) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.hilling.junit.cdi/cdi-test/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.hilling.junit.cdi/cdi-test)
 ========
 
 junit-addon for easy and quick testing of cdi projects.

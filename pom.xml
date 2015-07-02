@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.7</java.version>
-        <deltaspike.version>1.3.0</deltaspike.version>
+        <deltaspike.version>1.4.1</deltaspike.version>
         <cdi-1.1-weld.version>2.1.2.Final</cdi-1.1-weld.version>
         <cdi-1.2-weld.version>2.2.14.Final</cdi-1.2-weld.version>
         <cdi-1.2b-weld.version>2.3.0.Beta1</cdi-1.2b-weld.version>

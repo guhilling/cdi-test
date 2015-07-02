@@ -6,6 +6,7 @@ jdk:
 env:
   - CDI=cdi-1.1
   - CDI=cdi-1.2
+  - CDI=cdi-1.2b
   - CDI=cdi-2.0
 
 matrix:

@@ -16,7 +16,7 @@
         <deltaspike.version>1.4.1</deltaspike.version>
         <cdi-1.1-weld.version>2.1.2.Final</cdi-1.1-weld.version>
         <cdi-1.2-weld.version>2.2.14.Final</cdi-1.2-weld.version>
-        <cdi-1.2b-weld.version>2.3.0.Beta1</cdi-1.2b-weld.version>
+        <cdi-1.2b-weld.version>2.3.0.Beta2</cdi-1.2b-weld.version>
         <cdi-2.0-weld.version>3.0.0.Alpha11</cdi-2.0-weld.version>
         <github.global.server>github</github.global.server>
     </properties>

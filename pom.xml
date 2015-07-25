@@ -65,6 +65,7 @@
         <module>integration-tests</module>
         <module>cdi-test-cucumber</module>
         <module>cdi-test-jee</module>
+        <module>cdi-test-api</module>
     </modules>
 
     <dependencyManagement>

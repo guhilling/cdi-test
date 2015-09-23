@@ -18,7 +18,6 @@
         <cdi-1.2-weld.version>2.2.16.SP1</cdi-1.2-weld.version>
         <cdi-1.2b-weld.version>2.3.0.Final</cdi-1.2b-weld.version>
         <cdi-2.0-weld.version>3.0.0.Alpha13</cdi-2.0-weld.version>
-        <cdi-api.version>2.0-EDR1</cdi-api.version>
         <github.global.server>github</github.global.server>
     </properties>
 
@@ -227,12 +226,14 @@
             <id>cdi-1.1</id>
             <properties>
                 <weld.version>${cdi-1.1-weld.version}</weld.version>
+                <cdi-api.version>1.1</cdi-api.version>
             </properties>
         </profile>
         <profile>
             <id>cdi-2.0</id>
             <properties>
                 <weld.version>${cdi-2.0-weld.version}</weld.version>
+                <cdi-api.version>2.0-EDR1</cdi-api.version>
             </properties>
         </profile>
         <profile>
@@ -242,6 +243,7 @@
             </activation>
             <properties>
                 <weld.version>${cdi-1.2-weld.version}</weld.version>
+                <cdi-api.version>1.1</cdi-api.version>
             </properties>
         </profile>
         <profile>
@@ -251,12 +253,14 @@
             </activation>
             <properties>
                 <weld.version>${cdi-1.2b-weld.version}</weld.version>
+                <cdi-api.version>1.1</cdi-api.version>
             </properties>
         </profile>
         <profile>
             <id>release</id>
             <properties>
                 <weld.version>${cdi-1.2-weld.version}</weld.version>
+                <cdi-api.version>1.1</cdi-api.version>
             </properties>
             <build>
                 <plugins>

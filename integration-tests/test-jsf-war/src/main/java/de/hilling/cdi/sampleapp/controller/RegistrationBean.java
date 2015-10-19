@@ -18,8 +18,8 @@ package de.hilling.cdi.sampleapp.controller;
 
 import de.hilling.cdi.sampleapp.ejb.RegistrationService;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ import java.io.Serializable;
 @SessionScoped
 public class RegistrationBean implements Serializable {
 
-    @EJB
+    @Inject
     private RegistrationService registrationService;
 
     private String name;

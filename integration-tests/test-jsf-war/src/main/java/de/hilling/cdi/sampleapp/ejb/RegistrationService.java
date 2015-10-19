@@ -21,9 +21,10 @@ import de.hilling.cdi.sampleapp.UserRegistrationEntity;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.io.Serializable;
 
 @Stateless
-public class RegistrationService {
+public class RegistrationService implements Serializable {
 
     @Inject
     private EntityManager entityManager;

@@ -34,5 +34,39 @@
             <version>2.6.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <scope>provided</scope>
+            <version>1.0.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa</artifactId>
+            <version>2.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jandex</artifactId>
+            <version>1.2.2.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-weld</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.187</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -8,4 +8,11 @@ import java.io.Serializable;
 public class SampleScopedBean extends ScopedBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @SampleAnnotation
+    private String fieldOne;
+
+    @SampleAnnotation
+    public String getFieldOne() {
+        return fieldOne;
+    }
 }

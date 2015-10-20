@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class AnnotatedMemberAdapter<T> implements AnnotatedMember<T> {
+public abstract class AnnotatedMemberAdapter<T> implements AnnotatedMember<T> {
     private final AnnotatedMember<? super T>             member;
     private Map<Class<? extends Annotation>, Annotation> replacementMap;
 

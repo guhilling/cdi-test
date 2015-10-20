@@ -13,8 +13,15 @@ import java.sql.SQLException;
 @RequestScoped
 public class EclipselinkConnectionWrapper implements ConnectionWrapper {
 
-    @Inject
     private EntityManager entityManager;
+
+    protected EclipselinkConnectionWrapper() {
+    }
+
+    @Inject
+    public EclipselinkConnectionWrapper(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     public boolean runWithConnection(final DatabaseCleaner work) throws SQLException {

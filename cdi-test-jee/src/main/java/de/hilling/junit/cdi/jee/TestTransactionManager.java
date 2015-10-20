@@ -47,10 +47,12 @@ public class TestTransactionManager {
     }
 
     protected void finishTransaction(@Observes @TestEvent(EventType.FINISHING) Description description) {
-        if (transaction.getRollbackOnly()) {
-            transaction.rollback();
-        } else {
-            transaction.commit();
+        if (transaction.isActive()) {
+            if (transaction.getRollbackOnly()) {
+                transaction.rollback();
+            } else {
+                transaction.commit();
+            }
         }
     }
 

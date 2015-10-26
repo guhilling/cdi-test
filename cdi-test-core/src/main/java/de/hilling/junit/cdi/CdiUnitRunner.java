@@ -90,13 +90,10 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
 
     @SuppressWarnings("unchecked")
     protected <T> T resolveTest(Class<T> clazz) {
-        if (testCases.containsKey(clazz)) {
-            return (T) testCases.get(clazz);
-        } else {
-            T testCase = BeanProvider.getContextualReference(clazz, false);
-            testCases.put(clazz, testCase);
-            return testCase;
+        if (!testCases.containsKey(clazz)) {
+            testCases.put(clazz, BeanProvider.getContextualReference(clazz, false));
         }
+        return (T) testCases.get(clazz);
     }
 
 }

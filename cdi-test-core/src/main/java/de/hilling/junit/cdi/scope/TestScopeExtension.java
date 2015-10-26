@@ -82,9 +82,6 @@ public class TestScopeExtension implements Extension, Serializable {
                 private static final long serialVersionUID = 1L;
             });
             try {
-                {
-                    pat.setAnnotatedType(builder.create());
-                }
                 pat.setAnnotatedType(builder.create());
             } catch (RuntimeException e) {
                 LOG.log(Level.SEVERE, "unable to process type " + pat, e);

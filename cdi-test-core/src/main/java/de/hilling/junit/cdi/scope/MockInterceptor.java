@@ -38,7 +38,8 @@ public class MockInterceptor implements Serializable {
         try {
             Object alternative = BeanProvider.getContextualReference(mockManager.alternativeFor(javaClass));
             Method method = ctx.getMethod();
-            return method.invoke(alternative, ctx.getParameters());
+            Method alternativeMethod = alternative.getClass().getMethod(method.getName(), method.getParameterTypes());
+            return alternativeMethod.invoke(alternative, ctx.getParameters());
         } catch (InvocationTargetException ite) {
             throw ite.getCause();
         }

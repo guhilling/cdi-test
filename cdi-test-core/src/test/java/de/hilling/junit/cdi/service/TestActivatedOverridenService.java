@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.service;
 
-import de.hilling.junit.cdi.AlternativeFor;
+import de.hilling.junit.cdi.annotations.AlternativeFor;
 
 import javax.annotation.PostConstruct;
 

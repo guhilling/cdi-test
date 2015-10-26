@@ -1,5 +1,6 @@
 package de.hilling.junit.cdi;
 
+import de.hilling.junit.cdi.annotations.AlternativeFor;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
 import de.hilling.junit.cdi.scope.EventType;
 import de.hilling.junit.cdi.scope.MockManager;

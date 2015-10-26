@@ -1,4 +1,4 @@
-package de.hilling.junit.cdi;
+package de.hilling.junit.cdi.annotations;
 
 import de.hilling.junit.cdi.scope.TestScoped;
 

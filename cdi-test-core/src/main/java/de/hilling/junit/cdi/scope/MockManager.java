@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.AlternativeFor;
+import de.hilling.junit.cdi.annotations.AlternativeFor;
 import org.apache.deltaspike.core.util.ProxyUtils;
 import org.mockito.Mockito;
 

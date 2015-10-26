@@ -45,7 +45,7 @@ public class TestScopeExtension implements Extension, Serializable {
      * Use {@link javax.enterprise.inject.spi.AfterTypeDiscovery} to add Stereotype. <p> This is <a
      * href="https://issues.jboss.org/browse/WELD-1660">not possible in older weld versions</a>. </p>
      *
-     * @param afterTypeDiscovery
+     * @param afterTypeDiscovery type meta information.
      */
     public void afterTypeDiscovery(@Observes AfterTypeDiscovery afterTypeDiscovery) {
         MavenVersion version = versionResolver.getVersion("org.jboss.weld", "weld-api");
@@ -61,31 +61,28 @@ public class TestScopeExtension implements Extension, Serializable {
     }
 
 
-    public <X> void makeTypesMockable(@Observes ProcessAnnotatedType<X> pat) {
+    public <X> void processAnnotatedTypes(@Observes ProcessAnnotatedType<X> pat) {
         AnnotatedType<X> type = pat.getAnnotatedType();
         Class<X> javaClass = type.getJavaClass();
         if (ReflectionsUtils.isTestClass(javaClass)) {
-            AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();
-            builder.readFromType(type);
-            builder.addToClass(new AnnotationLiteral<TestSuiteScoped>() {
+            addClassAnnotation(pat, type, new AnnotationLiteral<TestSuiteScoped>() {
                 private static final long serialVersionUID = 1L;
             });
-            try {
-                pat.setAnnotatedType(builder.create());
-            } catch (RuntimeException e) {
-                LOG.log(Level.SEVERE, "unable to process type " + pat, e);
-            }
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
-            AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();
-            builder.readFromType(type);
-            builder.addToClass(new AnnotationLiteral<Mockable>() {
+            addClassAnnotation(pat, type, new AnnotationLiteral<Mockable>() {
                 private static final long serialVersionUID = 1L;
             });
-            try {
-                pat.setAnnotatedType(builder.create());
-            } catch (RuntimeException e) {
-                LOG.log(Level.SEVERE, "unable to process type " + pat, e);
-            }
+        }
+    }
+
+    private <X> void addClassAnnotation(ProcessAnnotatedType<X> pat, AnnotatedType<X> type, AnnotationLiteral<?> annotation) {
+        AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();
+        builder.readFromType(type);
+        builder.addToClass(annotation);
+        try {
+            pat.setAnnotatedType(builder.create());
+        } catch (RuntimeException e) {
+            LOG.log(Level.SEVERE, "unable to process type " + pat, e);
         }
     }
 }

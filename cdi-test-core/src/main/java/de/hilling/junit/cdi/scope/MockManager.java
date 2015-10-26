@@ -9,6 +9,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Book keeping for mocks. Thread safe.
+ */
 @Vetoed
 public class MockManager {
 
@@ -26,7 +29,7 @@ public class MockManager {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T mock(Class<T> javaClass) {
+    public synchronized <T> T mock(Class<T> javaClass) {
         if (!mocks.containsKey(javaClass)) {
             mocks.put(javaClass, Mockito.mock(javaClass));
         }
@@ -36,7 +39,7 @@ public class MockManager {
     /**
      * Reset all {@link Mockito} mocks. See {@link Mockito#reset(Object...)}
      */
-    public void resetMocks() {
+    public synchronized void resetMocks() {
         Mockito.reset(mocks.values().toArray());
     }
 
@@ -46,7 +49,7 @@ public class MockManager {
      * @param javaClass clazz for which check is performed.
      * @return true if {@link #activateMock} was called before.
      */
-    public boolean isMockEnabled(Class<?> javaClass) {
+    public synchronized boolean isMockEnabled(Class<?> javaClass) {
         if (activeTest == null) {
             return false;
         } else {
@@ -64,7 +67,7 @@ public class MockManager {
      *
      * @param clazz class to activate mock for
      */
-    public void activateMock(Class<?> clazz) {
+    public synchronized void activateMock(Class<?> clazz) {
         mock(clazz);
         if (mocks.containsKey(clazz)) {
             currentMockSet().add(clazz);
@@ -73,7 +76,7 @@ public class MockManager {
         }
     }
 
-    public void addAndActivateTest(Class<?> newTestClass) {
+    public synchronized void addAndActivateTest(Class<?> newTestClass) {
         Class<?> keyClass = ProxyUtils.getUnproxiedClass(newTestClass);
         if (!activeMocksByTestClass.containsKey(keyClass)) {
             activeMocksByTestClass.put(keyClass, new HashSet<Class<?>>());
@@ -88,7 +91,7 @@ public class MockManager {
         }
     }
 
-    public void deactivateTest() {
+    public synchronized void deactivateTest() {
         activeTest = null;
     }
 }

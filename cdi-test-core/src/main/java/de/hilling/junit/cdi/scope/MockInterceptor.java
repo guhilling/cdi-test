@@ -17,29 +17,22 @@ import java.lang.reflect.InvocationTargetException;
 public class MockInterceptor implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private boolean initialized = false;
-    private Object mock;
-
     private MockManager mockManager = MockManager.getInstance();
 
     @AroundInvoke
     public Object invokeMockableBean(InvocationContext ctx) throws Throwable {
         Class<? extends Object> javaClass = ReflectionsUtils
                 .getOriginalClass(ctx.getTarget().getClass());
-        if (!initialized) {
-            initialized = true;
-            mock = mockManager.mock(javaClass);
-        }
         if (mockManager.isMockEnabled(javaClass)) {
-            return callMock(ctx);
+            return callMock(ctx, javaClass);
         } else {
             return ctx.proceed();
         }
     }
 
-    private Object callMock(InvocationContext ctx) throws Throwable {
+    private Object callMock(InvocationContext ctx, Class<?> javaClass) throws Throwable {
         try {
-            return ctx.getMethod().invoke(mock, ctx.getParameters());
+            return ctx.getMethod().invoke(mockManager.mock(javaClass), ctx.getParameters());
         } catch (InvocationTargetException ite) {
             throw ite.getCause();
         }

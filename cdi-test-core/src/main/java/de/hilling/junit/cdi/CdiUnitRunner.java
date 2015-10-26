@@ -52,8 +52,23 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
             if (field.isAnnotationPresent(Mock.class)) {
                 assignMockAndActivateProxy(field, test);
             }
+            if (isTestActivatable(field)) {
+                activateForTest(field);
+            }
         }
         return test;
+    }
+
+    private boolean isTestActivatable(Field field) {
+        Class type = field.getType();
+        if(type.isAnnotationPresent(AlternativeFor.class)) {
+            return true;
+        }
+        return false;
+    }
+
+    private void activateForTest(Field field) {
+        mockManager.activateAlternative(field.getType());
     }
 
     private void assignMockAndActivateProxy(Field field, Object test) {

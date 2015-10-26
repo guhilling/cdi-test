@@ -4,8 +4,8 @@ import de.hilling.junit.cdi.AlternativeFor;
 
 import javax.annotation.PostConstruct;
 
-@AlternativeFor(OverriddenService.class)
-public class TestActivatedOverridenService implements OverriddenService {
+@AlternativeFor(OverridingServiceImpl.class)
+public class TestActivatedOverridenService extends OverridingServiceImpl {
 
     private int invocationCounter = 0;
 

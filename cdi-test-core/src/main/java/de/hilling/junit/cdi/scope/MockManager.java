@@ -1,13 +1,11 @@
 package de.hilling.junit.cdi.scope;
 
+import de.hilling.junit.cdi.AlternativeFor;
 import org.apache.deltaspike.core.util.ProxyUtils;
 import org.mockito.Mockito;
 
 import javax.enterprise.inject.Vetoed;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Book keeping for mocks. Thread safe.
@@ -19,6 +17,7 @@ public class MockManager {
 
     private Map<Class<?>, Object> mocks = new HashMap<>();
     private Map<Class<?>, Set<Class<?>>> activeMocksByTestClass = new HashMap<>();
+    private Map<Class<?>, Set<Class<?>>> activeAlternativesByTestClass = new HashMap<>();
     private Class<?> activeTest;
 
     private MockManager() {
@@ -50,16 +49,46 @@ public class MockManager {
      * @return true if {@link #activateMock} was called before.
      */
     public synchronized boolean isMockEnabled(Class<?> javaClass) {
-        if (activeTest == null) {
-            return false;
-        } else {
-            return currentMockSet().contains(javaClass);
-        }
+        return currentMockSet().contains(javaClass);
     }
 
+    /**
+     * Check if alternative for the given class is enabled.
+     *
+     * @param javaClass clazz for which check is performed.
+     * @return true if {@link #activateAlternative} was called before.
+     */
+    public synchronized boolean isAlternativeEnabled(Class<?> javaClass) {
+        return alternativeFor(javaClass) != null;
+    }
+
+    public Class<?> alternativeFor(Class<?> javaClass) {
+        for (Class<?> alternative : currentAlternativesSet()) {
+            AlternativeFor alternativeFor = alternative.getAnnotation(AlternativeFor.class);
+            for(Class<?> overriden: alternativeFor.value()) {
+                if(overriden.equals(javaClass)) {
+                    return alternative;
+                }
+            }
+        }
+        return null;
+    }
+
+
     private Set<Class<?>> currentMockSet() {
+        if (activeTest == null) {
+            return Collections.emptySet();
+        }
         assertTestClassRegistered(activeTest);
         return activeMocksByTestClass.get(activeTest);
+    }
+
+    private Set<Class<?>> currentAlternativesSet() {
+        if (activeTest == null) {
+            return Collections.emptySet();
+        }
+        assertTestClassRegistered(activeTest);
+        return activeAlternativesByTestClass.get(activeTest);
     }
 
     /**
@@ -68,6 +97,9 @@ public class MockManager {
      * @param clazz class to activate mock for
      */
     public synchronized void activateMock(Class<?> clazz) {
+        if(activeTest == null) {
+            throw new IllegalArgumentException("not test active: " + clazz);
+        }
         mock(clazz);
         if (mocks.containsKey(clazz)) {
             currentMockSet().add(clazz);
@@ -76,10 +108,18 @@ public class MockManager {
         }
     }
 
+    public synchronized void activateAlternative(Class<?> alternativeType) {
+        currentAlternativesSet().add(alternativeType);
+    }
+
+
     public synchronized void addAndActivateTest(Class<?> newTestClass) {
         Class<?> keyClass = ProxyUtils.getUnproxiedClass(newTestClass);
         if (!activeMocksByTestClass.containsKey(keyClass)) {
             activeMocksByTestClass.put(keyClass, new HashSet<Class<?>>());
+        }
+        if (!activeAlternativesByTestClass.containsKey(keyClass)) {
+            activeAlternativesByTestClass.put(keyClass, new HashSet<Class<?>>());
         }
         this.activeTest = keyClass;
     }
@@ -94,4 +134,5 @@ public class MockManager {
     public synchronized void deactivateTest() {
         activeTest = null;
     }
+
 }

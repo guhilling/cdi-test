@@ -4,14 +4,12 @@ import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.service.BackendService;
 import de.hilling.junit.cdi.service.TestActivatedOverridenService;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
 @RunWith(CdiUnitRunner.class)
-@Ignore
 public class TestActivationTest {
     @Inject
     private TestActivatedOverridenService overridenService;

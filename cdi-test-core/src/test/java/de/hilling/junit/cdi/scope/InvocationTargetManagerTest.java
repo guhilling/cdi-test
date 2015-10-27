@@ -10,9 +10,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MockManagerTest {
+public class InvocationTargetManagerTest {
 
-    private MockManager manager = MockManager.getInstance();
+    private InvocationTargetManager manager = InvocationTargetManager.getInstance();
     private Class<CaseScopedBean> mockedClass = CaseScopedBean.class;
 
     @Before
@@ -27,7 +27,7 @@ public class MockManagerTest {
 
     @Test
     public void enableMock() {
-        Class<? extends MockManagerTest> testClass = this.getClass();
+        Class<? extends InvocationTargetManagerTest> testClass = this.getClass();
         manager.addAndActivateTest(testClass);
         manager.mock(mockedClass);
         manager.activateMock(mockedClass);
@@ -49,7 +49,7 @@ public class MockManagerTest {
     public void activateAddedTestAndActivateDifferentMocks() {
         Class<?> testClass = getClass();
         manager.addAndActivateTest(testClass);
-        Class<MockManager> class1 = MockManager.class;
+        Class<InvocationTargetManager> class1 = InvocationTargetManager.class;
         manager.activateMock(class1);
         assertTrue(manager.isMockEnabled(class1));
         Class<?> stringClass = String.class;

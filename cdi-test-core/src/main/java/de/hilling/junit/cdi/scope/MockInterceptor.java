@@ -19,15 +19,15 @@ import java.lang.reflect.Method;
 public class MockInterceptor implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private MockManager mockManager = MockManager.getInstance();
+    private InvocationTargetManager invocationTargetManager = InvocationTargetManager.getInstance();
 
     @AroundInvoke
     public Object invokeMockableBean(InvocationContext ctx) throws Throwable {
         Class<? extends Object> javaClass = ReflectionsUtils
                 .getOriginalClass(ctx.getTarget().getClass());
-        if (mockManager.isAlternativeEnabled(javaClass)) {
+        if (invocationTargetManager.isAlternativeEnabled(javaClass)) {
             return callAlternative(ctx, javaClass);
-        } else if (mockManager.isMockEnabled(javaClass)) {
+        } else if (invocationTargetManager.isMockEnabled(javaClass)) {
             return callMock(ctx, javaClass);
         } else {
             return ctx.proceed();
@@ -36,7 +36,7 @@ public class MockInterceptor implements Serializable {
 
     private Object callAlternative(InvocationContext ctx, Class<?> javaClass) throws Throwable {
         try {
-            Object alternative = BeanProvider.getContextualReference(mockManager.alternativeFor(javaClass));
+            Object alternative = BeanProvider.getContextualReference(invocationTargetManager.alternativeFor(javaClass));
             Method method = ctx.getMethod();
             Method alternativeMethod = alternative.getClass().getMethod(method.getName(), method.getParameterTypes());
             return alternativeMethod.invoke(alternative, ctx.getParameters());
@@ -47,7 +47,7 @@ public class MockInterceptor implements Serializable {
 
     private Object callMock(InvocationContext ctx, Class<?> javaClass) throws Throwable {
         try {
-            return ctx.getMethod().invoke(mockManager.mock(javaClass), ctx.getParameters());
+            return ctx.getMethod().invoke(invocationTargetManager.mock(javaClass), ctx.getParameters());
         } catch (InvocationTargetException ite) {
             throw ite.getCause();
         }

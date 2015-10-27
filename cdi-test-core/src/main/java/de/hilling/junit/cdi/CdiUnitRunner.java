@@ -1,9 +1,9 @@
 package de.hilling.junit.cdi;
 
-import de.hilling.junit.cdi.annotations.AlternativeFor;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
 import de.hilling.junit.cdi.scope.EventType;
-import de.hilling.junit.cdi.scope.MockManager;
+import de.hilling.junit.cdi.scope.InvocationTargetManager;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 import org.apache.deltaspike.cdise.api.ContextControl;
@@ -28,7 +28,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
     private static final Logger LOG = Logger.getLogger(CdiUnitRunner.class
             .getCanonicalName());
 
-    private final MockManager mockManager = MockManager.getInstance();
+    private final InvocationTargetManager invocationTargetManager = InvocationTargetManager.getInstance();
     private final ContextControl contextControl = ContextControlWrapper.getInstance();
 
     private static Map<Class<?>, Object> testCases = new HashMap<>();
@@ -62,23 +62,23 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
 
     private boolean isTestActivatable(Field field) {
         Class type = field.getType();
-        if(type.isAnnotationPresent(AlternativeFor.class)) {
+        if(type.isAnnotationPresent(ActivatableTestImplementation.class)) {
             return true;
         }
         return false;
     }
 
     private void activateForTest(Field field) {
-        mockManager.activateAlternative(field.getType());
+        invocationTargetManager.activateAlternative(field.getType());
     }
 
     private void assignMockAndActivateProxy(Field field, Object test) {
         field.setAccessible(true);
         try {
             Class<?> type = field.getType();
-            Object mock = mockManager.mock(type);
+            Object mock = invocationTargetManager.mock(type);
             field.set(test, mock);
-            mockManager.activateMock(type);
+            invocationTargetManager.activateMock(type);
         } catch (IllegalArgumentException | IllegalAccessException e) {
             throw new RuntimeException(e);
         } finally {
@@ -90,7 +90,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
     protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
         final Description description = describeChild(method);
         LOG.fine("> preparing " + description);
-        mockManager.addAndActivateTest(description.getTestClass());
+        invocationTargetManager.addAndActivateTest(description.getTestClass());
         contextControl.startContexts();
         lifecycleNotifier.notify(EventType.STARTING, description);
         LOG.fine(">> starting " + description);
@@ -99,7 +99,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
         lifecycleNotifier.notify(EventType.FINISHING, description);
         contextControl.stopContexts();
         lifecycleNotifier.notify(EventType.FINISHED, description);
-        mockManager.reset();
+        invocationTargetManager.reset();
         LOG.fine("< finished " + description);
     }
 

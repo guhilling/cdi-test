@@ -2,6 +2,6 @@
 <beans xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://jboss.org/schema/cdi/beans_1_1.xsd">
     <alternatives>
-        <stereotype>de.hilling.junit.cdi.annotations.TestImplementation</stereotype>
+        <stereotype>de.hilling.junit.cdi.annotations.GlobalTestImplementation</stereotype>
     </alternatives>
 </beans>

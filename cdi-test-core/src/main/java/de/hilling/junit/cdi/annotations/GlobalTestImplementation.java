@@ -1,5 +1,7 @@
 package de.hilling.junit.cdi.annotations;
 
+import de.hilling.junit.cdi.scope.TestScoped;
+
 import javax.annotation.Priority;
 import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Stereotype;
@@ -9,6 +11,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Alternative
+@TestScoped
 @Stereotype
 @Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -21,5 +24,5 @@ import java.lang.annotation.Target;
  *     because the container is only started once.
  * </p>
  */
-public @interface TestImplementation {
+public @interface GlobalTestImplementation {
 }

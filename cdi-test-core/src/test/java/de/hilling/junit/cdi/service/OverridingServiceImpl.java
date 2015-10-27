@@ -1,8 +1,8 @@
 package de.hilling.junit.cdi.service;
 
-import de.hilling.junit.cdi.annotations.TestImplementation;
+import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 
-@TestImplementation
+@GlobalTestImplementation
 public class OverridingServiceImpl implements OverriddenService {
     @Override
     public void serviceMethod() {

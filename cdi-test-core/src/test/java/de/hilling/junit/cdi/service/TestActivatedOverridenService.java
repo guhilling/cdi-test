@@ -1,10 +1,10 @@
 package de.hilling.junit.cdi.service;
 
-import de.hilling.junit.cdi.annotations.AlternativeFor;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 
 import javax.annotation.PostConstruct;
 
-@AlternativeFor(OverridingServiceImpl.class)
+@ActivatableTestImplementation(OverridingServiceImpl.class)
 public class TestActivatedOverridenService implements OverriddenService {
 
     private int invocationCounter = 0;

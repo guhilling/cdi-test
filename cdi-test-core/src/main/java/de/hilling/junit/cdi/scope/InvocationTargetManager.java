@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.annotations.AlternativeFor;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import org.apache.deltaspike.core.util.ProxyUtils;
 import org.mockito.Mockito;
 
@@ -11,19 +11,19 @@ import java.util.*;
  * Book keeping for mocks. Thread safe.
  */
 @Vetoed
-public class MockManager {
+public class InvocationTargetManager {
 
-    private static final MockManager instance = new MockManager();
+    private static final InvocationTargetManager instance = new InvocationTargetManager();
 
     private Map<Class<?>, Object> mocks = new HashMap<>();
     private Map<Class<?>, Set<Class<?>>> activeMocksByTestClass = new HashMap<>();
     private Map<Class<?>, Set<Class<?>>> activeAlternativesByTestClass = new HashMap<>();
     private Class<?> activeTest;
 
-    private MockManager() {
+    private InvocationTargetManager() {
     }
 
-    public static MockManager getInstance() {
+    public static InvocationTargetManager getInstance() {
         return instance;
     }
 
@@ -65,8 +65,8 @@ public class MockManager {
 
     public Class<?> alternativeFor(Class<?> javaClass) {
         for (Class<?> alternative : currentAlternativesSet()) {
-            AlternativeFor alternativeFor = alternative.getAnnotation(AlternativeFor.class);
-            for(Class<?> overriden: alternativeFor.value()) {
+            ActivatableTestImplementation activatableTestImplementation = alternative.getAnnotation(ActivatableTestImplementation.class);
+            for(Class<?> overriden: activatableTestImplementation.value()) {
                 if(overriden.equals(javaClass)) {
                     return alternative;
                 }

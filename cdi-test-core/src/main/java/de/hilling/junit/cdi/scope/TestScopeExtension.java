@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.annotations.TestImplementation;
+import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotatedTypeAdapter;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
 import de.hilling.junit.cdi.scope.context.TestContext;
@@ -50,7 +50,7 @@ public class TestScopeExtension implements Extension, Serializable {
     public void afterTypeDiscovery(@Observes AfterTypeDiscovery afterTypeDiscovery) {
         MavenVersion version = versionResolver.getVersion("org.jboss.weld", "weld-api");
         if (version != null && version.compareTo(MINIMUM_WELD_VERSION_FOR_AFTER_TYPE_DISCOVERY) >= 0) {
-            afterTypeDiscovery.getAlternatives().add(TestImplementation.class);
+            afterTypeDiscovery.getAlternatives().add(GlobalTestImplementation.class);
         }
     }
 

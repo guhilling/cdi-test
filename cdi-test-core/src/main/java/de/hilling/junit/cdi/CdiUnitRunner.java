@@ -91,7 +91,6 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
         final Description description = describeChild(method);
         LOG.fine("> preparing " + description);
         mockManager.addAndActivateTest(description.getTestClass());
-        mockManager.resetMocks();
         contextControl.startContexts();
         lifecycleNotifier.notify(EventType.STARTING, description);
         LOG.fine(">> starting " + description);
@@ -100,7 +99,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
         lifecycleNotifier.notify(EventType.FINISHING, description);
         contextControl.stopContexts();
         lifecycleNotifier.notify(EventType.FINISHED, description);
-        mockManager.deactivateTest();
+        mockManager.reset();
         LOG.fine("< finished " + description);
     }
 

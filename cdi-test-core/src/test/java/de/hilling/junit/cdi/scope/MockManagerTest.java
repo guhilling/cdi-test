@@ -2,7 +2,10 @@ package de.hilling.junit.cdi.scope;
 
 import de.hilling.junit.cdi.CdiUnitRunner;
 import de.hilling.junit.cdi.beans.Person;
+import de.hilling.junit.cdi.service.OverridingServiceImpl;
+import de.hilling.junit.cdi.service.TestActivatedOverridenService;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,14 +15,9 @@ public class MockManagerTest {
     private MockManager manager = MockManager.getInstance();
     private Class<CaseScopedBean> mockedClass = CaseScopedBean.class;
 
-    @Test
-    public void test() {
-        assertNotNull(manager);
-    }
-
-    @Test
-    public void reset() {
-        manager.resetMocks();
+    @Before
+    public void setUp() {
+        manager.reset();
     }
 
     @Test
@@ -60,6 +58,17 @@ public class MockManagerTest {
         manager.activateMock(class2);
         assertTrue(manager.isMockEnabled(class2));
         assertFalse(manager.isMockEnabled(class1));
+    }
+
+    @Test
+    public void activatedAddedTestAndActivateAlternative() {
+        Object test = new Object() {
+        };
+        manager.addAndActivateTest(test.getClass());
+        manager.activateAlternative(TestActivatedOverridenService.class);
+        assertTrue(manager.isAlternativeEnabled(OverridingServiceImpl.class));
+        assertFalse(manager.isAlternativeEnabled(test.getClass()));
+        assertEquals(TestActivatedOverridenService.class, manager.alternativeFor(OverridingServiceImpl.class));
     }
 
     @Test

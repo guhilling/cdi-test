@@ -38,8 +38,9 @@ public class MockManager {
     /**
      * Reset all {@link Mockito} mocks. See {@link Mockito#reset(Object...)}
      */
-    public synchronized void resetMocks() {
+    public synchronized void reset() {
         Mockito.reset(mocks.values().toArray());
+        activeTest=null;
     }
 
     /**
@@ -129,10 +130,6 @@ public class MockManager {
             throw new IllegalArgumentException("test class not registered: "
                     + testToActivate);
         }
-    }
-
-    public synchronized void deactivateTest() {
-        activeTest = null;
     }
 
 }

@@ -1,7 +1,6 @@
 package de.hilling.junit.cdi.scope;
 
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
-import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationUtils;
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
 import javax.enterprise.inject.Typed;
@@ -33,8 +32,7 @@ class ActivatableAlternativeBuilder<X> {
         if (implementation.value().length == 0) {
             guessReplacableTypes();
         }
-
-        AnnotationUtils.addClassAnnotation(pat, new TypedLiteral() {
+        builder.addToClass(new TypedLiteral() {
             @Override
             public Class<?>[] value() {
                 return new Class[]{javaClass};

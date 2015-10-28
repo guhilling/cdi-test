@@ -15,9 +15,9 @@ import javax.enterprise.util.AnnotationLiteral;
  */
 class ActivatableAlternativeBuilder<X> {
     private final ProcessAnnotatedType<X> pat;
-    private final AnnotatedType type;
+    private final AnnotatedType<X> type;
     private final Class<X> javaClass;
-    private final AnnotatedTypeBuilder builder;
+    private final AnnotatedTypeBuilder<X> builder;
 
     public ActivatableAlternativeBuilder(ProcessAnnotatedType<X> pat) {
         this.pat = pat;

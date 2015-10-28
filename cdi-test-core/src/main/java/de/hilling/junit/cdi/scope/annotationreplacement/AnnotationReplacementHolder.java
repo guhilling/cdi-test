@@ -52,16 +52,17 @@ public class AnnotationReplacementHolder {
                     final Object replacementProxy = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{replacmentAnnotation}, new InvocationHandler() {
                         @Override
                         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                            if(method.getName().equals("annotationType")) {
-                                return replacmentAnnotation;
-                            } else if(method.getName().equals("hashCode")) {
-                                return 0;
-                            } else if(method.getName().equals("equals")) {
-                                return false;
-                            } else if(method.getName().equals("toString")) {
-                                return replacmentAnnotation.getCanonicalName();
-                            } else {
-                                return null;
+                            switch (method.getName()) {
+                                case "annotationType":
+                                    return replacmentAnnotation;
+                                case "hashCode":
+                                    return 0;
+                                case "equals":
+                                    return false;
+                                case "toString":
+                                    return replacmentAnnotation.getCanonicalName();
+                                default:
+                                    return null;
                             }
                         }
                     });

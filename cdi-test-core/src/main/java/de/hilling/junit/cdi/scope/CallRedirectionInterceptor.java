@@ -26,8 +26,7 @@ public class CallRedirectionInterceptor implements Serializable {
 
     @AroundInvoke
     public Object invokeMockableBean(InvocationContext ctx) throws Throwable {
-        Class<? extends Object> javaClass = ReflectionsUtils
-                .getOriginalClass(ctx.getTarget().getClass());
+        Class<?> javaClass = ReflectionsUtils.getOriginalClass(ctx.getTarget().getClass());
         if (invocationTargetManager.get().isAlternativeEnabled(javaClass)) {
             return callAlternative(ctx, javaClass);
         } else if (invocationTargetManager.get().isMockEnabled(javaClass)) {

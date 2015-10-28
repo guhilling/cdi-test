@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 
 @RunWith(CdiUnitRunner.class)
-public class TestActivationTest {
+public class AcitvateAlternativeForAlternativeTest {
     @Inject
     private TestActivatedOverridenService testOverride;
     @Inject

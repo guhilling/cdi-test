@@ -239,7 +239,7 @@
         <profile>
             <id>cdi-1.2</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
                 <weld.version>${cdi-1.2-weld.version}</weld.version>
@@ -249,7 +249,7 @@
         <profile>
             <id>cdi-1.2b</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
                 <weld.version>${cdi-1.2b-weld.version}</weld.version>

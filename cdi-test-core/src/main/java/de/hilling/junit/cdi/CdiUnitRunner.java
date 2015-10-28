@@ -28,7 +28,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
     private static final Logger LOG = Logger.getLogger(CdiUnitRunner.class
             .getCanonicalName());
 
-    private final InvocationTargetManager invocationTargetManager = InvocationTargetManager.getInstance();
+    private final InvocationTargetManager invocationTargetManager;
     private final ContextControl contextControl = ContextControlWrapper.getInstance();
 
     private static Map<Class<?>, Object> testCases = new HashMap<>();
@@ -41,8 +41,8 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
 
     public CdiUnitRunner(Class<?> klass) throws InitializationError {
         super(klass);
-        lifecycleNotifier = BeanProvider.getContextualReference(
-                LifecycleNotifier.class, false);
+        invocationTargetManager = BeanProvider.getContextualReference(InvocationTargetManager.class, false);
+        lifecycleNotifier = BeanProvider.getContextualReference(LifecycleNotifier.class, false);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
 
     private boolean isTestActivatable(Field field) {
         Class type = field.getType();
-        if(type.isAnnotationPresent(ActivatableTestImplementation.class)) {
+        if (type.isAnnotationPresent(ActivatableTestImplementation.class)) {
             return true;
         }
         return false;

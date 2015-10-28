@@ -4,28 +4,24 @@ import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import org.apache.deltaspike.core.util.ProxyUtils;
 import org.mockito.Mockito;
 
-import javax.enterprise.inject.Vetoed;
+import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.BeanManager;
+import javax.inject.Inject;
 import java.util.*;
 
 /**
  * Book keeping for mocks. Thread safe.
  */
-@Vetoed
+@TestSuiteScoped
 public class InvocationTargetManager {
 
-    private static final InvocationTargetManager instance = new InvocationTargetManager();
+    @Inject
+    private BeanManager beanManager;
 
     private Map<Class<?>, Object> mocks = new HashMap<>();
     private Map<Class<?>, Set<Class<?>>> activeMocksByTestClass = new HashMap<>();
     private Map<Class<?>, Set<Class<?>>> activeAlternativesByTestClass = new HashMap<>();
     private Class<?> activeTest;
-
-    private InvocationTargetManager() {
-    }
-
-    public static InvocationTargetManager getInstance() {
-        return instance;
-    }
 
     @SuppressWarnings("unchecked")
     public synchronized <T> T mock(Class<T> javaClass) {
@@ -65,10 +61,13 @@ public class InvocationTargetManager {
 
     public Class<?> alternativeFor(Class<?> javaClass) {
         for (Class<?> alternative : currentAlternativesSet()) {
-            ActivatableTestImplementation activatableTestImplementation = alternative.getAnnotation(ActivatableTestImplementation.class);
-            for(Class<?> overriden: activatableTestImplementation.value()) {
-                if(overriden.equals(javaClass)) {
-                    return alternative;
+            AnnotatedType type = beanManager.getExtension(TestScopeExtension.class).decoratedTypeFor(alternative);
+            if(type!=null) {
+                ActivatableTestImplementation activatableTestImplementation = type.getAnnotation(ActivatableTestImplementation.class);
+                for (Class<?> overriden : activatableTestImplementation.value()) {
+                    if (overriden.equals(javaClass)) {
+                        return alternative;
+                    }
                 }
             }
         }

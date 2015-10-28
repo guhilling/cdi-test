@@ -7,12 +7,18 @@ import de.hilling.junit.cdi.service.TestActivatedOverridenService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import javax.inject.Inject;
 
 import static org.junit.Assert.*;
 
+@RunWith(CdiUnitRunner.class)
 public class InvocationTargetManagerTest {
 
-    private InvocationTargetManager manager = InvocationTargetManager.getInstance();
+    @Inject
+    private InvocationTargetManager manager;
+
     private Class<CaseScopedBean> mockedClass = CaseScopedBean.class;
 
     @Before
@@ -25,15 +31,6 @@ public class InvocationTargetManagerTest {
         assertFalse(manager.isMockEnabled(mockedClass));
     }
 
-    @Test
-    public void enableMock() {
-        Class<? extends InvocationTargetManagerTest> testClass = this.getClass();
-        manager.addAndActivateTest(testClass);
-        manager.mock(mockedClass);
-        manager.activateMock(mockedClass);
-        assertTrue(manager.isMockEnabled(mockedClass));
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void activateNonEnabledMock() {
         manager.activateMock(mockedClass);
@@ -43,21 +40,6 @@ public class InvocationTargetManagerTest {
     public void activateAddedTest() {
         Class<?> testClass = getClass();
         manager.addAndActivateTest(testClass);
-    }
-
-    @Test
-    public void activateAddedTestAndActivateDifferentMocks() {
-        Class<?> testClass = getClass();
-        manager.addAndActivateTest(testClass);
-        Class<InvocationTargetManager> class1 = InvocationTargetManager.class;
-        manager.activateMock(class1);
-        assertTrue(manager.isMockEnabled(class1));
-        Class<?> stringClass = String.class;
-        manager.addAndActivateTest(stringClass);
-        Class<CdiUnitRunner> class2 = CdiUnitRunner.class;
-        manager.activateMock(class2);
-        assertTrue(manager.isMockEnabled(class2));
-        assertFalse(manager.isMockEnabled(class1));
     }
 
     @Test

@@ -4,20 +4,22 @@ import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotatedTypeAdapter;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
+import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationUtils;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.util.MavenVersion;
 import de.hilling.junit.cdi.util.MavenVersionResolver;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
-import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
 import javax.enterprise.event.Observes;
-import javax.enterprise.inject.Typed;
 import javax.enterprise.inject.spi.*;
 import javax.enterprise.util.AnnotationLiteral;
 import java.io.Serializable;
-import java.util.logging.Level;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
+
+import static java.util.logging.Level.FINE;
 
 /**
  * CDI {@link javax.enterprise.inject.spi.Extension} to enable proxying of (nearly) all method invocations. <p> By
@@ -31,6 +33,7 @@ public class TestScopeExtension implements Extension, Serializable {
     private static final Logger LOG = Logger.getLogger(TestScopeExtension.class
             .getCanonicalName());
     private final MavenVersionResolver versionResolver = MavenVersionResolver.getInstance();
+    private final Map<Class<?>, AnnotatedType> decoratedTypes = new HashMap<>();
 
     /**
      * Add contexts after bean discovery.
@@ -41,6 +44,10 @@ public class TestScopeExtension implements Extension, Serializable {
             @Observes AfterBeanDiscovery afterBeanDiscovery) {
         afterBeanDiscovery.addContext(new TestSuiteContext());
         afterBeanDiscovery.addContext(new TestContext());
+    }
+
+    public AnnotatedType decoratedTypeFor(Class<?> clazz) {
+        return decoratedTypes.get(clazz);
     }
 
     /**
@@ -57,9 +64,14 @@ public class TestScopeExtension implements Extension, Serializable {
     }
 
     public <T> void replaceAnnotations(@Observes ProcessAnnotatedType<T> pat) {
-        LOG.log(Level.FINE, "processing type " + pat);
+        LOG.log(FINE, "processing type " + pat);
         AnnotatedTypeAdapter<T> enhancedAnnotatedType = new AnnotationReplacementAdapter<>(pat.getAnnotatedType());
         pat.setAnnotatedType(enhancedAnnotatedType);
+        updateDecoratedTypes(pat);
+    }
+
+    private <T> void updateDecoratedTypes(ProcessAnnotatedType<T> pat) {
+        decoratedTypes.put(pat.getAnnotatedType().getJavaClass(), pat.getAnnotatedType());
     }
 
 
@@ -67,37 +79,16 @@ public class TestScopeExtension implements Extension, Serializable {
         AnnotatedType<X> type = pat.getAnnotatedType();
         final Class<X> javaClass = type.getJavaClass();
         if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
-            addClassAnnotation(pat, type, new TypedLiteral() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public Class<?>[] value() {
-                    return new Class[]{javaClass};
-                }
-            });
+            new ActivatableAlternativeBuilder<X>(pat).invoke();
         } else if (ReflectionsUtils.isTestClass(javaClass)) {
-            addClassAnnotation(pat, type, new AnnotationLiteral<TestSuiteScoped>() {
-                private static final long serialVersionUID = 1L;
+            AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<TestSuiteScoped>() {
             });
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
-            addClassAnnotation(pat, type, new AnnotationLiteral<Mockable>() {
-                private static final long serialVersionUID = 1L;
+            AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<Rediractable>() {
             });
         }
-    }
-
-    private static abstract class TypedLiteral extends AnnotationLiteral<Typed> implements Typed {
+        updateDecoratedTypes(pat);
     }
 
 
-    private <X> void addClassAnnotation(ProcessAnnotatedType<X> pat, AnnotatedType<X> type, AnnotationLiteral<?> annotation) {
-        AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();
-        builder.readFromType(type);
-        builder.addToClass(annotation);
-        try {
-            pat.setAnnotatedType(builder.create());
-        } catch (RuntimeException e) {
-            LOG.log(Level.SEVERE, "unable to process type " + pat, e);
-        }
-    }
 }

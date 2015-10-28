@@ -1,5 +1,6 @@
 package de.hilling.junit.cdi.scope;
 
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotatedTypeAdapter;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
@@ -11,6 +12,7 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
 import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Typed;
 import javax.enterprise.inject.spi.*;
 import javax.enterprise.util.AnnotationLiteral;
 import java.io.Serializable;
@@ -63,8 +65,17 @@ public class TestScopeExtension implements Extension, Serializable {
 
     public <X> void processAnnotatedTypes(@Observes ProcessAnnotatedType<X> pat) {
         AnnotatedType<X> type = pat.getAnnotatedType();
-        Class<X> javaClass = type.getJavaClass();
-        if (ReflectionsUtils.isTestClass(javaClass)) {
+        final Class<X> javaClass = type.getJavaClass();
+        if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
+            addClassAnnotation(pat, type, new TypedLiteral() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public Class<?>[] value() {
+                    return new Class[]{javaClass};
+                }
+            });
+        } else if (ReflectionsUtils.isTestClass(javaClass)) {
             addClassAnnotation(pat, type, new AnnotationLiteral<TestSuiteScoped>() {
                 private static final long serialVersionUID = 1L;
             });
@@ -74,6 +85,10 @@ public class TestScopeExtension implements Extension, Serializable {
             });
         }
     }
+
+    private static abstract class TypedLiteral extends AnnotationLiteral<Typed> implements Typed {
+    }
+
 
     private <X> void addClassAnnotation(ProcessAnnotatedType<X> pat, AnnotatedType<X> type, AnnotationLiteral<?> annotation) {
         AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();

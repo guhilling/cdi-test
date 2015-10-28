@@ -42,6 +42,8 @@ public class CallRedirectionInterceptor implements Serializable {
             Method method = ctx.getMethod();
             Method alternativeMethod = alternative.getClass().getMethod(method.getName(), method.getParameterTypes());
             return alternativeMethod.invoke(alternative, ctx.getParameters());
+        } catch (NoSuchMethodException nme) {
+            return callMock(ctx, javaClass);
         } catch (InvocationTargetException ite) {
             throw ite.getCause();
         }

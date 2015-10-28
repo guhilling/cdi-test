@@ -53,14 +53,11 @@ class ActivatableAlternativeBuilder<X> {
 
     private Class<?> determineUniqueSuperclass() {
         Class<? super X> superclass = javaClass.getSuperclass();
-        if(superclass!=null) {
+        if (superclass != null) {
             return superclass;
+        } else {
+            throw new RuntimeException("No unique interface or superclass found on '" + javaClass + "'. You have to provide value() in ActivatableTestImplementation in this case!");
         }
-        Class<?>[] interfaces = javaClass.getInterfaces();
-        if(interfaces.length == 1) {
-            return interfaces[0];
-        }
-        throw new RuntimeException("No unique interface or superclass found on '" + javaClass + "'. You have to provide value() in ActivatableTestImplementation in this case!");
     }
 
     private static abstract class TypedLiteral extends AnnotationLiteral<Typed> implements Typed {

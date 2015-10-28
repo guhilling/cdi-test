@@ -2,9 +2,9 @@ package de.hilling.cdi.sampleapp.ejb;
 
 import de.hilling.cdi.sampleapp.UserRegistrationEntity;
 import de.hilling.junit.cdi.CdiUnitRunner;
-import de.hilling.junit.cdi.annotations.TestImplementation;
+import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 import de.hilling.junit.cdi.jee.EntityManagerTestProducer;
-import org.hamcrest.core.Is;
+import de.hilling.junit.cdi.jee.JEETestConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -27,10 +27,14 @@ public class RegistrationServiceUnitTest {
     @Inject
     private EntityManager entityManager;
 
-    @TestImplementation
+    @GlobalTestImplementation
     @Produces
-    @Named(EntityManagerTestProducer.PERSISTENCE_UNIT_PROPERTY)
-    private String persistencUnit = "cdi-test-unit-eclipselink";
+    private JEETestConfiguration configuration = new JEETestConfiguration() {
+        @Override
+        public String getTestPersistenceUnitName() {
+            return "cdi-test-unit-eclipselink";
+        }
+    };
     private List<UserRegistrationEntity> allUsers;
 
     private void assertDatabaseSize(int expectedSize) {

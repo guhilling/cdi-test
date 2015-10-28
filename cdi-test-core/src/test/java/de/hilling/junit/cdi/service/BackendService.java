@@ -10,6 +10,7 @@ public class BackendService {
     private OverriddenService sampleService;
 
     public void storePerson(Person person) {
+        sampleService.serviceMethod();
     }
 
 }

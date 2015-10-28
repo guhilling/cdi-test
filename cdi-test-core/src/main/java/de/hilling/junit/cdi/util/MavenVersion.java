@@ -34,13 +34,9 @@ public final class MavenVersion implements Comparable<MavenVersion> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         MavenVersion that = (MavenVersion) o;
 
-        if (major != that.major) return false;
-        if (minor != that.minor) return false;
-
-        return true;
+        return major==that.major && minor==that.minor;
     }
 
     @Override

@@ -50,7 +50,7 @@ public class AnnotationReplacementAdapter<T>
     public Set<AnnotatedMethod<? super T>> getMethods() {
         Set<AnnotatedMethod<? super T>> result = new HashSet<>();
         for (final AnnotatedMethod<? super T> field : super.getMethods()) {
-            result.add(new AnnotatedMethodAdapter<T>(field, replacementMap));
+            result.add(new AnnotatedMethodAdapter<>(field, replacementMap));
         }
         return result;
     }
@@ -59,7 +59,7 @@ public class AnnotationReplacementAdapter<T>
     public Set<AnnotatedField<? super T>> getFields() {
         Set<AnnotatedField<? super T>> result = new HashSet<>();
         for (final AnnotatedField<? super T> field : super.getFields()) {
-            result.add(new AnnotatedFieldAdapter<T>(field, replacementMap));
+            result.add(new AnnotatedFieldAdapter<>(field, replacementMap));
         }
         return result;
     }

@@ -1,21 +1,25 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.annotations.TestImplementation;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotatedTypeAdapter;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
+import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationUtils;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.util.MavenVersion;
 import de.hilling.junit.cdi.util.MavenVersionResolver;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
-import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.*;
 import javax.enterprise.util.AnnotationLiteral;
 import java.io.Serializable;
-import java.util.logging.Level;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
+
+import static java.util.logging.Level.FINE;
 
 /**
  * CDI {@link javax.enterprise.inject.spi.Extension} to enable proxying of (nearly) all method invocations. <p> By
@@ -29,6 +33,7 @@ public class TestScopeExtension implements Extension, Serializable {
     private static final Logger LOG = Logger.getLogger(TestScopeExtension.class
             .getCanonicalName());
     private final MavenVersionResolver versionResolver = MavenVersionResolver.getInstance();
+    private final Map<Class<?>, AnnotatedType> decoratedTypes = new HashMap<>();
 
     /**
      * Add contexts after bean discovery.
@@ -41,54 +46,49 @@ public class TestScopeExtension implements Extension, Serializable {
         afterBeanDiscovery.addContext(new TestContext());
     }
 
+    public AnnotatedType decoratedTypeFor(Class<?> clazz) {
+        return decoratedTypes.get(clazz);
+    }
+
     /**
      * Use {@link javax.enterprise.inject.spi.AfterTypeDiscovery} to add Stereotype. <p> This is <a
      * href="https://issues.jboss.org/browse/WELD-1660">not possible in older weld versions</a>. </p>
      *
-     * @param afterTypeDiscovery
+     * @param afterTypeDiscovery type meta information.
      */
     public void afterTypeDiscovery(@Observes AfterTypeDiscovery afterTypeDiscovery) {
         MavenVersion version = versionResolver.getVersion("org.jboss.weld", "weld-api");
         if (version != null && version.compareTo(MINIMUM_WELD_VERSION_FOR_AFTER_TYPE_DISCOVERY) >= 0) {
-            afterTypeDiscovery.getAlternatives().add(TestImplementation.class);
+            afterTypeDiscovery.getAlternatives().add(GlobalTestImplementation.class);
         }
     }
 
     public <T> void replaceAnnotations(@Observes ProcessAnnotatedType<T> pat) {
-        LOG.log(Level.FINE, "processing type " + pat);
+        LOG.log(FINE, "processing type " + pat);
         AnnotatedTypeAdapter<T> enhancedAnnotatedType = new AnnotationReplacementAdapter<>(pat.getAnnotatedType());
         pat.setAnnotatedType(enhancedAnnotatedType);
+        updateDecoratedTypes(pat);
+    }
+
+    private <T> void updateDecoratedTypes(ProcessAnnotatedType<T> pat) {
+        decoratedTypes.put(pat.getAnnotatedType().getJavaClass(), pat.getAnnotatedType());
     }
 
 
-    public <X> void makeTypesMockable(@Observes ProcessAnnotatedType<X> pat) {
+    public <X> void processAnnotatedTypes(@Observes ProcessAnnotatedType<X> pat) {
         AnnotatedType<X> type = pat.getAnnotatedType();
-        Class<X> javaClass = type.getJavaClass();
-        if (ReflectionsUtils.isTestClass(javaClass)) {
-            AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();
-            builder.readFromType(type);
-            builder.addToClass(new AnnotationLiteral<TestSuiteScoped>() {
-                private static final long serialVersionUID = 1L;
+        final Class<X> javaClass = type.getJavaClass();
+        if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
+            new ActivatableAlternativeBuilder<X>(pat).invoke();
+        } else if (ReflectionsUtils.isTestClass(javaClass)) {
+            AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<TestSuiteScoped>() {
             });
-            try {
-                pat.setAnnotatedType(builder.create());
-            } catch (RuntimeException e) {
-                LOG.log(Level.SEVERE, "unable to process type " + pat, e);
-            }
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
-            AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();
-            builder.readFromType(type);
-            builder.addToClass(new AnnotationLiteral<Mockable>() {
-                private static final long serialVersionUID = 1L;
+            AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<Rediractable>() {
             });
-            try {
-                {
-                    pat.setAnnotatedType(builder.create());
-                }
-                pat.setAnnotatedType(builder.create());
-            } catch (RuntimeException e) {
-                LOG.log(Level.SEVERE, "unable to process type " + pat, e);
-            }
         }
+        updateDecoratedTypes(pat);
     }
+
+
 }

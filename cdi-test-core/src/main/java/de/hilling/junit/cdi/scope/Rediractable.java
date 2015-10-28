@@ -11,5 +11,5 @@ import java.lang.annotation.*;
 @InterceptorBinding
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Mockable {
+public @interface Rediractable {
 }

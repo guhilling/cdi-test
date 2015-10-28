@@ -3,14 +3,11 @@ package de.hilling.cdi.sampleapp.ejb;
 import de.hilling.cdi.sampleapp.UserRegistrationEntity;
 import de.hilling.junit.cdi.CdiUnitRunner;
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
-import de.hilling.junit.cdi.jee.EntityManagerTestProducer;
-import de.hilling.junit.cdi.jee.JEETestConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import java.util.List;
 
@@ -27,14 +24,6 @@ public class RegistrationServiceUnitTest {
     @Inject
     private EntityManager entityManager;
 
-    @GlobalTestImplementation
-    @Produces
-    private JEETestConfiguration configuration = new JEETestConfiguration() {
-        @Override
-        public String getTestPersistenceUnitName() {
-            return "cdi-test-unit-eclipselink";
-        }
-    };
     private List<UserRegistrationEntity> allUsers;
 
     private void assertDatabaseSize(int expectedSize) {
@@ -60,4 +49,5 @@ public class RegistrationServiceUnitTest {
         entityManager.flush();
         assertDatabaseSize(1);
     }
+
 }

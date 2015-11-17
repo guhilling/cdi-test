@@ -39,10 +39,13 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
         LoggerConfigurator.configure();
     }
 
+    private CurrentTestInformation testInformation;
+
     public CdiUnitRunner(Class<?> klass) throws InitializationError {
         super(klass);
         invocationTargetManager = BeanProvider.getContextualReference(InvocationTargetManager.class, false);
         lifecycleNotifier = BeanProvider.getContextualReference(LifecycleNotifier.class, false);
+        testInformation = resolveBean(CurrentTestInformation.class);
     }
 
     @Override
@@ -91,6 +94,8 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
         final Description description = describeChild(method);
         LOG.fine("> preparing " + description);
         invocationTargetManager.addAndActivateTest(description.getTestClass());
+        testInformation.setMethod(method.getMethod());
+        testInformation.setTestClass(description.getTestClass());
         contextControl.startContexts();
         lifecycleNotifier.notify(EventType.STARTING, description);
         LOG.fine(">> starting " + description);
@@ -106,9 +111,12 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
     @SuppressWarnings("unchecked")
     protected <T> T resolveTest(Class<T> clazz) {
         if (!testCases.containsKey(clazz)) {
-            testCases.put(clazz, BeanProvider.getContextualReference(clazz, false));
+            testCases.put(clazz, resolveBean(clazz));
         }
         return (T) testCases.get(clazz);
     }
 
+    private <T> T resolveBean(Class<T> clazz) {
+        return BeanProvider.getContextualReference(clazz, false);
+    }
 }

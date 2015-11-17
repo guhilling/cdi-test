@@ -1,9 +1,5 @@
 package de.hilling.junit.cdi;
 
-import java.lang.annotation.Annotation;
-
-import javax.enterprise.inject.Alternative;
-
 import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.apache.deltaspike.cdise.api.CdiContainerLoader;
 import org.apache.deltaspike.cdise.api.ContextControl;
@@ -11,13 +7,12 @@ import org.apache.deltaspike.cdise.api.ContextControl;
 /**
  * Wrapper for handling cdi startup, shutdown and lifecycle.
  */
-@Alternative
-public class ContextControlWrapper implements ContextControl {
+public class ContextControlWrapper {
     private ContextControl contextControl;
 
     private static final ContextControlWrapper INSTANCE = new ContextControlWrapper();
 
-    public static ContextControl getInstance() {
+    public static ContextControlWrapper getInstance() {
         return INSTANCE;
     }
 
@@ -27,23 +22,12 @@ public class ContextControlWrapper implements ContextControl {
         contextControl = cdiContainer.getContextControl();
     }
 
-    @Override
     public void startContexts() {
         contextControl.startContexts();
     }
 
-    @Override
     public void stopContexts() {
         contextControl.stopContexts();
     }
 
-    @Override
-    public void startContext(Class<? extends Annotation> scopeClass) {
-        contextControl.startContext(scopeClass);
-    }
-
-    @Override
-    public void stopContext(Class<? extends Annotation> scopeClass) {
-        contextControl.stopContext(scopeClass);
-    }
 }

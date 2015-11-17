@@ -35,9 +35,8 @@ public class ContextControlTest {
     private ApplicationScopedBean applicationScopedBean;
     @Inject
     private SessionScopedBean     sessionScopedBean;
-
     @Inject
-    private ContextControl contextControl;
+    private ContextControl        contextControl;
 
     @Test
     public void restartRequestStopAll() {

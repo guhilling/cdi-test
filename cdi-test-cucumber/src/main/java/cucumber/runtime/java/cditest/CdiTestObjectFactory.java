@@ -1,22 +1,23 @@
 package cucumber.runtime.java.cditest;
 
 import cucumber.runtime.java.ObjectFactory;
-import de.hilling.junit.cdi.ContextControlWrapper;
-import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
-import de.hilling.junit.cdi.scope.EventType;
-import org.apache.deltaspike.cdise.api.ContextControl;
-import org.apache.deltaspike.core.api.provider.BeanProvider;
-import org.junit.runner.Description;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.apache.deltaspike.core.api.provider.BeanProvider;
+import org.junit.runner.Description;
+
+import de.hilling.junit.cdi.ContextControlWrapper;
+import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
+import de.hilling.junit.cdi.scope.EventType;
+
 
 public class CdiTestObjectFactory implements ObjectFactory {
     private static final Logger LOG = Logger.getLogger(CdiTestObjectFactory.class.getCanonicalName());
 
-    private ContextControl contextControl;
+    private ContextControlWrapper contextControl;
     private LifecycleNotifier notifier;
 
     {

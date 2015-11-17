@@ -1,12 +1,10 @@
 package de.hilling.junit.cdi;
 
-import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
-import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
-import de.hilling.junit.cdi.scope.EventType;
-import de.hilling.junit.cdi.scope.InvocationTargetManager;
-import de.hilling.junit.cdi.util.LoggerConfigurator;
-import de.hilling.junit.cdi.util.ReflectionsUtils;
-import org.apache.deltaspike.cdise.api.ContextControl;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
+
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
@@ -15,10 +13,12 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.mockito.Mock;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
+import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.InvocationTargetManager;
+import de.hilling.junit.cdi.util.LoggerConfigurator;
+import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 /**
  * Runner for cdi tests providing: <ul> <li>test creation via cdi using deltaspike</li> <li>injection and activation of
@@ -26,10 +26,10 @@ import java.util.logging.Logger;
  */
 public class CdiUnitRunner extends BlockJUnit4ClassRunner {
     private static final Logger LOG = Logger.getLogger(CdiUnitRunner.class
-            .getCanonicalName());
+                                                       .getCanonicalName());
 
     private final InvocationTargetManager invocationTargetManager;
-    private final ContextControl contextControl = ContextControlWrapper.getInstance();
+    private final ContextControlWrapper contextControl = ContextControlWrapper.getInstance();
 
     private static Map<Class<?>, Object> testCases = new HashMap<>();
 
@@ -65,10 +65,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
 
     private boolean isTestActivatable(Field field) {
         Class type = field.getType();
-        if (type.isAnnotationPresent(ActivatableTestImplementation.class)) {
-            return true;
-        }
-        return false;
+        return type.isAnnotationPresent(ActivatableTestImplementation.class);
     }
 
     private void activateForTest(Field field) {

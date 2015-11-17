@@ -1,18 +1,19 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
-import javax.enterprise.inject.Alternative;
-import javax.enterprise.inject.spi.AnnotatedField;
-import javax.enterprise.inject.spi.AnnotatedMethod;
-import javax.enterprise.inject.spi.AnnotatedType;
 import java.lang.annotation.Annotation;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.spi.AnnotatedField;
+import javax.enterprise.inject.spi.AnnotatedMethod;
+import javax.enterprise.inject.spi.AnnotatedType;
+
 @SuppressWarnings("CdiManagedBeanInconsistencyInspection")
 @Alternative
 public class AnnotationReplacementAdapter<T>
-        extends AnnotatedTypeAdapter<T> {
+extends AnnotatedTypeAdapter<T> {
     private final Map<Class<? extends Annotation>, Annotation> replacementMap;
 
     public AnnotationReplacementAdapter(AnnotatedType<T> delegate) {

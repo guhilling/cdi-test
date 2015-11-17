@@ -1,14 +1,15 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
-import javax.enterprise.inject.spi.AnnotatedMethod;
-import javax.enterprise.inject.spi.AnnotatedParameter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
-public class AnnotatedMethodAdapter<T>
-    extends AnnotatedMemberAdapter<T> implements AnnotatedMethod<T> {
+import javax.enterprise.inject.spi.AnnotatedMethod;
+import javax.enterprise.inject.spi.AnnotatedParameter;
+
+class AnnotatedMethodAdapter<T>
+extends AnnotatedMemberAdapter<T> implements AnnotatedMethod<T> {
     private AnnotatedMethod<T> delegate;
 
     @SuppressWarnings("unchecked")

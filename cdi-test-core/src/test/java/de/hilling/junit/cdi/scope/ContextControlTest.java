@@ -40,11 +40,6 @@ public class ContextControlTest {
     private ContextControl contextControl;
 
     @Test
-    public void restartRequest() {
-        runTest(requestScopedBean, RequestScoped.class);
-    }
-
-    @Test
     public void restartRequestStopAll() {
         runTestStopAll(requestScopedBean, RequestScoped.class);
     }
@@ -57,6 +52,11 @@ public class ContextControlTest {
     @Test
     public void restartApplicationStopAll() {
         runTestStopAll(applicationScopedBean, ApplicationScoped.class);
+    }
+
+    @Test
+    public void restartRequest() {
+        runTest(requestScopedBean, RequestScoped.class);
     }
 
     @Test

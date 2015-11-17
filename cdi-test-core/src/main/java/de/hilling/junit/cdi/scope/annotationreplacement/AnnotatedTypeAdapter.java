@@ -11,12 +11,11 @@ import javax.enterprise.inject.spi.AnnotatedType;
 
 /**
  * Implement {@link AnnotatedType}, delegating to existing instance by default.
- * 
- * @author gunnar
- * 
+ *
  * @param <X> Type of annotation being replaced.
+ * @author gunnar
  */
-public abstract class AnnotatedTypeAdapter<X> implements AnnotatedType<X> {
+abstract class AnnotatedTypeAdapter<X> implements AnnotatedType<X> {
     private final AnnotatedType<X> delegate;
 
     public AnnotatedTypeAdapter(AnnotatedType<X> delegate) {

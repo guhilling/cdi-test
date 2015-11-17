@@ -1,10 +1,6 @@
 package de.hilling.junit.cdi;
 
-import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Method;
-
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Vetoed;
 
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 

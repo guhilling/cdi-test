@@ -10,9 +10,10 @@ cdi-test is available under the [The Apache Software License, Version 2.0](http:
 
 * Plain cdi test, no classpath magic.
 * Custom scopes for testing.
-* Uses interceptors for on-the-fly switching between mockito-mocks and real implementations.
+* Uses interceptors for on-the-fly switching between mockito-mocks, test implementation and production implementations.
 * Support for some ejb features to test jee application components:
     * Inject EntityManager via ``@Inject`` or ``@PersistenceContext``
+    * Injection of Stateless Beans
 
 ## Usage
 
@@ -24,9 +25,43 @@ Use maven to pull dependency on basic features:
     <dependency>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-core</artifactId>
-        <version>0.10.0</version>
+        <version>0.12.0</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.deltaspike.cdictrl</groupId>
+        <artifactId>deltaspike-cdictrl-weld</artifactId>
+        <version>1.5.1</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.jboss.weld.se</groupId>
+        <artifactId>weld-se-core</artifactId>
+        <version>2.2.14.Final</version>
+        <scope>test</scope>
+    </dependency>
+
+```
+
+Of course the version of weld being used should match the version you are using in your production system.
+The smallest supported version is _2.1.2.Final_ however.
+
+So if you are using an old version of JBoss or whatever server you have, you have to use a different cdi
+implementation for your tests.
+
+If you are using cdi-test with hibernate you might run into problems because hibernate uses jandex. Weld will try
+to use jandex if it is present but the version used by hibernate is not suitable for Weld. To fix the problem you
+just add a newer jandex version with test scope:
+
+```xml
+    <dependency>
+        <groupId>org.jboss</groupId>
+        <artifactId>jandex</artifactId>
+        <version>1.2.2.Final</version>
+        <scope>test</scope>
     </dependency>
 ```
+
 
 ### Writing Tests
 
@@ -74,7 +109,8 @@ public class RequestScopeMockTest extends BaseTest {
 
 ## TODO
 
-* add database cleanup support.
-* add jpa support.
-* add ejb support at least for some features.
-* allow switchable test implementations instead of mocks.
+* Project restructuring to release extensions (like cdi-test-jee) independently from cdi-test-core.
+* More extensions:
+    * dbunit
+    * test data generator
+* switchable Mock-Providers

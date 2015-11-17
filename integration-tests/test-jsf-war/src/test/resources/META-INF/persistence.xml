@@ -19,8 +19,8 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>de.hilling.cdi.sampleapp.UserRegistrationEntity</class>
         <properties>
-            <property name="eclipselink.jdbc.url" value="jdbc:h2:mem:test"/>
-            <property name="eclipselink.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="eclipselink.target-database" value="Oracle"/>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
             <property name="eclipselink.ddl-generation.output-mode" value="database"/>

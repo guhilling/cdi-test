@@ -15,7 +15,18 @@ public class InjectionTest extends CdiTestAbstract {
     private Person person;
 
     @Inject
+    private CurrentTestInformation testInformation;
+
+    @Inject
     private ConstructorInjected constructorInjected;
+
+
+    @Test
+    public void checkTestInformation()throws Exception {
+        assertNotNull(testInformation);
+        assertEquals(InjectionTest.class, testInformation.getTestClass());
+        assertEquals(InjectionTest.class.getMethod("checkTestInformation"), testInformation.getMethod());
+    }
 
     @Test
     public void testInjection() {

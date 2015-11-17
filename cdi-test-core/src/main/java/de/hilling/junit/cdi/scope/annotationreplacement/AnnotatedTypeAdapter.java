@@ -1,12 +1,13 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.Set;
+
 import javax.enterprise.inject.spi.AnnotatedConstructor;
 import javax.enterprise.inject.spi.AnnotatedField;
 import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.Set;
 
 /**
  * Implement {@link AnnotatedType}, delegating to existing instance by default.
@@ -15,7 +16,7 @@ import java.util.Set;
  * 
  * @param <X> Type of annotation being replaced.
  */
-public class AnnotatedTypeAdapter<X> implements AnnotatedType<X> {
+public abstract class AnnotatedTypeAdapter<X> implements AnnotatedType<X> {
     private final AnnotatedType<X> delegate;
 
     public AnnotatedTypeAdapter(AnnotatedType<X> delegate) {

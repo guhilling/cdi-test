@@ -1,8 +1,6 @@
 package de.hilling.junit.cdi.util;
 
-import de.hilling.junit.cdi.CdiUnitRunner;
-import org.junit.runner.RunWith;
-
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -10,7 +8,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ReflectionsUtils {
+import org.junit.runner.RunWith;
+
+import de.hilling.junit.cdi.CdiUnitRunner;
+
+public final class ReflectionsUtils {
+
+    private ReflectionsUtils() {
+    }
 
     private static final String[] SYSTEM_PACKAGES = {
             "java",
@@ -81,7 +86,7 @@ public class ReflectionsUtils {
         return !isSystemClass(javaClass) && isProxyable(javaClass);
     }
 
-    private static <X> boolean isSystemClass(Class<X> javaClass) {
+    public static <X> boolean isSystemClass(Class<X> javaClass) {
         if (javaClass.getPackage() == null)
             return false;
 
@@ -94,7 +99,7 @@ public class ReflectionsUtils {
         return false;
     }
 
-    private static <X> boolean isProxyable(Class<X> javaClass) {
+    public static <X> boolean isProxyable(Class<X> javaClass) {
         if (javaClass.isAnonymousClass()) {
             return false;
         }
@@ -116,7 +121,7 @@ public class ReflectionsUtils {
         return !javaClass.isEnum();
     }
 
-    private static <X> boolean hasFinalMethods(Class<X> javaClass) {
+    public static <X> boolean hasFinalMethods(Class<X> javaClass) {
         Method[] methods = javaClass.getMethods();
         for (Method method : methods) {
             if (method.getDeclaringClass().getPackage() != null &&
@@ -131,9 +136,10 @@ public class ReflectionsUtils {
         return false;
     }
 
-    private static <X> boolean hasPublicConstructor(Class<X> javaClass) {
+    public static <X> boolean hasPublicConstructor(Class<X> javaClass) {
         try {
-            if (!Modifier.isPublic(javaClass.getConstructor().getModifiers())) {
+            Constructor<X> constructor = javaClass.getConstructor();
+            if (!Modifier.isPublic(constructor.getModifiers())) {
                 return false;
             }
         } catch (NoSuchMethodException e) {

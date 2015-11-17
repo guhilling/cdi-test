@@ -1,12 +1,17 @@
-package de.hilling.junit.cdi;
+package de.hilling.junit.cdi.util;
 
-import de.hilling.junit.cdi.beans.StrangeName$Object;
-import de.hilling.junit.cdi.util.ReflectionsUtils;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
+import de.hilling.junit.cdi.CdiTestAbstract;
+import de.hilling.junit.cdi.InjectionTest;
+import de.hilling.junit.cdi.NotificationTest;
+import de.hilling.junit.cdi.beans.StrangeName$Object;
 
 public class ReflectionsUtilsTest {
 
@@ -34,6 +39,21 @@ public class ReflectionsUtilsTest {
     public void dontProxySystemClasses() {
         assertFalse(ReflectionsUtils.shouldProxyCdiType(Integer.class));
         assertFalse(ReflectionsUtils.shouldProxyCdiType(CdiContainer.class));
+    }
+
+    @Test
+    public void dontProxyPrivateConstructor() {
+        assertFalse(ReflectionsUtils.shouldProxyCdiType(ReflectionsUtils.class));
+    }
+
+    @Test
+    public void dontProxyProtectedConstructor() {
+        assertFalse(ReflectionsUtils.hasPublicConstructor(TestClassNoPublicConstructor.class));
+    }
+
+    @Test
+    public void dontProxyPrimitives() {
+        assertFalse(ReflectionsUtils.shouldProxyCdiType(Integer.TYPE));
     }
 
     @Test

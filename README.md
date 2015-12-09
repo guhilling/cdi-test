@@ -114,3 +114,11 @@ public class RequestScopeMockTest extends BaseTest {
     * dbunit
     * test data generator
 * switchable Mock-Providers
+
+## Sponsors
+
+JProfiler supports open source projects with its full-featured Java Profiler. Click the JProfiler logo below to learn more.
+
+<a href="http://www.ej-technologies.com/products/jprofiler/overview.html" target="_blank" title="File Management">
+  <img src="http://www.ej-technologies.com/images/product_banners/jprofiler_large.png" alt="File Management">
+</a>

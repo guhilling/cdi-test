@@ -1,18 +1,20 @@
 package de.hilling.junit.cdi.jee;
 
-import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
-import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
-import de.hilling.junit.cdi.lifecycle.TestEvent;
-import de.hilling.junit.cdi.scope.EventType;
-import de.hilling.junit.cdi.scope.TestSuiteScoped;
-import org.junit.runner.Description;
+import java.sql.SQLException;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import java.sql.SQLException;
+
+import org.junit.runner.Description;
+
+import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
+import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
+import de.hilling.junit.cdi.lifecycle.TestEvent;
+import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 @TestSuiteScoped
 public class TestTransactionManager {
@@ -23,10 +25,8 @@ public class TestTransactionManager {
     @Inject
     private Instance<ConnectionWrapper> connectionWrappers;
     @Inject
-    private DatabaseCleaner databaseCleaner;
-    @Inject
-    private EntityManager entityManager;
-    private EntityTransaction transaction;
+    private EntityManager               entityManager;
+    private EntityTransaction           transaction;
 
     protected void beginTransaction(@Observes @TestEvent(EventType.STARTING) Description description) {
         cleanDatabase();
@@ -37,7 +37,7 @@ public class TestTransactionManager {
     private void cleanDatabase() {
         try {
             for (ConnectionWrapper wrapper : connectionWrappers) {
-                if(wrapper.runWithConnection(databaseCleaner)) {
+                if(wrapper.runWithConnection()) {
                     break;
                 }
             }

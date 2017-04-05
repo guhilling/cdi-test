@@ -1,30 +1,31 @@
 package de.hilling.junit.cdi.jee.jpa.eclipselink;
 
-import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
-import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import java.sql.Connection;
-import java.sql.SQLException;
+
+import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
+import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 
 @RequestScoped
 public class EclipselinkConnectionWrapper implements ConnectionWrapper {
 
-    private EntityManager entityManager;
-
-    protected EclipselinkConnectionWrapper() {
-    }
+    private final Instance<DatabaseCleaner> cleaner;
+    private final EntityManager entityManager;
 
     @Inject
-    public EclipselinkConnectionWrapper(EntityManager entityManager) {
+    public EclipselinkConnectionWrapper(EntityManager entityManager, Instance<DatabaseCleaner> cleaner) {
         this.entityManager = entityManager;
+        this.cleaner = cleaner;
     }
 
     @Override
-    public boolean runWithConnection(final DatabaseCleaner work) throws SQLException {
+    public boolean runWithConnection() throws SQLException {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
@@ -33,7 +34,9 @@ public class EclipselinkConnectionWrapper implements ConnectionWrapper {
                 transaction.rollback();
                 return false;
             } else {
-                work.run(connection);
+                if(!cleaner.isUnsatisfied()) {
+                    cleaner.get().run(connection);
+                }
                 transaction.commit();
                 return true;
             }

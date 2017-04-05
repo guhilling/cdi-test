@@ -15,8 +15,14 @@ import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 @RequestScoped
 public class EclipselinkConnectionWrapper implements ConnectionWrapper {
 
-    private final Instance<DatabaseCleaner> cleaner;
-    private final EntityManager entityManager;
+    private Instance<DatabaseCleaner> cleaner;
+    private EntityManager             entityManager;
+
+    /**
+     * make it proxyable.
+     */
+    protected EclipselinkConnectionWrapper() {
+    }
 
     @Inject
     public EclipselinkConnectionWrapper(EntityManager entityManager, Instance<DatabaseCleaner> cleaner) {
@@ -34,7 +40,7 @@ public class EclipselinkConnectionWrapper implements ConnectionWrapper {
                 transaction.rollback();
                 return false;
             } else {
-                if(!cleaner.isUnsatisfied()) {
+                if (!cleaner.isUnsatisfied()) {
                     cleaner.get().run(connection);
                 }
                 transaction.commit();

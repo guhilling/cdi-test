@@ -6,7 +6,7 @@ import de.hilling.junit.cdi.scope.TestSuiteScoped;
  * Configuration provider for jee integration.
  */
 @TestSuiteScoped
-public class JEEDefaultConfiguration implements JEETestConfiguration{
+public class JEEConfiguration implements JEETestConfiguration{
 
     @Override
     public String getTestPersistenceUnitName() {

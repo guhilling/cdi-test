@@ -1,8 +1,11 @@
 package de.hilling.junit.cdi.util;
 
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+
 /**
  * Version for requested artifact.
  */
+@BypassTestInterceptor
 public final class MavenVersion implements Comparable<MavenVersion> {
     /**
      * Maven major version.

@@ -2,8 +2,10 @@ package de.hilling.junit.cdi;
 
 import java.lang.reflect.Method;
 
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
+@BypassTestInterceptor
 @TestSuiteScoped
 public class CurrentTestInformation {
 

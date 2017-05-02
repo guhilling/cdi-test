@@ -1,7 +1,8 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.util.ReflectionsUtils;
-import org.apache.deltaspike.core.api.provider.BeanProvider;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
@@ -10,9 +11,12 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
+import org.apache.deltaspike.core.api.provider.BeanProvider;
+
+import de.hilling.junit.cdi.CurrentTestInformation;
+import de.hilling.junit.cdi.annotations.BypassMocks;
+import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 @Rediractable
 @Interceptor
@@ -23,22 +27,37 @@ public class CallRedirectionInterceptor implements Serializable {
 
     @Inject
     private Instance<InvocationTargetManager> invocationTargetManager;
+    @Inject
+    private Instance<CurrentTestInformation>  testInformation;
 
     @AroundInvoke
     public Object invokeMockableBean(InvocationContext ctx) throws Throwable {
         Class<?> javaClass = ReflectionsUtils.getOriginalClass(ctx.getTarget().getClass());
         if (invocationTargetManager.get().isAlternativeEnabled(javaClass)) {
             return callAlternative(ctx, javaClass);
-        } else if (invocationTargetManager.get().isMockEnabled(javaClass)) {
+        } else if (!bypassMocks() && invocationTargetManager.get().isMockEnabled(javaClass)) {
             return callMock(ctx, javaClass);
         } else {
             return ctx.proceed();
         }
     }
 
+    private boolean bypassMocks() {
+        if (testInformation.isUnsatisfied()) {
+            throw new RuntimeException("could not find testinformation.");
+        }
+        final Method testMethod = testInformation.get().getMethod();
+        if (testMethod != null) {
+            return testMethod.isAnnotationPresent(BypassMocks.class);
+        } else {
+            return false;
+        }
+    }
+
     private Object callAlternative(InvocationContext ctx, Class<?> javaClass) throws Throwable {
         try {
-            Object alternative = BeanProvider.getContextualReference(invocationTargetManager.get().alternativeFor(javaClass));
+            Object alternative = BeanProvider
+                                 .getContextualReference(invocationTargetManager.get().alternativeFor(javaClass));
             Method method = ctx.getMethod();
             Method alternativeMethod = alternative.getClass().getMethod(method.getName(), method.getParameterTypes());
             return alternativeMethod.invoke(alternative, ctx.getParameters());
@@ -56,5 +75,4 @@ public class CallRedirectionInterceptor implements Serializable {
             throw ite.getCause();
         }
     }
-
 }

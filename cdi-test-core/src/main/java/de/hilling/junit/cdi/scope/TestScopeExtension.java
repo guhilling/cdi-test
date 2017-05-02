@@ -16,6 +16,7 @@ import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.enterprise.util.AnnotationLiteral;
 
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationUtils;
@@ -30,6 +31,7 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
  * default, these are all classes, except: <ul> <li>Anonymous classes.</li> <li>Enums.</li> </ul> To preventing
  * <em>everything</em> from being proxied it is possible to define explicit packages.
  */
+@BypassTestInterceptor
 public class TestScopeExtension implements Extension, Serializable {
     public static final MavenVersion MINIMUM_WELD_VERSION_FOR_AFTER_TYPE_DISCOVERY = new MavenVersion(2, 2);
 

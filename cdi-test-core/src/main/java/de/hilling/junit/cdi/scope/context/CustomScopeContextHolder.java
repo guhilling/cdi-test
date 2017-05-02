@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.enterprise.inject.spi.Bean;
 
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+
+@BypassTestInterceptor
 public class CustomScopeContextHolder implements ScopeContextHolder {
     private Map<Class<?>, CustomScopeInstance<?>> beans;
 

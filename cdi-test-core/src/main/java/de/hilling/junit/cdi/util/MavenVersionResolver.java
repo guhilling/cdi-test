@@ -6,9 +6,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+
 /**
  * Resolve maven versions from pom.properties resources in classpath.
  */
+@BypassTestInterceptor
 public final class MavenVersionResolver {
 
     private final Map<String, MavenVersion> pathToVersionMap;

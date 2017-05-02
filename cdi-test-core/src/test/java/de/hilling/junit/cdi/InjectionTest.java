@@ -1,13 +1,14 @@
 package de.hilling.junit.cdi;
 
-import de.hilling.junit.cdi.beans.ConstructorInjected;
-import de.hilling.junit.cdi.beans.Person;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
+
+import de.hilling.junit.cdi.beans.ConstructorInjected;
+import de.hilling.junit.cdi.beans.Person;
 
 public class InjectionTest extends CdiTestAbstract {
 

@@ -3,9 +3,12 @@ package de.hilling.junit.cdi.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+
 /**
  * Parse content of pom.properties file.
  */
+@BypassTestInterceptor
 public class ContentParser {
 
     private static final Pattern PATTERN;

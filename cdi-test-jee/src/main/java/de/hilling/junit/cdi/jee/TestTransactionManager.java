@@ -11,16 +11,12 @@ import javax.persistence.EntityTransaction;
 import org.junit.runner.Description;
 
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
-import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.EventType;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 @TestSuiteScoped
 public class TestTransactionManager {
-
-    public static final String HIBERNATE_DELEGATE = "org.hibernate.internal.SessionImpl";
-    public static final String ECLIPSELINK_DELEGATE = "org.eclipse.persistence.jpa.JpaEntityManager";
 
     @Inject
     private Instance<ConnectionWrapper> connectionWrappers;

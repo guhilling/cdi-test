@@ -5,7 +5,7 @@ import org.apache.deltaspike.cdise.api.CdiContainerLoader;
 import org.apache.deltaspike.cdise.api.ContextControl;
 
 /**
- * Singelton for booting the container and starting and stopping the standard CDI contexts.
+ * Singleton for booting the container and starting and stopping the standard CDI contexts.
  */
 public class ContextControlWrapper {
     private final ContextControl contextControl;

@@ -17,7 +17,7 @@ cdi-test is available under the [The Apache Software License, Version 2.0](http:
 
 ## Usage
 
-See the [Documentation]().
+See the [Documentation on github pages](http://guhilling.github.io/cdi-test/).
 
 ## LICENSE
 

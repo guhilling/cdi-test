@@ -1,7 +1,9 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Map;
@@ -47,6 +49,24 @@ abstract class AnnotatedMemberAdapter<T> implements AnnotatedMember<T> {
             return member.getAnnotation(annotationType);
         } else {
             return (A) replacementMap.get(annotationType);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType) {
+        if (member.isAnnotationPresent(annotationType)) {
+            try {
+                final Method getAnnotations = member.getClass().getMethod("getAnnotations", annotationType.getClass());
+                return (Set<T>) getAnnotations.invoke(getAnnotations, annotationType);
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException("no such method, jdk mix?", e);
+            }
+        } else {
+            final HashSet<T> ts = new HashSet<>();
+            if (replacementMap.containsKey(annotationType)) {
+                ts.add((T) replacementMap.get(annotationType));
+            }
+            return ts;
         }
     }
 

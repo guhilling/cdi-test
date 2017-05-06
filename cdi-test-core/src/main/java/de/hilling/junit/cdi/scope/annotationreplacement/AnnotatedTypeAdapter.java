@@ -1,6 +1,8 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Set;
 
@@ -35,6 +37,16 @@ abstract class AnnotatedTypeAdapter<X> implements AnnotatedType<X> {
     @Override
     public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
         return delegate.getAnnotation(annotationType);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType) {
+        try {
+            final Method getAnnotations = delegate.getClass().getMethod("getAnnotations", annotationType.getClass());
+            return (Set<T>) getAnnotations.invoke(getAnnotations, annotationType);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException("no such method, jdk mix?", e);
+        }
     }
 
     @Override

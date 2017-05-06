@@ -1,6 +1,5 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
@@ -27,11 +26,6 @@ public final class AnnotationUtils {
     public static <X> void addClassAnnotation(ProcessAnnotatedType<X> pat, AnnotationLiteral<?> annotation) {
         AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();
         builder.readFromType(pat.getAnnotatedType());
-        builder.addToClass(annotation);
-        try {
-            pat.setAnnotatedType(builder.create());
-        } catch (RuntimeException e) {
-            LOG.log(Level.SEVERE, "unable to process type " + pat, e);
-        }
+        pat.setAnnotatedType(builder.addToClass(annotation).create());
     }
 }

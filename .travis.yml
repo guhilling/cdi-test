@@ -1,3 +1,7 @@
+sudo: required
+dist: trusty
+group: edge
+
 language: java
 jdk:
   - oraclejdk8

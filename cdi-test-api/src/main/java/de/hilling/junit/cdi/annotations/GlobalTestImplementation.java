@@ -11,12 +11,6 @@ import javax.enterprise.inject.Stereotype;
 
 import de.hilling.junit.cdi.scope.TestScoped;
 
-@Alternative
-@TestScoped
-@Stereotype
-@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Priority(100)
 /**
  * Use this annotation to mark Alternatives that should globally replace
  * production implementations.
@@ -25,5 +19,11 @@ import de.hilling.junit.cdi.scope.TestScoped;
  *     because the container is only started once.
  * </p>
  */
+@Alternative
+@TestScoped
+@Stereotype
+@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Priority(100)
 public @interface GlobalTestImplementation {
 }

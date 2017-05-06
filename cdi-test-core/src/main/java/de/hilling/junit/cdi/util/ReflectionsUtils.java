@@ -1,18 +1,12 @@
 package de.hilling.junit.cdi.util;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-
-import javax.enterprise.inject.spi.Annotated;
-import javax.enterprise.inject.spi.AnnotatedType;
 
 import org.junit.runner.RunWith;
 
@@ -90,7 +84,7 @@ public final class ReflectionsUtils {
      * @return true if a cdi proxy should be created.
      */
     public static <X> boolean shouldProxyCdiType(Class<X> javaClass) {
-        return !isSystemClass(javaClass) && isProxyable(javaClass);
+        return !isSystemClass(javaClass) && isPossibleCdiBean(javaClass);
     }
 
     public static <X> boolean isSystemClass(Class<X> javaClass) {
@@ -110,7 +104,7 @@ public final class ReflectionsUtils {
         return false;
     }
 
-    public static <X> boolean isProxyable(Class<X> javaClass) {
+    public static <X> boolean isPossibleCdiBean(Class<X> javaClass) {
         if (javaClass.isAnonymousClass()) {
             return false;
         }
@@ -157,24 +151,5 @@ public final class ReflectionsUtils {
             return false;
         }
         return true;
-    }
-
-    /**
-     * Call {@link AnnotatedType#getAnnotations(Class)} using reflections because it is not available
-     * in older cdi versions.
-     * @param annotationType java class of annotation
-     * @param delegate delegate to call method on
-     * @param <T> annotation type.
-     * @return annotations of this type.
-     */
-    @SuppressWarnings("unchecked")
-    public static <T extends Annotation> Set<T> callGetAnnotations(Class<T> annotationType,
-                                                                   Annotated delegate) {
-        try {
-            final Method getAnnotations = delegate.getClass().getMethod("getAnnotations", annotationType.getClass());
-            return (Set<T>) getAnnotations.invoke(getAnnotations, annotationType);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException("no such method, jdk mix?", e);
-        }
     }
 }

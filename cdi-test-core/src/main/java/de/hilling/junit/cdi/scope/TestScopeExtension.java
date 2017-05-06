@@ -18,7 +18,7 @@ import javax.enterprise.util.AnnotationLiteral;
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
-import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementAdapter;
+import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementBuilder;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationUtils;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
@@ -71,7 +71,7 @@ public class TestScopeExtension implements Extension, Serializable {
 
     public <T> void replaceAnnotations(@Observes ProcessAnnotatedType<T> pat) {
         LOG.log(FINE, "processing type " + pat);
-        pat.setAnnotatedType(new AnnotationReplacementAdapter<>(pat.getAnnotatedType()));
+        pat.setAnnotatedType(new AnnotationReplacementBuilder<>(pat.getAnnotatedType()).invoke());
         updateDecoratedTypes(pat);
     }
 
@@ -89,7 +89,7 @@ public class TestScopeExtension implements Extension, Serializable {
             AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<TestSuiteScoped>() {
             });
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
-            AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<Rediractable>() {
+            AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<Replaceable>() {
             });
         }
         updateDecoratedTypes(pat);

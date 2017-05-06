@@ -16,7 +16,7 @@ env:
 matrix:
   exclude:
     - jdk: oraclejdk7
-    - env: cdi-2.0
+      env: CDI=cdi-2.0
 
 
 script:

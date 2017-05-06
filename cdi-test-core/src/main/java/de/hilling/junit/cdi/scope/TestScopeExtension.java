@@ -38,8 +38,8 @@ public class TestScopeExtension implements Extension, Serializable {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = Logger.getLogger(TestScopeExtension.class
             .getCanonicalName());
-    private final MavenVersionResolver versionResolver = MavenVersionResolver.getInstance();
-    private final Map<Class<?>, AnnotatedType> decoratedTypes = new HashMap<>();
+    private final transient MavenVersionResolver versionResolver = MavenVersionResolver.getInstance();
+    private final transient Map<Class<?>, AnnotatedType> decoratedTypes = new HashMap<>();
 
     /**
      * Add contexts after bean discovery.
@@ -70,7 +70,7 @@ public class TestScopeExtension implements Extension, Serializable {
     }
 
     public <T> void replaceAnnotations(@Observes ProcessAnnotatedType<T> pat) {
-        LOG.log(FINE, "processing type " + pat);
+        LOG.log(FINE, "processing type %s", pat);
         pat.setAnnotatedType(new AnnotationReplacementBuilder<>(pat.getAnnotatedType()).invoke());
         updateDecoratedTypes(pat);
     }

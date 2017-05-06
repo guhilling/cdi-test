@@ -12,6 +12,8 @@ import java.util.Set;
 import javax.enterprise.inject.spi.AnnotatedMember;
 import javax.enterprise.inject.spi.AnnotatedType;
 
+import de.hilling.junit.cdi.util.ReflectionsUtils;
+
 abstract class AnnotatedMemberAdapter<T> implements AnnotatedMember<T> {
     private final AnnotatedMember<? super T>                   member;
     private       Map<Class<? extends Annotation>, Annotation> replacementMap;
@@ -55,12 +57,7 @@ abstract class AnnotatedMemberAdapter<T> implements AnnotatedMember<T> {
     @SuppressWarnings("unchecked")
     public <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType) {
         if (member.isAnnotationPresent(annotationType)) {
-            try {
-                final Method getAnnotations = member.getClass().getMethod("getAnnotations", annotationType.getClass());
-                return (Set<T>) getAnnotations.invoke(getAnnotations, annotationType);
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException("no such method, jdk mix?", e);
-            }
+            return ReflectionsUtils.callGetAnnotations(annotationType, member);
         } else {
             final HashSet<T> ts = new HashSet<>();
             if (replacementMap.containsKey(annotationType)) {

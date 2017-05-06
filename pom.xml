@@ -19,6 +19,7 @@
         <cdi-1.2b-weld.version>2.4.3.Final</cdi-1.2b-weld.version>
         <cdi-2.0-weld.version>3.0.0.CR2</cdi-2.0-weld.version>
         <github.global.server>github</github.global.server>
+        <mockito-core.version>2.7.22</mockito-core.version>
     </properties>
 
     <scm>
@@ -107,7 +108,7 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>1.9.5</version>
+                <version>${mockito-core.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.deltaspike.cdictrl</groupId>
@@ -221,6 +222,9 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

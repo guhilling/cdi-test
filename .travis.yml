@@ -6,13 +6,18 @@ language: java
 jdk:
   - oraclejdk7
   - oraclejdk8
-  - oraclejdk9
 
 env:
   - CDI=cdi-1.1
   - CDI=cdi-1.2
   - CDI=cdi-1.2b
   - CDI=cdi-2.0
+
+matrix:
+  exclude:
+    - jdk: oraclejdk7
+    - env: cdi-2.0
+
 
 script:
   - mvn test -P${CDI} jacoco:report coveralls:report

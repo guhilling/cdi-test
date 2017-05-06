@@ -26,7 +26,7 @@ matrix:
 
 
 script:
-  - mvn test -P${CDI} jacoco:report coveralls:report sonar:sonar
+  - mvn test -P${CDI} jacoco:report coveralls:report
 
 cache:
   directories:

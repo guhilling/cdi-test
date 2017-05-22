@@ -9,6 +9,7 @@ public enum EventType {
      * Unit test is about to start.
      * <p>
      *     The event will be sent just before the test method is called.
+     *     The CDI scopes for the test are already active.
      * </p>
      */
     STARTING,
@@ -23,7 +24,7 @@ public enum EventType {
     /**
      * Unit test has finished.
      * <p>
-     *     The test method finished and the scopes of the test are closed.
+     *     The test method finished and the CDI scopes of the test are closed.
      * </p>
      */
     FINISHED

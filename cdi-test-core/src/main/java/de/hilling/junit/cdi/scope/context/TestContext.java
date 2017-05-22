@@ -9,11 +9,13 @@ import javax.enterprise.event.Observes;
 
 import org.junit.runner.Description;
 
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.EventType;
 import de.hilling.junit.cdi.scope.TestScoped;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
+@BypassTestInterceptor
 @TestSuiteScoped
 public class TestContext extends AbstractScopeContext implements Context, Serializable {
     private static final long serialVersionUID = 1L;

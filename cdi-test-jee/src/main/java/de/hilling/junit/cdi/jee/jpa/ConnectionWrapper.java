@@ -9,8 +9,7 @@ public interface ConnectionWrapper {
 
     /**
      * Execute specified code in connection.
-     * @param work
-     * @throws SQLException
+     * @throws SQLException on any error during execution.
      */
-    boolean runWithConnection(DatabaseCleaner work) throws SQLException;
+    boolean runWithConnection() throws SQLException;
 }

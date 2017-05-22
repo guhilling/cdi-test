@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.runner.RunWith;
 
 import de.hilling.junit.cdi.CdiUnitRunner;
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 
 public final class ReflectionsUtils {
 
@@ -87,8 +88,12 @@ public final class ReflectionsUtils {
     }
 
     public static <X> boolean isSystemClass(Class<X> javaClass) {
-        if (javaClass.getPackage() == null)
+        if (javaClass.isAnnotationPresent(BypassTestInterceptor.class)) {
+            return true;
+        }
+        if (javaClass.getPackage() == null) {
             return false;
+        }
 
         String packageName = javaClass.getPackage().getName();
         for(String packagePrefix: SYSTEM_PACKAGES) {

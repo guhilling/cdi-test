@@ -1,15 +1,17 @@
 package de.hilling.junit.cdi.util;
 
-import de.hilling.junit.cdi.CdiUnitRunner;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import de.hilling.junit.cdi.CdiUnitRunner;
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+
 /**
  * Setup java.util.logging.
  */
+@BypassTestInterceptor
 public class LoggerConfigurator {
 
     public static final String LOGCONFIG_KEY = "junit.cdi.logconfig";

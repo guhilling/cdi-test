@@ -19,7 +19,7 @@ import de.hilling.junit.cdi.scope.TestScoped;
 public @interface ActivatableTestImplementation {
     /**
      * Enumerates the classes and/or interfaces that should be replaced by the injected bean.
-     * @return
+     * @return activatable beans.
      */
     Class<?>[] value() default {};
 }

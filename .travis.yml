@@ -26,7 +26,7 @@ matrix:
 
 
 script:
-  - mvn test -P${CDI} jacoco:report coveralls:report
+  - export JAVA_HOME=$(/usr/libexec/java_home) && mvn test -P${CDI} jacoco:report coveralls:report
 
 cache:
   directories:

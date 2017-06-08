@@ -18,7 +18,7 @@ import de.hilling.junit.cdi.CurrentTestInformation;
 import de.hilling.junit.cdi.annotations.BypassMocks;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
-@Rediractable
+@Replaceable
 @Interceptor
 @Dependent
 @Priority(0)

@@ -84,7 +84,7 @@ public final class ReflectionsUtils {
      * @return true if a cdi proxy should be created.
      */
     public static <X> boolean shouldProxyCdiType(Class<X> javaClass) {
-        return !isSystemClass(javaClass) && isProxyable(javaClass);
+        return !isSystemClass(javaClass) && isPossibleCdiBean(javaClass);
     }
 
     public static <X> boolean isSystemClass(Class<X> javaClass) {
@@ -104,7 +104,7 @@ public final class ReflectionsUtils {
         return false;
     }
 
-    public static <X> boolean isProxyable(Class<X> javaClass) {
+    public static <X> boolean isPossibleCdiBean(Class<X> javaClass) {
         if (javaClass.isAnonymousClass()) {
             return false;
         }

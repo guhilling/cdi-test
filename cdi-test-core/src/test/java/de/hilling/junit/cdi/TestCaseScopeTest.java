@@ -1,13 +1,22 @@
 package de.hilling.junit.cdi;
 
-import de.hilling.junit.cdi.scopedbeans.*;
-import org.junit.Assert;
-import org.junit.Test;
-
-import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import javax.inject.Inject;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import de.hilling.junit.cdi.scopedbeans.ApplicationScopedBean;
+import de.hilling.junit.cdi.scopedbeans.DependentScopedBean;
+import de.hilling.junit.cdi.scopedbeans.RequestScopedBean;
+import de.hilling.junit.cdi.scopedbeans.SampleScopedBean;
+import de.hilling.junit.cdi.scopedbeans.ScopedBean;
+import de.hilling.junit.cdi.scopedbeans.SessionScopedBean;
+import de.hilling.junit.cdi.scopedbeans.TestScopedBean;
+import de.hilling.junit.cdi.scopedbeans.TestSuiteScopedBean;
 
 /**
  * Test if only one test class.
@@ -50,14 +59,19 @@ public class TestCaseScopeTest extends CdiTestAbstract {
         Assert.assertNotSame(dependent1, dependent2);
     }
 
+    @Test
+    public void testSampleReplacedToDependent() {
+
+    }
+
     private void assertInstances() {
         assertInstanceNotSame(testScopedBean);
         assertInstanceNotSame(applicationScopedBean);
         assertInstanceNotSame(requestScopedBean);
         assertInstanceNotSame(sessionScopedBean);
+        assertInstanceNotSame(sampleScopedBean);
         assertInstanceSame(testSuiteScopedBean);
         assertInstanceSame(dependentScopedBean);
-        assertInstanceSame(sampleScopedBean);
     }
 
     private void assertInstanceNotSame(ScopedBean bean) {

@@ -1,13 +1,19 @@
 package de.hilling.junit.cdi;
 
+import java.util.logging.Logger;
+
 import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.apache.deltaspike.cdise.api.CdiContainerLoader;
 import org.apache.deltaspike.cdise.api.ContextControl;
+
+import de.hilling.junit.cdi.util.UserLogger;
 
 /**
  * Singleton for booting the container and starting and stopping the standard CDI contexts.
  */
 public class ContextControlWrapper {
+    private static final Logger LOG = UserLogger.getInstance();
+
     private final ContextControl contextControl;
 
     private static final class SingletonHolder {
@@ -27,7 +33,11 @@ public class ContextControlWrapper {
     private ContextControlWrapper() {
         final CdiContainer cdiContainer = CdiContainerLoader.getCdiContainer();
         if (!isCdiContainerBooted(cdiContainer)) {
+            LOG.info("booting cdi container");
+            long start = System.currentTimeMillis();
             cdiContainer.boot();
+            long end = System.currentTimeMillis();
+            LOG.info("booting cdi container finished in " + (end - start) + " ms");
         }
         contextControl = cdiContainer.getContextControl();
     }

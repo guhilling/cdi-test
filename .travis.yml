@@ -11,8 +11,8 @@ addons:
 language: java
 
 jdk:
-  - oraclejdk7
-  - oraclejdk8
+  - jdk7
+  - jdk8
 
 env:
   - CDI=cdi-1.1

@@ -3,7 +3,7 @@
 
     <groupId>de.hilling.junit.cdi</groupId>
     <artifactId>cdi-test</artifactId>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>https://github.com/guhilling/cdi-test</url>
     <inceptionYear>2014</inceptionYear>
@@ -12,11 +12,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
         <deltaspike.version>1.8.0</deltaspike.version>
-        <cdi-1.1-weld.version>2.1.2.Final</cdi-1.1-weld.version>
-        <cdi-1.2-weld.version>2.2.16.SP1</cdi-1.2-weld.version>
-        <cdi-1.2b-weld.version>2.4.3.Final</cdi-1.2b-weld.version>
         <cdi-2.0-weld.version>3.0.0.Final</cdi-2.0-weld.version>
         <github.global.server>github</github.global.server>
         <mockito-core.version>2.7.22</mockito-core.version>

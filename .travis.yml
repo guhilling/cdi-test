@@ -11,20 +11,10 @@ addons:
 language: java
 
 jdk:
-  - jdk7
   - oraclejdk8
 
 env:
-  - CDI=cdi-1.1
-  - CDI=cdi-1.2
-  - CDI=cdi-1.2b
   - CDI=cdi-2.0
-
-matrix:
-  exclude:
-    - jdk: jdk7
-      env: CDI=cdi-2.0
-
 
 script:
   - mvn test -P${CDI} jacoco:report coveralls:report

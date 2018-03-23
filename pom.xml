@@ -51,6 +51,7 @@
     <developers>
         <developer>
             <name>Gunnar Hilling</name>
+            <id>gunnar</id>
             <email>cdi-test@hilling.de</email>
             <organization>Gunnar Hilling IT Consulting GmbH</organization>
             <timezone>+1</timezone>

@@ -229,44 +229,20 @@
 
     <profiles>
         <profile>
-            <id>cdi-1.1</id>
-            <properties>
-                <weld.version>${cdi-1.1-weld.version}</weld.version>
-                <cdi-api.version>1.1</cdi-api.version>
-            </properties>
-        </profile>
-        <profile>
             <id>cdi-2.0</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <weld.version>${cdi-2.0-weld.version}</weld.version>
                 <cdi-api.version>2.0</cdi-api.version>
             </properties>
         </profile>
         <profile>
-            <id>cdi-1.2</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <weld.version>${cdi-1.2-weld.version}</weld.version>
-                <cdi-api.version>1.1</cdi-api.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>cdi-1.2b</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <weld.version>${cdi-1.2b-weld.version}</weld.version>
-                <cdi-api.version>1.1</cdi-api.version>
-            </properties>
-        </profile>
-        <profile>
             <id>release</id>
             <properties>
-                <weld.version>${cdi-1.2b-weld.version}</weld.version>
-                <cdi-api.version>1.1</cdi-api.version>
+                <weld.version>${cdi-2.0-weld.version}</weld.version>
+                <cdi-api.version>2.0</cdi-api.version>
             </properties>
             <build>
                 <plugins>

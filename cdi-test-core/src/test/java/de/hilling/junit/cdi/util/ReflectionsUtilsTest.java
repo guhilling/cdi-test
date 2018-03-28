@@ -70,16 +70,6 @@ public class ReflectionsUtilsTest {
     }
 
     @Test
-    public void proxyStandardClass() {
-        assertTrue(ReflectionsUtils.shouldProxyCdiType(ReflectionsUtilsTest.class));
-        try {
-            assertTrue(ReflectionsUtils.shouldProxyCdiType(Class.forName("NoPackageTestBean")));
-        } catch (ClassNotFoundException e) {
-            assertFalse(true);
-        }
-    }
-
-    @Test
     public void isTestClass() {
         assertTrue(ReflectionsUtils.isTestClass(CdiTestAbstract.class));
         assertTrue(ReflectionsUtils.isTestClass(InjectionTest.class));

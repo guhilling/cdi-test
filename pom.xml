@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <deltaspike.version>1.8.0</deltaspike.version>
+        <deltaspike.version>1.8.1</deltaspike.version>
         <cdi-2.0-weld.version>3.0.3.Final</cdi-2.0-weld.version>
         <github.global.server>github</github.global.server>
         <mockito-core.version>2.16.0</mockito-core.version>

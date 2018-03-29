@@ -9,9 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 
 import org.apache.deltaspike.cdise.api.ContextControl;
-import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,14 +18,9 @@ import de.hilling.junit.cdi.scopedbeans.ApplicationScopedBean;
 import de.hilling.junit.cdi.scopedbeans.RequestScopedBean;
 import de.hilling.junit.cdi.scopedbeans.ScopedBean;
 import de.hilling.junit.cdi.scopedbeans.SessionScopedBean;
-import de.hilling.junit.cdi.util.MavenVersion;
-import de.hilling.junit.cdi.util.MavenVersionResolver;
 
 @RunWith(CdiUnitRunner.class)
 public class ContextControlTest {
-
-    private final MavenVersionResolver versionResolver    = MavenVersionResolver.getInstance();
-    private final MavenVersion         minimumWeldVersion = new MavenVersion(2, 2);
 
     @Inject
     private RequestScopedBean     requestScopedBean;
@@ -60,8 +53,6 @@ public class ContextControlTest {
 
     @Test
     public void restartApplication() {
-        MavenVersion actualVersion = versionResolver.getVersion("org.jboss.weld", "weld-api");
-        Assume.assumeThat(actualVersion, Matchers.greaterThan(minimumWeldVersion));
         runTest(applicationScopedBean, ApplicationScoped.class);
     }
 

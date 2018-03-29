@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.junit.runner.RunWith;
 
+import de.hilling.junit.cdi.CdiRunnerException;
 import de.hilling.junit.cdi.CdiUnitRunner;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 
@@ -47,7 +48,7 @@ public final class ReflectionsUtils {
                 return Class.forName(canonicalName.substring(0,
                         canonicalName.indexOf("$")));
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException("unable to find original class", e);
+                throw new CdiRunnerException("unable to find original class", e);
             }
         } else {
             return clazz;

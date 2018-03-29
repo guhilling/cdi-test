@@ -14,6 +14,7 @@ import javax.interceptor.InvocationContext;
 
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 
+import de.hilling.junit.cdi.CdiRunnerException;
 import de.hilling.junit.cdi.CurrentTestInformation;
 import de.hilling.junit.cdi.annotations.BypassMocks;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
@@ -44,7 +45,7 @@ public class CallRedirectionInterceptor implements Serializable {
 
     private boolean bypassMocks() {
         if (testInformation.isUnsatisfied()) {
-            throw new RuntimeException("could not find testinformation.");
+            throw new CdiRunnerException("could not find testinformation.");
         }
         final Method testMethod = testInformation.get().getMethod();
         if (testMethod != null) {

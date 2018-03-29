@@ -80,7 +80,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
             field.set(test, mock);
             invocationTargetManager.activateMock(type);
         } catch (IllegalArgumentException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new CdiRunnerException("error activating proxy", e);
         } finally {
             field.setAccessible(false);
         }
@@ -106,7 +106,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
     }
 
     @SuppressWarnings("unchecked")
-    protected <T> T resolveTest(Class<T> clazz) {
+    private <T> T resolveTest(Class<T> clazz) {
         if (!testCases.containsKey(clazz)) {
             testCases.put(clazz, resolveBean(clazz));
         }

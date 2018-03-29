@@ -1,12 +1,14 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
-import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
-
 import javax.enterprise.inject.Typed;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.enterprise.util.AnnotationLiteral;
+
+import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
+
+import de.hilling.junit.cdi.CdiRunnerException;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 
 /**
  * Prepare activatable alternatives.
@@ -56,7 +58,7 @@ class ActivatableAlternativeBuilder<X> {
         if (superclass != null) {
             return superclass;
         } else {
-            throw new RuntimeException("No unique interface or superclass found on '" + javaClass + "'. You have to provide value() in ActivatableTestImplementation in this case!");
+            throw new CdiRunnerException("No unique interface or superclass found on '" + javaClass + "'. You have to provide value() in ActivatableTestImplementation in this case!");
         }
     }
 

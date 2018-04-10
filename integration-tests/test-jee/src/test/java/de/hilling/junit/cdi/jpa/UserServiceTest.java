@@ -1,8 +1,5 @@
 package de.hilling.junit.cdi.jpa;
 
-import java.time.LocalDate;
-import java.time.Month;
-
 import javax.inject.Inject;
 
 import org.junit.Test;
@@ -15,12 +12,11 @@ public class UserServiceTest {
 
     @Inject
     private UserService userService;
+    @Inject
+    private TestUtils testUtils;
 
     @Test
     public void addUser() {
-        final ImmutableUser gunnar = ImmutableUser.builder()
-                                                  .birthDate(LocalDate.of(1971, Month.JUNE, 15))
-                                                  .firstName("Gunnar").build();
-        userService.addUser(gunnar);
+        userService.addUser(testUtils.createGunnar());
     }
 }

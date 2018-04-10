@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-public class UserEntity extends BaseEntity implements User {
+public class UserEntity extends BaseEntity {
 
     @Column(name = "firstname", length = 50, nullable = false)
     private String firstName;
@@ -14,7 +14,6 @@ public class UserEntity extends BaseEntity implements User {
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthDate;
 
-    @Override
     public String getFirstName() {
         return firstName;
     }
@@ -23,7 +22,6 @@ public class UserEntity extends BaseEntity implements User {
         this.firstName = firstName;
     }
 
-    @Override
     public LocalDate getBirthDate() {
         return birthDate;
     }

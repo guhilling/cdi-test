@@ -1,8 +1,5 @@
 package de.hilling.junit.cdi.jpa;
 
-import java.time.LocalDate;
-import java.time.Month;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
@@ -16,6 +13,8 @@ import de.hilling.junit.cdi.CdiUnitRunner;
 public class UserEntityTest {
     @Inject
     private EntityManager entityManager;
+    @Inject
+    private TestUtils testUtils;
 
     @Test(expected = PersistenceException.class)
     public void storeUserEntityWithNullAttributes() {
@@ -25,9 +24,6 @@ public class UserEntityTest {
 
     @Test
     public void storeUserEntity() {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setFirstName("Gunnar");
-        userEntity.setBirthDate(LocalDate.of(1971, Month.JUNE, 15));
-        entityManager.persist(userEntity);
+        entityManager.persist(testUtils.createGunnar());
     }
 }

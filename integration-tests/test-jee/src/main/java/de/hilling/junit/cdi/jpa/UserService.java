@@ -10,10 +10,7 @@ public class UserService {
     @Inject
     private EntityManager entityManager;
 
-    public long addUser(User user) {
-        final UserEntity userEntity = new UserEntity();
-        userEntity.setBirthDate(user.getBirthDate());
-        userEntity.setFirstName(user.getFirstName());
+    public long addUser(UserEntity userEntity) {
         entityManager.persist(userEntity);
         return userEntity.getId();
     }

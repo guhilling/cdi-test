@@ -13,7 +13,6 @@
 
     <modules>
         <module>test-core</module>
-        <module>test-db</module>
         <module>test-jee</module>
         <module>test-jsf-war</module>
     </modules>

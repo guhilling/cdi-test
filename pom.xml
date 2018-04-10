@@ -134,6 +134,12 @@
                 <artifactId>deltaspike-cdictrl-weld</artifactId>
                 <version>${deltaspike.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+                <scope>provided</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.jboss.weld</groupId>
@@ -243,6 +249,7 @@
             <properties>
                 <weld.version>${cdi-2.0-weld.version}</weld.version>
                 <cdi-api.version>2.0</cdi-api.version>
+                <hibernate.version>5.2.16.Final</hibernate.version>
             </properties>
         </profile>
         <profile>

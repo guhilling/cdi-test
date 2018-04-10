@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.2.16.Final</version>
+            <version>4.3.11.Final</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

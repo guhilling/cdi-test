@@ -1,8 +1,6 @@
 package de.hilling.junit.cdi;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +21,6 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
 public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallback {
 
     private static final Logger LOG = Logger.getLogger(CdiTestJunitExtension.class.getCanonicalName());
-    private static Map<Class<?>, Object> testCases = new HashMap<>();
 
     static {
         LoggerConfigurator.configure();
@@ -31,8 +28,8 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
 
     private final InvocationTargetManager invocationTargetManager;
     private final ContextControlWrapper   contextControl = ContextControlWrapper.getInstance();
-    private LifecycleNotifier lifecycleNotifier;
-    private Object testInstance;
+    private       LifecycleNotifier       lifecycleNotifier;
+    private       TestContext             testContext;
 
     public CdiTestJunitExtension() {
         invocationTargetManager = BeanProvider.getContextualReference(InvocationTargetManager.class, false);
@@ -46,11 +43,15 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        testInstance = context.getRequiredTestInstance();
         contextControl.startContexts();
-        for (Field field : ReflectionsUtils.getAllFields(testInstance.getClass())) {
+        testContext = resolveBean(TestContext.class);
+        testContext.setTestInstance(context.getRequiredTestInstance());
+        testContext.setTestMethod(context.getRequiredTestMethod());
+        testContext.setTestName(context.getDisplayName());
+        invocationTargetManager.addAndActivateTest(testContext.getTestClass());
+        for (Field field : ReflectionsUtils.getAllFields(context.getTestInstance().get().getClass())) {
             if (field.isAnnotationPresent(Mock.class)) {
-                assignMockAndActivateProxy(field, testInstance);
+                assignMockAndActivateProxy(field, context.getTestInstance().get());
             }
             if (field.isAnnotationPresent(Inject.class)) {
                 resolveAndAssignBean(field);
@@ -59,7 +60,7 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
                 activateForTest(field);
             }
         }
-        LOG.log(Level.FINE, "running class " + testInstance.getClass().getSimpleName());
+        LOG.log(Level.FINE, "running class " + testContext.getTestName());
     }
 
     private void resolveAndAssignBean(Field field) {
@@ -67,7 +68,7 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
         try {
             Class<?> type = field.getType();
             Object bean = resolveBean(type);
-            field.set(testInstance, bean);
+            field.set(testContext.getTestInstance(), bean);
         } catch (IllegalArgumentException | IllegalAccessException e) {
             throw new CdiTestException("error activating proxy", e);
         } finally {

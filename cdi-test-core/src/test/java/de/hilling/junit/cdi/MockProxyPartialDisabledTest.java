@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import de.hilling.junit.cdi.annotations.BypassMocks;
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.service.BackendService;
 import de.hilling.junit.cdi.service.SampleService;
@@ -33,11 +32,4 @@ public class MockProxyPartialDisabledTest extends CdiTestAbstract {
         verifyZeroInteractions(backendService);
     }
 
-    @BypassMocks
-    @Test
-    public void bypassMock() {
-        Person person = new Person();
-        sampleService.storePerson(person);
-        verifyZeroInteractions(backendService);
-    }
 }

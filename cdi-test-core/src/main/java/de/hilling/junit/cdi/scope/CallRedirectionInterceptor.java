@@ -14,9 +14,6 @@ import javax.interceptor.InvocationContext;
 
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 
-import de.hilling.junit.cdi.CdiTestException;
-import de.hilling.junit.cdi.CurrentTestInformation;
-import de.hilling.junit.cdi.annotations.BypassMocks;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 @Replaceable
@@ -28,30 +25,16 @@ public class CallRedirectionInterceptor implements Serializable {
 
     @Inject
     private Instance<InvocationTargetManager> invocationTargetManager;
-    @Inject
-    private Instance<CurrentTestInformation>  testInformation;
 
     @AroundInvoke
     public Object invokeMockableBean(InvocationContext ctx) throws Throwable {
         Class<?> javaClass = ReflectionsUtils.getOriginalClass(ctx.getTarget().getClass());
         if (invocationTargetManager.get().isAlternativeEnabled(javaClass)) {
             return callAlternative(ctx, javaClass);
-        } else if (!bypassMocks() && invocationTargetManager.get().isMockEnabled(javaClass)) {
+        } else if (invocationTargetManager.get().isMockEnabled(javaClass)) {
             return callMock(ctx, javaClass);
         } else {
             return ctx.proceed();
-        }
-    }
-
-    private boolean bypassMocks() {
-        if (testInformation.isUnsatisfied()) {
-            throw new CdiTestException("could not find testinformation.");
-        }
-        final Method testMethod = testInformation.get().getMethod();
-        if (testMethod != null) {
-            return testMethod.isAnnotationPresent(BypassMocks.class);
-        } else {
-            return false;
         }
     }
 

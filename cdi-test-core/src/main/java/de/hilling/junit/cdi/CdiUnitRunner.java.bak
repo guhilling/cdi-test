@@ -80,7 +80,7 @@ public class CdiUnitRunner extends BlockJUnit4ClassRunner {
             field.set(test, mock);
             invocationTargetManager.activateMock(type);
         } catch (IllegalArgumentException | IllegalAccessException e) {
-            throw new CdiRunnerException("error activating proxy", e);
+            throw new CdiTestException("error activating proxy", e);
         } finally {
             field.setAccessible(false);
         }

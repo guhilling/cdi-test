@@ -1,7 +1,6 @@
 package de.hilling.junit.cdi;
 
 import java.lang.reflect.Field;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -65,7 +64,6 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
                 activateForTest(field);
             }
         }
-        LOG.log(Level.FINE, "running class " + testContext.getTestName());
     }
 
     private void resolveAndAssignBean(Field field) {

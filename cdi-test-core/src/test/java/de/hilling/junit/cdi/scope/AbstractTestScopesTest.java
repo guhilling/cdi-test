@@ -1,9 +1,10 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.CdiTestAbstract;
-import org.junit.Test;
-
 import javax.inject.Inject;
+
+import org.junit.jupiter.api.Test;
+
+import de.hilling.junit.cdi.CdiTestAbstract;
 
 public abstract class AbstractTestScopesTest extends CdiTestAbstract {
 

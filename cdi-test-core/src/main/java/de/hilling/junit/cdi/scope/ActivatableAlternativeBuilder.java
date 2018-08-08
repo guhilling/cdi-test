@@ -7,7 +7,7 @@ import javax.enterprise.util.AnnotationLiteral;
 
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
-import de.hilling.junit.cdi.CdiRunnerException;
+import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 
 /**
@@ -58,7 +58,7 @@ class ActivatableAlternativeBuilder<X> {
         if (superclass != null) {
             return superclass;
         } else {
-            throw new CdiRunnerException("No unique interface or superclass found on '" + javaClass + "'. You have to provide value() in ActivatableTestImplementation in this case!");
+            throw new CdiTestException("No unique interface or superclass found on '" + javaClass + "'. You have to provide value() in ActivatableTestImplementation in this case!");
         }
     }
 

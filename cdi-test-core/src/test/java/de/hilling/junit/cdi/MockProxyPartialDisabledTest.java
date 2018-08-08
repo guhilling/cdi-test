@@ -5,7 +5,7 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 
 import javax.inject.Inject;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import de.hilling.junit.cdi.annotations.BypassMocks;

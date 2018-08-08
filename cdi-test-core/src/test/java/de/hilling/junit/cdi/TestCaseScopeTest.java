@@ -1,13 +1,15 @@
 package de.hilling.junit.cdi;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.hilling.junit.cdi.scopedbeans.ApplicationScopedBean;
 import de.hilling.junit.cdi.scopedbeans.DependentScopedBean;
@@ -56,7 +58,7 @@ public class TestCaseScopeTest extends CdiTestAbstract {
     public void testDependents() {
         DependentScopedBean dependent1 = requestScopedBean.getDependentScopedBean();
         DependentScopedBean dependent2 = applicationScopedBean.getDependentScopedBean();
-        Assert.assertNotSame(dependent1, dependent2);
+        assertNotSame(dependent1, dependent2);
     }
 
     @Test
@@ -77,7 +79,7 @@ public class TestCaseScopeTest extends CdiTestAbstract {
     private void assertInstanceNotSame(ScopedBean bean) {
         Class<? extends ScopedBean> beanKey = bean.getClass();
         if (firstUuids.containsKey(beanKey)) {
-            Assert.assertNotSame(firstUuids.get(beanKey), bean.getUuid());
+            assertNotSame(firstUuids.get(beanKey), bean.getUuid());
         } else {
             firstUuids.put(beanKey, bean.getUuid());
         }
@@ -86,7 +88,7 @@ public class TestCaseScopeTest extends CdiTestAbstract {
     private void assertInstanceSame(ScopedBean bean) {
         Class<? extends ScopedBean> beanKey = bean.getClass();
         if (firstUuids.containsKey(beanKey)) {
-            Assert.assertSame(firstUuids.get(beanKey), bean.getUuid());
+            assertSame(firstUuids.get(beanKey), bean.getUuid());
         } else {
             firstUuids.put(beanKey, bean.getUuid());
         }

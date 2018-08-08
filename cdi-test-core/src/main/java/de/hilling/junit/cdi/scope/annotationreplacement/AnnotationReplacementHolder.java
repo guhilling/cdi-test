@@ -12,7 +12,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hilling.junit.cdi.CdiRunnerException;
+import de.hilling.junit.cdi.CdiTestException;
 
 /**
  * Load annotation replacements and provide them to the replacer.
@@ -41,7 +41,7 @@ public class AnnotationReplacementHolder {
                 addConfigurationFrom(resources.nextElement());
             }
         } catch (IOException e) {
-            throw new CdiRunnerException("error loading annotation replacements", e);
+            throw new CdiTestException("error loading annotation replacements", e);
         }
     }
 
@@ -77,10 +77,10 @@ public class AnnotationReplacementHolder {
                     if (replacementProxy instanceof Annotation) {
                         replacementMap.put(oldAnnotation, (Annotation) replacementProxy);
                     } else {
-                        throw new CdiRunnerException("class " + replacmentAnnotation + " is not an annotation");
+                        throw new CdiTestException("class " + replacmentAnnotation + " is not an annotation");
                     }
                 } catch (ClassNotFoundException e) {
-                    throw new CdiRunnerException("unable to load specified class", e);
+                    throw new CdiTestException("unable to load specified class", e);
                 }
             }
         }

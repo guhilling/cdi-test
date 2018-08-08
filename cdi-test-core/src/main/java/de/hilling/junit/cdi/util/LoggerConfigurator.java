@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import de.hilling.junit.cdi.CdiUnitRunner;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 
 /**
@@ -27,7 +27,7 @@ public class LoggerConfigurator {
     public static void configure() {
         final String configurationFile = System.getProperty(LOGCONFIG_KEY,
                 LOGCONFIG_DEFAULT);
-        try (InputStream inputStream = CdiUnitRunner.class
+        try (InputStream inputStream = CdiTestJunitExtension.class
                 .getResourceAsStream(configurationFile)) {
             if (inputStream == null) {
                 warnLoggerNotConfigured("file not found");

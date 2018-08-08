@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.runner.RunWith;
-
-import de.hilling.junit.cdi.CdiRunnerException;
-import de.hilling.junit.cdi.CdiUnitRunner;
+import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 
 public final class ReflectionsUtils {
@@ -48,28 +45,10 @@ public final class ReflectionsUtils {
                 return Class.forName(canonicalName.substring(0,
                         canonicalName.indexOf("$")));
             } catch (ClassNotFoundException e) {
-                throw new CdiRunnerException("unable to find original class", e);
+                throw new CdiTestException("unable to find original class", e);
             }
         } else {
             return clazz;
-        }
-    }
-
-    /**
-     * Determine is the given class is a junit cdi test.
-     * <p>
-     *     This is done by checking for the annotation {@link RunWith} annotation.
-     * </p>
-     * @param javaClass class to verify
-     * @param <X> type of class
-     * @return true if it is a junit test.
-     */
-    public static <X> boolean isTestClass(Class<X> javaClass) {
-        if (javaClass.isAnnotationPresent(RunWith.class)) {
-            RunWith annotation = javaClass.getAnnotation(RunWith.class);
-            return annotation.value().isAssignableFrom(CdiUnitRunner.class);
-        } else {
-            return false;
         }
     }
 

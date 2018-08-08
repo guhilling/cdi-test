@@ -7,8 +7,6 @@ import java.util.logging.Logger;
 import javax.enterprise.context.spi.Context;
 import javax.enterprise.event.Observes;
 
-import org.junit.runner.Description;
-
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.EventType;
@@ -33,11 +31,11 @@ public class TestContext extends AbstractScopeContext implements Context, Serial
         return TestScoped.class;
     }
 
-    protected void activate(@Observes @TestEvent(EventType.STARTING) Description description) {
+    protected void activate(@Observes @TestEvent(EventType.STARTING) Object description) {
         active = true;
     }
 
-    protected void deactivate(@Observes @TestEvent(EventType.FINISHING) Description description) {
+    protected void deactivate(@Observes @TestEvent(EventType.FINISHING) Object description) {
         getScopeContextHolder().clear();
         active = false;
     }

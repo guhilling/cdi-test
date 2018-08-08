@@ -5,8 +5,6 @@ import javax.enterprise.inject.Any;
 import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 
-import org.junit.runner.Description;
-
 import de.hilling.junit.cdi.scope.EventType;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
@@ -15,9 +13,9 @@ public class LifecycleNotifier {
 
     @Inject
     @Any
-    private Event<Description> lifecycleEvent;
+    private Event<Object> lifecycleEvent;
 
-    public void notify(final EventType testCaseLifecycle, Description description) {
+    public void notify(final EventType testCaseLifecycle, Object description) {
         AnnotationLiteral<TestEvent> event = new TestEventLiteral() {
             @Override
             public EventType value() {

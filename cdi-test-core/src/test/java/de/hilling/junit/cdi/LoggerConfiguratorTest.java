@@ -1,12 +1,13 @@
 package de.hilling.junit.cdi;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import de.hilling.junit.cdi.util.LoggerConfigurator;
-import org.junit.After;
-import org.junit.Test;
 
 public class LoggerConfiguratorTest {
 
-    @After
+    @BeforeAll
     public void cleanUp() {
         System.clearProperty(LoggerConfigurator.LOGCONFIG_KEY);
     }

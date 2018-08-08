@@ -1,16 +1,15 @@
 package de.hilling.junit.cdi;
 
-import org.junit.runner.RunWith;
-
-import javax.annotation.PostConstruct;
 import java.util.logging.Logger;
 
-@RunWith(CdiUnitRunner.class)
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+@ExtendWith(CdiTestJunitExtension.class)
 public abstract class CdiTestAbstract {
     protected static final Logger LOG = Logger.getLogger(CdiTestAbstract.class.getName());
 
-    @PostConstruct
-    public void init() {
-        System.out.println("created");
+    @BeforeEach
+    private void init() {
     }
 }

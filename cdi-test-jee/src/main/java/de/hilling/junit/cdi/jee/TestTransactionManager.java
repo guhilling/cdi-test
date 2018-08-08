@@ -10,7 +10,7 @@ import javax.persistence.EntityTransaction;
 
 import org.junit.runner.Description;
 
-import de.hilling.junit.cdi.CdiRunnerException;
+import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.EventType;
@@ -39,7 +39,7 @@ public class TestTransactionManager {
                 }
             }
         } catch (SQLException e) {
-            throw new CdiRunnerException("error cleaning db", e);
+            throw new CdiTestException("error cleaning db", e);
         }
     }
 

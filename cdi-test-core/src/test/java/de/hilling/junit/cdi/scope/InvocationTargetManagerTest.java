@@ -1,19 +1,19 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.CdiUnitRunner;
-import de.hilling.junit.cdi.beans.Person;
-import de.hilling.junit.cdi.service.OverridingServiceImpl;
-import de.hilling.junit.cdi.service.TestActivatedOverridenService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-@RunWith(CdiUnitRunner.class)
+import de.hilling.junit.cdi.CdiTestJunitExtension;
+import de.hilling.junit.cdi.beans.Person;
+import de.hilling.junit.cdi.service.OverridingServiceImpl;
+import de.hilling.junit.cdi.service.TestActivatedOverridenService;
+
+@ExtendWith(CdiTestJunitExtension.class)
 public class InvocationTargetManagerTest {
 
     @Inject
@@ -21,7 +21,7 @@ public class InvocationTargetManagerTest {
 
     private Class<CaseScopedBean> mockedClass = CaseScopedBean.class;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         manager.reset();
     }
@@ -31,9 +31,9 @@ public class InvocationTargetManagerTest {
         assertFalse(manager.isMockEnabled(mockedClass));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void activateNonEnabledMock() {
-        manager.activateMock(mockedClass);
+        assertThrows(IllegalArgumentException.class, () -> manager.activateMock(mockedClass));
     }
 
     @Test
@@ -57,6 +57,6 @@ public class InvocationTargetManagerTest {
     public void cacheEnabled() {
         Person person1 = manager.mock(Person.class);
         Person person2 = manager.mock(Person.class);
-        Assert.assertSame(person1, person2);
+        assertSame(person1, person2);
     }
 }

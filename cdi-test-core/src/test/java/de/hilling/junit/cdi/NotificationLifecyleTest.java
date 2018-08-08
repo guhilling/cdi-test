@@ -1,29 +1,29 @@
 package de.hilling.junit.cdi;
 
-import de.hilling.junit.cdi.lifecycle.TestEvent;
-import de.hilling.junit.cdi.scope.EventType;
-import org.junit.Test;
-import org.junit.runner.Description;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.enterprise.event.Observes;
 
-import static org.junit.Assert.assertNotNull;
+import org.junit.jupiter.api.Test;
+
+import de.hilling.junit.cdi.lifecycle.TestEvent;
+import de.hilling.junit.cdi.scope.EventType;
 
 public class NotificationLifecyleTest extends CdiTestAbstract {
 
-    private Description startingEvent;
-    private Description finishingEvent;
-    private Description finishedEvent;
+    private Object startingEvent;
+    private Object finishingEvent;
+    private Object finishedEvent;
 
-    protected void observeStarting(@Observes @TestEvent(EventType.STARTING) Description testEvent) {
+    protected void observeStarting(@Observes @TestEvent(EventType.STARTING) Object testEvent) {
         this.startingEvent = testEvent;
     }
 
-    protected void observeFinishing(@Observes @TestEvent(EventType.FINISHING) Description testEvent) {
+    protected void observeFinishing(@Observes @TestEvent(EventType.FINISHING) Object testEvent) {
         this.finishingEvent = testEvent;
     }
 
-    protected void observeFinished(@Observes @TestEvent(EventType.FINISHED) Description testEvent) {
+    protected void observeFinished(@Observes @TestEvent(EventType.FINISHED) Object testEvent) {
         this.finishedEvent = testEvent;
     }
 

@@ -77,9 +77,6 @@ public class TestScopeExtension implements Extension, Serializable {
         final Class<X> javaClass = type.getJavaClass();
         if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
             new ActivatableAlternativeBuilder<X>(pat).invoke();
-        } else if (ReflectionsUtils.isTestClass(javaClass)) {
-            AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<TestSuiteScoped>() {
-            });
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
             AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<Replaceable>() {
             });

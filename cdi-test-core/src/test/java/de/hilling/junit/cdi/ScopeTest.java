@@ -33,7 +33,7 @@ public class ScopeTest extends CdiTestAbstract {
 
     private void assertNotEqual() {
         if (lastIdentifier == null) {
-            request.getIdentifier();
+            lastIdentifier = request.getIdentifier();
         } else {
             Assertions.assertNotEquals(lastIdentifier, request.getIdentifier());
         }

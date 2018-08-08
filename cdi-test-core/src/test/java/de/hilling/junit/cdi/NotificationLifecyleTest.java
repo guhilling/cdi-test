@@ -5,25 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import javax.enterprise.event.Observes;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.EventType;
 
 public class NotificationLifecyleTest extends CdiTestAbstract {
 
-    private Object startingEvent;
-    private Object finishingEvent;
-    private Object finishedEvent;
+    private ExtensionContext startingEvent;
+    private ExtensionContext finishingEvent;
+    private ExtensionContext finishedEvent;
 
-    protected void observeStarting(@Observes @TestEvent(EventType.STARTING) Object testEvent) {
+    protected void observeStarting(@Observes @TestEvent(EventType.STARTING) ExtensionContext testEvent) {
         this.startingEvent = testEvent;
     }
 
-    protected void observeFinishing(@Observes @TestEvent(EventType.FINISHING) Object testEvent) {
+    protected void observeFinishing(@Observes @TestEvent(EventType.FINISHING) ExtensionContext testEvent) {
         this.finishingEvent = testEvent;
     }
 
-    protected void observeFinished(@Observes @TestEvent(EventType.FINISHED) Object testEvent) {
+    protected void observeFinished(@Observes @TestEvent(EventType.FINISHED) ExtensionContext testEvent) {
         this.finishedEvent = testEvent;
     }
 

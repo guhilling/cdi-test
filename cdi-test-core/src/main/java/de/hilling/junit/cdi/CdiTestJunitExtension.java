@@ -14,6 +14,7 @@ import org.mockito.Mock;
 
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
+import de.hilling.junit.cdi.scope.EventType;
 import de.hilling.junit.cdi.scope.InvocationTargetManager;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
@@ -38,17 +39,21 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
 
     @Override
     public void afterEach(ExtensionContext context) {
+        lifecycleNotifier.notify(EventType.FINISHING, context);
         contextControl.stopContexts();
+        lifecycleNotifier.notify(EventType.FINISHED, context);
+        invocationTargetManager.reset();
     }
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        contextControl.startContexts();
         testContext = resolveBean(TestContext.class);
         testContext.setTestInstance(context.getRequiredTestInstance());
         testContext.setTestMethod(context.getRequiredTestMethod());
         testContext.setTestName(context.getDisplayName());
         invocationTargetManager.addAndActivateTest(testContext.getTestClass());
+        contextControl.startContexts();
+        lifecycleNotifier.notify(EventType.STARTING, context);
         for (Field field : ReflectionsUtils.getAllFields(context.getTestInstance().get().getClass())) {
             if (field.isAnnotationPresent(Mock.class)) {
                 assignMockAndActivateProxy(field, context.getTestInstance().get());

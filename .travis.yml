@@ -11,12 +11,11 @@ addons:
 language: java
 
 jdk:
-  - openjdk8
-  - openjdk9
   - openjdk10
   - oraclejdk8
   - oraclejdk9
   - oraclejdk10
+  - oraclejdk11
 
 env:
   - CDI=cdi-2.0

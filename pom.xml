@@ -250,7 +250,7 @@
             <properties>
                 <weld.version>${cdi-2.0-weld.version}</weld.version>
                 <cdi-api.version>2.0</cdi-api.version>
-                <hibernate.version>5.2.16.Final</hibernate.version>
+                <hibernate.version>5.3.4.Final</hibernate.version>
             </properties>
         </profile>
         <profile>

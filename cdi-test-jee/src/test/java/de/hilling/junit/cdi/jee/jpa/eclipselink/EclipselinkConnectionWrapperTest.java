@@ -5,25 +5,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.SQLException;
 
-import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.hilling.junit.cdi.CdiTestJunitExtension;
-import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
+import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 @ExtendWith(CdiTestJunitExtension.class)
 public class EclipselinkConnectionWrapperTest {
 
     @Inject
     private EclipselinkConnectionWrapper connectionWrapper;
-    @Inject
-    private Instance<DatabaseCleaner> cleaner;
 
     private EntityManagerFactory entityManagerFactory;
 
@@ -37,9 +35,10 @@ public class EclipselinkConnectionWrapperTest {
         assertFalse(connectionWrapper.runWithConnection());
     }
 
+    @Disabled
     @Test
     public void runWithEclipseLinkPersistence() throws SQLException {
-        connectionWrapper = new EclipselinkConnectionWrapper(entityManagerFactory.createEntityManager(), cleaner);
+        ReflectionsUtils.setField(connectionWrapper, entityManagerFactory.createEntityManager());
         assertTrue(connectionWrapper.runWithConnection());
     }
 }

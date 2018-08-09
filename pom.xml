@@ -16,13 +16,15 @@
         <java.version>1.8</java.version>
         <deltaspike.version>1.8.2</deltaspike.version>
         <cdi-2.0-weld.version>3.0.5.Final</cdi-2.0-weld.version>
+        <weld.version>${cdi-2.0-weld.version}</weld.version>
+        <cdi-api.version>2.0</cdi-api.version>
+        <hibernate.version>5.3.4.Final</hibernate.version>
         <github.global.server>github</github.global.server>
         <mockito-core.version>2.21.0</mockito-core.version>
         <javassist.version>3.23.1-GA</javassist.version>
         <hamcrest.version>1.3</hamcrest.version>
         <junit.jupiter.version>5.2.0</junit.jupiter.version>
         <junit.platform.version>1.2.0</junit.platform.version>
-
     </properties>
 
     <scm>
@@ -259,17 +261,6 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>cdi-2.0</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <weld.version>${cdi-2.0-weld.version}</weld.version>
-                <cdi-api.version>2.0</cdi-api.version>
-                <hibernate.version>5.3.4.Final</hibernate.version>
-            </properties>
-        </profile>
         <profile>
             <id>release</id>
             <properties>

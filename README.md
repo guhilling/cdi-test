@@ -5,6 +5,7 @@
 
 # cdi-test
 
+## A test framework for CDI based Java applications
 
 cdi-test is a junit-addon for easy and quick testing of cdi projects.
 
@@ -16,10 +17,9 @@ cdi-test is available under the [The Apache Software License, Version 2.0](http:
 
 ## Main features:
 
-* Plain cdi test, no classpath magic.
-* Fast because the CDI-Container is started only once for the whole Test-Scenario.
+* Fast because the CDI-Container is started only once for the whole scenario.
 * Well tested.
-* Supports Mocks and Test-Replacements for CDI Beans.   These can be activated in each individual Test Class.
+* Supports mocks and test alternatives for CDI beans. These can be activated per test class.
 * Support for some ejb features to test jee application components:
     * Inject EntityManager via ``@Inject`` or ``@PersistenceContext``
     * Injection of Stateless Beans

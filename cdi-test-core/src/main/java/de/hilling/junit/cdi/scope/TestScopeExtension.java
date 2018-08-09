@@ -22,7 +22,6 @@ import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementBui
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationUtils;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
-import de.hilling.junit.cdi.util.MavenVersion;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 /**
@@ -32,7 +31,6 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
  */
 @BypassTestInterceptor
 public class TestScopeExtension implements Extension, Serializable {
-    public static final MavenVersion MINIMUM_WELD_VERSION_FOR_AFTER_TYPE_DISCOVERY = new MavenVersion(2, 2);
 
     private static final    long                         serialVersionUID = 1L;
     private static final    Logger                       LOG              = Logger.getLogger(

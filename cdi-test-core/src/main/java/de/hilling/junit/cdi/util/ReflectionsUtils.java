@@ -8,23 +8,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.runner.RunWith;
-
-import de.hilling.junit.cdi.CdiUnitRunner;
+import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 
 public final class ReflectionsUtils {
 
+    private static final String[] SYSTEM_PACKAGES = {"java", "javax", "com.sun", "org.apache.deltaspike", "org.jboss"};
+    private static Field[] fields;
+
     private ReflectionsUtils() {
     }
-
-    private static final String[] SYSTEM_PACKAGES = {
-            "java",
-            "javax",
-            "com.sun",
-            "org.apache.deltaspike",
-            "org.jboss"
-    };
 
     public static List<Field> getAllFields(Class<?> clazz) {
         List<Field> result = new ArrayList<>();
@@ -36,18 +29,17 @@ public final class ReflectionsUtils {
         return result;
     }
 
-    public static Class<? extends Object> getOriginalClass(
-            Class<? extends Object> clazz) {
+    public static Class<? extends Object> getOriginalClass(Class<? extends Object> clazz) {
         String canonicalName = clazz.getCanonicalName();
         if (canonicalName.contains("$")) {
             try {
-                if (clazz.getPackage() == null)
-                    return Class.forName(canonicalName.substring(canonicalName.lastIndexOf(".") + 1,
-                                                                 canonicalName.indexOf("$")));
-                return Class.forName(canonicalName.substring(0,
-                        canonicalName.indexOf("$")));
+                if (clazz.getPackage() == null) {
+                    return Class.forName(
+                    canonicalName.substring(canonicalName.lastIndexOf(".") + 1, canonicalName.indexOf("$")));
+                }
+                return Class.forName(canonicalName.substring(0, canonicalName.indexOf("$")));
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException("unable to find original class", e);
+                throw new CdiTestException("unable to find original class", e);
             }
         } else {
             return clazz;
@@ -55,32 +47,16 @@ public final class ReflectionsUtils {
     }
 
     /**
-     * Determine is the given class is a junit cdi test.
-     * <p>
-     *     This is done by checking for the annotation {@link RunWith} annotation.
-     * </p>
-     * @param javaClass class to verify
-     * @param <X> type of class
-     * @return true if it is a junit test.
-     */
-    public static <X> boolean isTestClass(Class<X> javaClass) {
-        if (javaClass.isAnnotationPresent(RunWith.class)) {
-            RunWith annotation = javaClass.getAnnotation(RunWith.class);
-            return annotation.value().isAssignableFrom(CdiUnitRunner.class);
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Determine if a proxy should be created for the given class.
      * <p>The following classes will be excluded:</p>
-     *     <ul>
-     *         <li>System classes, including those from weld and deltaspike.</li>
-     *         <li>Classes that are not proxyable.</li>
-     *     </ul>
+     * <ul>
+     * <li>System classes, including those from weld and deltaspike.</li>
+     * <li>Classes that are not proxyable.</li>
+     * </ul>
+     *
      * @param javaClass class to verify
-     * @param <X> type of class
+     * @param <X>       type of class
+     *
      * @return true if a cdi proxy should be created.
      */
     public static <X> boolean shouldProxyCdiType(Class<X> javaClass) {
@@ -96,8 +72,8 @@ public final class ReflectionsUtils {
         }
 
         String packageName = javaClass.getPackage().getName();
-        for(String packagePrefix: SYSTEM_PACKAGES) {
-            if(packageName.startsWith(packagePrefix)) {
+        for (String packagePrefix : SYSTEM_PACKAGES) {
+            if (packageName.startsWith(packagePrefix)) {
                 return true;
             }
         }
@@ -129,9 +105,8 @@ public final class ReflectionsUtils {
     public static <X> boolean hasFinalMethods(Class<X> javaClass) {
         Method[] methods = javaClass.getMethods();
         for (Method method : methods) {
-            if (method.getDeclaringClass().getPackage() != null &&
-                method.getDeclaringClass().getPackage()
-                      .getName().startsWith("java.lang")) {
+            if (method.getDeclaringClass().getPackage() != null && method.getDeclaringClass().getPackage().getName()
+                                                                         .startsWith("java.lang")) {
                 continue;
             }
             if (Modifier.isFinal(method.getModifiers())) {
@@ -151,5 +126,16 @@ public final class ReflectionsUtils {
             return false;
         }
         return true;
+    }
+
+    public static void setField(Object target, Object value, Field field) {
+        field.setAccessible(true);
+        try {
+            field.set(target, value);
+        } catch (IllegalAccessException e) {
+            throw new CdiTestException("setting field failed", e);
+        } finally {
+            field.setAccessible(false);
+        }
     }
 }

@@ -1,9 +1,10 @@
 package de.hilling.junit.cdi.testing;
 
-import de.hilling.junit.cdi.CdiUnitRunner;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-@RunWith(CdiUnitRunner.class)
+import de.hilling.junit.cdi.CdiTestJunitExtension;
+
+@ExtendWith(CdiTestJunitExtension.class)
 public abstract class BaseTest {
 
 }

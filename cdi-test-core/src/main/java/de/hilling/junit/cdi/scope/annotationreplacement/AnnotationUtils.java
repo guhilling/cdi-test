@@ -1,7 +1,5 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
-import java.util.logging.Logger;
-
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.enterprise.util.AnnotationLiteral;
 
@@ -11,7 +9,6 @@ import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
  * Utilities for annotation replacement.
  */
 public final class AnnotationUtils {
-    private static final Logger LOG = Logger.getLogger(AnnotationUtils.class.getCanonicalName());
 
     private AnnotationUtils() {
     }

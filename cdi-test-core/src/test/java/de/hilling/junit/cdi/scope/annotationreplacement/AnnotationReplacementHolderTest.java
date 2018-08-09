@@ -1,14 +1,16 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.SessionScoped;
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
+
+import org.junit.jupiter.api.Test;
 
 public class AnnotationReplacementHolderTest {
 
@@ -25,19 +27,20 @@ public class AnnotationReplacementHolderTest {
         createHolder("test-annotations.properties");
         Map<Class<? extends Annotation>, Annotation> replacementMap = holder.getReplacementMap();
         assertEquals(1, replacementMap.size());
-        Map.Entry<Class<? extends Annotation>, Annotation> annotationEntry = replacementMap.entrySet().iterator().next();
+        Map.Entry<Class<? extends Annotation>, Annotation> annotationEntry = replacementMap.entrySet().iterator()
+                                                                                           .next();
         assertEquals(SessionScoped.class, annotationEntry.getKey());
         assertTrue(annotationEntry.getValue() instanceof ApplicationScoped);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void noSuchClass() {
-        createHolder("test-nosuchclass.properties");
+        assertThrows(RuntimeException.class, () -> createHolder("test-nosuchclass.properties"));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void classNotAnAnnotation() {
-        createHolder("test-noannotation.properties");
+        assertThrows(RuntimeException.class, () -> createHolder("test-noannotation.properties"));
     }
 
     private void createHolder(String resourceName) {

@@ -1,11 +1,11 @@
 package de.hilling.junit.cdi;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.inject.Inject;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.hilling.junit.cdi.beans.ConstructorInjected;
 import de.hilling.junit.cdi.beans.Person;
@@ -16,7 +16,7 @@ public class InjectionTest extends CdiTestAbstract {
     private Person person;
 
     @Inject
-    private CurrentTestInformation testInformation;
+    private TestContext testInformation;
 
     @Inject
     private ConstructorInjected constructorInjected;
@@ -26,7 +26,7 @@ public class InjectionTest extends CdiTestAbstract {
     public void checkTestInformation()throws Exception {
         assertNotNull(testInformation);
         assertEquals(InjectionTest.class, testInformation.getTestClass());
-        assertEquals(InjectionTest.class.getMethod("checkTestInformation"), testInformation.getMethod());
+        assertEquals(InjectionTest.class.getMethod("checkTestInformation"), testInformation.getTestMethod());
     }
 
     @Test

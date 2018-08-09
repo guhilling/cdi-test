@@ -2,12 +2,12 @@ package de.hilling.junit.cdi.jpa;
 
 import javax.inject.Inject;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import de.hilling.junit.cdi.CdiUnitRunner;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 
-@RunWith(CdiUnitRunner.class)
+@ExtendWith(CdiTestJunitExtension.class)
 public class UserServiceTest {
 
     @Inject

@@ -1,16 +1,17 @@
 package de.hilling.junit.cdi;
 
-import de.hilling.junit.cdi.beans.Person;
-import de.hilling.junit.cdi.service.BackendServiceTestImplementation;
-import de.hilling.junit.cdi.service.SampleService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-@RunWith(CdiUnitRunner.class)
+import de.hilling.junit.cdi.beans.Person;
+import de.hilling.junit.cdi.service.BackendServiceTestImplementation;
+import de.hilling.junit.cdi.service.SampleService;
+
+@ExtendWith(CdiTestJunitExtension.class)
 public class ActivateAlternativeForRegularBeanTest {
     @Inject
     private SampleService sampleService;

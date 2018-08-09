@@ -23,7 +23,6 @@ import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationUtils;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.util.MavenVersion;
-import de.hilling.junit.cdi.util.MavenVersionResolver;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 /**
@@ -35,19 +34,17 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
 public class TestScopeExtension implements Extension, Serializable {
     public static final MavenVersion MINIMUM_WELD_VERSION_FOR_AFTER_TYPE_DISCOVERY = new MavenVersion(2, 2);
 
-    private static final long serialVersionUID = 1L;
-    private static final Logger LOG = Logger.getLogger(TestScopeExtension.class
-            .getCanonicalName());
-    private final transient MavenVersionResolver versionResolver = MavenVersionResolver.getInstance();
-    private final transient Map<Class<?>, AnnotatedType> decoratedTypes = new HashMap<>();
+    private static final    long                         serialVersionUID = 1L;
+    private static final    Logger                       LOG              = Logger.getLogger(
+    TestScopeExtension.class.getCanonicalName());
+    private final transient Map<Class<?>, AnnotatedType> decoratedTypes   = new HashMap<>();
 
     /**
      * Add contexts after bean discovery.
      *
      * @param afterBeanDiscovery AfterBeanDiscovery
      */
-    public void afterBeanDiscovery(
-            @Observes AfterBeanDiscovery afterBeanDiscovery) {
+    public void afterBeanDiscovery(@Observes AfterBeanDiscovery afterBeanDiscovery) {
         afterBeanDiscovery.addContext(new TestSuiteContext());
         afterBeanDiscovery.addContext(new TestContext());
     }
@@ -57,16 +54,12 @@ public class TestScopeExtension implements Extension, Serializable {
     }
 
     /**
-     * Use {@link javax.enterprise.inject.spi.AfterTypeDiscovery} to add Stereotype. <p> This is <a
-     * href="https://issues.jboss.org/browse/WELD-1660">not possible in older weld versions</a>. </p>
+     * Use {@link javax.enterprise.inject.spi.AfterTypeDiscovery} to add Stereotype.
      *
      * @param afterTypeDiscovery type meta information.
      */
     public void afterTypeDiscovery(@Observes AfterTypeDiscovery afterTypeDiscovery) {
-        MavenVersion version = versionResolver.getVersion("org.jboss.weld", "weld-api");
-        if (version != null && version.compareTo(MINIMUM_WELD_VERSION_FOR_AFTER_TYPE_DISCOVERY) >= 0) {
-            afterTypeDiscovery.getAlternatives().add(GlobalTestImplementation.class);
-        }
+        afterTypeDiscovery.getAlternatives().add(GlobalTestImplementation.class);
     }
 
     public <T> void replaceAnnotations(@Observes ProcessAnnotatedType<T> pat) {
@@ -79,21 +72,15 @@ public class TestScopeExtension implements Extension, Serializable {
         decoratedTypes.put(pat.getAnnotatedType().getJavaClass(), pat.getAnnotatedType());
     }
 
-
     public <X> void processAnnotatedTypes(@Observes ProcessAnnotatedType<X> pat) {
         AnnotatedType<X> type = pat.getAnnotatedType();
         final Class<X> javaClass = type.getJavaClass();
         if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
             new ActivatableAlternativeBuilder<X>(pat).invoke();
-        } else if (ReflectionsUtils.isTestClass(javaClass)) {
-            AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<TestSuiteScoped>() {
-            });
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
             AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<Replaceable>() {
             });
         }
         updateDecoratedTypes(pat);
     }
-
-
 }

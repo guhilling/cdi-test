@@ -1,20 +1,19 @@
 package de.hilling.cdi.sampleapp.ejb;
 
-import de.hilling.cdi.sampleapp.UserRegistrationEntity;
-import de.hilling.junit.cdi.CdiUnitRunner;
-import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
-@RunWith(CdiUnitRunner.class)
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import de.hilling.cdi.sampleapp.UserRegistrationEntity;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
+
+@ExtendWith(CdiTestJunitExtension.class)
 public class RegistrationServiceUnitTest {
 
     public static final String NAME = "Gunnar";

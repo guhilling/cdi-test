@@ -8,8 +8,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import org.junit.runner.Description;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
+import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.EventType;
@@ -24,7 +25,7 @@ public class TestTransactionManager {
     private EntityManager               entityManager;
     private EntityTransaction           transaction;
 
-    protected void beginTransaction(@Observes @TestEvent(EventType.STARTING) Description description) {
+    protected void beginTransaction(@Observes @TestEvent(EventType.STARTING) ExtensionContext description) {
         cleanDatabase();
         transaction = entityManager.getTransaction();
         transaction.begin();
@@ -38,11 +39,11 @@ public class TestTransactionManager {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("error cleaning db", e);
+            throw new CdiTestException("error cleaning db", e);
         }
     }
 
-    protected void finishTransaction(@Observes @TestEvent(EventType.FINISHING) Description description) {
+    protected void finishTransaction(@Observes @TestEvent(EventType.FINISHING) ExtensionContext description) {
         if (transaction.isActive()) {
             if (transaction.getRollbackOnly()) {
                 transaction.rollback();

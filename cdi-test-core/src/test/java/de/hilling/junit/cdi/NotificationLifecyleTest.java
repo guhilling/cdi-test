@@ -1,44 +1,28 @@
 package de.hilling.junit.cdi;
 
-import de.hilling.junit.cdi.lifecycle.TestEvent;
-import de.hilling.junit.cdi.scope.EventType;
-import org.junit.Test;
-import org.junit.runner.Description;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 
-import static org.junit.Assert.assertNotNull;
+import org.junit.jupiter.api.Test;
 
 public class NotificationLifecyleTest extends CdiTestAbstract {
 
-    private Description startingEvent;
-    private Description finishingEvent;
-    private Description finishedEvent;
-
-    protected void observeStarting(@Observes @TestEvent(EventType.STARTING) Description testEvent) {
-        this.startingEvent = testEvent;
-    }
-
-    protected void observeFinishing(@Observes @TestEvent(EventType.FINISHING) Description testEvent) {
-        this.finishingEvent = testEvent;
-    }
-
-    protected void observeFinished(@Observes @TestEvent(EventType.FINISHED) Description testEvent) {
-        this.finishedEvent = testEvent;
-    }
+    @Inject
+    private NotificationLifecyleSupportBean supportBean;
 
     @Test
     public void notifyStarting() {
-        assertNotNull(startingEvent);
+        assertNotNull(supportBean.startingEvent);
     }
 
     @Test
     public void notifyFinishing() {
-        assertNotNull(finishingEvent);
+        assertNotNull(supportBean.finishingEvent);
     }
 
     @Test
     public void notifyFinished() {
-        assertNotNull(finishedEvent);
+        assertNotNull(supportBean.finishedEvent);
     }
 }

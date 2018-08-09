@@ -12,12 +12,14 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hilling.junit.cdi.CdiTestException;
+
 /**
  * Load annotation replacements and provide them to the replacer.
  */
 public class AnnotationReplacementHolder {
 
-    public static final String DEFAULT_ANNOTATION_FILE_NAME = "cdi-test-annotations.properties";
+    private static final String DEFAULT_ANNOTATION_FILE_NAME = "cdi-test-annotations.properties";
 
     private static final AnnotationReplacementHolder INSTANCE;
     private Map<Class<? extends Annotation>, Annotation> replacementMap = new HashMap<>();
@@ -28,18 +30,18 @@ public class AnnotationReplacementHolder {
      *
      * @return replacement map.
      */
-    public Map<Class<? extends Annotation>, Annotation> getReplacementMap() {
+    Map<Class<? extends Annotation>, Annotation> getReplacementMap() {
         return replacementMap;
     }
 
-    protected AnnotationReplacementHolder(String annotationResourceName) {
+    AnnotationReplacementHolder(String annotationResourceName) {
         try {
             Enumeration<URL> resources = getClass().getClassLoader().getResources(annotationResourceName);
             while (resources.hasMoreElements()) {
                 addConfigurationFrom(resources.nextElement());
             }
         } catch (IOException e) {
-            throw new RuntimeException("error loading annotation replacements", e);
+            throw new CdiTestException("error loading annotation replacements", e);
         }
     }
 
@@ -75,10 +77,10 @@ public class AnnotationReplacementHolder {
                     if (replacementProxy instanceof Annotation) {
                         replacementMap.put(oldAnnotation, (Annotation) replacementProxy);
                     } else {
-                        throw new RuntimeException("class " + replacmentAnnotation + " is not an annotation");
+                        throw new CdiTestException("class " + replacmentAnnotation + " is not an annotation");
                     }
                 } catch (ClassNotFoundException e) {
-                    throw new RuntimeException("unable to load specified class: " + e.getMessage());
+                    throw new CdiTestException("unable to load specified class", e);
                 }
             }
         }

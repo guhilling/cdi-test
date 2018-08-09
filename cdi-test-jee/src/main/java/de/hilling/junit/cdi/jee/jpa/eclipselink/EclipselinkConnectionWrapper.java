@@ -21,7 +21,7 @@ public class EclipselinkConnectionWrapper implements ConnectionWrapper {
     /**
      * make it proxyable.
      */
-    protected EclipselinkConnectionWrapper() {
+    public EclipselinkConnectionWrapper() {
     }
 
     @Inject

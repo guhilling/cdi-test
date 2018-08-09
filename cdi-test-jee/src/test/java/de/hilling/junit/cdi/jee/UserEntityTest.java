@@ -1,13 +1,14 @@
 package de.hilling.junit.cdi.jee;
 
-import de.hilling.junit.cdi.CdiUnitRunner;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-@RunWith(CdiUnitRunner.class)
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import de.hilling.junit.cdi.CdiTestJunitExtension;
+
+@ExtendWith(CdiTestJunitExtension.class)
 public class UserEntityTest {
     @Inject
     private EntityManager entityManager;

@@ -1,38 +1,31 @@
 package de.hilling.junit.cdi.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.deltaspike.cdise.api.CdiContainer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import de.hilling.junit.cdi.CdiTestAbstract;
-import de.hilling.junit.cdi.InjectionTest;
-import de.hilling.junit.cdi.NotificationTest;
 import de.hilling.junit.cdi.beans.StrangeName$Object;
 
 public class ReflectionsUtilsTest {
 
     @Test
     public void findIdenticalClass() {
-        assertEquals(String.class,
-                ReflectionsUtils.getOriginalClass(String.class));
+        assertEquals(String.class, ReflectionsUtils.getOriginalClass(String.class));
     }
 
     @Test
     public void findOriginalClass() {
-        ReflectionsUtilsTest utilsTestMock = Mockito
-                .mock(ReflectionsUtilsTest.class);
-        assertEquals(ReflectionsUtilsTest.class,
-                ReflectionsUtils.getOriginalClass(utilsTestMock.getClass()));
+        ReflectionsUtilsTest utilsTestMock = Mockito.mock(ReflectionsUtilsTest.class);
+        assertEquals(ReflectionsUtilsTest.class, ReflectionsUtils.getOriginalClass(utilsTestMock.getClass()));
     }
 
-
-    @Test(expected = RuntimeException.class)
+    @Test
     public void failOnStrangeClassName() {
-        ReflectionsUtils.getOriginalClass(StrangeName$Object.class);
+        assertThrows(RuntimeException.class, () -> ReflectionsUtils.getOriginalClass(StrangeName$Object.class));
     }
 
     @Test
@@ -69,22 +62,9 @@ public class ReflectionsUtilsTest {
         }.getClass()));
     }
 
-    @Test
-    public void proxyStandardClass() {
-        assertTrue(ReflectionsUtils.shouldProxyCdiType(ReflectionsUtilsTest.class));
-        try {
-            assertTrue(ReflectionsUtils.shouldProxyCdiType(Class.forName("NoPackageTestBean")));
-        } catch (ClassNotFoundException e) {
-            assertFalse(true);
-        }
-    }
-
-    @Test
-    public void isTestClass() {
-        assertTrue(ReflectionsUtils.isTestClass(CdiTestAbstract.class));
-        assertTrue(ReflectionsUtils.isTestClass(InjectionTest.class));
-        assertTrue(ReflectionsUtils.isTestClass(NotificationTest.class));
-        assertFalse(ReflectionsUtils.isTestClass(ReflectionsUtilsTest.class));
+    public enum SampleEnum {
+        ONE,
+        TWO
     }
 
     public static final class FinalClass {
@@ -111,10 +91,5 @@ public class ReflectionsUtilsTest {
     public static class ClassWithPrivateDefaultConstructor {
         private ClassWithPrivateDefaultConstructor() {
         }
-    }
-
-    public enum SampleEnum {
-        ONE,
-        TWO
     }
 }

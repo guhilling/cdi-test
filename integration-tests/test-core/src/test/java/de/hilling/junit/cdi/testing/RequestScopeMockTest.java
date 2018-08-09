@@ -1,11 +1,11 @@
 package de.hilling.junit.cdi.testing;
 
-import org.junit.Test;
-import org.mockito.Mock;
+import static org.mockito.Mockito.verify;
 
 import javax.inject.Inject;
 
-import static org.mockito.Mockito.verify;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 public class RequestScopeMockTest extends BaseTest {
 

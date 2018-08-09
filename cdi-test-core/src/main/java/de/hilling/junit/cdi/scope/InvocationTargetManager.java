@@ -75,8 +75,8 @@ public class InvocationTargetManager {
             if (type != null) {
                 ActivatableTestImplementation activatableTestImplementation = type.getAnnotation(
                 ActivatableTestImplementation.class);
-                for (Class<?> overriden : activatableTestImplementation.value()) {
-                    if (overriden.equals(javaClass)) {
+                for (Class<?> overridden : activatableTestImplementation.value()) {
+                    if (overridden.equals(javaClass)) {
                         return alternative;
                     }
                 }

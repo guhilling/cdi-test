@@ -1,11 +1,13 @@
 package de.hilling.junit.cdi;
 
-import de.hilling.junit.cdi.beans.Request;
-import org.junit.Assert;
-import org.junit.Test;
+import java.util.UUID;
 
 import javax.inject.Inject;
-import java.util.UUID;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import de.hilling.junit.cdi.beans.Request;
 
 public class ScopeTest extends CdiTestAbstract {
 
@@ -16,7 +18,7 @@ public class ScopeTest extends CdiTestAbstract {
 
     @Test
     public void assertNotNull() {
-        Assert.assertNotNull(request);
+        Assertions.assertNotNull(request);
     }
 
     @Test
@@ -31,9 +33,9 @@ public class ScopeTest extends CdiTestAbstract {
 
     private void assertNotEqual() {
         if (lastIdentifier == null) {
-            request.getIdentifier();
+            lastIdentifier = request.getIdentifier();
         } else {
-            Assert.assertNotEquals(lastIdentifier, request.getIdentifier());
+            Assertions.assertNotEquals(lastIdentifier, request.getIdentifier());
         }
     }
 

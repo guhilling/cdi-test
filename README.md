@@ -8,14 +8,18 @@
 
 cdi-test is a junit-addon for easy and quick testing of cdi projects.
 
+cdi-test is available as a JUnit 4 TestRunner in the 1.x Versions.
+Starting with 2.0 cdi-test is used as an Extension with JUnit 5.
+
 cdi-test is available under the [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 
 ## Main features:
 
 * Plain cdi test, no classpath magic.
-* Custom scopes for testing.
-* Uses interceptors for on-the-fly switching between mockito-mocks, test implementation and production implementations.
+* Fast because the CDI-Container is started only once for the whole Test-Scenario.
+* Well tested.
+* Supports Mocks and Test-Replacements for CDI Beans.   These can be activated in each individual Test Class.
 * Support for some ejb features to test jee application components:
     * Inject EntityManager via ``@Inject`` or ``@PersistenceContext``
     * Injection of Stateless Beans
@@ -44,6 +48,6 @@ See the [Documentation on github pages](http://guhilling.github.io/cdi-test/).
 
 JProfiler supports open source projects with its full-featured Java Profiler. Click the JProfiler logo below to learn more.
 
-<a href="http://www.ej-technologies.com/products/jprofiler/overview.html" target="_blank" title="File Management">
-  <img src="http://www.ej-technologies.com/images/product_banners/jprofiler_large.png" alt="File Management">
+<a href="https://www.ej-technologies.com/products/jprofiler/overview.html" target="_blank" title="File Management">
+  <img src="https://www.ej-technologies.com/images/product_banners/jprofiler_large.png" alt="File Management">
 </a>

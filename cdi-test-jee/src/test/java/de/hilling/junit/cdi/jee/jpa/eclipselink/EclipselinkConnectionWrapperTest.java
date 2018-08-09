@@ -1,5 +1,8 @@
 package de.hilling.junit.cdi.jee.jpa.eclipselink;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.sql.SQLException;
 
 import javax.enterprise.inject.Instance;
@@ -7,15 +10,14 @@ import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import de.hilling.junit.cdi.CdiUnitRunner;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 
-@RunWith(CdiUnitRunner.class)
+@ExtendWith(CdiTestJunitExtension.class)
 public class EclipselinkConnectionWrapperTest {
 
     @Inject
@@ -25,19 +27,19 @@ public class EclipselinkConnectionWrapperTest {
 
     private EntityManagerFactory entityManagerFactory;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         entityManagerFactory = Persistence.createEntityManagerFactory("cdi-test-unit-eclipselink");
     }
 
     @Test
     public void runWithHibernatePersistence() throws SQLException {
-        Assert.assertFalse(connectionWrapper.runWithConnection());
+        assertFalse(connectionWrapper.runWithConnection());
     }
 
     @Test
     public void runWithEclipseLinkPersistence() throws SQLException {
         connectionWrapper = new EclipselinkConnectionWrapper(entityManagerFactory.createEntityManager(), cleaner);
-        Assert.assertTrue(connectionWrapper.runWithConnection());
+        assertTrue(connectionWrapper.runWithConnection());
     }
 }

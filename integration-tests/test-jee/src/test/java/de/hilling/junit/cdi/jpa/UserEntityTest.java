@@ -4,22 +4,23 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import de.hilling.junit.cdi.CdiUnitRunner;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 
-@RunWith(CdiUnitRunner.class)
+@ExtendWith(CdiTestJunitExtension.class)
 public class UserEntityTest {
     @Inject
     private EntityManager entityManager;
     @Inject
     private TestUtils testUtils;
 
-    @Test(expected = PersistenceException.class)
+    @Test
     public void storeUserEntityWithNullAttributes() {
         UserEntity userEntity = new UserEntity();
-        entityManager.persist(userEntity);
+        Assertions.assertThrows(PersistenceException.class, () -> entityManager.persist(userEntity));
     }
 
     @Test

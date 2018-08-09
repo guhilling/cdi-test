@@ -1,11 +1,11 @@
 package de.hilling.junit.cdi.testing;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class RequestScopePlainTest extends BaseTest {
 
@@ -19,7 +19,7 @@ public class RequestScopePlainTest extends BaseTest {
 
     @Test
     public void setAttributeTransitive() {
-        Assert.assertNull(applicationBean.getAttribute());
+        Assertions.assertNull(applicationBean.getAttribute());
         requestBean.setAttribute(SAMPLE);
         assertEquals(SAMPLE, applicationBean.getAttribute());
     }

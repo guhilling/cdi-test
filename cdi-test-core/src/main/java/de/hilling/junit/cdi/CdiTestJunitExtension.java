@@ -47,35 +47,23 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
     @Override
     public void beforeEach(ExtensionContext context) {
         testContext = resolveBean(TestContext.class);
-        testContext.setTestInstance(context.getRequiredTestInstance());
+        Object testInstance = context.getRequiredTestInstance();
+        testContext.setTestInstance(testInstance);
         testContext.setTestMethod(context.getRequiredTestMethod());
         testContext.setTestName(context.getDisplayName());
         invocationTargetManager.addAndActivateTest(testContext.getTestClass());
         contextControl.startContexts();
         lifecycleNotifier.notify(EventType.STARTING, context);
-        for (Field field : ReflectionsUtils.getAllFields(context.getTestInstance().get().getClass())) {
+        for (Field field : ReflectionsUtils.getAllFields(testInstance.getClass())) {
             if (field.isAnnotationPresent(Mock.class)) {
-                assignMockAndActivateProxy(field, context.getTestInstance().get());
+                assignMockAndActivateProxy(field);
             }
             if (field.isAnnotationPresent(Inject.class)) {
-                resolveAndAssignBean(field);
+                ReflectionsUtils.setField(testInstance, resolveBean(field.getType()), field);
             }
             if (isTestActivatable(field)) {
                 activateForTest(field);
             }
-        }
-    }
-
-    private void resolveAndAssignBean(Field field) {
-        field.setAccessible(true);
-        try {
-            Class<?> type = field.getType();
-            Object bean = resolveBean(type);
-            field.set(testContext.getTestInstance(), bean);
-        } catch (IllegalArgumentException | IllegalAccessException e) {
-            throw new CdiTestException("error activating proxy", e);
-        } finally {
-            field.setAccessible(false);
         }
     }
 
@@ -92,17 +80,10 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
         invocationTargetManager.activateAlternative(field.getType());
     }
 
-    private void assignMockAndActivateProxy(Field field, Object test) {
-        field.setAccessible(true);
-        try {
-            Class<?> type = field.getType();
-            Object mock = invocationTargetManager.mock(type);
-            field.set(test, mock);
-            invocationTargetManager.activateMock(type);
-        } catch (IllegalArgumentException | IllegalAccessException e) {
-            throw new CdiTestException("error activating proxy", e);
-        } finally {
-            field.setAccessible(false);
-        }
+    private void assignMockAndActivateProxy(Field field) {
+        Class<?> type = field.getType();
+        Object mock = invocationTargetManager.mock(type);
+        ReflectionsUtils.setField(testContext.getTestInstance(), mock, field);
+        invocationTargetManager.activateMock(type);
     }
 }

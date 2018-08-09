@@ -128,33 +128,14 @@ public final class ReflectionsUtils {
         return true;
     }
 
-    public static void setField(Object target, Object value) {
-        final Class<?> valueClass = value.getClass();
-        fields = target.getClass().getDeclaredFields();
-        String targetField = null;
-        for (int i = 0; i < fields.length; i++) {
-            final Field field = fields[i];
-            if (field.getType().isAssignableFrom(valueClass)) {
-                if (targetField == null) {
-                    targetField = setField(target, value, field);
-                } else {
-                    throw new CdiTestException("found at least two candidates: " + targetField + " and " + field.getName());
-                }
-            }
-        }
-    }
-
-    public static String setField(Object target, Object value, Field field) {
-        String targetField;
+    public static void setField(Object target, Object value, Field field) {
         field.setAccessible(true);
         try {
             field.set(target, value);
-            targetField = field.getName();
         } catch (IllegalAccessException e) {
             throw new CdiTestException("setting field failed", e);
         } finally {
             field.setAccessible(false);
         }
-        return targetField;
     }
 }

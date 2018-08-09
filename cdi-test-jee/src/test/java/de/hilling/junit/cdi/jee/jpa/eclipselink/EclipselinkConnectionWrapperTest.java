@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.hilling.junit.cdi.CdiTestJunitExtension;
-import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 @ExtendWith(CdiTestJunitExtension.class)
 public class EclipselinkConnectionWrapperTest {
@@ -38,7 +37,6 @@ public class EclipselinkConnectionWrapperTest {
     @Disabled
     @Test
     public void runWithEclipseLinkPersistence() throws SQLException {
-        ReflectionsUtils.setField(connectionWrapper, entityManagerFactory.createEntityManager());
         assertTrue(connectionWrapper.runWithConnection());
     }
 }

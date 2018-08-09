@@ -20,7 +20,7 @@ cdi-test is available under the [The Apache Software License, Version 2.0](http:
 * Fast because the CDI-Container is started only once for the whole scenario.
 * Well tested.
 * Supports mocks and test alternatives for CDI beans. These can be activated per test class.
-* Support for some ejb features to test jee application components:
+* Support for some EJB features to test JEE application components:
     * Inject EntityManager via ``@Inject`` or ``@PersistenceContext``
     * Injection of Stateless Beans
 
@@ -51,3 +51,4 @@ JProfiler supports open source projects with its full-featured Java Profiler. Cl
 <a href="https://www.ej-technologies.com/products/jprofiler/overview.html" target="_blank" title="File Management">
   <img src="https://www.ej-technologies.com/images/product_banners/jprofiler_large.png" alt="File Management">
 </a>
+

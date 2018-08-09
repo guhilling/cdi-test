@@ -8,8 +8,10 @@ import java.sql.SQLException;
 public interface ConnectionWrapper {
 
     /**
-     * Execute specified code in connection.
+     * Execute database cleaner.
+     *
      * @throws SQLException on any error during execution.
+     * @return true if cleaning was successful.
      */
-    boolean runWithConnection() throws SQLException;
+    boolean callDatabaseCleaner() throws SQLException;
 }

@@ -31,12 +31,12 @@ public class EclipselinkConnectionWrapperTest {
 
     @Test
     public void runWithHibernatePersistence() throws SQLException {
-        assertFalse(connectionWrapper.runWithConnection());
+        assertFalse(connectionWrapper.callDatabaseCleaner());
     }
 
     @Disabled
     @Test
     public void runWithEclipseLinkPersistence() throws SQLException {
-        assertTrue(connectionWrapper.runWithConnection());
+        assertTrue(connectionWrapper.callDatabaseCleaner());
     }
 }

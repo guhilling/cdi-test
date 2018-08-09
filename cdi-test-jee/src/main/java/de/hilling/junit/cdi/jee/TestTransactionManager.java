@@ -34,7 +34,7 @@ public class TestTransactionManager {
     private void cleanDatabase() {
         try {
             for (ConnectionWrapper wrapper : connectionWrappers) {
-                if(wrapper.runWithConnection()) {
+                if(wrapper.callDatabaseCleaner()) {
                     break;
                 }
             }

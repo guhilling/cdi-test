@@ -1,8 +1,5 @@
 package de.hilling.junit.cdi.jee.jpa.hibernate;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
@@ -23,17 +20,12 @@ public class HibernateConnectionWrapper implements ConnectionWrapper {
     private EntityManager entityManager;
 
     @Override
-    public boolean runWithConnection() {
+    public boolean callDatabaseCleaner() {
         Object delegate = entityManager.getDelegate();
         if (delegate instanceof SessionImpl) {
             SessionImpl session = (SessionImpl) delegate;
             if(!cleaner.isUnsatisfied()) {
-                session.doWork(new org.hibernate.jdbc.Work() {
-                    @Override
-                    public void execute(Connection connection) throws SQLException {
-                        cleaner.get().run(connection);
-                    }
-                });
+                session.doWork(connection -> cleaner.get().run(connection));
             }
             return true;
         } else {

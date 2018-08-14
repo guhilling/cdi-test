@@ -59,7 +59,7 @@ public class AnnotationReplacementHolder {
                     final Class<? extends Annotation> replacmentAnnotation = (Class<? extends Annotation>) Class.forName(split[1]);
                     final Object replacementProxy = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{replacmentAnnotation}, new InvocationHandler() {
                         @Override
-                        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        public Object invoke(Object proxy, Method method, Object[] args) {
                             switch (method.getName()) {
                                 case "annotationType":
                                     return replacmentAnnotation;

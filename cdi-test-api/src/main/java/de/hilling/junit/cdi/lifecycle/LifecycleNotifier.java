@@ -25,6 +25,6 @@ public class LifecycleNotifier {
         lifecycleEvent.select(event).fire(description);
     }
 
-    private static abstract class TestEventLiteral extends AnnotationLiteral<TestEvent> implements TestEvent {
+    private abstract static class TestEventLiteral extends AnnotationLiteral<TestEvent> implements TestEvent {
     }
 }

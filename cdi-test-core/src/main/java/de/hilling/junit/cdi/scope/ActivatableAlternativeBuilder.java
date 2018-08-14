@@ -62,10 +62,10 @@ class ActivatableAlternativeBuilder<X> {
         }
     }
 
-    private static abstract class TypedLiteral extends AnnotationLiteral<Typed> implements Typed {
+    private abstract static class TypedLiteral extends AnnotationLiteral<Typed> implements Typed {
     }
 
-    private static abstract class ActivatableTestImplementationLiteral extends AnnotationLiteral<ActivatableTestImplementation> implements ActivatableTestImplementation {
+    private abstract static class ActivatableTestImplementationLiteral extends AnnotationLiteral<ActivatableTestImplementation> implements ActivatableTestImplementation {
     }
 
 

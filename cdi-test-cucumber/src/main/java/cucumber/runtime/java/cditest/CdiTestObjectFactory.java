@@ -17,14 +17,8 @@ import de.hilling.junit.cdi.scope.EventType;
 public class CdiTestObjectFactory implements ObjectFactory {
     private static final Logger LOG = Logger.getLogger(CdiTestObjectFactory.class.getCanonicalName());
 
-    private ContextControlWrapper contextControl;
-    private LifecycleNotifier notifier;
-
-    {
-        contextControl = ContextControlWrapper.getInstance();
-        notifier = BeanProvider.getContextualReference(LifecycleNotifier.class, false);
-    }
-
+    private ContextControlWrapper contextControl = ContextControlWrapper.getInstance();
+    private LifecycleNotifier notifier = BeanProvider.getContextualReference(LifecycleNotifier.class, false);
     private Map<Class, Object> definitions = new HashMap<>();
 
     @Override

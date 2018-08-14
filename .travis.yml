@@ -3,7 +3,7 @@ dist: trusty
 group: edge
 
 addons:
-  sonarqube:
+  sonarcloud:
     organization: "guhilling-github"
     token:
       secure: "PIVBggt+JPplyg9oy6BZwQH2zHSFEsPdTlaJcXXEbnumfGzRbcq4Dr1FXzWn1ZOas9cPv0tG5YHbMhTYvettSLssAWI12LzgcjdvlqFrn4PYwa4zux+xJYxfgHdrIay6sm4FfS59ERz5oC8BBab5rxBCSWsONYrw0lO1esYw4Wk="
@@ -20,7 +20,7 @@ env:
   - CDI=cdi-2.0
 
 script:
-  - mvn test -P${CDI} jacoco:report coveralls:report
+  - mvn test -P${CDI} jacoco:report coveralls:report sonar:sonar
 
 cache:
   directories:

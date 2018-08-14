@@ -10,7 +10,13 @@ import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
  */
 @BypassTestInterceptor
 public class CustomScopeInstance<T> {
-    public Bean<T> bean;
-    public CreationalContext<T> ctx;
-    public T instance;
+    public final Bean<T> bean;
+    public final CreationalContext<T> ctx;
+    public final T instance;
+
+    public CustomScopeInstance(Bean<T> bean, CreationalContext<T> ctx, T instance) {
+        this.bean = bean;
+        this.ctx = ctx;
+        this.instance = instance;
+    }
 }

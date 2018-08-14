@@ -1,7 +1,6 @@
 package de.hilling.junit.cdi;
 
 import java.lang.reflect.Field;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -19,8 +18,6 @@ import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallback {
-
-    private static final Logger LOG = Logger.getLogger(CdiTestJunitExtension.class.getCanonicalName());
 
     static {
         LoggerConfigurator.configure();

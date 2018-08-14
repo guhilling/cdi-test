@@ -16,7 +16,7 @@ public class InjectionTest extends CdiTestAbstract {
     private Person person;
 
     @Inject
-    private TestContext testInformation;
+    private TestEnvironment testInformation;
 
     @Inject
     private ConstructorInjected constructorInjected;

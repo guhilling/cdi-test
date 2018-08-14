@@ -7,7 +7,7 @@ import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 @BypassTestInterceptor
 @TestSuiteScoped
-public class TestContext {
+public class TestEnvironment {
 
     private Object testInstance;
     private Method testMethod;

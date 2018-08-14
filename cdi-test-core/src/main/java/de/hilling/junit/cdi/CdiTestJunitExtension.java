@@ -26,7 +26,7 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
     private final InvocationTargetManager invocationTargetManager;
     private final ContextControlWrapper   contextControl = ContextControlWrapper.getInstance();
     private       LifecycleNotifier       lifecycleNotifier;
-    private       TestContext             testContext;
+    private       TestEnvironment         testEnvironment;
 
     public CdiTestJunitExtension() {
         invocationTargetManager = BeanProvider.getContextualReference(InvocationTargetManager.class, false);
@@ -43,12 +43,12 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        testContext = resolveBean(TestContext.class);
+        testEnvironment = resolveBean(TestEnvironment.class);
         Object testInstance = context.getRequiredTestInstance();
-        testContext.setTestInstance(testInstance);
-        testContext.setTestMethod(context.getRequiredTestMethod());
-        testContext.setTestName(context.getDisplayName());
-        invocationTargetManager.addAndActivateTest(testContext.getTestClass());
+        testEnvironment.setTestInstance(testInstance);
+        testEnvironment.setTestMethod(context.getRequiredTestMethod());
+        testEnvironment.setTestName(context.getDisplayName());
+        invocationTargetManager.addAndActivateTest(testEnvironment.getTestClass());
         contextControl.startContexts();
         lifecycleNotifier.notify(EventType.STARTING, context);
         for (Field field : ReflectionsUtils.getAllFields(testInstance.getClass())) {
@@ -80,7 +80,7 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
     private void assignMockAndActivateProxy(Field field) {
         Class<?> type = field.getType();
         Object mock = invocationTargetManager.mock(type);
-        ReflectionsUtils.setField(testContext.getTestInstance(), mock, field);
+        ReflectionsUtils.setField(testEnvironment.getTestInstance(), mock, field);
         invocationTargetManager.activateMock(type);
     }
 }

@@ -14,7 +14,6 @@ import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 public final class ReflectionsUtils {
 
     private static final String[] SYSTEM_PACKAGES = {"java", "javax", "com.sun", "org.apache.deltaspike", "org.jboss"};
-    private static Field[] fields;
 
     private ReflectionsUtils() {
     }
@@ -35,9 +34,9 @@ public final class ReflectionsUtils {
             try {
                 if (clazz.getPackage() == null) {
                     return Class.forName(
-                    canonicalName.substring(canonicalName.lastIndexOf(".") + 1, canonicalName.indexOf("$")));
+                    canonicalName.substring(canonicalName.lastIndexOf('.') + 1, canonicalName.indexOf('$')));
                 }
-                return Class.forName(canonicalName.substring(0, canonicalName.indexOf("$")));
+                return Class.forName(canonicalName.substring(0, canonicalName.indexOf('$')));
             } catch (ClassNotFoundException e) {
                 throw new CdiTestException("unable to find original class", e);
             }

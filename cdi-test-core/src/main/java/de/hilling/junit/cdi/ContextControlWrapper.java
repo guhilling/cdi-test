@@ -16,9 +16,7 @@ public class ContextControlWrapper {
 
     private final ContextControl contextControl;
 
-    private static final class SingletonHolder {
-        final static ContextControlWrapper INSTANCE = new ContextControlWrapper();
-    }
+    private static final ContextControlWrapper INSTANCE = new ContextControlWrapper();
 
     /**
      * Returns the singleton.
@@ -27,7 +25,7 @@ public class ContextControlWrapper {
      * @return the single instance of this class
      */
     public static ContextControlWrapper getInstance() {
-        return SingletonHolder.INSTANCE;
+        return INSTANCE;
     }
 
     private ContextControlWrapper() {

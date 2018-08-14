@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.net.URL;
 import java.util.Enumeration;
@@ -57,23 +56,8 @@ public class AnnotationReplacementHolder {
                 try {
                     Class<? extends Annotation> oldAnnotation = (Class<? extends Annotation>) Class.forName(split[0]);
                     final Class<? extends Annotation> replacmentAnnotation = (Class<? extends Annotation>) Class.forName(split[1]);
-                    final Object replacementProxy = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{replacmentAnnotation}, new InvocationHandler() {
-                        @Override
-                        public Object invoke(Object proxy, Method method, Object[] args) {
-                            switch (method.getName()) {
-                                case "annotationType":
-                                    return replacmentAnnotation;
-                                case "hashCode":
-                                    return 0;
-                                case "equals":
-                                    return false;
-                                case "toString":
-                                    return replacmentAnnotation.getCanonicalName();
-                                default:
-                                    return null;
-                            }
-                        }
-                    });
+                    final Object replacementProxy = Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{replacmentAnnotation},
+                                                                           executeVirtualAnnotationMethods(replacmentAnnotation));
                     if (replacementProxy instanceof Annotation) {
                         replacementMap.put(oldAnnotation, (Annotation) replacementProxy);
                     } else {
@@ -84,6 +68,23 @@ public class AnnotationReplacementHolder {
                 }
             }
         }
+    }
+
+    private InvocationHandler executeVirtualAnnotationMethods(Class<? extends Annotation> replacmentAnnotation) {
+        return (proxy, method, args) -> {
+            switch (method.getName()) {
+                case "annotationType":
+                    return replacmentAnnotation;
+                case "hashCode":
+                    return 0;
+                case "equals":
+                    return false;
+                case "toString":
+                    return replacmentAnnotation.getCanonicalName();
+                default:
+                    return null;
+            }
+        };
     }
 
     static {

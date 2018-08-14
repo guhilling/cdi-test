@@ -25,7 +25,7 @@ public interface ScopeContextHolder {
      *
      * @return a map of all beans of the specific context
      */
-    Map<Class<?>, CustomScopeInstance<?>> getBeans();
+    Map<Class<?>, CustomScopeInstance> getBeans();
 
     /**
      * Receive one bean of the specific context.

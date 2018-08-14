@@ -257,7 +257,6 @@
                 <version>2.21.0</version>
                 <configuration>
                     <threadCount>6</threadCount>
-                    <argLine>-Xmx1400m -XX:MaxPermSize=256m</argLine>
                 </configuration>
                 <dependencies>
                     <dependency>

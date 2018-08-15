@@ -1,0 +1,23 @@
+sudo: false
+dist: trusty
+group: edge
+
+addons:
+  sonarcloud:
+    organization: "guhilling-github"
+    token:
+      secure: "PIVBggt+JPplyg9oy6BZwQH2zHSFEsPdTlaJcXXEbnumfGzRbcq4Dr1FXzWn1ZOas9cPv0tG5YHbMhTYvettSLssAWI12LzgcjdvlqFrn4PYwa4zux+xJYxfgHdrIay6sm4FfS59ERz5oC8BBab5rxBCSWsONYrw0lO1esYw4Wk="
+
+language: java
+
+jdk:
+  - oraclejdk8
+  - oraclejdk10
+
+script:
+  - mvn test jacoco:report sonar:sonar
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'

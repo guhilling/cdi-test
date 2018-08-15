@@ -18,9 +18,10 @@ jdk:
 
 env:
   - CDI=cdi-2.0
+  - CDI=cdi-1.2
 
 script:
-  - mvn test -P${CDI} jacoco:report coveralls:report sonar:sonar
+  - mvn test -P${CDI} jacoco:report sonar:sonar
 
 cache:
   directories:

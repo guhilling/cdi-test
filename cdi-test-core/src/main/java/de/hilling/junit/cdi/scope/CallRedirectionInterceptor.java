@@ -52,6 +52,7 @@ public class CallRedirectionInterceptor implements Serializable {
         }
     }
 
+    @SuppressWarnings("squid:S00112")
     private Object callMock(InvocationContext ctx, Class<?> javaClass) throws Throwable {
         try {
             return ctx.getMethod().invoke(invocationTargetManager.get().mock(javaClass), ctx.getParameters());

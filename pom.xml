@@ -15,9 +15,8 @@
         <java.version>1.8</java.version>
         <deltaspike.version>1.8.2</deltaspike.version>
         <cdi-2.0-weld.version>3.0.5.Final</cdi-2.0-weld.version>
-        <weld.version>${cdi-2.0-weld.version}</weld.version>
-        <cdi-api.version>2.0</cdi-api.version>
-        <hibernate.version>5.3.4.Final</hibernate.version>
+        <cdi-1.2-weld.version>2.4.7.Final</cdi-1.2-weld.version>
+        <cdi-api.version>2.0.SP1</cdi-api.version>
         <github.global.server>github</github.global.server>
         <mockito.version>2.21.0</mockito.version>
         <javassist.version>3.23.1-GA</javassist.version>
@@ -69,9 +68,6 @@
     <modules>
         <module>docs</module>
         <module>cdi-test-core</module>
-        <module>integration-tests</module>
-        <module>cdi-test-cucumber</module>
-        <module>cdi-test-jee</module>
         <module>cdi-test-api</module>
     </modules>
 
@@ -154,13 +150,6 @@
                 <version>${deltaspike.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>${hibernate.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>org.jboss.weld</groupId>
                 <artifactId>weld-core-bom</artifactId>
                 <version>${weld.version}</version>
@@ -196,7 +185,7 @@
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <useReleaseProfile>true</useReleaseProfile>
-                    <releaseProfiles>release,cdi-1.2</releaseProfiles>
+                    <releaseProfiles>release,cdi-2</releaseProfiles>
                     <goals>deploy</goals>
                 </configuration>
             </plugin>
@@ -290,10 +279,24 @@
 
     <profiles>
         <profile>
+            <id>cdi-2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <weld.version>${cdi-2.0-weld.version}</weld.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>cdi-1.2</id>
+            <properties>
+                <weld.version>${cdi-1.2-weld.version}</weld.version>
+            </properties>
+        </profile>
+        <profile>
             <id>release</id>
             <properties>
                 <weld.version>${cdi-2.0-weld.version}</weld.version>
-                <cdi-api.version>2.0</cdi-api.version>
             </properties>
             <build>
                 <plugins>

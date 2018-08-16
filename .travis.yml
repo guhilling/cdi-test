@@ -21,9 +21,11 @@ env:
   - CDI=cdi-1.2
 
 script:
-  - mvn test -P${CDI} jacoco:report sonar:sonar
+  - build/travis-build
 
 cache:
   directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
+    - "$HOME/.m2/repository"
+    - "$HOME/.sonar/cache"
+before_cache:
+  build/cleanup-snapshots

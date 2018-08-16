@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -euo pipefail
+
+JAVA_VERSION=$( java -version 2>&1 | head -n 1 | cut -d'"' -f2| cut -d '.' -f 2 )
+
+if [ ${CDI} = cdi-2.0 ] && [ ${JAVA_VERSION} = 10 ]; then
+    mvn test -P${CDI} jacoco:report sonar:sonar
+else
+    mvn test
+fi

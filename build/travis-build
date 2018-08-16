@@ -4,7 +4,7 @@ set -euo pipefail
 
 set -vx
 
-if [ "${COVERAGE}z" != z ]; then
+if [ "${COVERAGE:-false}" != false ]; then
     echo building with coverage on sonarcloud
     mvn test -P${CDI} jacoco:report sonar:sonar
 else

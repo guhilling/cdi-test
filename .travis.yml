@@ -39,5 +39,6 @@ cache:
   directories:
     - "$HOME/.m2/repository"
     - "$HOME/.sonar/cache"
+
 before_cache:
   build/cleanup-snapshots

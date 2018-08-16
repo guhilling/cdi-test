@@ -10,8 +10,6 @@ addons:
 
 language: java
 
-install: /bin/true
-
 matrix:
   include:
   - name: "Java 8"

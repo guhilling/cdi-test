@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-JAVA_VERSION=$( java -version 2>&1 | head -n 1 | cut -d'"' -f2| cut -d '.' -f 1 )
+set -vx
 
-if [ ${CDI} = cdi-2.0 ] && [ ${JAVA_VERSION} = 10 ]; then
+if [ "${COVERAGE}z" != z ]; then
     echo building with coverage on sonarcloud
     mvn test -P${CDI} jacoco:report sonar:sonar
 else

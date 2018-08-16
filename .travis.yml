@@ -10,24 +10,27 @@ addons:
 
 language: java
 
+install: /bin/true
+
 matrix:
   include:
   - name: "Java 8"
     jdk: oraclejdk8
-    CDI=cdi-2.0
+    env: CDI=cdi-2.0
   - name: "Java 9"
     jdk: oraclejdk9
-    CDI=cdi-2.0
-  - name: "OpenJdk Java 10"
+    env: CDI=cdi-2.0
+  - name: "Java 10 (OpenJDK)"
     jdk: openjdk10
-    CDI=cdi-2.0
-  - name: "CDI 1.2 Java 10"
+    env: CDI=cdi-2.0
+  - name: "Java 10 (CDI-1.2)"
     jdk: openjdk10
-    CDI=cdi-1.2
+    env: CDI=cdi-1.2
   - name: "Java 10"
     jdk: oraclejdk10
-    CDI=cdi-2.0
-    COVERAGE=1
+    env:
+    - CDI=cdi-2.0
+    - COVERAGE=1
 
 script:
   - build/travis-build

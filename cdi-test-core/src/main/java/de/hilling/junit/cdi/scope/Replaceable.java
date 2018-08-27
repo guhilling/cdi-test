@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 
 import javax.interceptor.InterceptorBinding;
 
+import de.hilling.lang.annotations.GenerateLiteral;
+
 /**
  * Marker interface used internally by the {@link de.hilling.junit.cdi.scope.TestScopeExtension} to
  * mark classes that can be mocked or replaced by other test beans.
@@ -16,5 +18,6 @@ import javax.interceptor.InterceptorBinding;
 @InterceptorBinding
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
+@GenerateLiteral
 public @interface Replaceable {
 }

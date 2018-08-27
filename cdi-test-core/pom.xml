@@ -52,6 +52,10 @@
             <artifactId>javassist</artifactId>
         </dependency>
         <dependency>
+            <groupId>de.hilling.lang.annotations</groupId>
+            <artifactId>processor</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
         </dependency>

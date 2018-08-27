@@ -13,7 +13,6 @@ import javax.enterprise.inject.spi.AfterTypeDiscovery;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
-import javax.enterprise.util.AnnotationLiteral;
 
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
@@ -76,8 +75,7 @@ public class TestScopeExtension implements Extension, Serializable {
         if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
             new ActivatableAlternativeBuilder<X>(pat).invoke();
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
-            AnnotationUtils.addClassAnnotation(pat, new AnnotationLiteral<Replaceable>() {
-            });
+            AnnotationUtils.addClassAnnotation(pat, new Replaceable__Literal());
         }
         updateDecoratedTypes(pat);
     }

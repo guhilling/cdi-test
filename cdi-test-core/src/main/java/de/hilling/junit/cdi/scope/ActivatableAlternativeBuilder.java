@@ -9,6 +9,7 @@ import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
 import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation__Literal;
 
 /**
  * Prepare activatable alternatives.
@@ -45,12 +46,7 @@ class ActivatableAlternativeBuilder<X> {
 
     private void guessReplacableTypes() {
         builder.removeFromClass(ActivatableTestImplementation.class);
-        builder.addToClass(new ActivatableTestImplementationLiteral() {
-            @Override
-            public Class<?>[] value() {
-                return new Class<?>[]{determineUniqueSuperclass()};
-            }
-        });
+        builder.addToClass(new ActivatableTestImplementation__Literal(new Class<?>[]{determineUniqueSuperclass()}));
     }
 
     private Class<?> determineUniqueSuperclass() {
@@ -64,9 +60,5 @@ class ActivatableAlternativeBuilder<X> {
 
     private abstract static class TypedLiteral extends AnnotationLiteral<Typed> implements Typed {
     }
-
-    private abstract static class ActivatableTestImplementationLiteral extends AnnotationLiteral<ActivatableTestImplementation> implements ActivatableTestImplementation {
-    }
-
 
 }

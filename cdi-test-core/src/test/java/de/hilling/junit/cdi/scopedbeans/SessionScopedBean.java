@@ -1,7 +1,8 @@
 package de.hilling.junit.cdi.scopedbeans;
 
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+
+import javax.enterprise.context.SessionScoped;
 
 @SessionScoped
 public class SessionScopedBean extends ScopedBean implements Serializable {

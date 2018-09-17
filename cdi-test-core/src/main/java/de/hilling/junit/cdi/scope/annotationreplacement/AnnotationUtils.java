@@ -1,9 +1,9 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
-import javax.enterprise.inject.spi.ProcessAnnotatedType;
-import javax.enterprise.util.AnnotationLiteral;
-
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
+
+import javax.enterprise.inject.spi.ProcessAnnotatedType;
+import java.lang.annotation.Annotation;
 
 /**
  * Utilities for annotation replacement.
@@ -20,7 +20,7 @@ public final class AnnotationUtils {
      * @param annotation annotation literal to add to the type.
      * @param <X>        any type.
      */
-    public static <X> void addClassAnnotation(ProcessAnnotatedType<X> pat, AnnotationLiteral<?> annotation) {
+    public static <X> void addClassAnnotation(ProcessAnnotatedType<X> pat, Annotation annotation) {
         AnnotatedTypeBuilder<X> builder = new AnnotatedTypeBuilder<>();
         builder.readFromType(pat.getAnnotatedType());
         pat.setAnnotatedType(builder.addToClass(annotation).create());

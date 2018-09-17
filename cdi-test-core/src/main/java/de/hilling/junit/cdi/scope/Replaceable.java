@@ -1,14 +1,9 @@
 package de.hilling.junit.cdi.scope;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.immutables.value.Value;
 
 import javax.interceptor.InterceptorBinding;
-
-import de.hilling.lang.annotations.GenerateLiteral;
+import java.lang.annotation.*;
 
 /**
  * Marker interface used internally by the {@link de.hilling.junit.cdi.scope.TestScopeExtension} to
@@ -18,6 +13,6 @@ import de.hilling.lang.annotations.GenerateLiteral;
 @InterceptorBinding
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@GenerateLiteral
+@Value.Immutable
 public @interface Replaceable {
 }

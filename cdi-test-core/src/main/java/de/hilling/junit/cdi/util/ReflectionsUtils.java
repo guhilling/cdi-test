@@ -1,5 +1,8 @@
 package de.hilling.junit.cdi.util;
 
+import de.hilling.junit.cdi.CdiTestException;
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -7,9 +10,6 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import de.hilling.junit.cdi.CdiTestException;
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 
 public final class ReflectionsUtils {
 
@@ -19,8 +19,7 @@ public final class ReflectionsUtils {
     }
 
     public static List<Field> getAllFields(Class<?> clazz) {
-        List<Field> result = new ArrayList<>();
-        result.addAll(Arrays.asList(clazz.getDeclaredFields()));
+        List<Field> result = new ArrayList<>(Arrays.asList(clazz.getDeclaredFields()));
         Class<?> superClass = clazz.getSuperclass();
         if (!superClass.equals(Object.class)) {
             result.addAll(getAllFields(superClass));
@@ -28,7 +27,7 @@ public final class ReflectionsUtils {
         return result;
     }
 
-    public static Class<? extends Object> getOriginalClass(Class<? extends Object> clazz) {
+    public static Class<?> getOriginalClass(Class<?> clazz) {
         String canonicalName = clazz.getCanonicalName();
         if (canonicalName.contains("$")) {
             try {

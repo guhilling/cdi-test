@@ -13,6 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.9</java.version>
+        <immutables.version>2.7.1</immutables.version>
         <deltaspike.version>1.8.2</deltaspike.version>
         <cdi-2.0-weld.version>3.0.5.Final</cdi-2.0-weld.version>
         <cdi-1.2-weld.version>2.4.7.Final</cdi-1.2-weld.version>
@@ -106,14 +107,9 @@
                 <version>${javassist.version}</version>
             </dependency>
             <dependency>
-                <groupId>de.hilling.lang.annotations</groupId>
-                <artifactId>api</artifactId>
-                <version>1.0.11</version>
-            </dependency>
-            <dependency>
-                <groupId>de.hilling.lang.annotations</groupId>
-                <artifactId>processor</artifactId>
-                <version>1.0.11</version>
+                <groupId>org.immutables</groupId>
+                <artifactId>value</artifactId>
+                <version>${immutables.version}</version>
                 <scope>provided</scope>
             </dependency>
             <!-- provided -->
@@ -217,13 +213,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <configuration>
+                            <additionalOptions>
+                                <additionalOption>-html5</additionalOption>
+                            </additionalOptions>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

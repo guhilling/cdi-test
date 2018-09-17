@@ -1,12 +1,11 @@
 package de.hilling.junit.cdi.scope.context;
 
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+
+import javax.enterprise.inject.spi.Bean;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.enterprise.inject.spi.Bean;
-
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 
 @BypassTestInterceptor
 public class CustomScopeContextHolder implements ScopeContextHolder {
@@ -29,7 +28,8 @@ public class CustomScopeContextHolder implements ScopeContextHolder {
 
     @Override
     public void putBean(CustomScopeInstance<?> customInstance) {
-        beans.put(customInstance.bean.getBeanClass(), customInstance);
+        beans.put(customInstance.getBean()
+                                .getBeanClass(), customInstance);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class CustomScopeContextHolder implements ScopeContextHolder {
     }
 
     private <T> void destroy(CustomScopeInstance<T> scopeInstance) {
-        Bean<T> bean = scopeInstance.bean;
-        bean.destroy(scopeInstance.instance, scopeInstance.ctx);
+        Bean<T> bean = scopeInstance.getBean();
+        bean.destroy(scopeInstance.getInstance(), scopeInstance.getCtx());
     }
 
 }

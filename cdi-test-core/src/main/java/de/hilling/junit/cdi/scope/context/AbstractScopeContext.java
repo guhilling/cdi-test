@@ -1,12 +1,11 @@
 package de.hilling.junit.cdi.scope.context;
 
-import java.io.Serializable;
-import java.util.logging.Logger;
-
 import javax.enterprise.context.spi.Context;
 import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
+import java.io.Serializable;
+import java.util.logging.Logger;
 
 public abstract class AbstractScopeContext implements Context, Serializable {
     private static final long serialVersionUID = 1L;
@@ -17,8 +16,10 @@ public abstract class AbstractScopeContext implements Context, Serializable {
     @Override
     public <T> T get(final Contextual<T> contextual) {
         Bean<T> bean = (Bean<T>) contextual;
-        if (getScopeContextHolder().getBeans().containsKey(bean.getBeanClass())) {
-            return (T) getScopeContextHolder().getBean(bean.getBeanClass()).instance;
+        if (getScopeContextHolder().getBeans()
+                                   .containsKey(bean.getBeanClass())) {
+            return (T) getScopeContextHolder().getBean(bean.getBeanClass())
+                                              .getInstance();
         } else {
             return null;
         }
@@ -28,8 +29,10 @@ public abstract class AbstractScopeContext implements Context, Serializable {
     @Override
     public <T> T get(final Contextual<T> contextual, final CreationalContext<T> creationalContext) {
         Bean<T> bean = (Bean<T>) contextual;
-        if (getScopeContextHolder().getBeans().containsKey(bean.getBeanClass())) {
-            return (T) getScopeContextHolder().getBean(bean.getBeanClass()).instance;
+        if (getScopeContextHolder().getBeans()
+                                   .containsKey(bean.getBeanClass())) {
+            return (T) getScopeContextHolder().getBean(bean.getBeanClass())
+                                              .getInstance();
         } else {
             return createNewInstance(creationalContext, bean);
         }
@@ -38,9 +41,13 @@ public abstract class AbstractScopeContext implements Context, Serializable {
     @SuppressWarnings("unchecked")
     private <T> T createNewInstance(final CreationalContext<T> creationalContext, Bean<T> bean) {
         LOG.fine("creating new bean of type " + bean.getBeanClass());
-        T t = bean.create(creationalContext);
-        getScopeContextHolder().putBean(new CustomScopeInstance(bean, creationalContext, t));
-        return t;
+        T instance = bean.create(creationalContext);
+        ImmutableCustomScopeInstance.Builder<T> builder = ImmutableCustomScopeInstance.builder();
+        builder.bean(bean)
+               .ctx(creationalContext)
+               .instance(instance);
+        getScopeContextHolder().putBean(builder.build());
+        return instance;
     }
 
     @Override

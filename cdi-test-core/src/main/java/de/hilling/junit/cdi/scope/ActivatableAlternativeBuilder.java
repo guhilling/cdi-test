@@ -1,15 +1,14 @@
 package de.hilling.junit.cdi.scope;
 
+import de.hilling.junit.cdi.CdiTestException;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.annotations.ImmutableActivatableTestImplementation;
+import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
+
 import javax.enterprise.inject.Typed;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.enterprise.util.AnnotationLiteral;
-
-import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
-
-import de.hilling.junit.cdi.CdiTestException;
-import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
-import de.hilling.junit.cdi.annotations.ActivatableTestImplementation__Literal;
 
 /**
  * Prepare activatable alternatives.
@@ -22,7 +21,7 @@ class ActivatableAlternativeBuilder<X> {
     private final Class<X> javaClass;
     private final AnnotatedTypeBuilder<X> builder;
 
-    public ActivatableAlternativeBuilder(ProcessAnnotatedType<X> pat) {
+    ActivatableAlternativeBuilder(ProcessAnnotatedType<X> pat) {
         this.pat = pat;
         type = pat.getAnnotatedType();
         javaClass = type.getJavaClass();
@@ -30,7 +29,7 @@ class ActivatableAlternativeBuilder<X> {
         builder.readFromType(type);
     }
 
-    public void invoke() {
+    void invoke() {
         ActivatableTestImplementation implementation = type.getAnnotation(ActivatableTestImplementation.class);
         if (implementation.value().length == 0) {
             guessReplacableTypes();
@@ -46,7 +45,8 @@ class ActivatableAlternativeBuilder<X> {
 
     private void guessReplacableTypes() {
         builder.removeFromClass(ActivatableTestImplementation.class);
-        builder.addToClass(new ActivatableTestImplementation__Literal(new Class<?>[]{determineUniqueSuperclass()}));
+        final ImmutableActivatableTestImplementation.Builder anntationBuilder = ImmutableActivatableTestImplementation.builder();
+        this.builder.addToClass(anntationBuilder.value(determineUniqueSuperclass()).build());
     }
 
     private Class<?> determineUniqueSuperclass() {

@@ -1,15 +1,15 @@
 package de.hilling.junit.cdi.annotations;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import de.hilling.junit.cdi.scope.TestScoped;
+import org.immutables.value.Value;
 
 import javax.annotation.Priority;
 import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Stereotype;
-
-import de.hilling.junit.cdi.scope.TestScoped;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Use this annotation to mark Alternatives that should globally replace
@@ -25,5 +25,6 @@ import de.hilling.junit.cdi.scope.TestScoped;
 @Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Priority(100)
+@Value.Immutable
 public @interface GlobalTestImplementation {
 }

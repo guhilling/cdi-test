@@ -12,30 +12,32 @@ public abstract class AbstractScopeContext implements Context, Serializable {
 
     private static final Logger LOG = Logger.getLogger(AbstractScopeContext.class.getCanonicalName());
 
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(final Contextual<T> contextual) {
         Bean<T> bean = (Bean<T>) contextual;
         if (getScopeContextHolder().getBeans()
                                    .containsKey(bean.getBeanClass())) {
-            return (T) getScopeContextHolder().getBean(bean.getBeanClass())
-                                              .getInstance();
+            return getInstanceFromScope(bean);
         } else {
             return null;
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(final Contextual<T> contextual, final CreationalContext<T> creationalContext) {
         Bean<T> bean = (Bean<T>) contextual;
         if (getScopeContextHolder().getBeans()
                                    .containsKey(bean.getBeanClass())) {
-            return (T) getScopeContextHolder().getBean(bean.getBeanClass())
-                                              .getInstance();
+            return getInstanceFromScope(bean);
         } else {
             return createNewInstance(creationalContext, bean);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private  <T> T getInstanceFromScope(Bean<T> bean) {
+        return (T) getScopeContextHolder().getBean(bean.getBeanClass())
+                                          .getInstance();
     }
 
     @SuppressWarnings("unchecked")

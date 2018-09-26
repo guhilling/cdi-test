@@ -1,19 +1,5 @@
 package de.hilling.junit.cdi.scope;
 
-import static java.util.logging.Level.FINE;
-
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
-
-import javax.enterprise.event.Observes;
-import javax.enterprise.inject.spi.AfterBeanDiscovery;
-import javax.enterprise.inject.spi.AfterTypeDiscovery;
-import javax.enterprise.inject.spi.AnnotatedType;
-import javax.enterprise.inject.spi.Extension;
-import javax.enterprise.inject.spi.ProcessAnnotatedType;
-
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
@@ -22,6 +8,15 @@ import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationUtils;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
+
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.spi.*;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.FINE;
 
 /**
  * CDI {@link javax.enterprise.inject.spi.Extension} to enable proxying of (nearly) all method invocations. <p> By
@@ -60,7 +55,7 @@ public class TestScopeExtension implements Extension, Serializable {
     }
 
     public <T> void replaceAnnotations(@Observes ProcessAnnotatedType<T> pat) {
-        LOG.log(FINE, "processing type %s", pat);
+        LOG.log(FINE, "processing type {0}", pat);
         pat.setAnnotatedType(new AnnotationReplacementBuilder<>(pat.getAnnotatedType()).invoke());
         updateDecoratedTypes(pat);
     }

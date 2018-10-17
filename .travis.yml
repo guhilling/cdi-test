@@ -15,16 +15,16 @@ install: /bin/true
 matrix:
   include:
   - name: "Java 9"
-    jdk: oraclejdk9
+    jdk: openjdk9
     env: CDI=cdi-2
-  - name: "Java 10 (OpenJDK)"
+  - name: "Java 10"
     jdk: openjdk10
     env: CDI=cdi-2
   - name: "Java 10 (CDI-1.2)"
     jdk: openjdk10
     env: CDI=cdi-1.2
-  - name: "Java 10"
-    jdk: oraclejdk10
+  - name: "Java 11 (Oracle)"
+    jdk: oraclejdk11
     env: CDI=cdi-2
   - name: "Java 11"
     jdk: openjdk11

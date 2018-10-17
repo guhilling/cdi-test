@@ -19,7 +19,9 @@ matrix:
     env: CDI=cdi-2
   - name: "Java 10"
     jdk: openjdk10
-    env: CDI=cdi-2
+    env:
+    - CDI=cdi-2
+    - COVERAGE=1
   - name: "Java 10 (CDI-1.2)"
     jdk: openjdk10
     env: CDI=cdi-1.2
@@ -28,9 +30,7 @@ matrix:
     env: CDI=cdi-2
   - name: "Java 11"
     jdk: openjdk11
-    env:
-    - CDI=cdi-2
-    - COVERAGE=1
+    env: CDI=cdi-2
 
 script:
   - build/travis-build

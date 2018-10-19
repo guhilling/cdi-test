@@ -15,7 +15,7 @@ jdk:
   - openjdk10
 
 script:
-  - mvn test jacoco:report sonar:sonar
+  - mvn test
 
 cache:
   directories:

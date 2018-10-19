@@ -11,8 +11,8 @@ addons:
 language: java
 
 jdk:
-  - oraclejdk8
-  - oraclejdk10
+  - openjdk9
+  - openjdk10
 
 script:
   - mvn test jacoco:report sonar:sonar

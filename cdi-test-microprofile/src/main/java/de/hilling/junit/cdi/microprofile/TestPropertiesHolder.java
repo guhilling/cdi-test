@@ -16,15 +16,15 @@ public class TestPropertiesHolder {
     private HashMap<String, String> properties = new HashMap<>();
 
 
-    public Map<String, String> getProperties() {
+    Map<String, String> getProperties() {
         return Collections.unmodifiableMap(properties);
     }
 
-    protected void clear(@Observes @TestEvent(EventType.FINISHED) ExtensionContext testEvent) {
+    void clear(@Observes @TestEvent(EventType.FINISHED) ExtensionContext testEvent) {
         properties.clear();
     }
 
-    public void put(String name, String value) {
+    void put(String name, String value) {
         properties.put(name, value);
     }
 }

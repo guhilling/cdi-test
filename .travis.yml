@@ -4,41 +4,40 @@ group: edge
 
 addons:
   sonarcloud:
-    organization: "guhilling-github"
+    organization: "guhilling-travis"
     token:
-      secure: "PIVBggt+JPplyg9oy6BZwQH2zHSFEsPdTlaJcXXEbnumfGzRbcq4Dr1FXzWn1ZOas9cPv0tG5YHbMhTYvettSLssAWI12LzgcjdvlqFrn4PYwa4zux+xJYxfgHdrIay6sm4FfS59ERz5oC8BBab5rxBCSWsONYrw0lO1esYw4Wk="
+      secure: "VmNeR+lgpAYqM5gSKcDPOHj4AD1qPEe9NJXk5LMzPo5TV61dm2X9zUpYKN8dChx3YGHPtGwEF3OcYmXbuFS67Fl17TiIRVQkG3yW1P3c9V+Uup28A2pLaiPEZNviR6oLqCXR9swZBNiRpx4lviH86sXy28+za9px9ztIm4biysFANRlmY1r53xZdZFpNsj98d+3VftX58XC43NZwMS0tY/9OLVGjPlf7a2PQytZ+3k613C4YiIjLqA8dZh6npfqSDVjb7CK/wH7/MCERCcOIQ6tiqUtwrvuaqCfY2zpcOVEF8zRXOjAtO2+H3uFaZQa+rrck+Ozfids0k6d8LpV6R7Og19SiSUkl1wGuH/zoubpJk/eMsKZJqoq1FmLg8O2VG8WfXItMxjP01sm3+LPUGMnPxEznNZPH9eyOZgAc+77MAJlETxnzfSnTApuEz+I2xj9Et30IjwCI5vvxJmnHHet7kUe6XzJwnoARUdOqUlqCYGGzwcY06e3gJoq5YykBNrssbND+qV0MweUE2GA7cLU6UbD2qq0JKdV5Trq+zBzlsc4G0pnHqt66RIjKbOvmTiW8yvehbWRX+I/Cqrk5bM3Dr+A+k8BRRVyj2K7E3OAcU5TzE6PWlsiiHz2HBIda/EtFSK4VCO3AsBlJnjF5h627vVDD2c6kuxJ2yKeH2gU="
 
 language: java
 
-install: /bin/true
+install: "/bin/true"
 
 matrix:
   include:
-  - name: "Java 9"
+  - name: Java 9
     jdk: openjdk9
     env: CDI=cdi-2
-  - name: "Java 10"
+  - name: Java 10
     jdk: openjdk10
     env:
     - CDI=cdi-2
     - COVERAGE=1
-  - name: "Java 10 (CDI-1.2)"
+  - name: Java 10 (CDI-1.2)
     jdk: openjdk10
     env: CDI=cdi-1.2
-  - name: "Java 11 (Oracle)"
+  - name: Java 11 (Oracle)
     jdk: oraclejdk11
     env: CDI=cdi-2
-  - name: "Java 11"
+  - name: Java 11
     jdk: openjdk11
     env: CDI=cdi-2
-
 script:
-  - build/travis-build
-
+- build/travis-build
 cache:
   directories:
-    - "$HOME/.m2/repository"
-    - "$HOME/.sonar/cache"
-
-before_cache:
-  build/cleanup-snapshots
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
+before_cache: build/cleanup-snapshots
+env:
+  global:
+    secure: hwntLt+f4ITqBKgW/iW6TFXZc8/65KBtVlNqlZTAH44F/rhMZzNr5ZmTD8677T+i4EihU/HHP+96LHnM26j9VVqwTtKTi63dE5111m7NwGCZVfZseZlTZWTS9ER2s3qmfUufTIAg+eKTesMe59Zg540kUx8RrVwpIRUXz+8vS+crFHIWJCaz4S70oT6l2KTfdfLkzl2ahvrpJF4I3xJga+XBpC0a6u7hjS/RRAnHSyrtq6RRQ7iTfGkYCLY/qw6nlXpbVfOwwbOapnURh2ymnYN6/xTaSTUSgHk/IZyMzDOzlNy4dNEWjwCezGW7IhNoVIjY2asOOqBLlWjv988hzflmJ9z6Y2XV3U7C/LEQf16s++gY7NZLEsYlXwVpPsKQ0HEgs2iTX04P45y81OTUCFkB/bOxHTNTyqSUcbBVQj0qDfk9pasnf7LfJE+ANHIE85DV9z4NAh+DA7jAY8st4u2KTNPZxcbTNbIPRT8J+e9aAtrv42zCy3qVpQfb4qyQ//39FhP87Z/P6hOT+I/5nv6AoD2JSAVSG/fGWL1BGJQF8X8cjQL831i1RKWFLwgbqKqGEfuoj30+q0dfiWT3H1EANjn89ztvPUzRJK58I/FSOSkUElKY7PyEVkmYnP6ZpZiPK/o6A0jmIWRf0IV7EIPm7meF04QQ0a7r/e47VYY=

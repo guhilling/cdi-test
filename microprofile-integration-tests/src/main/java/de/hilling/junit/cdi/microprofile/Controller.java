@@ -1,6 +1,5 @@
 package de.hilling.junit.cdi.microprofile;
 
-import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -13,13 +12,6 @@ import javax.ws.rs.core.MediaType;
 @ApplicationScoped
 @Path("/app")
 public class Controller {
-
-    public Controller() {
-        System.out.println("created");
-    }
-
-    @Inject
-    private Config config;
 
     @Inject
     @ConfigProperty(name = "some.string.property")
@@ -47,18 +39,18 @@ public class Controller {
     @GET
     @Path("/propertyInteger")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getIntegerProperty() {
-        return String.valueOf(intProperty);
+    public int getIntegerProperty() {
+        return intProperty;
     }
 
     @GET
     @Path("/propertyBoolean")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getBoolProperty() {
-        return String.valueOf(boolProperty);
+    public boolean getBoolProperty() {
+        return boolProperty;
     }
 
-    public Long getLongProperty() {
+    public long getLongProperty() {
         return longProperty;
     }
 }

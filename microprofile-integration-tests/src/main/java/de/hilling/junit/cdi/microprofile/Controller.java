@@ -10,12 +10,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-/**
- * @author Heiko Braun
- */
 @ApplicationScoped
 @Path("/app")
 public class Controller {
+
+    public Controller() {
+        System.out.println("created");
+    }
 
     @Inject
     private Config config;
@@ -31,6 +32,10 @@ public class Controller {
     @Inject
     @ConfigProperty(name = "some.boolean.property")
     private Boolean boolProperty;
+
+    @Inject
+    @ConfigProperty(name = "some.long.property")
+    private Long longProperty;
 
     @GET
     @Path("/propertyString")
@@ -53,4 +58,7 @@ public class Controller {
         return String.valueOf(boolProperty);
     }
 
+    public Long getLongProperty() {
+        return longProperty;
+    }
 }

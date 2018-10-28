@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <url>https://github.com/guhilling/cdi-test-microprofile</url>
     <inceptionYear>2018</inceptionYear>
-    <name>CDI Test Extensions</name>
+    <name>CDI Test Extensions Parent</name>
     <description>add-ons for cdi-test</description>
 
     <properties>
@@ -22,7 +22,7 @@
         <github.global.server>github</github.global.server>
         <junit.jupiter.version>5.2.0</junit.jupiter.version>
         <junit.platform.version>1.2.0</junit.platform.version>
-        <version.thorntail>2.2.0.Final</version.thorntail>
+        <thorntail.version>2.1.0.Final</thorntail.version>
     </properties>
 
     <scm>
@@ -115,9 +115,19 @@
             <dependency>
                 <groupId>io.thorntail</groupId>
                 <artifactId>bom</artifactId>
-                <version>${version.thorntail}</version>
+                <version>${thorntail.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.thorntail</groupId>
+                <artifactId>cdi-config</artifactId>
+                <version>${thorntail.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>1.1.1</version>
             </dependency>
             <dependency>
                 <groupId>org.eclipse.microprofile</groupId>
@@ -128,7 +138,7 @@
             <dependency>
                 <groupId>org.eclipse.microprofile.config</groupId>
                 <artifactId>microprofile-config-api</artifactId>
-                <version>1.3</version>
+                <version>1.2</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
@@ -230,7 +240,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -256,7 +266,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.1</version>
+                <version>0.8.2</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>

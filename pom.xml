@@ -13,7 +13,7 @@
     <description>add-ons for using cdi-test with eclipse microprofile projects</description>
 
     <properties>
-        <cdi-test.version>2.0.0</cdi-test.version>
+        <cdi-test.version>2.0.1-SNAPSHOT</cdi-test.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <maven.compiler.target>1.9</maven.compiler.target>

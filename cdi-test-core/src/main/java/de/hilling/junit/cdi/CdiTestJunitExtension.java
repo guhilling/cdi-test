@@ -1,21 +1,19 @@
 package de.hilling.junit.cdi;
 
-import java.lang.reflect.Field;
-
-import javax.inject.Inject;
-
-import org.apache.deltaspike.core.api.provider.BeanProvider;
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.mockito.Mock;
-
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
 import de.hilling.junit.cdi.scope.EventType;
 import de.hilling.junit.cdi.scope.InvocationTargetManager;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.mockito.Mock;
+
+import javax.inject.Inject;
+import java.lang.reflect.Field;
 
 public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallback {
 
@@ -49,8 +47,9 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
         testEnvironment.setTestMethod(context.getRequiredTestMethod());
         testEnvironment.setTestName(context.getDisplayName());
         invocationTargetManager.addAndActivateTest(testEnvironment.getTestClass());
-        contextControl.startContexts();
         lifecycleNotifier.notify(EventType.STARTING, context);
+        contextControl.startContexts();
+        lifecycleNotifier.notify(EventType.STARTED, context);
         for (Field field : ReflectionsUtils.getAllFields(testInstance.getClass())) {
             if (field.isAnnotationPresent(Mock.class)) {
                 assignMockAndActivateProxy(field);

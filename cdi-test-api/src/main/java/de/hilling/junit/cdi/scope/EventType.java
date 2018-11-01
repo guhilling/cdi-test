@@ -6,13 +6,20 @@ package de.hilling.junit.cdi.scope;
 public enum EventType {
 
     /**
+     * CDI scopes are about to be started.
+     * <p>
+     *     The CDI scopes for the test are started next.
+     * </p>
+     */
+    STARTING,
+    /**
      * Unit test is about to start.
      * <p>
      *     The event will be sent just before the test method is called.
      *     The CDI scopes for the test are already active.
      * </p>
      */
-    STARTING,
+    STARTED,
     /**
      * Unit test is finishing.
      * <p>

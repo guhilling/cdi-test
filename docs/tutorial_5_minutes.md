@@ -1,58 +1,57 @@
 ## Usage
 
+I'm assuming you are using maven 3.0.5 for this tutorial as I am using it for my integration testing.
+
+Furthermore a jdk >= 9 should be used. If in doubt check the testing matrix on
+[travis](https://travis-ci.org/guhilling/cdi-test).
+
+
 ### Dependencies
 
-Use maven to pull dependency on basic features:
+Define dependencies on basic cdi-test features:
 
 ```xml
+<dependencies>
+   [...] 
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.3.1</version>
+        <scope>test</scope>
+    </dependency>
+  [...] 
     <dependency>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-core</artifactId>
-        <version>1.1.0</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.deltaspike.cdictrl</groupId>
-        <artifactId>deltaspike-cdictrl-weld</artifactId>
-        <version>1.7.2</version>
+        <version>2.0.0</version>
         <scope>test</scope>
     </dependency>
     <dependency>
         <groupId>org.jboss.weld.se</groupId>
         <artifactId>weld-se-core</artifactId>
-        <version>2.4.3.Final</version>
+        <version>3.0.5.Final</version>
         <scope>test</scope>
     </dependency>
-
-```
-
-Of course the version of weld being used should match the version you are using in your production system.
-The oldest supported version is _2.1.2.Final_ however.
-
-So if you are using an old version of JBoss or whatever server you have, you have to use a different cdi
-implementation for your tests.
-
-If you are using cdi-test with hibernate you might run into problems because hibernate uses jandex. Weld will try
-to use jandex if it is present but the version used by hibernate is not suitable for Weld. To fix the problem you
-just add a newer jandex version with test scope:
-
-```xml
     <dependency>
-        <groupId>org.jboss</groupId>
-        <artifactId>jandex</artifactId>
-        <version>1.2.2.Final</version>
+        <groupId>org.apache.deltaspike.cdictrl</groupId>
+        <artifactId>deltaspike-cdictrl-weld</artifactId>
+        <version>1.9.0</version>
         <scope>test</scope>
     </dependency>
+</dependencies>
 ```
 
+Again check [travis](https://travis-ci.org/guhilling/cdi-test) for tested combintations of weld and jdk.
 
 ### Writing Tests
 
 In the following example, `ApplicationBean` will automatically be replaced by a mockito mock in all cdi
-beans, see the full example in the code for details.
+beans when _this test is run_, see the full example in the code for details.
+
+It is possible to select different mockito or test implementations in each test class (see the full documentation for details).
 
 ```java
-@RunWith(CdiUnitRunner.class)
+@ExtendWith(CdiTestJunitExtension.class)
 public class RequestScopeMockTest extends BaseTest {
 
     private static final String SAMPLE = "sample";
@@ -92,7 +91,6 @@ public class RequestScopeMockTest extends BaseTest {
 
 ## TODO
 
-* Project restructuring to release extensions (like cdi-test-jee) independently from cdi-test-core.
 * More extensions:
     * dbunit
     * test data generator

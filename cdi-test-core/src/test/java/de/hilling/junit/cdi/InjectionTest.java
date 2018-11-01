@@ -1,16 +1,17 @@
 package de.hilling.junit.cdi;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import de.hilling.junit.cdi.beans.ConstructorInjected;
+import de.hilling.junit.cdi.beans.Person;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import de.hilling.junit.cdi.beans.ConstructorInjected;
-import de.hilling.junit.cdi.beans.Person;
-
-public class InjectionTest extends CdiTestAbstract {
+@ExtendWith(CdiTestJunitExtension.class)
+public class InjectionTest {
 
     @Inject
     private Person person;

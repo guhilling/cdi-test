@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.scope.context;
 
-import de.hilling.junit.cdi.CdiTestAbstract;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 import de.hilling.junit.cdi.scopedbeans.RequestScopedBean;
 import de.hilling.junit.cdi.scopedbeans.ScopedBean;
 import de.hilling.junit.cdi.scopedbeans.TestScopedBean;
@@ -9,6 +9,7 @@ import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -16,7 +17,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
-public class AbstractScopeContextTest extends CdiTestAbstract {
+@ExtendWith(CdiTestJunitExtension.class)
+public class AbstractScopeContextTest {
 
     private static Map<Type, UUID> uuidMap;
 

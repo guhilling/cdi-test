@@ -1,12 +1,14 @@
 package de.hilling.junit.cdi;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class NotificationLifecyleTest extends CdiTestAbstract {
+@ExtendWith(CdiTestJunitExtension.class)
+public class NotificationLifecyleTest {
 
     @Inject
     private NotificationLifecyleSupportBean supportBean;

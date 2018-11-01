@@ -1,15 +1,15 @@
 package de.hilling.junit.cdi;
 
-import java.util.UUID;
-
-import javax.inject.Inject;
-
+import de.hilling.junit.cdi.beans.Request;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import de.hilling.junit.cdi.beans.Request;
+import javax.inject.Inject;
+import java.util.UUID;
 
-public class ScopeTest extends CdiTestAbstract {
+@ExtendWith(CdiTestJunitExtension.class)
+public class ScopeTest {
 
     @Inject
     private Request request;

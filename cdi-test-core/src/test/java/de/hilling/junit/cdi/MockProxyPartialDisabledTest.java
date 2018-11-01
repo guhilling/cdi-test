@@ -1,18 +1,19 @@
 package de.hilling.junit.cdi;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-
-import javax.inject.Inject;
-
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.service.BackendService;
 import de.hilling.junit.cdi.service.SampleService;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 
-public class MockProxyPartialDisabledTest extends CdiTestAbstract {
+import javax.inject.Inject;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+
+@ExtendWith(CdiTestJunitExtension.class)
+public class MockProxyPartialDisabledTest {
 
     @Mock
     private BackendService backendService;

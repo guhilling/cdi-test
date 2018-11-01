@@ -8,17 +8,29 @@
         <artifactId>cdi-test-microprofile-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <name>CDI Test Extensions Integration Tests</name>
-    <artifactId>microprofile-integration-tests</artifactId>
+
+    <packaging>war</packaging>
+
+    <description>Integration Tests for Microprofile Config in cdi-test</description>
+    <name>CDI Test Microprofile Integration Tests</name>
+    <artifactId>cdi-test-microprofile-tests</artifactId>
 
     <dependencies>
-        <!--
         <dependency>
-            <groupId>org.eclipse.microprofile.config</groupId>
-            <artifactId>microprofile-config-api</artifactId>
+            <groupId>org.eclipse.microprofile</groupId>
+            <artifactId>microprofile-spec</artifactId>
+            <version>2.1</version>
+            <type>pom</type>
+            <scope>provided</scope>
         </dependency>
 
-        -->
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-api</artifactId>
+            <version>1.9.0</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -33,12 +45,20 @@
             <groupId>de.hilling.junit.cdi</groupId>
             <artifactId>cdi-test-microprofile</artifactId>
             <version>1.0.0-SNAPSHOT</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-weld</artifactId>
+            <version>1.9.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

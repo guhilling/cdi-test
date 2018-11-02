@@ -4,14 +4,9 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 @ApplicationScoped
-@Path("/app")
-public class Controller {
+public class Controller implements ControllerService {
 
     @Inject
     @ConfigProperty(name = "some.string.property")
@@ -29,27 +24,22 @@ public class Controller {
     @ConfigProperty(name = "some.long.property")
     private Long longProperty;
 
-    @GET
-    @Path("/propertyString")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public String getStringProperty() {
         return stringProperty;
     }
 
-    @GET
-    @Path("/propertyInteger")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public int getIntegerProperty() {
         return intProperty;
     }
 
-    @GET
-    @Path("/propertyBoolean")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Override
     public boolean getBoolProperty() {
         return boolProperty;
     }
 
+    @Override
     public long getLongProperty() {
         return longProperty;
     }

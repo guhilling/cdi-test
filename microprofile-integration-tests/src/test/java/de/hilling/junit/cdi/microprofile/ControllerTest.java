@@ -12,19 +12,19 @@ import javax.inject.Inject;
 public class ControllerTest {
 
     @Inject
-    private Controller controller;
+    private ControllerService controllerService;
 
     @Test
     public void controllerInjected() {
-        Assertions.assertNotNull(controller);
+        Assertions.assertNotNull(controllerService);
     }
 
     @Test
     public void useValuesFromPropertyFile() {
-        Assertions.assertEquals("value class a", controller.getStringProperty());
-        Assertions.assertEquals(50, controller.getIntegerProperty());
-        Assertions.assertTrue(controller.getBoolProperty());
-        Assertions.assertEquals(40000L, controller.getLongProperty());
+        Assertions.assertEquals("value class a", controllerService.getStringProperty());
+        Assertions.assertEquals(50, controllerService.getIntegerProperty());
+        Assertions.assertTrue(controllerService.getBoolProperty());
+        Assertions.assertEquals(40000L, controllerService.getLongProperty());
     }
 
     @Test
@@ -32,10 +32,10 @@ public class ControllerTest {
     @ConfigPropertyValue(name = "some.integer.property", value = "4")
     @ConfigPropertyValue(name = "some.long.property", value = "46000")
     public void overrideValuesInMethod() {
-        Assertions.assertEquals("value method b", controller.getStringProperty());
-        Assertions.assertEquals(4, controller.getIntegerProperty());
-        Assertions.assertTrue(controller.getBoolProperty());
-        Assertions.assertEquals(46000L, controller.getLongProperty());
+        Assertions.assertEquals("value method b", controllerService.getStringProperty());
+        Assertions.assertEquals(4, controllerService.getIntegerProperty());
+        Assertions.assertTrue(controllerService.getBoolProperty());
+        Assertions.assertEquals(46000L, controllerService.getLongProperty());
     }
 
     @Test
@@ -44,9 +44,9 @@ public class ControllerTest {
     @ConfigPropertyValue(name = "some.long.property", value = "47000")
     @ConfigPropertyValue(name = "some.boolean.property", value = "fase")
     public void overrideValuesDifferentlyInOtherMethod() {
-        Assertions.assertEquals("value method c", controller.getStringProperty());
-        Assertions.assertEquals(5, controller.getIntegerProperty());
-        Assertions.assertFalse(controller.getBoolProperty());
-        Assertions.assertEquals(47000L, controller.getLongProperty());
+        Assertions.assertEquals("value method c", controllerService.getStringProperty());
+        Assertions.assertEquals(5, controllerService.getIntegerProperty());
+        Assertions.assertFalse(controllerService.getBoolProperty());
+        Assertions.assertEquals(47000L, controllerService.getLongProperty());
     }
 }

@@ -9,7 +9,7 @@
     <url>https://github.com/guhilling/cdi-test-microprofile</url>
     <inceptionYear>2018</inceptionYear>
     <name>CDI Test Microprofile Parent</name>
-    <description>add-ons for using cdi-test with eclipse microprofile projects</description>
+    <description>cdi-test add-on for testing projects using eclipse microprofile config</description>
 
     <properties>
         <cdi-test.version>2.0.1</cdi-test.version>

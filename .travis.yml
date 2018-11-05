@@ -15,7 +15,7 @@ install: "/bin/true"
 matrix:
   include:
   - name: Java 10 (Oracle)
-    jdk: openjdk10
+    jdk: oraclejdk10
   - name: Java 11 (Oracle)
     jdk: oraclejdk11
   - name: Java 11

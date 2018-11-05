@@ -1,15 +1,15 @@
 package de.hilling.junit.cdi;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import javax.inject.Inject;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.service.BackendServiceTestImplementation;
 import de.hilling.junit.cdi.service.SampleService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import javax.inject.Inject;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(CdiTestJunitExtension.class)
 public class ActivateAlternativeForRegularBeanTest {
@@ -22,6 +22,14 @@ public class ActivateAlternativeForRegularBeanTest {
     public void callTestActivatedService() {
         sampleService.storePerson(new Person());
         assertEquals(1, testBackendService.getInvocations());
+    }
+
+    @Test
+    @BackendServiceException(RuntimeException.class)
+    public void callTestActivatedServiceWithBackendException() {
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            sampleService.storePerson(new Person());
+        });
     }
 
 }

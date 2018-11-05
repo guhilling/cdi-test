@@ -3,7 +3,6 @@ package de.hilling.junit.cdi.scope.context;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.scope.TestScoped;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
-import org.junit.jupiter.api.extension.ExtensionContext;
 
 import javax.enterprise.context.spi.Context;
 import java.io.Serializable;
@@ -28,7 +27,7 @@ public class TestContext extends AbstractScopeContext implements Context, Serial
         return TestScoped.class;
     }
 
-    public static void activate(ExtensionContext context) {
+    public static void activate() {
         active = true;
     }
 

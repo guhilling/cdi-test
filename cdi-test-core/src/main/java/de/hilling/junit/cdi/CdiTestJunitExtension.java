@@ -45,7 +45,7 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
     public void beforeEach(ExtensionContext context) {
         testEnvironment = resolveBean(TestEnvironment.class);
         Object testInstance = context.getRequiredTestInstance();
-        TestContext.activate(context);
+        TestContext.activate();
         testEnvironment.setTestInstance(testInstance);
         testEnvironment.setTestMethod(context.getRequiredTestMethod());
         testEnvironment.setTestName(context.getDisplayName());

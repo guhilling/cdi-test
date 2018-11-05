@@ -4,6 +4,7 @@ import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
 import de.hilling.junit.cdi.scope.EventType;
 import de.hilling.junit.cdi.scope.InvocationTargetManager;
+import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
@@ -36,6 +37,7 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
         lifecycleNotifier.notify(EventType.FINISHING, context);
         contextControl.stopContexts();
         lifecycleNotifier.notify(EventType.FINISHED, context);
+        TestContext.deactivate();
         invocationTargetManager.reset();
     }
 
@@ -43,6 +45,7 @@ public class CdiTestJunitExtension implements BeforeEachCallback, AfterEachCallb
     public void beforeEach(ExtensionContext context) {
         testEnvironment = resolveBean(TestEnvironment.class);
         Object testInstance = context.getRequiredTestInstance();
+        TestContext.activate(context);
         testEnvironment.setTestInstance(testInstance);
         testEnvironment.setTestMethod(context.getRequiredTestMethod());
         testEnvironment.setTestName(context.getDisplayName());

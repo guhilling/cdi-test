@@ -1,17 +1,14 @@
 package de.hilling.junit.cdi.scope.context;
 
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+import de.hilling.junit.cdi.scope.TestScoped;
+import de.hilling.junit.cdi.scope.TestSuiteScoped;
+import org.junit.jupiter.api.extension.ExtensionContext;
+
+import javax.enterprise.context.spi.Context;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
-
-import javax.enterprise.context.spi.Context;
-import javax.enterprise.event.Observes;
-
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
-import de.hilling.junit.cdi.lifecycle.TestEvent;
-import de.hilling.junit.cdi.scope.EventType;
-import de.hilling.junit.cdi.scope.TestScoped;
-import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 @BypassTestInterceptor
 @TestSuiteScoped
@@ -31,12 +28,12 @@ public class TestContext extends AbstractScopeContext implements Context, Serial
         return TestScoped.class;
     }
 
-    protected void activate(@Observes @TestEvent(EventType.STARTING) Object description) {
+    public static void activate(ExtensionContext context) {
         active = true;
     }
 
-    protected void deactivate(@Observes @TestEvent(EventType.FINISHING) Object description) {
-        getScopeContextHolder().clear();
+    public static void deactivate() {
+        CONTEXT_HOLDER.clear();
         active = false;
     }
 

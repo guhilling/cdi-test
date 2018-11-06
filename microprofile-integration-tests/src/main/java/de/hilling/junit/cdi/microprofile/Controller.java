@@ -24,6 +24,10 @@ public class Controller implements ControllerService {
     @ConfigProperty(name = "some.long.property")
     private Long longProperty;
 
+    @Inject
+    @ConfigProperty(name = "some.horse.property")
+    private Horse horseProperty;
+
     @Override
     public String getStringProperty() {
         return stringProperty;
@@ -43,4 +47,10 @@ public class Controller implements ControllerService {
     public long getLongProperty() {
         return longProperty;
     }
+
+    @Override
+    public String getHorseProperty() {
+        return horseProperty.getName();
+    }
+
 }

@@ -26,4 +26,9 @@ public interface ControllerService {
     @Path("/propertyLong")
     @Produces(MediaType.TEXT_PLAIN)
     long getLongProperty();
+
+    @GET
+    @Path("/propertyHorse")
+    @Produces(MediaType.TEXT_PLAIN)
+    String getHorseProperty();
 }

@@ -25,6 +25,7 @@ public class ControllerTest {
         Assertions.assertEquals(50, controllerService.getIntegerProperty());
         Assertions.assertTrue(controllerService.getBoolProperty());
         Assertions.assertEquals(40000L, controllerService.getLongProperty());
+        Assertions.assertEquals("Black Beauty", controllerService.getHorseProperty());
     }
 
     @Test

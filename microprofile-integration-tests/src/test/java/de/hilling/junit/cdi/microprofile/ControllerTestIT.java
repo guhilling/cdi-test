@@ -40,4 +40,8 @@ public class ControllerTestIT {
         Assertions.assertTrue(controllerService.getBoolProperty());
     }
 
+    @Test
+    public void assertHorseProperty() {
+        Assertions.assertEquals("Rih", controllerService.getHorseProperty());
+    }
 }

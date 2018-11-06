@@ -111,8 +111,6 @@
                 <groupId>io.thorntail</groupId>
                 <artifactId>thorntail-maven-plugin</artifactId>
                 <version>${thorntail.version}</version>
-                <configuration>
-                </configuration>
                 <executions>
                     <execution>
                         <id>package-thorntail</id>
@@ -133,6 +131,10 @@
                                 <some.integer.property>915</some.integer.property>
                                 <some.string.property>Message from test</some.string.property>
                             </properties>
+                            <jvmArguments>
+                                <jvmArgument>-Djava.net.preferIPv4Stack=true</jvmArgument>
+                                <jvmArgument>-Djava.net.preferIPv4Addresses=true</jvmArgument>
+                            </jvmArguments>
                         </configuration>
                     </execution>
                     <execution>

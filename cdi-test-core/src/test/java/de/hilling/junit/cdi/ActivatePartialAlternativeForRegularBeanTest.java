@@ -3,6 +3,7 @@ package de.hilling.junit.cdi;
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.service.BackendServiceTestPartialImplementation;
 import de.hilling.junit.cdi.service.SampleService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -20,7 +21,7 @@ public class ActivatePartialAlternativeForRegularBeanTest {
 
     @Test
     public void callTestActivatedService() {
-        sampleService.storePerson(new Person());
+        Assertions.assertThrows(IllegalStateException.class, () -> sampleService.storePerson(new Person()));
     }
 
 }

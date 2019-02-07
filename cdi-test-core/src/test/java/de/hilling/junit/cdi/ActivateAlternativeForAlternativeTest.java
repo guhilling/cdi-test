@@ -1,18 +1,19 @@
 package de.hilling.junit.cdi;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import javax.inject.Inject;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.service.BackendService;
 import de.hilling.junit.cdi.service.OverriddenService;
 import de.hilling.junit.cdi.service.TestActivatedOverridenService;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import javax.inject.Inject;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(CdiTestJunitExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class ActivateAlternativeForAlternativeTest {
     @Inject
     private TestActivatedOverridenService testOverride;

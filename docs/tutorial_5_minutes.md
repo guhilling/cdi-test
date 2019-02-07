@@ -74,7 +74,7 @@ public class RequestScopeMockTest extends BaseTest {
 
 ## LICENSE
 
- Copyright 2015 Gunnar Hilling
+ Copyright 2019 Gunnar Hilling
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

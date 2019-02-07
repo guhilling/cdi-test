@@ -6,6 +6,7 @@ import de.hilling.junit.cdi.service.SampleService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.inject.Inject;
 
@@ -13,6 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 @ExtendWith(CdiTestJunitExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class MockProxyPartialDisabledTest {
 
     @Mock

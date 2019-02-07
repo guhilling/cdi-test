@@ -1,52 +1,60 @@
 package de.hilling.junit.cdi.scope;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import javax.inject.Inject;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
 import de.hilling.junit.cdi.CdiTestJunitExtension;
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.service.OverridingServiceImpl;
 import de.hilling.junit.cdi.service.TestActivatedOverridenService;
+import de.hilling.junit.cdi.util.ReflectionsUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import javax.enterprise.inject.spi.BeanManager;
+import javax.inject.Inject;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(CdiTestJunitExtension.class)
 public class InvocationTargetManagerTest {
 
-    @Inject
     private InvocationTargetManager manager;
 
     private Class<CaseScopedBean> mockedClass = CaseScopedBean.class;
 
+    @Inject
+    private BeanManager beanManager;
+
     @BeforeEach
-    public void setUp() {
-        manager.reset();
+    public void createManager() {
+        manager = new InvocationTargetManager();
+        try {
+            ReflectionsUtils.setField(manager, beanManager, manager.getClass().getDeclaredField("beanManager"));
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException("field not found");
+        }
     }
 
     @Test
     public void noMockEnabled() {
+        activateTest();
         assertFalse(manager.isMockEnabled(mockedClass));
     }
 
     @Test
-    public void activateNonEnabledMock() {
-        assertThrows(IllegalArgumentException.class, () -> manager.activateMock(mockedClass));
+    public void activateAddedTest() {
+        activateTest();
     }
 
-    @Test
-    public void activateAddedTest() {
+    private void activateTest() {
         Class<?> testClass = getClass();
-        manager.addAndActivateTest(testClass);
+        manager.activateTest(testClass);
     }
 
     @Test
     public void activatedAddedTestAndActivateAlternative() {
         Object test = new Object() {
         };
-        manager.addAndActivateTest(test.getClass());
+        manager.activateTest(test.getClass());
         manager.activateAlternative(TestActivatedOverridenService.class);
         assertTrue(manager.isAlternativeEnabled(OverridingServiceImpl.class));
         assertFalse(manager.isAlternativeEnabled(test.getClass()));
@@ -55,6 +63,7 @@ public class InvocationTargetManagerTest {
 
     @Test
     public void cacheEnabled() {
+        activateTest();
         Person person1 = manager.mock(Person.class);
         Person person2 = manager.mock(Person.class);
         assertSame(person1, person2);

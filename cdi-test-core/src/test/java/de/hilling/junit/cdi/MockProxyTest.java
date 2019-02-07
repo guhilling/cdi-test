@@ -11,27 +11,25 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import javax.inject.Inject;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class MockProxyTest {
 
-    @Mock
-    private BackendService backendService;
-
     @Inject
     private SampleService sampleService;
 
     @Test
-    public void createPerson() {
+    public void createPersonWithMockBackend(@Mock BackendService backendService) {
         Person person = new Person();
         sampleService.storePerson(person);
         verify(backendService).storePerson(person);
     }
 
     @Test
-    public void doNothing() {
-        verifyZeroInteractions(backendService);
+    public void createPersonWithRealBackend() {
+        Person person = new Person();
+        sampleService.storePerson(person);
     }
+
 }

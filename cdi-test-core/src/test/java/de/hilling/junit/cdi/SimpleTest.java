@@ -9,13 +9,13 @@ import javax.inject.Inject;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class SimpleTest {
+class SimpleTest {
 
     @Inject
     private Person person;
 
     @Test
-    public void testInjection() {
+    void testInjection() {
         assertNotNull(person);
     }
 

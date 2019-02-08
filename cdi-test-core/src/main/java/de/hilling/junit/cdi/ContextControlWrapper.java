@@ -1,5 +1,6 @@
 package de.hilling.junit.cdi;
 
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.util.UserLogger;
 import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.apache.deltaspike.cdise.api.CdiContainerLoader;
@@ -12,6 +13,7 @@ import static java.util.logging.Level.INFO;
 /**
  * Singleton for booting the container and starting and stopping the standard CDI contexts.
  */
+@BypassTestInterceptor
 public class ContextControlWrapper {
     private static final Logger LOG = UserLogger.getInstance();
 

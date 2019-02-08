@@ -14,20 +14,20 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
-public class MockProxyTest {
+class MockProxyTest {
 
     @Inject
     private SampleService sampleService;
 
     @Test
-    public void createPersonWithMockBackend(@Mock BackendService backendService) {
+    void createPersonWithMockBackend(@Mock BackendService backendService) {
         Person person = new Person();
         sampleService.storePerson(person);
         verify(backendService).storePerson(person);
     }
 
     @Test
-    public void createPersonWithRealBackend() {
+    void createPersonWithRealBackend() {
         Person person = new Person();
         sampleService.storePerson(person);
     }

@@ -2,7 +2,7 @@ package de.hilling.junit.cdi;
 
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
-import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.InvocationTargetManager;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
@@ -59,10 +59,9 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
         TestContext.activate();
         testEnvironment.setTestMethod(context.getRequiredTestMethod());
         testEnvironment.setTestName(context.getDisplayName());
-        invocationTargetManager.activateTest(testEnvironment.getTestClass());
-        lifecycleNotifier.notify(EventType.STARTING, context);
+        lifecycleNotifier.notify(TestState.STARTING, context);
         contextControl.startContexts();
-        lifecycleNotifier.notify(EventType.STARTED, context);
+        lifecycleNotifier.notify(TestState.STARTED, context);
         for (Field field : ReflectionsUtils.getAllFields(testEnvironment.getTestClass())) {
             if (isTestActivatable(field)) {
                 invocationTargetManager.activateAlternative(field.getType());
@@ -72,10 +71,9 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
 
     @Override
     public void afterEach(ExtensionContext context) {
-        lifecycleNotifier.notify(EventType.FINISHING, context);
+        lifecycleNotifier.notify(TestState.FINISHING, context);
         contextControl.stopContexts();
-        lifecycleNotifier.notify(EventType.FINISHED, context);
-        invocationTargetManager.tearDownTest();
+        lifecycleNotifier.notify(TestState.FINISHED, context);
         TestContext.deactivate();
     }
 

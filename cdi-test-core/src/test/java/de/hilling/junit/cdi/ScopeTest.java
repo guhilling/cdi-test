@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import java.util.UUID;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class ScopeTest {
+class ScopeTest {
 
     @Inject
     private Request request;
@@ -17,17 +17,17 @@ public class ScopeTest {
     private UUID lastIdentifier;
 
     @Test
-    public void assertNotNull() {
+    void assertNotNull() {
         Assertions.assertNotNull(request);
     }
 
     @Test
-    public void testOne() {
+    void testOne() {
         assertNotEqual();
     }
 
     @Test
-    public void testTwo() {
+    void testTwo() {
         assertNotEqual();
     }
 

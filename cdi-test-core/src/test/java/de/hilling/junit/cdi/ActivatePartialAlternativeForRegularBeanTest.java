@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
-public class ActivatePartialAlternativeForRegularBeanTest {
+class ActivatePartialAlternativeForRegularBeanTest {
 
     @Inject
     private SampleService sampleService;
@@ -20,7 +20,7 @@ public class ActivatePartialAlternativeForRegularBeanTest {
     private BackendServiceTestPartialImplementation testBackendService;
 
     @Test
-    public void callTestActivatedService() {
+    void callTestActivatedService() {
         Assertions.assertThrows(IllegalStateException.class, () -> sampleService.storePerson(new Person()));
     }
 

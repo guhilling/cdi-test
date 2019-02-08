@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
-public class ActivateAlternativeForAlternativeTest {
+class ActivateAlternativeForAlternativeTest {
     @Inject
     private TestActivatedOverridenService testOverride;
     @Inject
@@ -23,21 +23,21 @@ public class ActivateAlternativeForAlternativeTest {
     private BackendService backendService;
 
     @Test
-    public void callTestActivatedService() {
+    void callTestActivatedService() {
         backendService.storePerson(new Person());
         backendService.storePerson(new Person());
         assertEquals(2, testOverride.getInvocationCounter());
     }
 
     @Test
-    public void callTestActivatedServiceIndependently() {
+    void callTestActivatedServiceIndependently() {
         backendService.storePerson(new Person());
         backendService.storePerson(new Person());
         assertEquals(2, testOverride.getInvocationCounter());
     }
 
     @Test
-    public void callOverridenServiceDirectly() {
+    void callOverridenServiceDirectly() {
         overriddenService.serviceMethod();
         overriddenService.serviceMethod();
         overriddenService.serviceMethod();
@@ -45,7 +45,7 @@ public class ActivateAlternativeForAlternativeTest {
     }
 
     @Test
-    public void callOverridenServiceMixed() {
+    void callOverridenServiceMixed() {
         overriddenService.serviceMethod();
         overriddenService.serviceMethod();
         overriddenService.serviceMethod();

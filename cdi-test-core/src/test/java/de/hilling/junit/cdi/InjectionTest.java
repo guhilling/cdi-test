@@ -27,7 +27,7 @@ class InjectionTest {
     void checkTestInformation() throws Exception {
         assertNotNull(testInformation);
         assertEquals(InjectionTest.class, testInformation.getTestClass());
-        assertEquals(InjectionTest.class.getMethod("checkTestInformation"), testInformation.getTestMethod());
+        assertEquals(InjectionTest.class.getDeclaredMethod("checkTestInformation"), testInformation.getTestMethod());
     }
 
     @Test

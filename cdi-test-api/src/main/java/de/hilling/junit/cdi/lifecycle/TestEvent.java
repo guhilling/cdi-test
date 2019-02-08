@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.lifecycle;
 
-import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.TestState;
 import org.immutables.value.Value;
 
 import javax.inject.Qualifier;
@@ -14,5 +14,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Value.Immutable
 public @interface TestEvent {
-    EventType value();
+    TestState value();
 }

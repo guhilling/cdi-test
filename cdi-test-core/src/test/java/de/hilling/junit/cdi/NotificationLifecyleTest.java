@@ -8,23 +8,23 @@ import javax.inject.Inject;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class NotificationLifecyleTest {
+class NotificationLifecyleTest {
 
     @Inject
     private NotificationLifecyleSupportBean supportBean;
 
     @Test
-    public void notifyStarting() {
+    void notifyStarting() {
         assertNotNull(supportBean.startingEvent);
     }
 
     @Test
-    public void notifyFinishing() {
+    void notifyFinishing() {
         assertNotNull(supportBean.finishingEvent);
     }
 
     @Test
-    public void notifyFinished() {
+    void notifyFinished() {
         assertNotNull(supportBean.finishedEvent);
     }
 }

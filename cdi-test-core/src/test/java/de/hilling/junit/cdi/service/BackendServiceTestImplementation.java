@@ -4,7 +4,7 @@ import de.hilling.junit.cdi.BackendServiceException;
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
-import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.TestState;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import javax.enterprise.event.Observes;
@@ -26,7 +26,7 @@ public class BackendServiceTestImplementation extends BackendService {
         }
     }
 
-    protected void testStarted(@Observes @TestEvent(EventType.STARTING) ExtensionContext context) {
+    protected void testStarted(@Observes @TestEvent(TestState.STARTING) ExtensionContext context) {
         context.getTestMethod().ifPresent(m -> {
             final BackendServiceException serviceException = m.getAnnotation(BackendServiceException.class);
             if (serviceException != null) {

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class InjectionTest {
+class InjectionTest {
 
     @Inject
     private Person person;
@@ -24,26 +24,26 @@ public class InjectionTest {
 
 
     @Test
-    public void checkTestInformation()throws Exception {
+    void checkTestInformation() throws Exception {
         assertNotNull(testInformation);
         assertEquals(InjectionTest.class, testInformation.getTestClass());
         assertEquals(InjectionTest.class.getMethod("checkTestInformation"), testInformation.getTestMethod());
     }
 
     @Test
-    public void testInjection() {
+    void testInjection() {
         assertNotNull(person);
         assertNotNull(constructorInjected);
     }
 
     @Test
-    public void testProxiedCostructorInjection() {
+    void testProxiedCostructorInjection() {
         assertNotNull(constructorInjected.getPerson());
         assertNotNull(constructorInjected.getRequest());
     }
 
     @Test
-    public void testPersons() {
+    void testPersons() {
         checkPersonWorks(person);
         checkPersonWorks(constructorInjected.getPerson());
     }

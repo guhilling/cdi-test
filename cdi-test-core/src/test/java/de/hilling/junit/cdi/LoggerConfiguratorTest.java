@@ -5,20 +5,20 @@ import org.junit.jupiter.api.Test;
 
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 
-public class LoggerConfiguratorTest {
+class LoggerConfiguratorTest {
 
     @BeforeEach
-    public void cleanUp() {
+    void cleanUp() {
         System.clearProperty(LoggerConfigurator.LOGCONFIG_KEY);
     }
 
     @Test
-    public void setUpDefaultLogging() {
+    void setUpDefaultLogging() {
         LoggerConfigurator.configure();
     }
 
     @Test
-    public void setUpIllegalLogging() {
+    void setUpIllegalLogging() {
         System.setProperty(LoggerConfigurator.LOGCONFIG_KEY,
                 "/no_such_resource");
         LoggerConfigurator.configure();

@@ -6,12 +6,10 @@ import de.hilling.junit.cdi.service.SampleService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.inject.Inject;
 
 @ExtendWith(CdiTestJunitExtension.class)
-@ExtendWith(MockitoExtension.class)
 class ActivatePartialAlternativeForRegularBeanTest {
 
     @Inject

@@ -20,7 +20,7 @@ public class TestPropertiesHolder {
         return Collections.unmodifiableMap(properties);
     }
 
-    void clear(@Observes @TestEvent(TestState.FINISHED) ExtensionContext testEvent) {
+    void clear(@Observes @TestEvent(TestState.FINISHING) ExtensionContext testEvent) {
         properties.clear();
     }
 

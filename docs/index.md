@@ -96,7 +96,7 @@ library.
     <dependency>
         <groupId>org.jboss.weld.se</groupId>
         <artifactId>weld-se-core</artifactId>
-        <version>3.0.5.Final</version>
+        <version>3.1.0.Final</version>
         <scope>test</scope>
     </dependency>
     <dependency>
@@ -163,10 +163,12 @@ public class SampleService {
 ```
 
 Maybe we need to mock the ``BackendService`` for our unit test. This is easily done by just creating the required
-mock object in the test class:
+mock object in the test class. It is necessary to add the ``MockitoExtension`` _after_ the ``CdiTestJunitExtension`` because
+we add a listener for mock creation first:
 
 ```java
 @ExtendWith(CdiTestJunitExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class MockProxyTest {
 
     @Mock
@@ -220,6 +222,7 @@ verify the test implementation:
 
 ```java
 @ExtendWith(CdiTestJunitExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class ActivateAlternativeForRegularBeanTest {
     @Inject
     private SampleService sampleService;
@@ -267,7 +270,7 @@ Feedback is always welcome. Feel free to ask for extensions an support for build
 
 ## LICENSE
 
- Copyright 2018 Gunnar Hilling
+ Copyright 2019 Gunnar Hilling
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

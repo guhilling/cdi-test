@@ -6,30 +6,30 @@ import de.hilling.junit.cdi.service.SampleService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.inject.Inject;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class MockProxyTest {
-
-    @Mock
-    private BackendService backendService;
+@ExtendWith(MockitoExtension.class)
+class MockProxyTest {
 
     @Inject
     private SampleService sampleService;
 
     @Test
-    public void createPerson() {
+    void createPersonWithMockBackend(@Mock BackendService backendService) {
         Person person = new Person();
         sampleService.storePerson(person);
         verify(backendService).storePerson(person);
     }
 
     @Test
-    public void doNothing() {
-        verifyZeroInteractions(backendService);
+    void createPersonWithRealBackend() {
+        Person person = new Person();
+        sampleService.storePerson(person);
     }
+
 }

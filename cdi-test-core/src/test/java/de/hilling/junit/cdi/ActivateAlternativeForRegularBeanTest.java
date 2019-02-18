@@ -12,21 +12,21 @@ import javax.inject.Inject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class ActivateAlternativeForRegularBeanTest {
+class ActivateAlternativeForRegularBeanTest {
     @Inject
     private SampleService sampleService;
     @Inject
     private BackendServiceTestImplementation testBackendService;
 
     @Test
-    public void callTestActivatedService() {
+    void callTestActivatedService() {
         sampleService.storePerson(new Person());
         assertEquals(1, testBackendService.getInvocations());
     }
 
     @Test
     @BackendServiceException(RuntimeException.class)
-    public void callTestActivatedServiceWithBackendException() {
+    void callTestActivatedServiceWithBackendException() {
         Assertions.assertThrows(RuntimeException.class, () -> {
             sampleService.storePerson(new Person());
         });

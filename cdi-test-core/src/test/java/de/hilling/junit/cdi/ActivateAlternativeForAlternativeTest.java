@@ -1,19 +1,20 @@
 package de.hilling.junit.cdi;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import javax.inject.Inject;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.service.BackendService;
 import de.hilling.junit.cdi.service.OverriddenService;
 import de.hilling.junit.cdi.service.TestActivatedOverridenService;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import javax.inject.Inject;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class ActivateAlternativeForAlternativeTest {
+@ExtendWith(MockitoExtension.class)
+class ActivateAlternativeForAlternativeTest {
     @Inject
     private TestActivatedOverridenService testOverride;
     @Inject
@@ -22,21 +23,21 @@ public class ActivateAlternativeForAlternativeTest {
     private BackendService backendService;
 
     @Test
-    public void callTestActivatedService() {
+    void callTestActivatedService() {
         backendService.storePerson(new Person());
         backendService.storePerson(new Person());
         assertEquals(2, testOverride.getInvocationCounter());
     }
 
     @Test
-    public void callTestActivatedServiceIndependently() {
+    void callTestActivatedServiceIndependently() {
         backendService.storePerson(new Person());
         backendService.storePerson(new Person());
         assertEquals(2, testOverride.getInvocationCounter());
     }
 
     @Test
-    public void callOverridenServiceDirectly() {
+    void callOverridenServiceDirectly() {
         overriddenService.serviceMethod();
         overriddenService.serviceMethod();
         overriddenService.serviceMethod();
@@ -44,7 +45,7 @@ public class ActivateAlternativeForAlternativeTest {
     }
 
     @Test
-    public void callOverridenServiceMixed() {
+    void callOverridenServiceMixed() {
         overriddenService.serviceMethod();
         overriddenService.serviceMethod();
         overriddenService.serviceMethod();

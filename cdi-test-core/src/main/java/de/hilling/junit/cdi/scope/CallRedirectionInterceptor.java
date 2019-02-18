@@ -1,8 +1,7 @@
 package de.hilling.junit.cdi.scope;
 
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import de.hilling.junit.cdi.util.ReflectionsUtils;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
@@ -11,10 +10,9 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-
-import org.apache.deltaspike.core.api.provider.BeanProvider;
-
-import de.hilling.junit.cdi.util.ReflectionsUtils;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 @Replaceable
 @Interceptor
@@ -38,15 +36,16 @@ public class CallRedirectionInterceptor implements Serializable {
         }
     }
 
+    @SuppressWarnings("squid:S00112")
     private Object callAlternative(InvocationContext ctx, Class<?> javaClass) throws Throwable {
+        Method method = ctx.getMethod();
+        Object alternative = BeanProvider
+                .getContextualReference(invocationTargetManager.get().alternativeFor(javaClass));
         try {
-            Object alternative = BeanProvider
-                                 .getContextualReference(invocationTargetManager.get().alternativeFor(javaClass));
-            Method method = ctx.getMethod();
             Method alternativeMethod = alternative.getClass().getMethod(method.getName(), method.getParameterTypes());
             return alternativeMethod.invoke(alternative, ctx.getParameters());
         } catch (NoSuchMethodException nme) {
-            return callMock(ctx, javaClass);
+            throw new IllegalStateException("method " + method.getName() + " not found on alternative " + alternative);
         } catch (InvocationTargetException ite) {
             throw ite.getCause();
         }

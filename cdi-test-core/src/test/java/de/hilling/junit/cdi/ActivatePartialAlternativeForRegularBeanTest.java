@@ -1,24 +1,27 @@
 package de.hilling.junit.cdi;
 
-import javax.inject.Inject;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.service.BackendServiceTestPartialImplementation;
 import de.hilling.junit.cdi.service.SampleService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import javax.inject.Inject;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class ActivatePartialAlternativeForRegularBeanTest {
+@ExtendWith(MockitoExtension.class)
+class ActivatePartialAlternativeForRegularBeanTest {
+
     @Inject
     private SampleService sampleService;
     @Inject
     private BackendServiceTestPartialImplementation testBackendService;
 
     @Test
-    public void callTestActivatedService() {
-        sampleService.storePerson(new Person());
+    void callTestActivatedService() {
+        Assertions.assertThrows(IllegalStateException.class, () -> sampleService.storePerson(new Person()));
     }
 
 }

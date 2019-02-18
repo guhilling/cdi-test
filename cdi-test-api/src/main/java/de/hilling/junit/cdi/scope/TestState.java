@@ -3,7 +3,7 @@ package de.hilling.junit.cdi.scope;
 /**
  * Unit test event type.
  */
-public enum EventType {
+public enum TestState {
 
     /**
      * CDI scopes are about to be started.

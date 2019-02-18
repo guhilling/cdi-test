@@ -1,68 +1,67 @@
 package de.hilling.junit.cdi.scope;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+import de.hilling.junit.cdi.lifecycle.TestEvent;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.mockito.listeners.MockCreationListener;
+import org.mockito.mock.MockCreationSettings;
 
+import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
-
-import org.apache.deltaspike.core.util.ProxyUtils;
-import org.mockito.Mockito;
-
-import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+import java.util.*;
 
 /**
  * Book keeping for mocks. Thread safe.
  */
 @BypassTestInterceptor
 @TestSuiteScoped
-public class InvocationTargetManager {
+public class InvocationTargetManager implements MockCreationListener {
+
+    private final BeanManager beanManager;
+    private final TestInformation testInformation;
+
+    private Map<Class<?>, Map<Class<?>, Object>> activeMocksByTestClass = new HashMap<>();
+    private Map<Class<?>, Set<Class<?>>> activeAlternativesByTestClass = new HashMap<>();
 
     @Inject
-    private BeanManager beanManager;
-
-    private Map<Class<?>, Object>        mocks                         = new HashMap<>();
-    private Map<Class<?>, Set<Class<?>>> activeMocksByTestClass        = new HashMap<>();
-    private Map<Class<?>, Set<Class<?>>> activeAlternativesByTestClass = new HashMap<>();
-    private Class<?> activeTest;
-
-    @SuppressWarnings("unchecked")
-    public synchronized <T> T mock(Class<T> javaClass) {
-        if (!mocks.containsKey(javaClass)) {
-            mocks.put(javaClass, Mockito.mock(javaClass));
-        }
-        return (T) mocks.get(javaClass);
+    public InvocationTargetManager( BeanManager beanManager, TestInformation testInformation) {
+        this.beanManager = beanManager;
+        this.testInformation = testInformation;
     }
 
-    /**
-     * Reset all {@link Mockito} mocks. See {@link Mockito#reset(Object...)}
-     */
-    public synchronized void reset() {
-        Mockito.reset(mocks.values().toArray());
-        activeTest = null;
+    @Override
+    public void onMockCreated(Object mock, MockCreationSettings settings) {
+        final Class typeToMock = settings.getTypeToMock();
+        final Map<Class<?>, Object> mocks = currentMockSet();
+        if (mocks.containsKey(typeToMock)) {
+            throw new RuntimeException("mock " + typeToMock + " already in set");
+        }
+        mocks.put(typeToMock, mock);
+    }
+
+    @SuppressWarnings("unchecked")
+    synchronized <T> T mock(Class<T> javaClass) {
+        return (T) currentMockSet().get(javaClass);
     }
 
     /**
      * Check if mock for the given class is enabled.
      *
      * @param javaClass clazz for which check is performed.
-     *
-     * @return true if {@link #activateMock} was called before.
+     * @return true if the mock was enabled for this test.
      */
-    public synchronized boolean isMockEnabled(Class<?> javaClass) {
-        return currentMockSet().contains(javaClass);
+    synchronized boolean isMockEnabled(Class<?> javaClass) {
+        return currentMockSet().keySet()
+                               .contains(javaClass);
     }
 
     /**
      * Check if alternative for the given class is enabled.
      *
      * @param javaClass clazz for which check is performed.
-     *
      * @return true if {@link #activateAlternative} was called before.
      */
     public synchronized boolean isAlternativeEnabled(Class<?> javaClass) {
@@ -71,10 +70,11 @@ public class InvocationTargetManager {
 
     public Class<?> alternativeFor(Class<?> javaClass) {
         for (Class<?> alternative : currentAlternativesSet()) {
-            AnnotatedType type = beanManager.getExtension(TestScopeExtension.class).decoratedTypeFor(alternative);
+            AnnotatedType type = beanManager.getExtension(TestScopeExtension.class)
+                                            .decoratedTypeFor(alternative);
             if (type != null) {
                 ActivatableTestImplementation activatableTestImplementation = type.getAnnotation(
-                ActivatableTestImplementation.class);
+                        ActivatableTestImplementation.class);
                 for (Class<?> overridden : activatableTestImplementation.value()) {
                     if (overridden.equals(javaClass)) {
                         return alternative;
@@ -85,60 +85,37 @@ public class InvocationTargetManager {
         return null;
     }
 
-    private Set<Class<?>> currentMockSet() {
-        if (activeTest == null) {
-            return Collections.emptySet();
-        }
-        assertTestClassRegistered(activeTest);
-        return activeMocksByTestClass.get(activeTest);
+    private Map<Class<?>, Object> currentMockSet() {
+        return currentElement(activeMocksByTestClass);
     }
 
     private Set<Class<?>> currentAlternativesSet() {
-        if (activeTest == null) {
-            return Collections.emptySet();
-        }
-        assertTestClassRegistered(activeTest);
-        return activeAlternativesByTestClass.get(activeTest);
+        return currentElement(activeAlternativesByTestClass);
     }
 
-    /**
-     * Activate mock for given class.
-     *
-     * @param clazz class to activate mock for
-     *
-     * @return mock
-     */
-    public synchronized Object activateMock(Class<?> clazz) {
+    private <V> V currentElement(Map<Class<?>, V> classMap) {
+        Class<?> activeTest = testInformation.getActiveTest();
         if (activeTest == null) {
-            throw new IllegalArgumentException("not test active: " + clazz);
+            throw new IllegalStateException("no test active");
         }
-        final Object mock = mock(clazz);
-        if (mocks.containsKey(clazz)) {
-            currentMockSet().add(clazz);
-        } else {
-            throw new IllegalArgumentException("not registered: " + clazz);
-        }
-        return mock;
+        assertTestClassRegistered(activeTest);
+        return classMap.get(activeTest);
     }
+
+    protected synchronized void finished(@Observes @TestEvent(TestState.FINISHING) ExtensionContext testContext) {
+        currentMockSet().clear();
+        currentAlternativesSet().clear();
+    }
+
 
     public synchronized void activateAlternative(Class<?> alternativeType) {
         currentAlternativesSet().add(alternativeType);
     }
 
-    public synchronized void addAndActivateTest(Class<?> newTestClass) {
-        Class<?> keyClass = ProxyUtils.getUnproxiedClass(newTestClass);
-        if (!activeMocksByTestClass.containsKey(keyClass)) {
-            activeMocksByTestClass.put(keyClass, new HashSet<Class<?>>());
-        }
-        if (!activeAlternativesByTestClass.containsKey(keyClass)) {
-            activeAlternativesByTestClass.put(keyClass, new HashSet<Class<?>>());
-        }
-        this.activeTest = keyClass;
-    }
-
     private void assertTestClassRegistered(Class<?> testToActivate) {
         if (!activeMocksByTestClass.containsKey(testToActivate)) {
-            throw new IllegalArgumentException("test class not registered: " + testToActivate);
+            activeMocksByTestClass.put(testToActivate, new HashMap<>());
+            activeAlternativesByTestClass.put(testToActivate, new HashSet<>());
         }
     }
 }

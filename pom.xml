@@ -15,7 +15,7 @@
         <java.version>1.9</java.version>
         <immutables.version>2.7.5</immutables.version>
         <deltaspike.version>1.9.0</deltaspike.version>
-        <cdi-2.0-weld.version>3.0.5.Final</cdi-2.0-weld.version>
+        <cdi-2.0-weld.version>3.1.0.Final</cdi-2.0-weld.version>
         <cdi-1.2-weld.version>2.4.8.Final</cdi-1.2-weld.version>
         <cdi-api.version>2.0.SP1</cdi-api.version>
         <github.global.server>github</github.global.server>

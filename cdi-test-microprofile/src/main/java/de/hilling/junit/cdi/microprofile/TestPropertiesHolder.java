@@ -1,7 +1,7 @@
 package de.hilling.junit.cdi.microprofile;
 
 import de.hilling.junit.cdi.lifecycle.TestEvent;
-import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
@@ -20,7 +20,7 @@ public class TestPropertiesHolder {
         return Collections.unmodifiableMap(properties);
     }
 
-    void clear(@Observes @TestEvent(EventType.FINISHED) ExtensionContext testEvent) {
+    void clear(@Observes @TestEvent(TestState.FINISHED) ExtensionContext testEvent) {
         properties.clear();
     }
 

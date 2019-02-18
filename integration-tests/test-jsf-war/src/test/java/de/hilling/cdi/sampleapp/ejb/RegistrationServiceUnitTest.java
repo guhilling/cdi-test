@@ -1,22 +1,20 @@
 package de.hilling.cdi.sampleapp.ejb;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-
+import de.hilling.cdi.sampleapp.UserRegistrationEntity;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import de.hilling.cdi.sampleapp.UserRegistrationEntity;
-import de.hilling.junit.cdi.CdiTestJunitExtension;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class RegistrationServiceUnitTest {
+class RegistrationServiceUnitTest {
 
-    public static final String NAME = "Gunnar";
+    static final String NAME = "Gunnar";
     @Inject
     private RegistrationService registrationService;
 
@@ -26,12 +24,13 @@ public class RegistrationServiceUnitTest {
     private List<UserRegistrationEntity> allUsers;
 
     private void assertDatabaseSize(int expectedSize) {
-        allUsers = entityManager.createQuery("select e from UserRegistrationEntity e").getResultList();
+        allUsers = entityManager.createQuery("select e from UserRegistrationEntity e")
+                                .getResultList();
         assertEquals(expectedSize, allUsers.size());
     }
 
     @Test
-    public void testSayHello() throws Exception {
+    void testSayHello() {
         assertDatabaseSize(0);
         registrationService.register(NAME);
         entityManager.flush();
@@ -42,7 +41,7 @@ public class RegistrationServiceUnitTest {
     }
 
     @Test
-    public void testSayHelloTwice() throws Exception {
+    void testSayHelloTwice() {
         assertDatabaseSize(0);
         registrationService.register(NAME);
         entityManager.flush();

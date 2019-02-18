@@ -3,7 +3,7 @@ package de.hilling.junit.cdi.jee;
 import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
-import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
@@ -23,7 +23,7 @@ public class TestTransactionManager {
     private EntityManager               entityManager;
     private EntityTransaction           transaction;
 
-    protected void beginTransaction(@Observes @TestEvent(EventType.STARTED) ExtensionContext description) {
+    protected void beginTransaction(@Observes @TestEvent(TestState.STARTED) ExtensionContext description) {
         cleanDatabase();
         transaction = entityManager.getTransaction();
         transaction.begin();
@@ -41,7 +41,7 @@ public class TestTransactionManager {
         }
     }
 
-    protected void finishTransaction(@Observes @TestEvent(EventType.FINISHING) ExtensionContext description) {
+    protected void finishTransaction(@Observes @TestEvent(TestState.FINISHING) ExtensionContext description) {
         if (transaction.isActive()) {
             if (transaction.getRollbackOnly()) {
                 transaction.rollback();

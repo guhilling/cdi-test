@@ -1,5 +1,6 @@
 package de.hilling.junit.cdi.microprofile;
 
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
@@ -10,6 +11,7 @@ import javax.inject.Inject;
 import java.util.Arrays;
 
 @TestSuiteScoped
+@BypassTestInterceptor
 public class TestConfigListener {
 
     private ExtensionContext startingEvent;

@@ -194,6 +194,9 @@ public class MockProxyTest {
 By just defining the ``BackendService`` as a mock using the standard mockito annotation ``@Mock`` it is automatically 
 used when calling the bean of type ``BackendService``.
 
+Because we are reusing the ``MockitoExtension`` here we can also use all its features like mocking per test case as
+described [in the Mockito documentation](https://static.javadoc.io/org.mockito/mockito-junit-jupiter/2.24.0/org/mockito/junit/jupiter/MockitoExtension.html) 
+
 ### How is this done?
 
 Actually it is quite simple. During testing every bean call runs via an additional proxy object that dispatches the calls. This 

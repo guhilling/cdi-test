@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/guhilling/cdi-test.svg?branch=master)](https://travis-ci.org/guhilling/cdi-test-extensions)
+[![Build Status](https://travis-ci.org/guhilling/cdi-test-extensions.svg?branch=master)](https://travis-ci.org/guhilling/cdi-test-extensions)
 
 # Extensions for cdi-test
 

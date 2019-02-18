@@ -1,20 +1,18 @@
 package de.hilling.junit.cdi.jee;
 
-import java.sql.SQLException;
+import de.hilling.junit.cdi.CdiTestException;
+import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
+import de.hilling.junit.cdi.lifecycle.TestEvent;
+import de.hilling.junit.cdi.scope.EventType;
+import de.hilling.junit.cdi.scope.TestSuiteScoped;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-
-import org.junit.jupiter.api.extension.ExtensionContext;
-
-import de.hilling.junit.cdi.CdiTestException;
-import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
-import de.hilling.junit.cdi.lifecycle.TestEvent;
-import de.hilling.junit.cdi.scope.EventType;
-import de.hilling.junit.cdi.scope.TestSuiteScoped;
+import java.sql.SQLException;
 
 @TestSuiteScoped
 public class TestTransactionManager {
@@ -25,7 +23,7 @@ public class TestTransactionManager {
     private EntityManager               entityManager;
     private EntityTransaction           transaction;
 
-    protected void beginTransaction(@Observes @TestEvent(EventType.STARTING) ExtensionContext description) {
+    protected void beginTransaction(@Observes @TestEvent(EventType.STARTED) ExtensionContext description) {
         cleanDatabase();
         transaction = entityManager.getTransaction();
         transaction.begin();

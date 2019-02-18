@@ -1,18 +1,16 @@
 package de.hilling.junit.cdi.cucumber.scope.context;
 
-import java.io.Serializable;
-import java.lang.annotation.Annotation;
-
-import javax.enterprise.context.spi.Context;
-import javax.enterprise.event.Observes;
-
-import org.junit.runner.Description;
-
 import de.hilling.junit.cdi.cucumber.scope.ScenarioScoped;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.EventType;
 import de.hilling.junit.cdi.scope.context.AbstractScopeContext;
 import de.hilling.junit.cdi.scope.context.CustomScopeContextHolder;
+import org.junit.runner.Description;
+
+import javax.enterprise.context.spi.Context;
+import javax.enterprise.event.Observes;
+import java.io.Serializable;
+import java.lang.annotation.Annotation;
 
 /**
  * Implements a CDI context for a cucumber scenario.
@@ -31,7 +29,7 @@ public class ScenarioScopedContext extends AbstractScopeContext implements Conte
         return ScenarioScoped.class;
     }
 
-    protected void activate(@Observes @TestEvent(EventType.STARTING) Description description) {
+    protected void activate(@Observes @TestEvent(EventType.STARTED) Description description) {
         active = true;
     }
 

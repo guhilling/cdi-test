@@ -1,7 +1,7 @@
 
 [![Build Status](https://travis-ci.org/guhilling/cdi-test-microprofile.svg?branch=master)](https://travis-ci.org/guhilling/cdi-test-microprofile)
 
-# Extensions for cdi-test
+# microprofile config extension for cdi-test
 
 ## LICENSE
 

@@ -17,8 +17,8 @@ matrix:
   - name: "Java 9"
     jdk: openjdk9
     env: CDI=cdi-2
-  - name: "Java 10"
-    jdk: openjdk10
+  - name: "Java 12"
+    jdk: openjdk12
     env: CDI=cdi-2
   - name: "Java 11 (CDI-1.2)"
     jdk: openjdk11

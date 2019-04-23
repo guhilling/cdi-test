@@ -163,6 +163,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <!-- remove this dependency when weld deps are updated -->
+                <groupId>org.jboss.classfilewriter</groupId>
+                <artifactId>jboss-classfilewriter</artifactId>
+                <version>1.2.4.Final</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.slf4j</groupId>

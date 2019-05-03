@@ -14,8 +14,8 @@ install: /bin/true
 
 matrix:
   include:
-  - name: "Java 9"
-    jdk: openjdk9
+  - name: "Java 8"
+    jdk: openjdk8
     env: CDI=cdi-2
   - name: "Java 12"
     jdk: openjdk12

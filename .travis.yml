@@ -21,6 +21,8 @@ matrix:
   - name: Java 11
     jdk: openjdk11
     env: COVERAGE=1
+  - name: Java 12
+    jdk: openjdk12
 
 script:
 - build/travis-build

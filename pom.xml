@@ -134,13 +134,6 @@
                 <artifactId>byte-buddy</artifactId>
                 <version>1.9.12</version>
             </dependency>
-            <dependency>
-                <!-- remove this dependency when weld deps are updated -->
-                <groupId>org.jboss.classfilewriter</groupId>
-                <artifactId>jboss-classfilewriter</artifactId>
-                <version>1.2.4.Final</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 

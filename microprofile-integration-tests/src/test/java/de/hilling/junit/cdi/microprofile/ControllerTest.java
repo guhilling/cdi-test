@@ -9,18 +9,18 @@ import javax.inject.Inject;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @ConfigPropertyValue(name = "some.string.property", value = "value class a")
-public class ControllerTest {
+class ControllerTest {
 
     @Inject
     private ControllerService controllerService;
 
     @Test
-    public void controllerInjected() {
+    void controllerInjected() {
         Assertions.assertNotNull(controllerService);
     }
 
     @Test
-    public void useValuesFromPropertyFile() {
+    void useValuesFromPropertyFile() {
         Assertions.assertEquals("value class a", controllerService.getStringProperty());
         Assertions.assertEquals(50, controllerService.getIntegerProperty());
         Assertions.assertTrue(controllerService.getBoolProperty());
@@ -32,7 +32,7 @@ public class ControllerTest {
     @ConfigPropertyValue(name = "some.string.property", value = "value method b")
     @ConfigPropertyValue(name = "some.integer.property", value = "4")
     @ConfigPropertyValue(name = "some.long.property", value = "46000")
-    public void overrideValuesInMethod() {
+    void overrideValuesInMethod() {
         Assertions.assertEquals("value method b", controllerService.getStringProperty());
         Assertions.assertEquals(4, controllerService.getIntegerProperty());
         Assertions.assertTrue(controllerService.getBoolProperty());
@@ -44,7 +44,7 @@ public class ControllerTest {
     @ConfigPropertyValue(name = "some.integer.property", value = "5")
     @ConfigPropertyValue(name = "some.long.property", value = "47000")
     @ConfigPropertyValue(name = "some.boolean.property", value = "fase")
-    public void overrideValuesDifferentlyInOtherMethod() {
+    void overrideValuesDifferentlyInOtherMethod() {
         Assertions.assertEquals("value method c", controllerService.getStringProperty());
         Assertions.assertEquals(5, controllerService.getIntegerProperty());
         Assertions.assertFalse(controllerService.getBoolProperty());

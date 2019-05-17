@@ -1,8 +1,8 @@
 ## Usage
 
-I'm assuming you are using maven 3.0.5 for this tutorial as I am using it for my integration testing.
+I'm assuming you are using maven 3.5+ for this tutorial as I am using it for my integration testing.
 
-Furthermore a jdk >= 9 should be used. If in doubt check the testing matrix on
+Furthermore a jdk >= 8 should be used. If in doubt check the testing matrix on
 [travis](https://travis-ci.org/guhilling/cdi-test).
 
 
@@ -16,20 +16,20 @@ Define dependencies on basic cdi-test features:
     <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-engine</artifactId>
-        <version>5.3.1</version>
+        <version>5.4.2</version>
         <scope>test</scope>
     </dependency>
   [...] 
     <dependency>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-core</artifactId>
-        <version>2.0.0</version>
+        <version>2.3.0</version>
         <scope>test</scope>
     </dependency>
     <dependency>
         <groupId>org.jboss.weld.se</groupId>
         <artifactId>weld-se-core</artifactId>
-        <version>3.0.5.Final</version>
+        <version>3.1.1.Final</version>
         <scope>test</scope>
     </dependency>
     <dependency>
@@ -41,7 +41,7 @@ Define dependencies on basic cdi-test features:
 </dependencies>
 ```
 
-Again check [travis](https://travis-ci.org/guhilling/cdi-test) for tested combintations of weld and jdk.
+Again, check [travis](https://travis-ci.org/guhilling/cdi-test) for tested combintations of weld and jdk.
 
 ### Writing Tests
 
@@ -51,8 +51,8 @@ beans when _this test is run_, see the full example in the code for details.
 It is possible to select different mockito or test implementations in each test class (see the full documentation for details).
 
 ```java
-@ExtendWith(CdiTestJunitExtension.class)
-public class RequestScopeMockTest extends BaseTest {
+@CdiTest
+public class RequestScopeMockTest {
 
     private static final String SAMPLE = "sample";
 

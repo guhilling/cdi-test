@@ -5,13 +5,12 @@ import de.hilling.junit.cdi.service.BackendServiceTestImplementation;
 import de.hilling.junit.cdi.service.SampleService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(CdiTestJunitExtension.class)
+@CdiTest
 class ActivateAlternativeForRegularBeanTest {
     @Inject
     private SampleService sampleService;

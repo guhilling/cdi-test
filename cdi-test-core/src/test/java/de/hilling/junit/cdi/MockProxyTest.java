@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 import static org.mockito.Mockito.verify;
 
-@ExtendWith(CdiTestJunitExtension.class)
+@CdiTest
 @ExtendWith(MockitoExtension.class)
 class MockProxyTest {
 

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.hilling.junit.cdi</groupId>
@@ -12,7 +13,7 @@
     <description>add-ons for cdi-test</description>
 
     <properties>
-		<cdi-test.version>2.3.0</cdi-test.version>
+        <cdi-test.version>2.3.0</cdi-test.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <deltaspike.version>1.9.0</deltaspike.version>
@@ -48,7 +49,7 @@
     <ciManagement>
         <system>Travis CI</system>
         <url>https://travis-ci.org/guhilling/cdi-test-extensions</url>
-        <notifiers />
+        <notifiers/>
     </ciManagement>
 
     <developers>
@@ -308,6 +309,9 @@
             <modules>
                 <module>cdi-test-jee</module>
             </modules>
+            <properties>
+                <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -370,7 +374,7 @@
                 </plugins>
             </build>
         </profile>
-		<profile>
+        <profile>
             <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>

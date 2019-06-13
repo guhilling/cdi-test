@@ -5,6 +5,7 @@
     <artifactId>cdi-test</artifactId>
     <version>2.3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <url>https://github.com/guhilling/cdi-test</url>
     <inceptionYear>2014</inceptionYear>
     <name>CDI Test</name>

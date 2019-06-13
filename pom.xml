@@ -65,11 +65,6 @@
         </developer>
     </developers>
 
-    <modules>
-        <module>integration-tests</module>
-        <module>cdi-test-jee</module>
-    </modules>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -300,7 +295,7 @@
                     <configuration>
                         <serverId>ossrh</serverId>
                         <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                        <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
                 </plugin>
             </plugins>
@@ -310,6 +305,9 @@
     <profiles>
         <profile>
             <id>release</id>
+            <modules>
+                <module>cdi-test-jee</module>
+            </modules>
             <build>
                 <plugins>
                     <plugin>
@@ -371,6 +369,16 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+		<profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>integration-tests</module>
+                <module>cdi-test-jee</module>
+            </modules>
         </profile>
     </profiles>
 

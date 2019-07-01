@@ -16,13 +16,11 @@ matrix:
   include:
   - name: Java 10
     jdk: openjdk10
-  - name: Java 11 (Oracle)
-    jdk: oraclejdk11
   - name: Java 11
     jdk: openjdk11
     env: COVERAGE=1
-#  - name: Java 12
-#    jdk: openjdk12
+  - name: Java 12
+    jdk: openjdk12
 
 script:
 - build/travis-build

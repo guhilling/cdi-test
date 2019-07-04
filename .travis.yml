@@ -11,7 +11,7 @@ addons:
 language: java
 
 jdk:
-  - openjdk9
+  - openjdk8
   - openjdk10
   - openjdk11
   - openjdk12

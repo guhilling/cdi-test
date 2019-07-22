@@ -41,7 +41,7 @@ public class TestScopeExtension implements Extension, Serializable {
         afterBeanDiscovery.addContext(new TestContext());
     }
 
-    public AnnotatedType decoratedTypeFor(Class<?> clazz) {
+    AnnotatedType decoratedTypeFor(Class<?> clazz) {
         return decoratedTypes.get(clazz);
     }
 

@@ -80,7 +80,7 @@ public class TestConfigProducer implements Serializable {
     @Produces
     @ConfigProperty
     <T> Set<T> producesSetConfigPropery(InjectionPoint ip) {
-        return ConfigProducerUtil.collectionConfigProperty(ip, config, new HashSet<>());
+        return ConfigProducerUtil.collectionConfigProperty(ip, config, HashSet::new);
     }
 
     @GlobalTestImplementation
@@ -88,7 +88,7 @@ public class TestConfigProducer implements Serializable {
     @Produces
     @ConfigProperty
     <T> List<T> producesListConfigPropery(InjectionPoint ip) {
-        return ConfigProducerUtil.collectionConfigProperty(ip, config, new ArrayList<T>());
+        return ConfigProducerUtil.collectionConfigProperty(ip, config, ArrayList::new);
     }
 
 }

@@ -20,7 +20,7 @@
         <github.global.server>github</github.global.server>
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <thorntail.version>2.5.0.Final</thorntail.version>
-        <smallrye.version>1.4.0</smallrye.version>
+        <smallrye.version>1.4.1</smallrye.version>
     </properties>
 
     <scm>

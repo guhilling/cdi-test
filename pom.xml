@@ -15,7 +15,7 @@
         <cdi-test.version>2.3.0</cdi-test.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <deltaspike.version>1.9.1</deltaspike.version>
+        <deltaspike.version>1.9.2</deltaspike.version>
         <weld.version>3.1.3.Final</weld.version>
         <github.global.server>github</github.global.server>
         <junit.jupiter.version>5.5.2</junit.jupiter.version>

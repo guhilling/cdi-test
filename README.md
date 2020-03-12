@@ -55,5 +55,5 @@ JProfiler supports open source projects with its full-featured Java Profiler. Cl
   <img src="https://www.ej-technologies.com/images/product_banners/jprofiler_large.png" alt="JProfiler">
 </a>
 <a href="https://www.jetbrains.com/?from=cdi-test" target="_blank" title="JetBrains">
-  <img src="https://.logos/jetbrains-variant-2.svg">
+  <img src="https:.logos/jetbrains-variant-2.svg">
 </a>

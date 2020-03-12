@@ -51,7 +51,9 @@ See the [Documentation on github pages](http://guhilling.github.io/cdi-test/).
 
 JProfiler supports open source projects with its full-featured Java Profiler. Click the JProfiler logo below to learn more.
 
-<a href="https://www.ej-technologies.com/products/jprofiler/overview.html" target="_blank" title="File Management">
-  <img src="https://www.ej-technologies.com/images/product_banners/jprofiler_large.png" alt="File Management">
+<a href="https://www.ej-technologies.com/products/jprofiler/overview.html" target="_blank" title="JProfiler">
+  <img src="https://www.ej-technologies.com/images/product_banners/jprofiler_large.png" alt="JProfiler">
 </a>
-
+<a href="https://www.jetbrains.com/?from=cdi-test" target="_blank" title="JetBrains">
+  <img src="https://.logos/jetbrains-variant-2.svg">
+</a>

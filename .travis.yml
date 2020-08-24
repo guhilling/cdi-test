@@ -24,6 +24,9 @@ matrix:
     env:
       - CDI=cdi-2
       - COVERAGE=1
+  - name: "Java 14"
+    jdk: openjdk14
+    env: CDI=cdi-2
 
 
 script:

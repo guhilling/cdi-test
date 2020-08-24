@@ -1,5 +1,4 @@
-sudo: false
-dist: trusty
+dist: bionic
 group: edge
 
 addons:
@@ -17,12 +16,6 @@ matrix:
   - name: "Java 8"
     jdk: openjdk8
     env: CDI=cdi-2
-  - name: "Java 12"
-    jdk: openjdk12
-    env: CDI=cdi-2
-  - name: "Java 13"
-    jdk: openjdk13
-    env: CDI=cdi-2
   - name: "Java 11 (CDI-1.2)"
     jdk: openjdk11
     env: CDI=cdi-1.2
@@ -31,6 +24,9 @@ matrix:
     env:
       - CDI=cdi-2
       - COVERAGE=1
+  - name: "Java 14"
+    jdk: openjdk14
+    env: CDI=cdi-2
 
 
 script:

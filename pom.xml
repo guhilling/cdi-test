@@ -19,7 +19,7 @@
         <cdi-1.2-weld.version>2.4.8.Final</cdi-1.2-weld.version>
         <cdi-api.version>2.0.SP1</cdi-api.version>
         <github.global.server>github</github.global.server>
-        <mockito.version>3.5.5</mockito.version>
+        <mockito.version>3.5.6</mockito.version>
         <javassist.version>3.27.0-GA</javassist.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit.jupiter.version>5.6.2</junit.jupiter.version>

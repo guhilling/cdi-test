@@ -1,12 +1,16 @@
 package de.hilling.junit.cdi.jee;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.junit.jupiter.api.Test;
+
+import javax.persistence.*;
 
 @Entity
+@EntityListeners(TestEntityListener.class)
 public class UserEntity {
+
+    public long getId() {
+        return id;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

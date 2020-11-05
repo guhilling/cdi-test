@@ -6,10 +6,13 @@ import de.hilling.junit.cdi.scope.TestSuiteScoped;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Producer for EntityManagers used in cdi-test unit tests.
@@ -19,11 +22,16 @@ public class EntityManagerTestProducer {
     private EntityManagerFactory entityManagerFactory;
 
     @Inject
+    private BeanManager beanManager;
+
+    @Inject
     private JEETestConfiguration configuration;
 
     @PostConstruct
     protected void createEntityManagerFactory() {
-        entityManagerFactory = Persistence.createEntityManagerFactory(configuration.getTestPersistenceUnitName());
+        Map<String, Object> props = new HashMap<>();
+        props.put("javax.persistence.bean.manager", beanManager);
+        entityManagerFactory = Persistence.createEntityManagerFactory(configuration.getTestPersistenceUnitName(), props);
     }
 
     @Produces

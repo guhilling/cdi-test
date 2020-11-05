@@ -4,7 +4,9 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 
+@EntityListeners(CounterEntityListener.class)
 @Entity
 public class UserEntity extends BaseEntity {
 

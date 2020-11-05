@@ -16,6 +16,8 @@ public class UserEntityTest {
     private EntityManager entityManager;
     @Inject
     private TestUtils testUtils;
+    @Inject
+    private InvocationCounter counter;
 
     @Test
     public void storeUserEntityWithNullAttributes() {
@@ -26,5 +28,14 @@ public class UserEntityTest {
     @Test
     public void storeUserEntity() {
         entityManager.persist(testUtils.createGunnar());
+        Assertions.assertEquals(1, counter.get());
+    }
+
+    @Test
+    public void storeAndRemoveUserEntity() {
+        UserEntity gunnar = testUtils.createGunnar();
+        entityManager.persist(gunnar);
+        entityManager.remove(gunnar);
+        Assertions.assertEquals(2, counter.get());
     }
 }

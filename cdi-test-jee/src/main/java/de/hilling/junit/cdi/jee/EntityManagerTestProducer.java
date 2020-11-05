@@ -5,6 +5,7 @@ import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
@@ -46,5 +47,9 @@ public class EntityManagerTestProducer {
     @RequestScoped
     protected EntityManager provideTestEntityManager() {
         return entityManagerFactory.createEntityManager();
+    }
+
+    public void close(@Disposes EntityManager entityManager) {
+        entityManager.close();
     }
 }

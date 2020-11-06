@@ -5,7 +5,7 @@
     <parent>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-microprofile-parent</artifactId>
-        <version>1.2.10</version>
+        <version>1.2.11-SNAPSHOT</version>
     </parent>
 
     <packaging>war</packaging>
@@ -13,6 +13,7 @@
     <description>Integration Tests for Microprofile Config in cdi-test</description>
     <name>CDI Test Microprofile Integration Tests</name>
     <artifactId>cdi-test-microprofile-tests</artifactId>
+  <version>1.2.2</version>
 
     <dependencies>
         <dependency>
@@ -46,7 +47,7 @@
         <dependency>
             <groupId>de.hilling.junit.cdi</groupId>
             <artifactId>cdi-test-microprofile</artifactId>
-            <version>1.2.10</version>
+            <version>1.2.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -164,9 +165,4 @@
             </plugin>
         </plugins>
     </build>
-
-
-  <scm>
-    <tag>cdi-test-microprofile-parent-1.2.10</tag>
-  </scm>
 </project>

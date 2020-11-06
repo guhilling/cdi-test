@@ -2,10 +2,12 @@ package de.hilling.junit.cdi.jee;
 
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
+import org.mockito.Mockito;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Disposes;
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
@@ -26,13 +28,15 @@ public class EntityManagerTestProducer {
     private BeanManager beanManager;
 
     @Inject
-    private JEETestConfiguration configuration;
+    private Instance<JEETestConfiguration> configuration;
 
     @PostConstruct
     protected void createEntityManagerFactory() {
-        Map<String, Object> props = new HashMap<>();
-        props.put("javax.persistence.bean.manager", beanManager);
-        entityManagerFactory = Persistence.createEntityManagerFactory(configuration.getTestPersistenceUnitName(), props);
+        if(configuration.isResolvable()) {
+            Map<String, Object> props = new HashMap<>();
+            props.put("javax.persistence.bean.manager", beanManager);
+            entityManagerFactory = Persistence.createEntityManagerFactory(configuration.get().getTestPersistenceUnitName(), props);
+        }
     }
 
     @Produces
@@ -46,7 +50,11 @@ public class EntityManagerTestProducer {
     @GlobalTestImplementation
     @RequestScoped
     protected EntityManager provideTestEntityManager() {
-        return entityManagerFactory.createEntityManager();
+        if(entityManagerFactory != null) {
+            return entityManagerFactory.createEntityManager();
+        } else {
+            return Mockito.mock(EntityManager.class);
+        }
     }
 
     public void close(@Disposes EntityManager entityManager) {

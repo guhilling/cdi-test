@@ -20,19 +20,23 @@ public class TestTransactionManager {
     @Inject
     private Instance<ConnectionWrapper> connectionWrappers;
     @Inject
-    private EntityManager               entityManager;
-    private EntityTransaction           transaction;
+    private EntityManager entityManager;
+    private EntityTransaction transaction;
+    @Inject
+    private Instance<JEETestConfiguration> configuration;
 
     protected void beginTransaction(@Observes @TestEvent(TestState.STARTED) ExtensionContext description) {
-        cleanDatabase();
-        transaction = entityManager.getTransaction();
-        transaction.begin();
+        if (configuration.isResolvable()) {
+            cleanDatabase();
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+        }
     }
 
     private void cleanDatabase() {
         try {
             for (ConnectionWrapper wrapper : connectionWrappers) {
-                if(wrapper.callDatabaseCleaner()) {
+                if (wrapper.callDatabaseCleaner()) {
                     break;
                 }
             }
@@ -42,11 +46,13 @@ public class TestTransactionManager {
     }
 
     protected void finishTransaction(@Observes @TestEvent(TestState.FINISHING) ExtensionContext description) {
-        if (transaction.isActive()) {
-            if (transaction.getRollbackOnly()) {
-                transaction.rollback();
-            } else {
-                transaction.commit();
+        if (configuration.isResolvable()) {
+            if (transaction.isActive()) {
+                if (transaction.getRollbackOnly()) {
+                    transaction.rollback();
+                } else {
+                    transaction.commit();
+                }
             }
         }
     }

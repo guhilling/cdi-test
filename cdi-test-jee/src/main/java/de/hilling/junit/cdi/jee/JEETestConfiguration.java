@@ -7,7 +7,8 @@ public interface JEETestConfiguration {
 
     /**
      * Provide test persistence unit name.
+     *
      * @return name of the test persistence unit.
      */
-    String getTestPersistenceUnitName();
+     String getTestPersistenceUnitName();
 }

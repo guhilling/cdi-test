@@ -5,13 +5,12 @@
     <parent>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-microprofile-parent</artifactId>
-        <version>1.2.6-SNAPSHOT</version>
+        <version>1.2.2</version>
     </parent>
 
     <description>Support Microprofile Config in cdi-test</description>
     <name>CDI Test Microprofile Extension</name>
     <artifactId>cdi-test-microprofile</artifactId>
-  <version>1.2.2</version>
 
     <dependencies>
         <dependency>

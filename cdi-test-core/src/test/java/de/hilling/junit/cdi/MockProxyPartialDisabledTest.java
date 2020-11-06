@@ -10,8 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.inject.Inject;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
@@ -32,7 +31,7 @@ class MockProxyPartialDisabledTest {
 
     @Test
     void doNothing() {
-        verifyZeroInteractions(backendService);
+        verifyNoInteractions(backendService);
     }
 
 }

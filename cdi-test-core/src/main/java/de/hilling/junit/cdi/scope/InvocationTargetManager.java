@@ -23,8 +23,12 @@ public class InvocationTargetManager implements MockCreationListener {
     private final BeanManager beanManager;
     private final TestInformation testInformation;
 
-    private Map<Class<?>, Map<Class<?>, Object>> activeMocksByTestClass = new HashMap<>();
-    private Map<Class<?>, Set<Class<?>>> activeAlternativesByTestClass = new HashMap<>();
+    private final Map<Class<?>, Map<Class<?>, Object>> activeMocksByTestClass = new HashMap<>();
+    private final Map<Class<?>, Set<Class<?>>> activeAlternativesByTestClass = new HashMap<>();
+
+    {
+        setUpEmpyElementsForNotTestActive();
+    }
 
     @Inject
     public InvocationTargetManager( BeanManager beanManager, TestInformation testInformation) {
@@ -39,7 +43,11 @@ public class InvocationTargetManager implements MockCreationListener {
         if (mocks.containsKey(typeToMock)) {
             throw new RuntimeException("mock " + typeToMock + " already in set");
         }
-        mocks.put(typeToMock, mock);
+        try {
+            mocks.put(typeToMock, mock);
+        } catch (UnsupportedOperationException uoe) {
+            // IGNORE
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -96,15 +104,22 @@ public class InvocationTargetManager implements MockCreationListener {
     private <V> V currentElement(Map<Class<?>, V> classMap) {
         Class<?> activeTest = testInformation.getActiveTest();
         if (activeTest == null) {
-            throw new IllegalStateException("no test active");
+            return classMap.get(Object.class);
+        } else {
+            assertTestClassRegistered(activeTest);
+            return classMap.get(activeTest);
         }
-        assertTestClassRegistered(activeTest);
-        return classMap.get(activeTest);
+    }
+
+    private void setUpEmpyElementsForNotTestActive() {
+        activeAlternativesByTestClass.put(Object.class, Collections.emptySet());
+        activeMocksByTestClass.put(Object.class, Collections.emptyMap());
     }
 
     protected synchronized void finished(@Observes @TestEvent(TestState.FINISHING) ExtensionContext testContext) {
         currentMockSet().clear();
         currentAlternativesSet().clear();
+        setUpEmpyElementsForNotTestActive();
     }
 
 

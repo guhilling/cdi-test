@@ -14,6 +14,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 
 @Priority(10000)
 @TestScoped
@@ -52,6 +53,11 @@ public class TestScopedConfiguration implements ConfigSource {
     @Override
     public Map<String, String> getProperties() {
         return testProperties;
+    }
+
+    @Override
+    public Set<String> getPropertyNames() {
+        return testProperties.keySet();
     }
 
     @Override

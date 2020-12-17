@@ -295,7 +295,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <weld.version>3.1.5.Final</weld.version>
+                <weld.version>4.0.0.Final</weld.version>
             </properties>
         </profile>
         <profile>

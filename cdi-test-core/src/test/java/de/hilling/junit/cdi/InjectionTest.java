@@ -2,6 +2,9 @@ package de.hilling.junit.cdi;
 
 import de.hilling.junit.cdi.beans.ConstructorInjected;
 import de.hilling.junit.cdi.beans.Person;
+import de.hilling.junit.cdi.beans.ResourceConstructorInjected;
+import de.hilling.junit.cdi.beans.ResourceInjected;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -22,6 +25,11 @@ class InjectionTest {
     @Inject
     private ConstructorInjected constructorInjected;
 
+    @Inject
+    private ResourceInjected resourceInjected;
+
+    @Inject
+    private ResourceConstructorInjected resourceConstructorInjected;
 
     @Test
     void checkTestInformation() throws Exception {
@@ -34,6 +42,18 @@ class InjectionTest {
     void testInjection() {
         assertNotNull(person);
         assertNotNull(constructorInjected);
+    }
+
+    @Test
+    void testResourceInjection() {
+        assertNotNull(resourceInjected);
+        assertNotNull(resourceInjected.getRequest());
+    }
+
+    @Test
+    void testResourceConstructorInjection() {
+        assertNotNull(resourceConstructorInjected);
+        assertNotNull(resourceConstructorInjected.getRequest());
     }
 
     @Test

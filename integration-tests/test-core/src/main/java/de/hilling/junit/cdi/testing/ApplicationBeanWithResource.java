@@ -1,12 +1,12 @@
 package de.hilling.junit.cdi.testing;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 @ApplicationScoped
-public class ApplicationBean extends BaseBean {
+public class ApplicationBeanWithResource extends BaseBean {
 
-    @Inject
+    @Resource
     private OtherApplicationBean otherApplicationBean;
 
     @Override

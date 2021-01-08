@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.testing;
 
-public class BaseBean {
+public abstract class BaseBean {
 
     private String attribute;
 
@@ -11,4 +11,6 @@ public class BaseBean {
     public void setAttribute(String attribute) {
         this.attribute = attribute;
     }
+
+    public abstract OtherApplicationBean getOtherApplicationBean();
 }

@@ -14,4 +14,9 @@ public class RequestBean extends BaseBean {
         applicationBean.setAttribute(attribute);
         super.setAttribute(attribute);
     }
+
+    @Override
+    public OtherApplicationBean getOtherApplicationBean() {
+        return applicationBean.getOtherApplicationBean();
+    }
 }

@@ -17,7 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <deltaspike.version>1.9.5</deltaspike.version>
-        <weld.version>3.1.5.Final</weld.version>
+        <weld.version>3.1.7.Final</weld.version>
         <github.global.server>github</github.global.server>
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
         <thorntail.version>2.7.0.Final</thorntail.version>

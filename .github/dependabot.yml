@@ -1,0 +1,18 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: org.jboss.weld.se:weld-se-core
+    versions:
+    - ">= 4.a, < 5"
+  - dependency-name: org.jboss.weld:weld-core-bom
+    versions:
+    - ">= 4.a, < 5"
+  - dependency-name: org.jboss.weld:weld-core-impl
+    versions:
+    - ">= 4.a, < 5"

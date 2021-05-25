@@ -17,7 +17,7 @@
         <java.version>1.8</java.version>
         <deltaspike.version>1.9.5</deltaspike.version>
         <weld.version>3.1.5.Final</weld.version>
-        <hibernate.version>5.4.31.Final</hibernate.version>
+        <hibernate.version>5.4.32.Final</hibernate.version>
         <github.global.server>github</github.global.server>
         <junit.jupiter.version>5.7.2</junit.jupiter.version>
         <mockito.version>3.10.0</mockito.version>

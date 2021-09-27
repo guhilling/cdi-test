@@ -26,6 +26,6 @@ jobs:
       run: >
         mvn -B test --file pom.xml
         jacoco:report
-        org.sonarsource.scanner.maven:sonar
+        sonar:sonar
         -Dsonar.organization=guhilling-github
         -Dsonar.projectKey=de.hilling.junit.cdi:cdi-test

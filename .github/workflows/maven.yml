@@ -22,6 +22,7 @@ jobs:
       run: mvn -B package --file pom.xml -DskipTests
     - name: Maven Test JDK ${{ matrix.java }}
       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: >
         mvn -B test --file pom.xml

@@ -22,21 +22,19 @@ public class EclipselinkConnectionWrapperTest {
     @Inject
     private EclipselinkConnectionWrapper connectionWrapper;
 
-    private EntityManagerFactory entityManagerFactory;
-
     @BeforeEach
     public void setUp() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("cdi-test-unit-eclipselink");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("cdi-test-unit-eclipselink");
     }
 
     @Test
-    public void runWithHibernatePersistence() throws SQLException {
-        assertFalse(connectionWrapper.callDatabaseCleaner());
+    public void runWithHibernatePersistence() {
+        connectionWrapper.callDatabaseCleaner();
     }
 
     @Disabled
     @Test
-    public void runWithEclipseLinkPersistence() throws SQLException {
-        assertTrue(connectionWrapper.callDatabaseCleaner());
+    public void runWithEclipseLinkPersistence() {
+        connectionWrapper.callDatabaseCleaner();
     }
 }

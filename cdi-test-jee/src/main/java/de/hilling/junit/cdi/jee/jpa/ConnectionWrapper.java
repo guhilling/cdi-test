@@ -11,7 +11,6 @@ public interface ConnectionWrapper {
      * Execute database cleaner.
      *
      * @throws SQLException on any error during execution.
-     * @return true if cleaning was successful.
      */
-    boolean callDatabaseCleaner() throws SQLException;
+    void callDatabaseCleaner() throws SQLException;
 }

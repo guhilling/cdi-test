@@ -9,6 +9,7 @@ import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -35,6 +36,14 @@ public class EntityManagerTestProducer {
     @RequestScoped
     protected EntityManager provideTestEntityManager() {
         return entityManagerFactory.resolveEntityManager("cdi-test-unit");
+    }
+
+    @Produces
+    @GlobalTestImplementation
+    @RequestScoped
+    @SecondEntityManager
+    protected EntityManager provideTestEntityManagerB() {
+        return entityManagerFactory.resolveEntityManager("cdi-test-unit-b");
     }
 }
 

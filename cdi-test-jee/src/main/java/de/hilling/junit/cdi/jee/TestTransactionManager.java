@@ -42,9 +42,7 @@ public class TestTransactionManager {
     private void cleanDatabase() {
         try {
             for (ConnectionWrapper wrapper : connectionWrappers) {
-                if (wrapper.callDatabaseCleaner()) {
-                    break;
-                }
+                wrapper.callDatabaseCleaner();
             }
         } catch (SQLException e) {
             throw new CdiTestException("error cleaning db", e);

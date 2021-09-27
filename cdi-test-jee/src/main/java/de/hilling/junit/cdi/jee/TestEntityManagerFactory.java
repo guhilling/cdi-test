@@ -2,6 +2,8 @@ package de.hilling.junit.cdi.jee;
 
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
+import javax.enterprise.inject.spi.BeanManager;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -19,6 +21,9 @@ public class TestEntityManagerFactory {
 
     private Map<String, EntityManager> entityManagers = new HashMap<>();
 
+    @Inject
+    BeanManager beanManager;
+
     /**
      * Provide an {@link EntityManagerFactory} for the persistence unit with the given name.
      * The scope is global, i.e. static.
@@ -29,7 +34,9 @@ public class TestEntityManagerFactory {
     public EntityManagerFactory resolveEntityManagerFactory(String persistenceUnitName) {
         synchronized (this) {
             if(!FACTORIES.containsKey(persistenceUnitName)) {
-                FACTORIES.put(persistenceUnitName, Persistence.createEntityManagerFactory(persistenceUnitName));
+                Map<String, Object> props = new HashMap<>();
+                props.put("javax.persistence.bean.manager", beanManager);
+                FACTORIES.put(persistenceUnitName, Persistence.createEntityManagerFactory(persistenceUnitName, props));
             }
             return FACTORIES.get(persistenceUnitName);
         }

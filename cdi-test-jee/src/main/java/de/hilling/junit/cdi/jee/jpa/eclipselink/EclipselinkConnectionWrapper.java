@@ -9,46 +9,43 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import de.hilling.junit.cdi.jee.TestEntityManagerFactory;
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
 import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 
 @RequestScoped
 public class EclipselinkConnectionWrapper implements ConnectionWrapper {
 
+    @Inject
     private Instance<DatabaseCleaner> cleaner;
-    private EntityManager             entityManager;
-
-    /**
-     * make it proxyable.
-     */
-    public EclipselinkConnectionWrapper() {
-    }
 
     @Inject
-    public EclipselinkConnectionWrapper(EntityManager entityManager, Instance<DatabaseCleaner> cleaner) {
-        this.entityManager = entityManager;
-        this.cleaner = cleaner;
-    }
+    private TestEntityManagerFactory entityManagerFactory;
 
     @Override
-    public boolean callDatabaseCleaner() throws SQLException {
+    public void callDatabaseCleaner() {
+        entityManagerFactory.getEntityManagers().values().forEach(this::cleanEntityManager);
+    }
+
+    private void cleanEntityManager(EntityManager entityManager) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            Connection connection = (Connection) entityManager.unwrap(Connection.class);
+            Connection connection = entityManager.unwrap(Connection.class);
             if (connection == null) {
                 transaction.rollback();
-                return false;
             } else {
                 if (!cleaner.isUnsatisfied()) {
-                    cleaner.get().run(connection);
+                    try {
+                        cleaner.get().run(connection);
+                    } catch (SQLException e) {
+                        throw new RuntimeException("cleaning database failed", e);
+                    }
                 }
                 transaction.commit();
-                return true;
             }
         } catch (RuntimeException re) {
             transaction.rollback();
-            return false;
         }
     }
 }

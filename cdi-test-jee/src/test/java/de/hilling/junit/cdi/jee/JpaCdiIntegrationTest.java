@@ -6,13 +6,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 @ExtendWith(CdiTestJunitExtension.class)
 public class JpaCdiIntegrationTest {
     @Inject
     private EntityManager entityManager;
+
     @Inject
+    @SecondEntityManager
     private EntityManager entityManagerB;
 
     @Inject

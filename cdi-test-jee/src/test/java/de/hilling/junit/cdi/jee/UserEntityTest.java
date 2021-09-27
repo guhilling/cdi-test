@@ -1,6 +1,7 @@
 package de.hilling.junit.cdi.jee;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
@@ -13,9 +14,25 @@ public class UserEntityTest {
     @Inject
     private EntityManager entityManager;
 
+    @Inject
+    @SecondEntityManager
+    private EntityManager entityManagerB;
+
     @Test
     public void storeUserEntity() {
         UserEntity user = new UserEntity();
         entityManager.persist(user);
+    }
+
+    @Test
+    public void storeCustomerEntity() {
+        CustomerEntity customer = new CustomerEntity();
+        entityManagerB.persist(customer);
+    }
+
+    @Test
+    public void storeBothEntitiesToDifferentDBs() {
+        storeCustomerEntity();
+        storeUserEntity();
     }
 }

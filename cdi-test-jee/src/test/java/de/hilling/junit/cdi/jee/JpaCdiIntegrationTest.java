@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
 public class JpaCdiIntegrationTest {
     @Inject
     private EntityManager entityManager;
+    @Inject
+    private EntityManager entityManagerB;
 
     @Inject
     private UpdateCounter updateCounter;

@@ -8,7 +8,10 @@ public interface JEETestConfiguration {
     /**
      * Provide test persistence unit name.
      *
+     * @deprecated use naming convention instead.
+     *
      * @return name of the test persistence unit.
      */
-     String getTestPersistenceUnitName();
+    @Deprecated
+    String getTestPersistenceUnitName();
 }

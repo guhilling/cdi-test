@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(CdiTestJunitExtension.class)
-class RegistrationServiceUnitTest {
+public class RegistrationServiceUnitTest {
 
     static final String NAME = "Gunnar";
     @Inject

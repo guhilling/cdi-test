@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import de.hilling.junit.cdi.jee.TestEntityManagerFactory;
+import de.hilling.junit.cdi.jee.TestEntityResources;
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
 import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 
@@ -20,11 +20,11 @@ public class EclipselinkConnectionWrapper implements ConnectionWrapper {
     private Instance<DatabaseCleaner> cleaner;
 
     @Inject
-    private TestEntityManagerFactory entityManagerFactory;
+    private TestEntityResources entityManagers;
 
     @Override
-    public void callDatabaseCleaner() {
-        entityManagerFactory.getEntityManagers().values().forEach(this::cleanEntityManager);
+    public void callDatabaseCleaner(EntityManager entityManager) {
+        cleanEntityManager(entityManager);
     }
 
     private void cleanEntityManager(EntityManager entityManager) {

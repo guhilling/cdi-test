@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PreRemove;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,53 +16,45 @@ import java.util.Map;
  */
 @TestSuiteScoped
 public class TestEntityManagerFactory {
-    private static final Map<String, EntityManagerFactory> FACTORIES      = new HashMap<>();
-
-    private Map<String, EntityManager> entityManagers = new HashMap<>();
+    private Map<String, EntityManagerFactory> factories = new HashMap<>();
 
     @Inject
-    BeanManager beanManager;
+    private TestEntityResources testEntityResources;
+
+    @Inject
+    private BeanManager beanManager;
 
     /**
-     * Provide an {@link EntityManagerFactory} for the persistence unit with the given name.
-     * The scope is global, i.e. static.
+     * Provide an {@link EntityManagerFactory} for the persistence unit with the given name. The scope is global, i.e. static.
      *
      * @param persistenceUnitName name of persistence unit to resolve.
      * @return EntityManagerFactory for current test run.
      */
     public EntityManagerFactory resolveEntityManagerFactory(String persistenceUnitName) {
         synchronized (this) {
-            if(!FACTORIES.containsKey(persistenceUnitName)) {
+            if (!factories.containsKey(persistenceUnitName)) {
                 Map<String, Object> props = new HashMap<>();
                 props.put("javax.persistence.bean.manager", beanManager);
-                FACTORIES.put(persistenceUnitName, Persistence.createEntityManagerFactory(persistenceUnitName, props));
+                factories.put(persistenceUnitName, Persistence.createEntityManagerFactory(persistenceUnitName, props));
             }
-            return FACTORIES.get(persistenceUnitName);
+            return factories.get(persistenceUnitName);
         }
     }
 
     /**
-     * Provide an {@link EntityManager } for the persistence unit with the given name.
-     * The scope is per Request, i.e. the {@link EntityManager} will be closed after the request, typically after the test.
+     * Provide an {@link EntityManager } for the persistence unit with the given name. The scope is per Request, i.e. the {@link EntityManager} will
+     * be closed after the request, typically after the test.
      *
      * @param persistenceUnitName name of persistence unit to resolve.
      * @return EntityManager for current request.
      */
     public EntityManager resolveEntityManager(String persistenceUnitName) {
         synchronized (this) {
-            if(!entityManagers.containsKey(persistenceUnitName)) {
-                entityManagers.put(persistenceUnitName, resolveEntityManagerFactory(persistenceUnitName).createEntityManager());
+            if (!testEntityResources.getEntityManagers().containsKey(persistenceUnitName)) {
+                testEntityResources.putEntityManager(persistenceUnitName, resolveEntityManagerFactory(persistenceUnitName).createEntityManager());
             }
-            return entityManagers.get(persistenceUnitName);
+            return testEntityResources.getEntityManagers().get(persistenceUnitName);
         }
     }
 
-    public Map<String, EntityManager> getEntityManagers() {
-        return entityManagers;
-    }
-
-    @PreRemove
-    public void close() {
-        entityManagers.values().forEach(EntityManager::close);
-    }
 }

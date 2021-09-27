@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 
 import org.hibernate.internal.SessionImpl;
 
-import de.hilling.junit.cdi.jee.TestEntityManagerFactory;
+import de.hilling.junit.cdi.jee.TestEntityResources;
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
 import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 
@@ -18,11 +18,11 @@ public class HibernateConnectionWrapper implements ConnectionWrapper {
     private Instance<DatabaseCleaner> cleaner;
 
     @Inject
-    private TestEntityManagerFactory entityManagerFactory;
+    private TestEntityResources entityManagers;
 
     @Override
-    public void callDatabaseCleaner() {
-        entityManagerFactory.getEntityManagers().values().forEach(this::cleanEntityManager);
+    public void callDatabaseCleaner(EntityManager entityManager) {
+        cleanEntityManager(entityManager);
     }
 
     private void cleanEntityManager(EntityManager entityManager) {

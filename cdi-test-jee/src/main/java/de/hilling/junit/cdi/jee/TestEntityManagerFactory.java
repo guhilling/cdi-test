@@ -1,10 +1,7 @@
 package de.hilling.junit.cdi.jee;
 
-import de.hilling.junit.cdi.scope.TestScoped;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Disposes;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,7 +13,7 @@ import java.util.Map;
 /**
  * Producer for EntityManagers used in cdi-test unit tests.
  */
-@RequestScoped
+@TestSuiteScoped
 public class TestEntityManagerFactory {
     private static final Map<String, EntityManagerFactory> FACTORIES      = new HashMap<>();
 

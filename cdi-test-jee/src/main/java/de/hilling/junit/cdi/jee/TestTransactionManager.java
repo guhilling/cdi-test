@@ -12,25 +12,31 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 @TestSuiteScoped
 public class TestTransactionManager {
 
     @Inject
-    private Instance<ConnectionWrapper> connectionWrappers;
+    private Instance<ConnectionWrapper>    connectionWrappers;
+    private Map<String, EntityTransaction> transactions = new HashMap<>();
     @Inject
-    private EntityManager entityManager;
-    private EntityTransaction transaction;
-    @Inject
-    private Instance<JEETestConfiguration> configuration;
+    private TestEntityManagerFactory       testEntityManagerFactory;
 
     protected void beginTransaction(@Observes @TestEvent(TestState.STARTED) ExtensionContext description) {
-        if (configuration.isResolvable()) {
-            cleanDatabase();
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-        }
+        cleanDatabase();
+        testEntityManagerFactory.getEntityManagers().entrySet().forEach(this::startTransaction);
+    }
+
+    private void startTransaction(Map.Entry<String, EntityManager> stringEntityManagerEntry) {
+        String name = stringEntityManagerEntry.getKey();
+        EntityManager entityManager = stringEntityManagerEntry.getValue();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transactions.put(name, transaction);
+        transaction.begin();
     }
 
     private void cleanDatabase() {
@@ -46,13 +52,16 @@ public class TestTransactionManager {
     }
 
     protected void finishTransaction(@Observes @TestEvent(TestState.FINISHING) ExtensionContext description) {
-        if (configuration.isResolvable()) {
-            if (transaction.isActive()) {
-                if (transaction.getRollbackOnly()) {
-                    transaction.rollback();
-                } else {
-                    transaction.commit();
-                }
+        transactions.values().forEach(this::finishTransaction);
+        transactions.clear();
+    }
+
+    private void finishTransaction(EntityTransaction transaction) {
+        if (transaction.isActive()) {
+            if (transaction.getRollbackOnly()) {
+                transaction.rollback();
+            } else {
+                transaction.commit();
             }
         }
     }

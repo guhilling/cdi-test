@@ -3,7 +3,7 @@
 
     <groupId>de.hilling.junit.cdi</groupId>
     <artifactId>cdi-test-extensions</artifactId>
-    <version>2.2.1</version>
+    <version>2.2.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <url>https://github.com/guhilling/cdi-test-extensions</url>
@@ -29,7 +29,7 @@
         <connection>scm:git:https://github.com/guhilling/cdi-test-extensions.git</connection>
         <developerConnection>scm:git:https://github.com/guhilling/cdi-test-extensions.git</developerConnection>
         <url>https://github.com/guhilling/cdi-test-extensions.git</url>
-        <tag>cdi-test-extensions-2.2.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <licenses>

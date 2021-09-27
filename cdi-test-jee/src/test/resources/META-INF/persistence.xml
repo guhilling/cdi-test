@@ -17,7 +17,7 @@
     </persistence-unit>
     <persistence-unit name="cdi-test-unit-b">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>de.hilling.junit.cdi.jee.CustomerEntity</class>
+        <class>de.hilling.junit.cdi.jee.UserEntity</class>
         <properties>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
             <property name="hibernate.connection.url" value="jdbc:h2:mem:test-b"/>
@@ -39,7 +39,7 @@
     </persistence-unit>
     <persistence-unit name="cdi-test-unit-eclipselink-b">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>de.hilling.junit.cdi.jee.CustomerEntity</class>
+        <class>de.hilling.junit.cdi.jee.UserEntity</class>
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:h2:mem:test-b"/>
             <property name="eclipselink.jdbc.driver" value="org.h2.Driver"/>

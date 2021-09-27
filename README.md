@@ -1,5 +1,6 @@
 
-[![Build Status](https://travis-ci.org/guhilling/cdi-test-microprofile.svg?branch=master)](https://travis-ci.org/guhilling/cdi-test-microprofile)
+[![Build CDI Test Microprofile](https://github.com/guhilling/cdi-test-microprofile/actions/workflows/maven.yml/badge.svg)](https://github.com/guhilling/cdi-test-microprofile/actions/workflows/maven.yml)
+[![CodeQL](https://github.com/guhilling/cdi-test-microprofile/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/guhilling/cdi-test-microprofile/actions/workflows/codeql-analysis.yml)
 
 # microprofile config extension for cdi-test
 

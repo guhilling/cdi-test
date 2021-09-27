@@ -16,4 +16,4 @@ jobs:
     - name: Maven Build
       run: mvn -B package --file pom.xml -DskipTests
     - name: Maven Test
-      run: mvn -B test --file pom.xml jacoco:report sonar:sonar
+      run: mvn -B test --file pom.xml jacoco:report

@@ -21,4 +21,11 @@ jobs:
     - name: Maven Build JDK ${{ matrix.java }}
       run: mvn -B package --file pom.xml -DskipTests
     - name: Maven Test JDK ${{ matrix.java }}
-      run: mvn -B test --file pom.xml jacoco:report
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: >
+        mvn -B test --file pom.xml
+        jacoco:report
+        org.sonarsource.scanner.maven:sonar
+        -Dsonar.organization=guhilling-github
+        -Dsonar.projectKey=de.hilling.junit.cdi:cdi-test

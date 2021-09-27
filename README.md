@@ -1,5 +1,6 @@
 
-[![Build Status](https://travis-ci.org/guhilling/cdi-test-extensions.svg?branch=master)](https://travis-ci.org/guhilling/cdi-test-extensions)
+[![Build CDI Test Extensions](https://github.com/guhilling/cdi-test-extensions/actions/workflows/maven.yml/badge.svg)](https://github.com/guhilling/cdi-test-extensions/actions/workflows/maven.yml)
+[![CodeQL](https://github.com/guhilling/cdi-test-extensions/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/guhilling/cdi-test-extensions/actions/workflows/codeql-analysis.yml)
 
 # Extensions for cdi-test
 

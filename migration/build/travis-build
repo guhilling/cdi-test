@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [ "${COVERAGE:-false}" != false ]; then
+    echo building with coverage on sonarcloud
+    mvn verify jacoco:report sonar:sonar
+else
+    echo building without coverage
+    mvn verify
+fi

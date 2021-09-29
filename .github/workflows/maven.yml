@@ -21,7 +21,7 @@ jobs:
       with:
         distribution: adopt
         java-version: ${{ matrix.java }}
-        cache: 'maven'
+        cache: maven
     - name: Maven Build JDK ${{ matrix.java }}
       run: mvn -B package --file pom.xml -DskipTests
     - name: Maven Test JDK ${{ matrix.java }}

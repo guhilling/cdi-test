@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
+        <artifactId>cdi-test</artifactId>
         <groupId>de.hilling.junit.cdi</groupId>
-        <artifactId>cdi-test-microprofile-parent</artifactId>
-        <version>1.2.14-SNAPSHOT</version>
+        <version>3.0.1-SNAPSHOT</version>
     </parent>
+
+    <artifactId>cdi-test-microprofile</artifactId>
 
     <description>Support Microprofile Config in cdi-test</description>
     <name>CDI Test Microprofile Extension</name>
-    <artifactId>cdi-test-microprofile</artifactId>
-  <version>1.2.2</version>
 
     <dependencies>
         <dependency>
@@ -30,6 +29,11 @@
             <groupId>io.smallrye</groupId>
             <artifactId>smallrye-config</artifactId>
             <version>${smallrye.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>de.hilling.junit.cdi</groupId>

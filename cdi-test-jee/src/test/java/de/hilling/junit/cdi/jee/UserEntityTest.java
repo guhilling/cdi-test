@@ -35,4 +35,10 @@ public class UserEntityTest {
         storeCustomerEntity();
         storeUserEntity();
     }
+
+    @Test
+    public void rollbackTransaction() {
+        storeUserEntity();
+        entityManager.getTransaction().setRollbackOnly();
+    }
 }

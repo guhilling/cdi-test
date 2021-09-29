@@ -71,6 +71,7 @@
         <module>cdi-test-core</module>
         <module>cdi-test-api</module>
         <module>cdi-test-jee</module>
+        <module>integration-tests</module>
     </modules>
 
     <dependencyManagement>
@@ -99,6 +100,12 @@
                 <artifactId>hamcrest-core</artifactId>
                 <version>${hamcrest.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <!-- internal -->
+            <dependency>
+                <groupId>de.hilling.junit.cdi</groupId>
+                <artifactId>cdi-test-core</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <!-- utils -->
             <dependency>
@@ -163,6 +170,11 @@
                 <version>${weld.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>5.5.7.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>

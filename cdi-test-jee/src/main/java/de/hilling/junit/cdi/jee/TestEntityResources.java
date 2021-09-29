@@ -8,7 +8,6 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.PreRemove;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 

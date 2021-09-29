@@ -25,7 +25,7 @@
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
         <annotation-literal.version>1.0.11</annotation-literal.version>
         <!--suppress UnresolvedMavenProperty -->
-        <sonar.jacoco.reportPath>${maven.multiModuleProjectDirectory}/cdi-test-core/target/jacoco.exec</sonar.jacoco.reportPath>
+        <jacoco.reportPath>${maven.multiModuleProjectDirectory}/cdi-test-core/target/jacoco.exec</jacoco.reportPath>
         <!--suppress UnresolvedMavenProperty -->
         <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/cdi-test-core/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -258,7 +258,7 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.7</version>
                 <configuration>
-                    <destFile>${sonar.jacoco.reportPath}</destFile>
+                    <destFile>${jacoco.reportPath}</destFile>
                     <append>true</append>
                 </configuration>
                 <executions>

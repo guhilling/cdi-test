@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import javax.inject.Inject;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
@@ -24,12 +25,6 @@ class MockProxyTest {
         Person person = new Person();
         sampleService.storePerson(person);
         verify(backendService).storePerson(person);
-    }
-
-    @Test
-    void createPersonWithRealBackend() {
-        Person person = new Person();
-        sampleService.storePerson(person);
     }
 
 }

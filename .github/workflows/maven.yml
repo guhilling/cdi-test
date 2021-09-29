@@ -37,3 +37,4 @@ jobs:
         -Dsonar.host.url=https://sonarcloud.io
         -Dsonar.organization=guhilling-github
         -Dsonar.projectKey=de.hilling.junit.cdi:cdi-test
+        -Dsonar.coverage.jacoco.xmlReportPaths=cdi-test-core/target/site/jacoco/jacoco.xml

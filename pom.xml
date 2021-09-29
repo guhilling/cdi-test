@@ -24,6 +24,7 @@
         <hamcrest.version>2.2</hamcrest.version>
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
         <annotation-literal.version>1.0.11</annotation-literal.version>
+        <!--suppress UnresolvedMavenProperty -->
         <sonar.jacoco.reportPath>${maven.multiModuleProjectDirectory}/cdi-test-core/target/jacoco.exec</sonar.jacoco.reportPath>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>

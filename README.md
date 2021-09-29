@@ -11,7 +11,6 @@
 
 cdi-test is a junit-addon for easy and quick testing of cdi projects.
 
-cdi-test is available as a JUnit 4 TestRunner in the 1.x Versions.
 Starting with 2.0 cdi-test is used as an Extension with JUnit 5.
 
 cdi-test is available under the [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -23,9 +22,10 @@ cdi-test is available under the [The Apache Software License, Version 2.0](http:
 * Well tested.
 * Supports mocks and test alternatives for CDI beans. These can be activated per test class.
 * Support for Eclipse Microprofile Config via https://github.com/guhilling/cdi-test-microprofile.
-* Support for some EJB features to test JEE application components:
+* Support for some EJB features to test JEE/Jakarta application components:
     * Inject EntityManager via ``@Inject`` or ``@PersistenceContext``
-    * Injection of Stateless Beans
+    * Injection of ``@Stateful`` and ``@Stateless`` ejbs.
+    * Tested in real projects ;-)
 
 ## Usage
 

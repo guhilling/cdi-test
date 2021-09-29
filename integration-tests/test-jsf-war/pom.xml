@@ -10,15 +10,8 @@
     <artifactId>test-jsf-war</artifactId>
     <packaging>war</packaging>
 
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <distribution>repo</distribution>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-        </license>
-    </licenses>
-
     <properties>
+        <sonar.skip>true</sonar.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
         <version.jboss.bom>8.2.2.Final</version.jboss.bom>

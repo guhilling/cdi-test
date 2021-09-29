@@ -19,7 +19,8 @@ class ActivatePartialAlternativeForRegularBeanTest {
 
     @Test
     void callTestActivatedService() {
-        Assertions.assertThrows(IllegalStateException.class, () -> sampleService.storePerson(new Person()));
+        Person person = new Person();
+        Assertions.assertThrows(IllegalStateException.class, () -> sampleService.storePerson(person));
     }
 
 }

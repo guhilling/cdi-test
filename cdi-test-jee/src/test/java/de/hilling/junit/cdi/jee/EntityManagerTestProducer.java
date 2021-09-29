@@ -16,7 +16,7 @@ import de.hilling.junit.cdi.scope.TestSuiteScoped;
 @TestSuiteScoped
 public class EntityManagerTestProducer {
     @Inject
-    private TestEntityManagerFactory entityManagerFactory;
+    private EntityManagerResourcesProvider entityManagerFactory;
 
     @Produces
     @GlobalTestImplementation

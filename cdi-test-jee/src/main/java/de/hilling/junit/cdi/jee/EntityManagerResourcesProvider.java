@@ -12,10 +12,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Producer for EntityManagers used in cdi-test unit tests.
+ * Provider/Factory for {@link EntityManager}s used in cdi-test unit tests.
+ * </br>
+ * Lookup you resources ({@link EntityManager} and {@link EntityManagerFactory} using this class.
+ * Transactions and cleanup will be handled automatically when unit tests are started and finished.
+ * </br>
+ * See examples in the integration-tests/test-jee package and in the unit tests for this module.
  */
 @TestSuiteScoped
-public class TestEntityManagerFactory {
+public class EntityManagerResourcesProvider {
     private Map<String, EntityManagerFactory> factories = new HashMap<>();
 
     @Inject

@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class JpaCdiIntegrationTest {
+class JpaCdiIntegrationTest {
     @Inject
     private EntityManager entityManager;
 
@@ -22,14 +21,21 @@ public class JpaCdiIntegrationTest {
     private UpdateCounter updateCounter;
 
     @Test
-    public void storeUserEntity() {
+    void storeUserEntity() {
         UserEntity user = new UserEntity();
         entityManager.persist(user);
         Assertions.assertEquals(1, updateCounter.get());
     }
 
     @Test
-    public void storeAndDeleteUserEntity() {
+    void storeCustomerEntity() {
+        CustomerEntity customer = new CustomerEntity();
+        entityManagerB.persist(customer);
+        Assertions.assertEquals(1, updateCounter.get());
+    }
+
+    @Test
+    void storeAndDeleteUserEntity() {
         UserEntity user = new UserEntity();
         entityManager.persist(user);
         entityManager.remove(user);

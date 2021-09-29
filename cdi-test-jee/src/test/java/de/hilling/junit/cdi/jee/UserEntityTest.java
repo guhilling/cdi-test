@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class UserEntityTest {
+class UserEntityTest {
     @Inject
     private EntityManager entityManager;
 
@@ -19,25 +19,25 @@ public class UserEntityTest {
     private EntityManager entityManagerB;
 
     @Test
-    public void storeUserEntity() {
+    void storeUserEntity() {
         UserEntity user = new UserEntity();
         entityManager.persist(user);
     }
 
     @Test
-    public void storeCustomerEntity() {
+    void storeCustomerEntity() {
         CustomerEntity customer = new CustomerEntity();
         entityManagerB.persist(customer);
     }
 
     @Test
-    public void storeBothEntitiesToDifferentDBs() {
+    void storeBothEntitiesToDifferentDBs() {
         storeCustomerEntity();
         storeUserEntity();
     }
 
     @Test
-    public void rollbackTransaction() {
+    void rollbackTransaction() {
         storeUserEntity();
         entityManager.getTransaction().setRollbackOnly();
     }

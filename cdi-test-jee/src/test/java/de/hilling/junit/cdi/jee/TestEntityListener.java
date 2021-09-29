@@ -19,13 +19,7 @@ public class TestEntityListener {
     @PrePersist
     @PreUpdate
     @PreRemove
-    private void beforeAnyUpdate(UserEntity user) {
-        LOG.info("got entity {}", user);
+    private void beforeAnyUpdate(Object o) {
         updateCounter.inc();
-        if (user.getId() == 0) {
-            LOG.info("[USER AUDIT] About to add a user");
-        } else {
-            LOG.info("[USER AUDIT] About to update/delete user: " + user.getId());
-        }
     }
 }

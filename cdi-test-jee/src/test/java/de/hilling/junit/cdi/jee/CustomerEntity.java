@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@EntityListeners(TestEntityListener.class)
 public class CustomerEntity {
 
     public long getId() {

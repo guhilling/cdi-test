@@ -28,31 +28,29 @@ public class AnnotationReplacementBuilder<T> {
         if (ReflectionsUtils.isPossibleCdiBean(delegate.getJavaClass())) {
             final AnnotatedTypeBuilder<T> typeBuilder = new AnnotatedTypeBuilder<>();
             typeBuilder.readFromType(delegate);
-            for (Map.Entry<Class<? extends Annotation>, Annotation> replacement : replacementMap.entrySet()) {
-                final Class<? extends Annotation> toReplace = replacement.getKey();
-                Annotation replacementValue = replacement.getValue();
-                if (delegate.isAnnotationPresent(toReplace)) {
-                    typeBuilder.addToClass(replacementValue);
-                }
-                for (AnnotatedField<? super T> field : delegate.getFields()) {
-                    if(field.isAnnotationPresent(toReplace)) {
-                        typeBuilder.addToField(field, replacementValue);
-                    }
-                }
-                for (AnnotatedMethod<? super T> method : delegate.getMethods()) {
-                    if(method.isAnnotationPresent(toReplace)) {
-                        typeBuilder.addToMethod(method, replacementValue);
-                    }
-                }
-                for (AnnotatedConstructor<T> constructor : delegate.getConstructors()) {
-                    if(constructor.isAnnotationPresent(toReplace)) {
-                        typeBuilder.addToConstructor(constructor, replacementValue);
-                    }
-                }
-            }
+            addAnnotations(typeBuilder);
             return typeBuilder.create();
         } else {
             return delegate;
+        }
+    }
+
+    private void addAnnotations(AnnotatedTypeBuilder<T> typeBuilder) {
+        for (Map.Entry<Class<? extends Annotation>, Annotation> replacement : replacementMap.entrySet()) {
+            final Class<? extends Annotation> toReplace = replacement.getKey();
+            Annotation replacementValue = replacement.getValue();
+            if (delegate.isAnnotationPresent(toReplace)) {
+                typeBuilder.addToClass(replacementValue);
+            }
+            delegate.getFields().stream()
+                    .filter(f -> f.isAnnotationPresent(toReplace))
+                    .forEach(f -> typeBuilder.addToField(f, replacementValue));
+            delegate.getMethods().stream()
+                    .filter(m -> m.isAnnotationPresent(toReplace))
+                    .forEach(m -> typeBuilder.addToMethod(m, replacementValue));
+            delegate.getConstructors().stream()
+                    .filter(c -> c.isAnnotationPresent(toReplace))
+                    .forEach(c -> typeBuilder.addToConstructor(c, replacementValue));
         }
     }
 }

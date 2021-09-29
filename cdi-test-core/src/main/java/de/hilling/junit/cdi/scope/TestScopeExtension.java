@@ -29,7 +29,7 @@ public class TestScopeExtension implements Extension, Serializable {
     private static final    long                         serialVersionUID = 1L;
     private static final    Logger                       LOG              = Logger.getLogger(
     TestScopeExtension.class.getCanonicalName());
-    private final transient Map<Class<?>, AnnotatedType> decoratedTypes   = new HashMap<>();
+    private final transient Map<Class<?>, AnnotatedType<?>> decoratedTypes   = new HashMap<>();
 
     /**
      * Add contexts after bean discovery.
@@ -41,7 +41,7 @@ public class TestScopeExtension implements Extension, Serializable {
         afterBeanDiscovery.addContext(new TestContext());
     }
 
-    AnnotatedType decoratedTypeFor(Class<?> clazz) {
+    AnnotatedType<?> decoratedTypeFor(Class<?> clazz) {
         return decoratedTypes.get(clazz);
     }
 
@@ -68,7 +68,7 @@ public class TestScopeExtension implements Extension, Serializable {
         AnnotatedType<X> type = pat.getAnnotatedType();
         final Class<X> javaClass = type.getJavaClass();
         if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
-            new ActivatableAlternativeBuilder<X>(pat).invoke();
+            new ActivatableAlternativeBuilder<>(pat).invoke();
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
             AnnotationUtils.addClassAnnotation(pat, ImmutableReplaceable.builder().build());
         }

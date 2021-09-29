@@ -82,7 +82,7 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
     }
 
     private boolean isTestActivatable(Field field) {
-        Class type = field.getType();
+        Class<?> type = field.getType();
         return type.isAnnotationPresent(ActivatableTestImplementation.class);
     }
 

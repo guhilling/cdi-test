@@ -1,9 +1,11 @@
 package de.hilling.junit.cdi.jee.jpa.eclipselink;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,11 +26,15 @@ class EclipselinkConnectionWrapperTest {
 
     @Test
     void runWithHibernatePersistence() {
-        connectionWrapper.callDatabaseCleaner(entityManagerFactory.createEntityManager());
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Assertions.assertNotNull(entityManager);
+        connectionWrapper.callDatabaseCleaner(entityManager);
     }
 
     @Test
     void runWithEclipseLinkPersistence() {
-        connectionWrapper.callDatabaseCleaner(entityManagerFactory.createEntityManager());
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Assertions.assertNotNull(entityManager);
+        connectionWrapper.callDatabaseCleaner(entityManager);
     }
 }

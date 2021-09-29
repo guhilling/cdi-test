@@ -4,9 +4,6 @@ import java.lang.annotation.Annotation;
 import java.util.Map;
 
 import javax.enterprise.inject.Alternative;
-import javax.enterprise.inject.spi.AnnotatedConstructor;
-import javax.enterprise.inject.spi.AnnotatedField;
-import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
 
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;

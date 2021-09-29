@@ -1,5 +1,6 @@
 package de.hilling.junit.cdi.scope;
 
+import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
@@ -26,22 +27,19 @@ public class InvocationTargetManager implements MockCreationListener {
     private final Map<Class<?>, Map<Class<?>, Object>> activeMocksByTestClass = new HashMap<>();
     private final Map<Class<?>, Set<Class<?>>> activeAlternativesByTestClass = new HashMap<>();
 
-    {
-        setUpEmpyElementsForNotTestActive();
-    }
-
     @Inject
     public InvocationTargetManager( BeanManager beanManager, TestInformation testInformation) {
+        setUpEmptyElementsForNotTestActive();
         this.beanManager = beanManager;
         this.testInformation = testInformation;
     }
 
     @Override
     public void onMockCreated(Object mock, MockCreationSettings settings) {
-        final Class typeToMock = settings.getTypeToMock();
+        final Class<?> typeToMock = settings.getTypeToMock();
         final Map<Class<?>, Object> mocks = currentMockSet();
         if (mocks.containsKey(typeToMock)) {
-            throw new RuntimeException("mock " + typeToMock + " already in set");
+            throw new CdiTestException("mock " + typeToMock + " already in set");
         }
         try {
             mocks.put(typeToMock, mock);
@@ -78,7 +76,7 @@ public class InvocationTargetManager implements MockCreationListener {
 
     public Class<?> alternativeFor(Class<?> javaClass) {
         for (Class<?> alternative : currentAlternativesSet()) {
-            AnnotatedType type = beanManager.getExtension(TestScopeExtension.class)
+            AnnotatedType<?> type = beanManager.getExtension(TestScopeExtension.class)
                                             .decoratedTypeFor(alternative);
             if (type != null) {
                 ActivatableTestImplementation activatableTestImplementation = type.getAnnotation(
@@ -111,7 +109,7 @@ public class InvocationTargetManager implements MockCreationListener {
         }
     }
 
-    private void setUpEmpyElementsForNotTestActive() {
+    private void setUpEmptyElementsForNotTestActive() {
         activeAlternativesByTestClass.put(Object.class, Collections.emptySet());
         activeMocksByTestClass.put(Object.class, Collections.emptyMap());
     }
@@ -119,7 +117,7 @@ public class InvocationTargetManager implements MockCreationListener {
     protected synchronized void finished(@Observes @TestEvent(TestState.FINISHING) ExtensionContext testContext) {
         currentMockSet().clear();
         currentAlternativesSet().clear();
-        setUpEmpyElementsForNotTestActive();
+        setUpEmptyElementsForNotTestActive();
     }
 
 
@@ -128,9 +126,7 @@ public class InvocationTargetManager implements MockCreationListener {
     }
 
     private void assertTestClassRegistered(Class<?> testToActivate) {
-        if (!activeMocksByTestClass.containsKey(testToActivate)) {
-            activeMocksByTestClass.put(testToActivate, new HashMap<>());
-            activeAlternativesByTestClass.put(testToActivate, new HashSet<>());
-        }
+        activeMocksByTestClass.computeIfAbsent(testToActivate, k -> new HashMap<>());
+        activeAlternativesByTestClass.computeIfAbsent(testToActivate, k -> new HashSet<>());
     }
 }

@@ -22,9 +22,6 @@ public class EclipselinkConnectionWrapper implements ConnectionWrapper {
     @Inject
     private Instance<DatabaseCleaner> cleaner;
 
-    @Inject
-    private TestEntityResources entityManagers;
-
     @Override
     public void callDatabaseCleaner(EntityManager entityManager) {
         cleanEntityManager(entityManager);

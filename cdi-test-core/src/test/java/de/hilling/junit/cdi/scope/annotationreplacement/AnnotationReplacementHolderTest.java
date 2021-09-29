@@ -12,18 +12,18 @@ import javax.enterprise.context.SessionScoped;
 
 import org.junit.jupiter.api.Test;
 
-public class AnnotationReplacementHolderTest {
+class AnnotationReplacementHolderTest {
 
     private AnnotationReplacementHolder holder;
 
     @Test
-    public void ignoreNoReplacementFound() {
+    void ignoreNoReplacementFound() {
         createHolder("no such resource");
         assertEquals(0, holder.getReplacementMap().size());
     }
 
     @Test
-    public void simpleReplacementWithComment() {
+    void simpleReplacementWithComment() {
         createHolder("test-annotations.properties");
         Map<Class<? extends Annotation>, Annotation> replacementMap = holder.getReplacementMap();
         assertEquals(1, replacementMap.size());
@@ -34,12 +34,12 @@ public class AnnotationReplacementHolderTest {
     }
 
     @Test
-    public void noSuchClass() {
+    void noSuchClass() {
         assertThrows(RuntimeException.class, () -> createHolder("test-nosuchclass.properties"));
     }
 
     @Test
-    public void classNotAnAnnotation() {
+    void classNotAnAnnotation() {
         assertThrows(RuntimeException.class, () -> createHolder("test-noannotation.properties"));
     }
 

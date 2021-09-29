@@ -21,7 +21,7 @@ import de.hilling.junit.cdi.scopedbeans.ScopedBean;
 import de.hilling.junit.cdi.scopedbeans.SessionScopedBean;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class ContextControlTest {
+class ContextControlTest {
 
     @Inject
     private RequestScopedBean     requestScopedBean;
@@ -33,27 +33,27 @@ public class ContextControlTest {
     private ContextControl        contextControl;
 
     @Test
-    public void restartRequestStopAll() {
+    void restartRequestStopAll() {
         runTestStopAll(requestScopedBean, RequestScoped.class);
     }
 
     @Test
-    public void restartSessionStopAll() {
+    void restartSessionStopAll() {
         runTestStopAll(sessionScopedBean, SessionScoped.class);
     }
 
     @Test
-    public void restartApplicationStopAll() {
+    void restartApplicationStopAll() {
         runTestStopAll(applicationScopedBean, ApplicationScoped.class);
     }
 
     @Test
-    public void restartRequest() {
+    void restartRequest() {
         runTest(requestScopedBean, RequestScoped.class);
     }
 
     @Test
-    public void restartApplication() {
+    void restartApplication() {
         runTest(applicationScopedBean, ApplicationScoped.class);
     }
 

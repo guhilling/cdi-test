@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class InvocationTargetManagerTest {
+class InvocationTargetManagerTest {
 
     private InvocationTargetManager manager;
 

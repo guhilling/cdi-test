@@ -10,47 +10,47 @@ import org.mockito.Mockito;
 
 import de.hilling.junit.cdi.beans.StrangeName$Object;
 
-public class ReflectionsUtilsTest {
+class ReflectionsUtilsTest {
 
     @Test
-    public void findIdenticalClass() {
+    void findIdenticalClass() {
         assertEquals(String.class, ReflectionsUtils.getOriginalClass(String.class));
     }
 
     @Test
-    public void findOriginalClass() {
+    void findOriginalClass() {
         ReflectionsUtilsTest utilsTestMock = Mockito.mock(ReflectionsUtilsTest.class);
         assertEquals(ReflectionsUtilsTest.class, ReflectionsUtils.getOriginalClass(utilsTestMock.getClass()));
     }
 
     @Test
-    public void failOnStrangeClassName() {
+    void failOnStrangeClassName() {
         assertThrows(RuntimeException.class, () -> ReflectionsUtils.getOriginalClass(StrangeName$Object.class));
     }
 
     @Test
-    public void dontProxySystemClasses() {
+    void dontProxySystemClasses() {
         assertFalse(ReflectionsUtils.shouldProxyCdiType(Integer.class));
         assertFalse(ReflectionsUtils.shouldProxyCdiType(CdiContainer.class));
     }
 
     @Test
-    public void dontProxyPrivateConstructor() {
+    void dontProxyPrivateConstructor() {
         assertFalse(ReflectionsUtils.shouldProxyCdiType(ReflectionsUtils.class));
     }
 
     @Test
-    public void dontProxyProtectedConstructor() {
+    void dontProxyProtectedConstructor() {
         assertFalse(ReflectionsUtils.hasPublicConstructor(TestClassNoPublicConstructor.class));
     }
 
     @Test
-    public void dontProxyPrimitives() {
+    void dontProxyPrimitives() {
         assertFalse(ReflectionsUtils.shouldProxyCdiType(Integer.TYPE));
     }
 
     @Test
-    public void dontProxyNonProxyableClasses() {
+    void dontProxyNonProxyableClasses() {
         assertFalse(ReflectionsUtils.shouldProxyCdiType(FinalClass.class));
         assertFalse(ReflectionsUtils.shouldProxyCdiType(ClassWithoutDefaultConstructor.class));
         assertFalse(ReflectionsUtils.shouldProxyCdiType(ClassWithProtectedDefaultConstructor.class));

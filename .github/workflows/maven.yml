@@ -28,6 +28,7 @@ jobs:
         mvn -B test --file pom.xml
         jacoco:report
         sonar:sonar
+        -Dsonar.sources=cdi-test-api/src/main/java,cdi-test-core/src/main/java,cdi-test-jee/src/main/java
         -Dsonar.host.url=https://sonarcloud.io
         -Dsonar.organization=guhilling-github
         -Dsonar.projectKey=de.hilling.junit.cdi:cdi-test

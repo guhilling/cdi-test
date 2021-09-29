@@ -10,7 +10,6 @@ jobs:
       fail-fast: false
       matrix:
         java: [ '11' ]
-        extraargs: ""
         include:
           - java: 16
             extraargs: >

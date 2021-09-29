@@ -14,9 +14,6 @@ import java.util.Arrays;
 @BypassTestInterceptor
 public class TestConfigListener {
 
-    private ExtensionContext startingEvent;
-    private ExtensionContext finishingEvent;
-
     @Inject
     private TestPropertiesHolder testProperties;
 
@@ -27,20 +24,10 @@ public class TestConfigListener {
         testEvent.getTestMethod()
                  .ifPresent(testMethod -> Arrays.stream(testMethod.getAnnotationsByType(ConfigPropertyValue.class))
                                                 .forEach(this::applyPropertyValue));
-        startingEvent = testEvent;
     }
 
     private void applyPropertyValue(ConfigPropertyValue configPropertyValue) {
         testProperties.put(configPropertyValue.name(), configPropertyValue.value());
-    }
-
-    protected void observeFinishing(@Observes @TestEvent(TestState.FINISHING) ExtensionContext testEvent) {
-        finishingEvent = testEvent;
-    }
-
-    protected void observeFinished(@Observes @TestEvent(TestState.FINISHED) ExtensionContext testEvent) {
-        finishingEvent = null;
-        startingEvent = null;
     }
 
 }

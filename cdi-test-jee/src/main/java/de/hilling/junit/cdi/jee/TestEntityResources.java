@@ -17,6 +17,9 @@ import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.TestScoped;
 import de.hilling.junit.cdi.scope.TestState;
 
+/**
+ * Track created {@link EntityManager} and {@link EntityTransaction} and dispose of them after Tests.
+ */
 @TestScoped
 public class TestEntityResources {
 
@@ -26,14 +29,26 @@ public class TestEntityResources {
     @Inject
     private Instance<ConnectionWrapper> connectionWrappers;
 
-    public Map<String, EntityManager> getEntityManagers() {
-        return entityManagers;
+    /**
+     * @param name persistence unit name.
+     * @return true if {@link EntityManager} for given persistence unit is already available.
+     */
+    public boolean hasEntityManager(String name) {
+        return entityManagers.containsKey(name);
     }
 
-    public Map<String, EntityTransaction> getTransactions() {
-        return transactions;
+    /**
+     * @param name persistence unit name.
+     * @return {@link EntityManager} for given persistence unit.
+     */
+    public EntityManager getEntityManager(String name) {
+        return entityManagers.get(name);
     }
 
+    /**
+     * Cleanup when test finished.
+     * @param description only used for triggering observer.
+     */
     protected void finishResources(@Observes @TestEvent(TestState.FINISHING) ExtensionContext description) {
         transactions.values().forEach(this::finishTransaction);
         transactions.clear();
@@ -51,12 +66,22 @@ public class TestEntityResources {
         }
     }
 
+    /**
+     * Add new {@link EntityManager} for given unit name.
+     * @param name unit name.
+     * @param entityManager manager.
+     */
     public void putEntityManager(String name, EntityManager entityManager) {
         entityManagers.put(name, entityManager);
         connectionWrappers.stream().forEach(cw -> cw.callDatabaseCleaner(entityManager));
         startTransaction(name, entityManager);
     }
 
+    /**
+     * Begin {@link EntityTransaction} for {@link EntityManager} with given unit name.
+     * @param name unit name.
+     * @param entityManager manager.
+     */
     private void startTransaction(String name, EntityManager entityManager) {
         EntityTransaction transaction = entityManager.getTransaction();
         transactions.put(name, transaction);

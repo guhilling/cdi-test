@@ -13,6 +13,9 @@ import de.hilling.junit.cdi.jee.TestEntityResources;
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
 import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 
+/**
+ * Wrapper for Eclipse Link to call {@link DatabaseCleaner}.
+ */
 @RequestScoped
 public class EclipselinkConnectionWrapper implements ConnectionWrapper {
 

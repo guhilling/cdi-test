@@ -50,10 +50,10 @@ public class TestEntityManagerFactory {
      */
     public EntityManager resolveEntityManager(String persistenceUnitName) {
         synchronized (this) {
-            if (!testEntityResources.getEntityManagers().containsKey(persistenceUnitName)) {
+            if (!testEntityResources.hasEntityManager(persistenceUnitName)) {
                 testEntityResources.putEntityManager(persistenceUnitName, resolveEntityManagerFactory(persistenceUnitName).createEntityManager());
             }
-            return testEntityResources.getEntityManagers().get(persistenceUnitName);
+            return testEntityResources.getEntityManager(persistenceUnitName);
         }
     }
 

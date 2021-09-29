@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class UserEntityTest {
+class UserEntityTest {
     @Inject
     private EntityManager entityManager;
     @Inject
@@ -20,19 +20,19 @@ public class UserEntityTest {
     private InvocationCounter counter;
 
     @Test
-    public void storeUserEntityWithNullAttributes() {
+    void storeUserEntityWithNullAttributes() {
         UserEntity userEntity = new UserEntity();
         Assertions.assertThrows(PersistenceException.class, () -> entityManager.persist(userEntity));
     }
 
     @Test
-    public void storeUserEntity() {
+    void storeUserEntity() {
         entityManager.persist(testUtils.createGunnar());
         Assertions.assertEquals(1, counter.get());
     }
 
     @Test
-    public void storeAndRemoveUserEntity() {
+    void storeAndRemoveUserEntity() {
         UserEntity gunnar = testUtils.createGunnar();
         entityManager.persist(gunnar);
         entityManager.remove(gunnar);

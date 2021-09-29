@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -21,13 +22,13 @@ class UserEntityTest {
     @Test
     void storeUserEntity() {
         UserEntity user = new UserEntity();
-        entityManager.persist(user);
+        Assertions.assertNotSame(user, entityManager.merge(user));
     }
 
     @Test
     void storeCustomerEntity() {
         CustomerEntity customer = new CustomerEntity();
-        entityManagerB.persist(customer);
+        Assertions.assertNotSame(customer, entityManagerB.merge(customer));
     }
 
     @Test

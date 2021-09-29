@@ -1,6 +1,10 @@
 package de.hilling.junit.cdi.scope;
 
+import java.util.UUID;
+
 import de.hilling.junit.cdi.CdiTestJunitExtension;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
@@ -18,10 +22,12 @@ public abstract class AbstractTestScopesTest {
     @Inject
     private SuiteScopedBean suiteScopedBean;
 
-    @Test
+    @BeforeEach
     public void showInfo() {
-        LOG.info("case: " + caseScopedBean.getIdentifier());
-        LOG.info("suite: " + suiteScopedBean.getIdentifier());
+        UUID identifierCaseScopedBean = caseScopedBean.getIdentifier();
+        LOG.info("case: " + identifierCaseScopedBean);
+        UUID identifierSuiteScopedBean = suiteScopedBean.getIdentifier();
+        LOG.info("suite: " + identifierSuiteScopedBean);
     }
 
 }

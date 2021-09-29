@@ -26,6 +26,8 @@
         <annotation-literal.version>1.0.11</annotation-literal.version>
         <!--suppress UnresolvedMavenProperty -->
         <sonar.jacoco.reportPath>${maven.multiModuleProjectDirectory}/cdi-test-core/target/jacoco.exec</sonar.jacoco.reportPath>
+        <!--suppress UnresolvedMavenProperty -->
+        <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/cdi-test-core/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
@@ -264,6 +266,12 @@
                         <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>

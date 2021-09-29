@@ -1,7 +1,5 @@
 package de.hilling.junit.cdi.jee.jpa;
 
-import java.sql.SQLException;
-
 import javax.persistence.EntityManager;
 
 /**

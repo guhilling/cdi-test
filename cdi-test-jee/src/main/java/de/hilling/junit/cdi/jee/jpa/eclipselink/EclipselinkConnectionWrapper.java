@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import de.hilling.junit.cdi.jee.TestEntityResources;
+import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
 import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 
@@ -35,17 +35,21 @@ public class EclipselinkConnectionWrapper implements ConnectionWrapper {
             if (connection == null) {
                 transaction.rollback();
             } else {
-                if (!cleaner.isUnsatisfied()) {
-                    try {
-                        cleaner.get().run(connection);
-                    } catch (SQLException e) {
-                        throw new RuntimeException("cleaning database failed", e);
-                    }
-                }
+                cleanUpDatabase(connection);
                 transaction.commit();
             }
         } catch (RuntimeException re) {
             transaction.rollback();
+        }
+    }
+
+    private void cleanUpDatabase(Connection connection) {
+        if (!cleaner.isUnsatisfied()) {
+            try {
+                cleaner.get().run(connection);
+            } catch (SQLException e) {
+                throw new CdiTestException("cleaning database failed", e);
+            }
         }
     }
 }

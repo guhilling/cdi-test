@@ -9,7 +9,7 @@ import java.util.Map;
 
 @BypassTestInterceptor
 public class CustomScopeContextHolder implements ScopeContextHolder {
-    private Map<Class<?>, CustomScopeInstance<?>> beans;
+    private final Map<Class<?>, CustomScopeInstance<?>> beans;
 
     public CustomScopeContextHolder() {
         beans = Collections.synchronizedMap(new HashMap<>());

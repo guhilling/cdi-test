@@ -1,5 +1,8 @@
 package de.hilling.junit.cdi;
 
+import java.util.logging.LogManager;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,13 +18,17 @@ class LoggerConfiguratorTest {
     @Test
     void setUpDefaultLogging() {
         LoggerConfigurator.configure();
+        LogManager logManager = LogManager.getLogManager();
+        Assertions.assertEquals("ALL", logManager.getProperty("level"));
     }
 
     @Test
     void setUpIllegalLogging() {
         System.setProperty(LoggerConfigurator.LOGCONFIG_KEY,
-                "/no_such_resource");
+                "/log4j-test.properties");
         LoggerConfigurator.configure();
+        LogManager logManager = LogManager.getLogManager();
+        Assertions.assertEquals("DEBUG", logManager.getProperty("level"));
     }
 
 }

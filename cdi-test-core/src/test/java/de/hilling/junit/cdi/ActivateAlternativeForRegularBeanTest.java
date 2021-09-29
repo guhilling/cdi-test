@@ -27,8 +27,9 @@ class ActivateAlternativeForRegularBeanTest {
     @Test
     @BackendServiceException(RuntimeException.class)
     void callTestActivatedServiceWithBackendException() {
+        Person person = new Person();
         Assertions.assertThrows(RuntimeException.class, () -> {
-            sampleService.storePerson(new Person());
+            sampleService.storePerson(person);
         });
     }
 

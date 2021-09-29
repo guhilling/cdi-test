@@ -7,11 +7,15 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         java: [ '11', '16' ]
 
+    name: Maven Build JDK ${{ matrix.java }}
+
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Set up JDK 
       uses: actions/setup-java@v2
       with:

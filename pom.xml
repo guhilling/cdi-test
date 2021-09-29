@@ -27,7 +27,7 @@
         <!--suppress UnresolvedMavenProperty -->
         <jacoco.reportPath>${maven.multiModuleProjectDirectory}/cdi-test-core/target/jacoco.exec</jacoco.reportPath>
         <!--suppress UnresolvedMavenProperty -->
-        <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/cdi-test-core/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/cdi-test-core/target/site/jacoco/jacoco.xml,${maven.multiModuleProjectDirectory}/cdi-test-jee/target/site/jacoco/jacoco.xml,${maven.multiModuleProjectDirectory}/integration-tests/test-jee/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
@@ -257,10 +257,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.7</version>
-                <configuration>
-                    <destFile>${jacoco.reportPath}</destFile>
-                    <append>true</append>
-                </configuration>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -271,8 +267,9 @@
                     <execution>
                         <id>report</id>
                         <goals>
-                            <goal>report</goal>
+                            <goal>report-aggregate</goal>
                         </goals>
+                        <phase>verify</phase>
                     </execution>
                 </executions>
             </plugin>

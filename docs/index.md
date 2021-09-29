@@ -22,6 +22,9 @@ be able to use the same cdi implementation in your tests as in your production c
 * Examples for extensions:
     * JPA/JEE extension.
     * Microprofile-Config support.
+    * Both extensionts are integrated in the cdi-test github repo.
+  
+All of "my" extensions are also available from this repository. So just use the same version for each module.
 
 ## Tutorial
 

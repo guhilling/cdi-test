@@ -127,47 +127,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>io.thorntail</groupId>
-                <artifactId>thorntail-maven-plugin</artifactId>
-                <version>${thorntail.version}</version>
-                <executions>
-                    <execution>
-                        <id>package-thorntail</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>start-test-container</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                        <configuration>
-                            <useUberJar>true</useUberJar>
-                            <properties>
-                                <some.integer.property>915</some.integer.property>
-                                <some.string.property>Message from test</some.string.property>
-                            </properties>
-                            <jvmArguments>
-                                <jvmArgument>-Djava.net.preferIPv4Stack=true</jvmArgument>
-                                <jvmArgument>-Djava.net.preferIPv4Addresses=true</jvmArgument>
-                            </jvmArguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>stop-test-container</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

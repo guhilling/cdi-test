@@ -47,8 +47,8 @@
     </issueManagement>
 
     <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/guhilling/cdi-test</url>
+        <system>github</system>
+        <url>https://github.com/guhilling/cdi-test/actions</url>
         <notifiers />
     </ciManagement>
 

@@ -14,8 +14,8 @@ import java.util.Map;
 /**
  * Provider/Factory for {@link EntityManager}s used in cdi-test unit tests.
  * <br>
- * Lookup you resources ({@link EntityManager} and {@link EntityManagerFactory} using this class.
- * Transactions and cleanup will be handled automatically when unit tests are started and finished.
+ * Lookup you resources ({@link EntityManager} and {@link EntityManagerFactory} using this class. Transactions and cleanup will be handled
+ * automatically when unit tests are started and finished.
  * <br>
  * See examples in the integration-tests/test-jee package and in the unit tests for this module.
  */
@@ -35,15 +35,14 @@ public class EntityManagerResourcesProvider {
      * @param persistenceUnitName name of persistence unit to resolve.
      * @return EntityManagerFactory for current test run.
      */
-    public EntityManagerFactory resolveEntityManagerFactory(String persistenceUnitName) {
-        synchronized (this) {
-            if (!factories.containsKey(persistenceUnitName)) {
-                Map<String, Object> props = new HashMap<>();
-                props.put("javax.persistence.bean.manager", beanManager);
-                factories.put(persistenceUnitName, Persistence.createEntityManagerFactory(persistenceUnitName, props));
-            }
-            return factories.get(persistenceUnitName);
-        }
+    public synchronized EntityManagerFactory resolveEntityManagerFactory(String persistenceUnitName) {
+        return factories.computeIfAbsent(persistenceUnitName, this::createEntityManagerFactory);
+    }
+
+    private EntityManagerFactory createEntityManagerFactory(String persistenceUnit) {
+        Map<String, Object> props = new HashMap<>();
+        props.put("javax.persistence.bean.manager", beanManager);
+        return Persistence.createEntityManagerFactory(persistenceUnit, props);
     }
 
     /**
@@ -53,13 +52,11 @@ public class EntityManagerResourcesProvider {
      * @param persistenceUnitName name of persistence unit to resolve.
      * @return EntityManager for current request.
      */
-    public EntityManager resolveEntityManager(String persistenceUnitName) {
-        synchronized (this) {
-            if (!testEntityResources.hasEntityManager(persistenceUnitName)) {
-                testEntityResources.putEntityManager(persistenceUnitName, resolveEntityManagerFactory(persistenceUnitName).createEntityManager());
-            }
-            return testEntityResources.getEntityManager(persistenceUnitName);
+    public synchronized EntityManager resolveEntityManager(String persistenceUnitName) {
+        if (!testEntityResources.hasEntityManager(persistenceUnitName)) {
+            testEntityResources.putEntityManager(persistenceUnitName, resolveEntityManagerFactory(persistenceUnitName).createEntityManager());
         }
+        return testEntityResources.getEntityManager(persistenceUnitName);
     }
 
 }

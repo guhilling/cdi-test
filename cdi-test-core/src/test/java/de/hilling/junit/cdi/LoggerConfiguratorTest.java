@@ -24,8 +24,16 @@ class LoggerConfiguratorTest {
 
     @Test
     void setUpIllegalLogging() {
+        System.setProperty(LoggerConfigurator.LOGCONFIG_KEY, "nosuchfile");
+        LoggerConfigurator.configure();
+        LogManager logManager = LogManager.getLogManager();
+        Assertions.assertNotNull(logManager);
+    }
+
+    @Test
+    void setUpCustomLogging() {
         System.setProperty(LoggerConfigurator.LOGCONFIG_KEY,
-                "/log4j-test.properties");
+                           "/log4j-test.properties");
         LoggerConfigurator.configure();
         LogManager logManager = LogManager.getLogManager();
         Assertions.assertEquals("DEBUG", logManager.getProperty("level"));

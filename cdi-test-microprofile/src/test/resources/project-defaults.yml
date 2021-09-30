@@ -1,0 +1,11 @@
+some:
+  string:
+    property: Runtime Defaults Demo
+  integer:
+    property: 815
+  long:
+    property: 81508150815081
+  boolean:
+    property: true
+  horse:
+    property: Rih

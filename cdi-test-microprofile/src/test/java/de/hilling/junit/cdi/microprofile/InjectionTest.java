@@ -10,13 +10,14 @@ import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @ConfigPropertyValue(name = "some.string.property", value = "value class a")
-public class InjectionTest {
+class InjectionTest {
+
 
     @Inject
     private InjectionSample injectionSample;
 
     @Test
     void testDefaultValue() {
-        Assertions.assertEquals("", injectionSample.getSomeProperty());
+        Assertions.assertEquals("value class a", injectionSample.getSomeProperty());
     }
 }

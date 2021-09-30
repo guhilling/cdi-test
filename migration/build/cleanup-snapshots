@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -euo pipefail
-
-rm -rf $( find "$HOME/.m2/repository" -type d -name "*SNAPSHOT*" )

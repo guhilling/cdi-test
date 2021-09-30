@@ -14,19 +14,25 @@ import java.util.Set;
 @TestSuiteScoped
 public class DummyConfigSource implements ConfigSource {
 
+    private final Map<String, String> properties = new HashMap<>();
+
+    public DummyConfigSource() {
+        properties.put("dummy", "1");
+    }
+
     @Override
     public Map<String, String> getProperties() {
-        return new HashMap<>();
+        return properties;
     }
 
     @Override
     public Set<String> getPropertyNames() {
-        return Collections.singleton("dummy");
+        return properties.keySet();
     }
 
     @Override
     public String getValue(String propertyName) {
-        return "1";
+        return properties.get(propertyName);
     }
 
     @Override

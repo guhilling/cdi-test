@@ -1,12 +1,12 @@
 package de.hilling.junit.cdi.microprofile;
 
-import de.hilling.junit.cdi.scope.TestSuiteScoped;
-import org.eclipse.microprofile.config.spi.ConfigSource;
-
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.eclipse.microprofile.config.spi.ConfigSource;
+
+import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 /**
  * Prevent any problems with non-resolved global properties.

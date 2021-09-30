@@ -10,4 +10,7 @@
     <description>documentation for cdi test</description>
     <artifactId>cdi-test-docs</artifactId>
 
+    <properties>
+        <sonar.skip>true</sonar.skip>
+    </properties>
 </project>

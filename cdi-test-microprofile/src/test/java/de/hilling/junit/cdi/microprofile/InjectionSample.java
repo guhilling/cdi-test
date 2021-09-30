@@ -1,5 +1,9 @@
 package de.hilling.junit.cdi.microprofile;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
@@ -30,6 +34,25 @@ public class InjectionSample {
     @ConfigProperty(name = "some.long.property", defaultValue = "1")
     private Long longProperty;
 
+    @Inject
+    @ConfigProperty(name = "some.float.property", defaultValue = "1.0")
+    private Float floatProperty;
+
+    @Inject
+    @ConfigProperty(name = "some.double.property", defaultValue = "1.0")
+    private Double doubleProperty;
+
+    @Inject
+    @ConfigProperty(name = "some.optional.property")
+    private Optional<String> optionalProperty;
+
+    @Inject
+    @ConfigProperty(name = "some.list.property", defaultValue = "a,a,b")
+    private List<String> listProperty;
+
+    @Inject
+    @ConfigProperty(name = "some.set.property", defaultValue = "a,a,b")
+    private Set<String> setProperty;
 
     public String getSomeProperty() {
         return someProperty;
@@ -49,5 +72,25 @@ public class InjectionSample {
 
     public Long getLongProperty() {
         return longProperty;
+    }
+
+    public Float getFloatProperty() {
+        return floatProperty;
+    }
+
+    public Double getDoubleProperty() {
+        return doubleProperty;
+    }
+
+    public Optional<String> getOptionalProperty() {
+        return optionalProperty;
+    }
+
+    public List<String> getListProperty() {
+        return listProperty;
+    }
+
+    public Set<String> getSetProperty() {
+        return setProperty;
     }
 }

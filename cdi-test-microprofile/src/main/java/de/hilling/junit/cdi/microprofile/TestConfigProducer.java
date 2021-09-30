@@ -79,7 +79,7 @@ public class TestConfigProducer implements Serializable {
     @Dependent
     @Produces
     @ConfigProperty
-    <T> Set<T> producesSetConfigPropery(InjectionPoint ip) {
+    <T> Set<T> producesSetConfigProperty(InjectionPoint ip) {
         return ConfigProducerUtil.collectionConfigProperty(ip, config, HashSet::new);
     }
 
@@ -87,7 +87,7 @@ public class TestConfigProducer implements Serializable {
     @Dependent
     @Produces
     @ConfigProperty
-    <T> List<T> producesListConfigPropery(InjectionPoint ip) {
+    <T> List<T> producesListConfigProperty(InjectionPoint ip) {
         return ConfigProducerUtil.collectionConfigProperty(ip, config, ArrayList::new);
     }
 

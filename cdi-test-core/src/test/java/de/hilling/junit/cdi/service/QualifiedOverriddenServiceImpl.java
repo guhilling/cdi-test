@@ -2,15 +2,15 @@ package de.hilling.junit.cdi.service;
 
 import javax.annotation.PostConstruct;
 
-public class OverriddenServiceImpl implements OverriddenService {
+@TestQualifier
+public class QualifiedOverriddenServiceImpl implements OverriddenService {
 
     @PostConstruct
     protected void create() {
-        throw new RuntimeException("not working");
     }
 
     @Override
     public String serviceMethod() {
-        return "OverriddenServiceImpl";
+        return "QualifiedOverriddenServiceImpl";
     }
 }

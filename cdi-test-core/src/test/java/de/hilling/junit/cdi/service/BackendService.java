@@ -9,8 +9,16 @@ public class BackendService {
     @Inject
     private OverriddenService sampleService;
 
-    public void storePerson(Person person) {
-        sampleService.serviceMethod();
+    @TestQualifier
+    @Inject
+    private OverriddenService qualifiedSampleService;
+
+    public String storePerson(Person person) {
+        return sampleService.serviceMethod();
+    }
+
+    public String storePersonQualified(Person person) {
+        return qualifiedSampleService.serviceMethod();
     }
 
 }

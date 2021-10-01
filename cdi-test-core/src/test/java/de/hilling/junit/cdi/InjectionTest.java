@@ -4,6 +4,9 @@ import de.hilling.junit.cdi.beans.ConstructorInjected;
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.beans.ResourceConstructorInjected;
 import de.hilling.junit.cdi.beans.ResourceInjected;
+import de.hilling.junit.cdi.service.BackendService;
+import de.hilling.junit.cdi.service.OverriddenService;
+import de.hilling.junit.cdi.service.TestQualifier;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +33,16 @@ class InjectionTest {
 
     @Inject
     private ResourceConstructorInjected resourceConstructorInjected;
+
+    @Inject
+    private BackendService backendService;
+
+    @Inject
+    private OverriddenService sampleService;
+
+    @TestQualifier
+    @Inject
+    private OverriddenService qualifiedSampleService;
 
     @Test
     void checkTestInformation() throws Exception {
@@ -66,6 +79,18 @@ class InjectionTest {
     void testPersons() {
         checkPersonWorks(person);
         checkPersonWorks(constructorInjected.getPerson());
+    }
+
+    @Test
+    void qualifierInjectionWorkingOnTestedClass() {
+        assertEquals("OverridingServiceImpl", backendService.storePerson(person));
+        assertEquals("QualifiedOverriddenServiceImpl", backendService.storePersonQualified(person));
+    }
+
+    @Test
+    void qualifierInjectionWorkingOnTestCase() {
+        assertEquals("OverridingServiceImpl", sampleService.serviceMethod());
+        assertEquals("QualifiedOverriddenServiceImpl", qualifiedSampleService.serviceMethod());
     }
 
     private void checkPersonWorks(Person person) {

@@ -18,12 +18,13 @@ public class BackendServiceTestImplementation extends BackendService {
     private RuntimeException exceptionToThrow;
 
     @Override
-    public void storePerson(Person person) {
+    public String storePerson(Person person) {
         if (exceptionToThrow != null) {
             throw exceptionToThrow;
         } else {
             invocations++;
         }
+        return null;
     }
 
     protected void testStarted(@Observes @TestEvent(TestState.STARTING) ExtensionContext context) {

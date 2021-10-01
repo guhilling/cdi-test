@@ -18,7 +18,8 @@ public class TestActivatedOverridenService implements OverriddenService {
     }
 
     @Override
-    public void serviceMethod() {
+    public String serviceMethod() {
         invocationCounter++;
+        return "TestActivatedOverridenService";
     }
 }

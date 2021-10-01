@@ -42,14 +42,14 @@
     </licenses>
 
     <issueManagement>
-        <system>JIRA</system>
-        <url>https://hilling.atlassian.net/secure/RapidBoard.jspa?rapidView=1&amp;projectKey=CDIT&amp;view=planning.nodetail</url>
+        <system>GitHub Issues</system>
+        <url>https://github.com/guhilling/cdi-test/issues</url>
     </issueManagement>
 
     <ciManagement>
-        <system>github</system>
+        <system>GitHub Actions</system>
         <url>https://github.com/guhilling/cdi-test/actions</url>
-        <notifiers />
+        <notifiers/>
     </ciManagement>
 
     <developers>

@@ -7,13 +7,27 @@ import de.hilling.junit.cdi.scope.InvocationTargetManager;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
+
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.junit.jupiter.api.extension.*;
 import org.mockito.Mockito;
 
 import javax.inject.Inject;
-import java.lang.reflect.Field;
+import javax.inject.Qualifier;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Optional;
+
+/**
+ * JUnit 5 extension for cdi lifecycle management and injection into test cases. Detailed documentation available at <a
+ * href="https://cdi-test.hilling.de">Github Pages</a>
+ * <p>
+ * {@link Mockito} will automatically added to the lifecycle so the {@link Mockito} JUnit Extension should <em>not</em> be added to the test
+ * additionally.
+ * </p>
+ */
 public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
 
     static {
@@ -21,10 +35,10 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
     }
 
     private final InvocationTargetManager invocationTargetManager;
-    private final ContextControlWrapper contextControl = ContextControlWrapper.getInstance();
+    private final ContextControlWrapper   contextControl = ContextControlWrapper.getInstance();
 
-    private LifecycleNotifier lifecycleNotifier;
-    private TestEnvironment testEnvironment;
+    private final LifecycleNotifier lifecycleNotifier;
+    private       TestEnvironment   testEnvironment;
 
     public CdiTestJunitExtension() {
         invocationTargetManager = BeanProvider.getContextualReference(InvocationTargetManager.class, false);
@@ -34,24 +48,39 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
     @Override
     public void beforeAll(ExtensionContext context) {
         Mockito.framework()
-               .addListener(invocationTargetManager);
+                .addListener(invocationTargetManager);
     }
 
     @Override
     public void afterAll(ExtensionContext context) {
         Mockito.framework()
-               .removeListener(invocationTargetManager);
+                .removeListener(invocationTargetManager);
     }
 
     @Override
     public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
-        testEnvironment = resolveBean(TestEnvironment.class);
+        testEnvironment = BeanProvider.getContextualReference(TestEnvironment.class);
         testEnvironment.setTestInstance(testInstance);
         for (Field field : ReflectionsUtils.getAllFields(testInstance.getClass())) {
             if (field.isAnnotationPresent(Inject.class)) {
-                ReflectionsUtils.setField(testInstance, resolveBean(field.getType()), field);
+                Optional<Annotation> qualifier = Arrays.stream(field.getDeclaredAnnotations()).filter(this::isQualifier).findFirst();
+                setField(testInstance, field, qualifier);
             }
         }
+    }
+
+    private boolean isQualifier(Annotation annotation) {
+        return annotation.annotationType().isAnnotationPresent(Qualifier.class);
+    }
+
+    private void setField(Object testInstance, Field field, Optional<Annotation> qualifierAnnotation) {
+        Object bean;
+        if(qualifierAnnotation.isPresent()) {
+            bean = BeanProvider.getContextualReference(field.getType(), qualifierAnnotation.get());
+        } else {
+            bean = BeanProvider.getContextualReference(field.getType());
+        }
+        ReflectionsUtils.setField(testInstance, bean, field);
     }
 
     @Override
@@ -75,10 +104,6 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
         contextControl.stopContexts();
         lifecycleNotifier.notify(TestState.FINISHED, context);
         TestContext.deactivate();
-    }
-
-    private <T> T resolveBean(Class<T> clazz) {
-        return BeanProvider.getContextualReference(clazz, false);
     }
 
     private boolean isTestActivatable(Field field) {

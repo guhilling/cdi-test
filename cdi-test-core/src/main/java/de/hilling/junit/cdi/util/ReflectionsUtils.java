@@ -36,10 +36,6 @@ public final class ReflectionsUtils {
         String canonicalName = clazz.getCanonicalName();
         if (canonicalName.contains("$")) {
             try {
-                if (clazz.getPackage() == null) {
-                    return Class.forName(
-                    canonicalName.substring(canonicalName.lastIndexOf('.') + 1, canonicalName.indexOf('$')));
-                }
                 return Class.forName(canonicalName.substring(0, canonicalName.indexOf('$')));
             } catch (ClassNotFoundException e) {
                 throw new CdiTestException("unable to find original class", e);

@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,6 +19,12 @@ class ReflectionsUtilsTest {
     @Test
     void findIdenticalClass() {
         assertEquals(String.class, ReflectionsUtils.getOriginalClass(String.class));
+    }
+
+    @Test
+    void getAllFields() {
+        List<Field> allFields = ReflectionsUtils.getAllFields(ArrayList.class);
+        assertEquals(9, allFields.size());
     }
 
     @Test

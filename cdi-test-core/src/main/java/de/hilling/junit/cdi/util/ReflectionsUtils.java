@@ -27,6 +27,11 @@ public final class ReflectionsUtils {
         return result;
     }
 
+    /**
+     * Gets the proxied class in case of proxied classes (Mockito or cdi).
+     * @param clazz class to find the "original" class for.
+     * @return "original" class.
+     */
     public static Class<?> getOriginalClass(Class<?> clazz) {
         String canonicalName = clazz.getCanonicalName();
         if (canonicalName.contains("$")) {

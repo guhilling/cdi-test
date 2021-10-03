@@ -1,8 +1,6 @@
 package de.hilling.junit.cdi.util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -11,8 +9,10 @@ import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import de.hilling.junit.cdi.ContextControlWrapper;
 import de.hilling.junit.cdi.beans.StrangeName$Object;
 import de.hilling.junit.cdi.service.BackendServiceTestImplementation;
+import de.hilling.junit.cdi.service.SampleService;
 
 class ReflectionsUtilsTest {
 
@@ -42,6 +42,13 @@ class ReflectionsUtilsTest {
     void dontProxySystemClasses() {
         assertFalse(ReflectionsUtils.shouldProxyCdiType(Integer.class));
         assertFalse(ReflectionsUtils.shouldProxyCdiType(CdiContainer.class));
+        assertFalse(ReflectionsUtils.shouldProxyCdiType(ContextControlWrapper.class));
+        assertFalse(ReflectionsUtils.shouldProxyCdiType(SampleEnum.class));
+    }
+
+    @Test
+    void proxyPlainClasses() {
+        assertTrue(ReflectionsUtils.shouldProxyCdiType(SampleService.class));
     }
 
     @Test

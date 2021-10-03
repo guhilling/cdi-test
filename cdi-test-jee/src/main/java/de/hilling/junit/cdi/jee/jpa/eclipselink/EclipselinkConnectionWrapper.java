@@ -31,13 +31,8 @@ public class EclipselinkConnectionWrapper implements ConnectionWrapper {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            Connection connection = entityManager.unwrap(Connection.class);
-            if (connection == null) {
-                transaction.rollback();
-            } else {
-                cleanUpDatabase(connection);
-                transaction.commit();
-            }
+            cleanUpDatabase(entityManager.unwrap(Connection.class));
+            transaction.commit();
         } catch (RuntimeException re) {
             transaction.rollback();
         }

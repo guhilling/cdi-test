@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import de.hilling.junit.cdi.beans.StrangeName$Object;
+import de.hilling.junit.cdi.service.BackendServiceTestImplementation;
 
 class ReflectionsUtilsTest {
 
@@ -23,8 +24,8 @@ class ReflectionsUtilsTest {
 
     @Test
     void getAllFields() {
-        List<Field> allFields = ReflectionsUtils.getAllFields(ArrayList.class);
-        assertEquals(9, allFields.size());
+        List<Field> allFields = ReflectionsUtils.getAllFields(BackendServiceTestImplementation.class);
+        assertEquals(4, allFields.size());
     }
 
     @Test

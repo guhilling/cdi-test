@@ -4,6 +4,7 @@ import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
+
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.mockito.listeners.MockCreationListener;
 import org.mockito.mock.MockCreationSettings;
@@ -12,6 +13,7 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
+
 import java.util.*;
 
 /**
@@ -21,14 +23,14 @@ import java.util.*;
 @TestSuiteScoped
 public class InvocationTargetManager implements MockCreationListener {
 
-    private final BeanManager beanManager;
+    private final BeanManager     beanManager;
     private final TestInformation testInformation;
 
-    private final Map<Class<?>, Map<Class<?>, Object>> activeMocksByTestClass = new HashMap<>();
-    private final Map<Class<?>, Set<Class<?>>> activeAlternativesByTestClass = new HashMap<>();
+    private final Map<Class<?>, Map<Class<?>, Object>> activeMocksByTestClass        = new HashMap<>();
+    private final Map<Class<?>, Set<Class<?>>>         activeAlternativesByTestClass = new HashMap<>();
 
     @Inject
-    public InvocationTargetManager( BeanManager beanManager, TestInformation testInformation) {
+    public InvocationTargetManager(BeanManager beanManager, TestInformation testInformation) {
         setUpEmptyElementsForNotTestActive();
         this.beanManager = beanManager;
         this.testInformation = testInformation;
@@ -60,8 +62,7 @@ public class InvocationTargetManager implements MockCreationListener {
      * @return true if the mock was enabled for this test.
      */
     synchronized boolean isMockEnabled(Class<?> javaClass) {
-        return currentMockSet().keySet()
-                               .contains(javaClass);
+        return currentMockSet().containsKey(javaClass);
     }
 
     /**
@@ -77,14 +78,12 @@ public class InvocationTargetManager implements MockCreationListener {
     public Class<?> alternativeFor(Class<?> javaClass) {
         for (Class<?> alternative : currentAlternativesSet()) {
             AnnotatedType<?> type = beanManager.getExtension(TestScopeExtension.class)
-                                            .decoratedTypeFor(alternative);
-            if (type != null) {
-                ActivatableTestImplementation activatableTestImplementation = type.getAnnotation(
-                        ActivatableTestImplementation.class);
-                for (Class<?> overridden : activatableTestImplementation.value()) {
-                    if (overridden.equals(javaClass)) {
-                        return alternative;
-                    }
+                    .decoratedTypeFor(alternative);
+            ActivatableTestImplementation activatableTestImplementation = type.getAnnotation(
+                    ActivatableTestImplementation.class);
+            for (Class<?> overridden : activatableTestImplementation.value()) {
+                if (overridden.equals(javaClass)) {
+                    return alternative;
                 }
             }
         }

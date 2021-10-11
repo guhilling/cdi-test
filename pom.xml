@@ -21,7 +21,6 @@
         <cdi-2.0-weld.version>3.1.0.Final</cdi-2.0-weld.version>
         <smallrye.version>1.4.1</smallrye.version>
         <mockito.version>4.0.0</mockito.version>
-        <javassist.version>3.28.0-GA</javassist.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
         <annotation-literal.version>1.0.11</annotation-literal.version>
@@ -123,11 +122,6 @@
             </dependency>
             <!-- utils -->
             <dependency>
-                <groupId>org.javassist</groupId>
-                <artifactId>javassist</artifactId>
-                <version>${javassist.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.immutables</groupId>
                 <artifactId>value</artifactId>
                 <version>${immutables.version}</version>
@@ -146,6 +140,24 @@
                 <version>1.3.5</version>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>jakarta.activation</groupId>
+                <artifactId>jakarta.activation-api</artifactId>
+                <version>1.2.2</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>3.0.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>3.0.2</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>

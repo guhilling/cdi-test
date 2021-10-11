@@ -164,6 +164,12 @@
                 <version>3.2.6</version>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>jakarta.interceptor</groupId>
+                <artifactId>jakarta.interceptor-api</artifactId>
+                <version>1.2.5</version>
+                <scope>provided</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.glassfish.jaxb</groupId>

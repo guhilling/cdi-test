@@ -72,9 +72,11 @@
         <module>docs</module>
         <module>cdi-test-core</module>
         <module>cdi-test-api</module>
+        <!--
         <module>cdi-test-jee</module>
         <module>cdi-test-microprofile</module>
         <module>integration-tests</module>
+        -->
     </modules>
 
     <dependencyManagement>

@@ -18,7 +18,7 @@
 
         <immutables.version>2.8.9-ea-1</immutables.version>
         <deltaspike.version>1.9.5</deltaspike.version>
-        <cdi-2.0-weld.version>3.1.0.Final</cdi-2.0-weld.version>
+        <cdi-2.0-weld.version>4.0.2.Final</cdi-2.0-weld.version>
         <smallrye.version>1.4.1</smallrye.version>
         <mockito.version>4.0.0</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
@@ -246,11 +246,6 @@
                 <version>${weld.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>5.6.0.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>

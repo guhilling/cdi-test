@@ -1,14 +1,14 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.CdiTestException;
-import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
-import de.hilling.junit.cdi.annotations.ImmutableActivatableTestImplementation;
-import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
-
 import javax.enterprise.inject.Typed;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
+import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 import javax.enterprise.util.AnnotationLiteral;
+
+import de.hilling.junit.cdi.CdiTestException;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.annotations.ImmutableActivatableTestImplementation;
 
 /**
  * Prepare activatable alternatives.
@@ -17,36 +17,28 @@ import javax.enterprise.util.AnnotationLiteral;
  */
 class ActivatableAlternativeBuilder<X> {
     private final ProcessAnnotatedType<X> pat;
-    private final AnnotatedType<X> type;
-    private final Class<X> javaClass;
-    private final AnnotatedTypeBuilder<X> builder;
+    private final AnnotatedType<X>        type;
+    private final Class<X>                javaClass;
 
     ActivatableAlternativeBuilder(ProcessAnnotatedType<X> pat) {
         this.pat = pat;
         type = pat.getAnnotatedType();
         javaClass = type.getJavaClass();
-        builder = new AnnotatedTypeBuilder<>();
-        builder.readFromType(type);
     }
 
     void invoke() {
         ActivatableTestImplementation implementation = type.getAnnotation(ActivatableTestImplementation.class);
+        AnnotatedTypeConfigurator<X> configureAnnotatedType = pat.configureAnnotatedType();
         if (implementation.value().length == 0) {
-            guessReplacableTypes();
+            configureAnnotatedType.remove((a) -> a.annotationType().equals(ActivatableTestImplementation.class));
+            configureAnnotatedType.add(ImmutableActivatableTestImplementation.builder().value(determineUniqueSuperclass()).build());
         }
-        builder.addToClass(new TypedLiteral() {
+        configureAnnotatedType.add(new TypedLiteral() {
             @Override
             public Class<?>[] value() {
                 return new Class[]{javaClass};
             }
         });
-        pat.setAnnotatedType(builder.create());
-    }
-
-    private void guessReplacableTypes() {
-        builder.removeFromClass(ActivatableTestImplementation.class);
-        final ImmutableActivatableTestImplementation.Builder anntationBuilder = ImmutableActivatableTestImplementation.builder();
-        this.builder.addToClass(anntationBuilder.value(determineUniqueSuperclass()).build());
     }
 
     private Class<?> determineUniqueSuperclass() {

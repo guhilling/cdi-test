@@ -20,8 +20,8 @@ import org.jboss.weld.context.bound.MutableBoundRequest;
 
 @Dependent
 public class WeldContextControl implements ContextControl {
-    private static ThreadLocal<WeldContextControl.RequestContextHolder> requestContexts = new ThreadLocal<>();
-    private static ThreadLocal<Map<String, Object>>                     sessionMaps     = new ThreadLocal<>();
+    private static final ThreadLocal<WeldContextControl.RequestContextHolder> requestContexts = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, Object>>                     sessionMaps     = new ThreadLocal<>();
 
 
     @Inject

@@ -14,8 +14,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.apache.deltaspike.core.api.provider.BeanProvider;
-
 @Replaceable
 @Interceptor
 @Dependent
@@ -43,8 +41,6 @@ public class CallRedirectionInterceptor implements Serializable {
         Method method = ctx.getMethod();
         ContextControlWrapper controlWrapper = ContextControlWrapper.getInstance();
         Object alternative = controlWrapper.getContextualInstance(invocationTargetManager.get().alternativeFor(javaClass));
-        Object alternativeOld = BeanProvider
-                .getContextualReference(invocationTargetManager.get().alternativeFor(javaClass));
 
         try {
             Method alternativeMethod = alternative.getClass().getMethod(method.getName(), method.getParameterTypes());

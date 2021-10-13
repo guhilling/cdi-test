@@ -2,6 +2,7 @@ package de.hilling.junit.cdi;
 
 import static java.util.logging.Level.INFO;
 
+import java.lang.annotation.Annotation;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -49,13 +50,13 @@ public class ContextControlWrapper {
             throw new CdiTestException("couldn't start weld");
         }
         weldManager = (WeldManager) weldContainer.getBeanManager();
-        contextControl = getContextualInstance(ContextControl.class);
+        contextControl = getContextualReference(ContextControl.class);
     }
 
     @SuppressWarnings({ "unchecked" })
-    public <T> T getContextualInstance(Class<T> beanType) {
+    public <T> T getContextualReference(Class<T> beanType, Annotation ... qualifiers) {
         WeldCreationalContext<T> creationalContext = weldManager.createCreationalContext(null);
-        Set<Bean<?>> beans = weldManager.getBeans(beanType);
+        Set<Bean<?>> beans = weldManager.getBeans(beanType, qualifiers);
         Bean<T> bean = (Bean<T>) weldManager.resolve(beans);
         return (T) weldManager.getReference(bean, beanType, creationalContext);
     }

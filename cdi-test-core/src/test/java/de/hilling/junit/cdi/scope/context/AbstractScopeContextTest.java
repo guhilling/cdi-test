@@ -6,13 +6,13 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
-import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.hilling.junit.cdi.CdiTestJunitExtension;
+import de.hilling.junit.cdi.ContextControlWrapper;
 import de.hilling.junit.cdi.scopedbeans.RequestScopedBean;
 import de.hilling.junit.cdi.scopedbeans.ScopedBean;
 import de.hilling.junit.cdi.scopedbeans.TestScopedBean;
@@ -45,7 +45,8 @@ class AbstractScopeContextTest {
     }
 
     private <T extends ScopedBean> void resolveOrAssert(Class<T> type, BiConsumer<UUID, UUID> assertion) {
-        final T resolvedObject = BeanProvider.getContextualReference(type, false);
+        ContextControlWrapper controlWrapper = ContextControlWrapper.getInstance();
+        final T resolvedObject = controlWrapper.getContextualReference(type);
         if (!uuidMap.containsKey(type)) {
             uuidMap.put(type, resolvedObject.getUuid());
         } else {

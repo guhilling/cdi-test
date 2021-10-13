@@ -40,7 +40,7 @@ public class CallRedirectionInterceptor implements Serializable {
     private Object callAlternative(InvocationContext ctx, Class<?> javaClass) throws Throwable {
         Method method = ctx.getMethod();
         ContextControlWrapper controlWrapper = ContextControlWrapper.getInstance();
-        Object alternative = controlWrapper.getContextualInstance(invocationTargetManager.get().alternativeFor(javaClass));
+        Object alternative = controlWrapper.getContextualReference(invocationTargetManager.get().alternativeFor(javaClass));
 
         try {
             Method alternativeMethod = alternative.getClass().getMethod(method.getName(), method.getParameterTypes());

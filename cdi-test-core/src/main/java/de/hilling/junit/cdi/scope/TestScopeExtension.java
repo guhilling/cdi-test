@@ -4,7 +4,6 @@ import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementBuilder;
-import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationUtils;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
@@ -70,7 +69,7 @@ public class TestScopeExtension implements Extension, Serializable {
         if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
             new ActivatableAlternativeBuilder<>(pat).invoke();
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
-            AnnotationUtils.addClassAnnotation(pat, ImmutableReplaceable.builder().build());
+            pat.configureAnnotatedType().add(ImmutableReplaceable.builder().build());
         }
         updateDecoratedTypes(pat);
     }

@@ -16,7 +16,7 @@ import java.util.List;
  */
 public final class ReflectionsUtils {
 
-    private static final String[] SYSTEM_PACKAGES = {"java", "javax", "com.sun", "org.jboss", "org.wildfly", "jakarta"};
+    private static final String[] SYSTEM_PACKAGES = {"java", "javax", "com.sun", "org.apache.deltaspike", "org.jboss", "org.wildfly", "jakarta"};
 
     private ReflectionsUtils() {
     }

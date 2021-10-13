@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.ProcessAnnotatedType;
+import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 
 import org.apache.deltaspike.core.util.metadata.builder.AnnotatedTypeBuilder;
 
@@ -15,9 +17,11 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
 public class AnnotationReplacementBuilder<T> {
     private final Map<Class<? extends Annotation>, Annotation> replacementMap;
     private final AnnotatedType<T>                             delegate;
+    private final AnnotatedTypeConfigurator<T> configurator;
 
-    public AnnotationReplacementBuilder(AnnotatedType<T> delegate) {
-        this.delegate = delegate;
+    public AnnotationReplacementBuilder(ProcessAnnotatedType<T> pat) {
+        this.delegate = pat.getAnnotatedType();
+        this.configurator = pat.configureAnnotatedType();
         this.replacementMap = AnnotationReplacementHolder.getInstance().getReplacementMap();
     }
 

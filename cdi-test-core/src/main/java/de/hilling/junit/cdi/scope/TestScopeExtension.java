@@ -55,7 +55,7 @@ public class TestScopeExtension implements Extension, Serializable {
 
     public <T> void replaceAnnotations(@Observes ProcessAnnotatedType<T> pat) {
         LOG.log(FINE, "processing type {0}", pat);
-        pat.setAnnotatedType(new AnnotationReplacementBuilder<>(pat.getAnnotatedType()).invoke());
+        new AnnotationReplacementBuilder(pat).invoke();
         updateDecoratedTypes(pat);
     }
 

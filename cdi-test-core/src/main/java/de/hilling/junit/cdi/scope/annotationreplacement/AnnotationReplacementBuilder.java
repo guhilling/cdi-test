@@ -17,11 +17,11 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
 public class AnnotationReplacementBuilder<T> {
     private final Map<Class<? extends Annotation>, Annotation> replacementMap;
     private final AnnotatedType<T>                             delegate;
-    private final AnnotatedTypeConfigurator<T> configurator;
+    //private final AnnotatedTypeConfigurator<T> configurator;
 
     public AnnotationReplacementBuilder(ProcessAnnotatedType<T> pat) {
         this.delegate = pat.getAnnotatedType();
-        this.configurator = pat.configureAnnotatedType();
+        //this.configurator = pat.configureAnnotatedType();
         this.replacementMap = AnnotationReplacementHolder.getInstance().getReplacementMap();
     }
 

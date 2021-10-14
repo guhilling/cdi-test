@@ -44,6 +44,7 @@ public class AnnotationReplacementHolder {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void addConfigurationFrom(URL url) throws IOException {
         try (BufferedReader in = new BufferedReader(
                 new InputStreamReader(url.openStream()))) {

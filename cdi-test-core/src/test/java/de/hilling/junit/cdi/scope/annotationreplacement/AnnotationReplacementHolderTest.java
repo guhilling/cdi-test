@@ -9,10 +9,8 @@ import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import de.hilling.junit.cdi.scope.CaseScopedBean;
 import de.hilling.junit.cdi.service.OverriddenService;
 import de.hilling.junit.cdi.service.OverriddenServiceImpl;
 
@@ -58,7 +56,7 @@ class AnnotationReplacementHolderTest {
         assertEquals(0, serviceProxy.hashCode());
         assertEquals("de.hilling.junit.cdi.service.OverriddenService", serviceProxy.toString());
         assertNull(serviceProxy.serviceMethod());
-        assertEquals(serviceProxy, serviceProxy);
+        assertTrue(serviceProxy.equals(serviceProxy));
     }
 
     private void createHolder(String resourceName) {

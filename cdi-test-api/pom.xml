@@ -4,7 +4,7 @@
     <parent>
         <artifactId>cdi-test</artifactId>
         <groupId>de.hilling.junit.cdi</groupId>
-        <version>3.2.2-SNAPSHOT</version>
+        <version>3.3.1</version>
     </parent>
 
     <artifactId>cdi-test-api</artifactId>

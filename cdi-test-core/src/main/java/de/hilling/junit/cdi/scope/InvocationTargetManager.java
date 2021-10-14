@@ -1,21 +1,23 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.CdiTestException;
-import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
-import de.hilling.junit.cdi.lifecycle.TestEvent;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.spi.BeanManager;
+import javax.inject.Inject;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.mockito.listeners.MockCreationListener;
 import org.mockito.mock.MockCreationSettings;
 
-import javax.enterprise.event.Observes;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
-import javax.inject.Inject;
-
-import java.lang.annotation.Annotation;
-import java.util.*;
+import de.hilling.junit.cdi.CdiTestException;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+import de.hilling.junit.cdi.lifecycle.TestEvent;
 
 /**
  * Book keeping for mocks. Thread safe.

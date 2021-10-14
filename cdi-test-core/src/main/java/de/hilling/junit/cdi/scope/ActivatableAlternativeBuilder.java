@@ -30,7 +30,7 @@ class ActivatableAlternativeBuilder<X> {
         ActivatableTestImplementation implementation = type.getAnnotation(ActivatableTestImplementation.class);
         AnnotatedTypeConfigurator<X> configureAnnotatedType = pat.configureAnnotatedType();
         if (implementation.value().length == 0) {
-            configureAnnotatedType.remove((a) -> a.annotationType().equals(ActivatableTestImplementation.class));
+            configureAnnotatedType.remove(a -> a.annotationType().equals(ActivatableTestImplementation.class));
             implementation = ImmutableActivatableTestImplementation.builder()
                     .value(determineUniqueSuperclass())
                     .build();

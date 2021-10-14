@@ -7,9 +7,10 @@
         <version>3.2.2-SNAPSHOT</version>
     </parent>
 
-    <description>cdi test core without runners</description>
-
+    <description>implementation of cdi-test</description>
+    <name>cdi-test core</name>
     <artifactId>cdi-test-core</artifactId>
+
     <packaging>jar</packaging>
 
     <licenses>

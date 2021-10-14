@@ -7,17 +7,17 @@
     <packaging>pom</packaging>
     <url>https://github.com/guhilling/cdi-test</url>
     <inceptionYear>2014</inceptionYear>
-    <name>CDI Test</name>
-    <description>JUnit Add-On for Simple Testing of CDI Components</description>
+    <name>cdi-test</name>
+    <description>junit extendsion for simple and efficient testing of cdi components</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
 
         <cdi-api.version>2.0.2</cdi-api.version>
+        <weld.version>3.1.8.Final</weld.version>
 
         <immutables.version>2.8.9-ea-1</immutables.version>
-        <cdi-2.0-weld.version>3.1.0.Final</cdi-2.0-weld.version>
         <smallrye.version>1.4.1</smallrye.version>
         <mockito.version>4.0.0</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
@@ -392,19 +392,7 @@
 
     <profiles>
         <profile>
-            <id>cdi-2</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <weld.version>3.1.5.Final</weld.version>
-            </properties>
-        </profile>
-        <profile>
             <id>release</id>
-            <properties>
-                <weld.version>${cdi-2.0-weld.version}</weld.version>
-            </properties>
             <build>
                 <plugins>
                     <plugin>

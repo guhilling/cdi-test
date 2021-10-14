@@ -7,6 +7,9 @@
         <version>3.2.2-SNAPSHOT</version>
     </parent>
 
+    <description>Basic annotations and interfaces for cdi-test</description>
+    <name>cdi-test api</name>
+
     <artifactId>cdi-test-api</artifactId>
 
     <dependencies>

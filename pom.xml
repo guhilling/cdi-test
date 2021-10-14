@@ -69,7 +69,9 @@
         <module>cdi-test-core</module>
         <module>cdi-test-api</module>
         <module>cdi-test-jee</module>
+        <!--
         <module>cdi-test-microprofile</module>
+        -->
         <module>integration-tests</module>
     </modules>
 
@@ -127,7 +129,7 @@
             <dependency>
                 <groupId>jakarta.platform</groupId>
                 <artifactId>jakarta.jakartaee-api</artifactId>
-                <version>8.0.0</version>
+                <version>9.1.0</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -169,7 +171,7 @@
             <dependency>
                 <groupId>jakarta.ejb</groupId>
                 <artifactId>jakarta.ejb-api</artifactId>
-                <version>3.2.6</version>
+                <version>4.0.0</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>

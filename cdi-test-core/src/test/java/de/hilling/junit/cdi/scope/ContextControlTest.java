@@ -70,6 +70,20 @@ class ContextControlTest {
     }
 
     @Test
+    void startStopMultiple() {
+        stopStartContext(RequestScoped.class);
+        stopStartContext(ApplicationScoped.class);
+    }
+
+    private void stopStartContext(Class<? extends Annotation> scopeClass) {
+        contextControl.stopContext(scopeClass);
+        contextControl.startContext(scopeClass);
+        contextControl.startContext(scopeClass);
+        contextControl.stopContext(scopeClass);
+        contextControl.stopContext(scopeClass);
+    }
+
+    @Test
     void restartApplicationStopAll() {
         runTestStopAll(applicationScopedBean, ApplicationScoped.class);
     }

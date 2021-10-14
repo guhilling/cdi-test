@@ -3,12 +3,12 @@
 
     <groupId>de.hilling.junit.cdi</groupId>
     <artifactId>cdi-test</artifactId>
-    <version>3.2.2-SNAPSHOT</version>
+    <version>3.3.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>https://github.com/guhilling/cdi-test</url>
     <inceptionYear>2014</inceptionYear>
-    <name>CDI Test</name>
-    <description>JUnit Add-On for Simple Testing of CDI Components</description>
+    <name>cdi-test</name>
+    <description>junit extension for simple and efficient testing of cdi components</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

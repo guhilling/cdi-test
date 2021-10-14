@@ -3,11 +3,12 @@
     <parent>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test</artifactId>
-        <version>3.2.2-SNAPSHOT</version>
+        <version>3.3.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <description>JEE Support for cdi-test</description>
+    <description>jee support for cdi-test, mainly persistence</description>
+    <name>cdi-test jee</name>
     <artifactId>cdi-test-jee</artifactId>
 
     <dependencies>

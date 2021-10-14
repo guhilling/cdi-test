@@ -4,13 +4,12 @@
     <parent>
         <artifactId>cdi-test</artifactId>
         <groupId>de.hilling.junit.cdi</groupId>
-        <version>3.2.2-SNAPSHOT</version>
+        <version>3.3.4-SNAPSHOT</version>
     </parent>
 
+    <description>support microprofile-config in cdi-test</description>
+    <name>cdi-test microprofile-config extension</name>
     <artifactId>cdi-test-microprofile</artifactId>
-
-    <description>Support Microprofile Config in cdi-test</description>
-    <name>CDI Test Microprofile Extension</name>
 
     <dependencies>
         <dependency>

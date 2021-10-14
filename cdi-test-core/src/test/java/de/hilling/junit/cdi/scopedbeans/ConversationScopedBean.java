@@ -2,9 +2,9 @@ package de.hilling.junit.cdi.scopedbeans;
 
 import java.io.Serializable;
 
-import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ConversationScoped;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 @ConversationScoped
 public class ConversationScopedBean extends ScopedBean implements Serializable {

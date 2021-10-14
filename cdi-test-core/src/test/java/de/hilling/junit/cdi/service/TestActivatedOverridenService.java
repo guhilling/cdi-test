@@ -2,7 +2,7 @@ package de.hilling.junit.cdi.service;
 
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 @ActivatableTestImplementation(OverridingServiceImpl.class)
 public class TestActivatedOverridenService implements OverriddenService {

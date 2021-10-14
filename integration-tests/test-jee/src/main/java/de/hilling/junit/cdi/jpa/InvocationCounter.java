@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.jpa;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ApplicationScoped

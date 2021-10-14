@@ -2,7 +2,7 @@ package de.hilling.junit.cdi.jee;
 
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @EntityListeners(TestEntityListener.class)

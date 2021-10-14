@@ -7,7 +7,7 @@ import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.TestState;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-import javax.enterprise.event.Observes;
+import jakarta.enterprise.event.Observes;
 import java.lang.reflect.InvocationTargetException;
 
 @ActivatableTestImplementation

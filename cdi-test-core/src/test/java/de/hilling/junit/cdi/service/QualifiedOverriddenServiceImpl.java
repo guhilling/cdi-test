@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.service;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 @TestQualifier
 public class QualifiedOverriddenServiceImpl implements OverriddenService {

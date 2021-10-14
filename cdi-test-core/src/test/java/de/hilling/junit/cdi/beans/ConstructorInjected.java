@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.beans;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 public class ConstructorInjected {
 

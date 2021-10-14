@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.beans;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 public class ResourceConstructorInjected {
 

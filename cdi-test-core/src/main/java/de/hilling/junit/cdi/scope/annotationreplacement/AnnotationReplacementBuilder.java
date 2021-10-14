@@ -44,17 +44,6 @@ public class AnnotationReplacementBuilder<T> {
             configurator.constructors().stream()
                     .filter(c -> c.getAnnotated().isAnnotationPresent(toReplace))
                     .forEach(c -> c.add(replacementValue));
-            /*
-            delegate.getFields().stream()
-                    .filter(f -> f.isAnnotationPresent(toReplace))
-                    .forEach(f -> typeBuilder.addToField(f, replacementValue));
-            delegate.getMethods().stream()
-                    .filter(m -> m.isAnnotationPresent(toReplace))
-                    .forEach(m -> typeBuilder.addToMethod(m, replacementValue));
-            delegate.getConstructors().stream()
-                    .filter(c -> c.isAnnotationPresent(toReplace))
-                    .forEach(c -> typeBuilder.addToConstructor(c, replacementValue));
-             */
         }
     }
 }

@@ -86,26 +86,20 @@ Additional to the junit 5 library you need the following dependencies:
     <dependency>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-core</artifactId>
-        <version>2.0.0</version>
+        <version>3.2.2</version>
         <scope>test</scope>
     </dependency>
 ```
 * You need an actual cdi implementation for your tests. There is no predefined implementation of cdi and cdi-test 
 should work with any cdi-1.2 or 2.0 compliant implementation. However I'm only using [Weld](http://weld.cdi-spec.org)
 for my integration tests at the moment.
-* As cdi-test uses [Apache DeltaSpike](https://deltaspike.apache.org) to boot and control the actual cdi-container you need a matching deltaspike-cdictrl 
-library.
+* As cdi-test used [Apache DeltaSpike](https://deltaspike.apache.org) up to version 3.2.x to boot and control the actual cdi-container.
+This is done internally now so DeltaSpike is no longer needed.
 ```xml
     <dependency>
         <groupId>org.jboss.weld.se</groupId>
         <artifactId>weld-se-core</artifactId>
-        <version>3.1.0.Final</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.deltaspike.cdictrl</groupId>
-        <artifactId>deltaspike-cdictrl-weld</artifactId>
-        <version>1.9.0</version>
+        <version>3.1.8.Final</version>
         <scope>test</scope>
     </dependency>
 ```

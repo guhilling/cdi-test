@@ -1,11 +1,13 @@
 package de.hilling.junit.cdi.scope;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.lang.annotation.Annotation;
 import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import de.hilling.junit.cdi.CdiTestJunitExtension;
 import de.hilling.junit.cdi.ContextControl;
 import de.hilling.junit.cdi.scopedbeans.ApplicationScopedBean;
+import de.hilling.junit.cdi.scopedbeans.ConversationScopedBean;
 import de.hilling.junit.cdi.scopedbeans.RequestScopedBean;
 import de.hilling.junit.cdi.scopedbeans.ScopedBean;
 import de.hilling.junit.cdi.scopedbeans.SessionScopedBean;
@@ -24,13 +27,15 @@ import de.hilling.junit.cdi.scopedbeans.SessionScopedBean;
 class ContextControlTest {
 
     @Inject
-    private RequestScopedBean     requestScopedBean;
+    private RequestScopedBean      requestScopedBean;
     @Inject
-    private ApplicationScopedBean applicationScopedBean;
+    private ApplicationScopedBean  applicationScopedBean;
     @Inject
-    private SessionScopedBean     sessionScopedBean;
+    private SessionScopedBean      sessionScopedBean;
     @Inject
-    private ContextControl        contextControl;
+    private ConversationScopedBean conversationScopedBean;
+    @Inject
+    private ContextControl         contextControl;
 
     @Test
     void restartRequestStopAll() {
@@ -40,6 +45,18 @@ class ContextControlTest {
     @Test
     void restartSessionStopAll() {
         runTestStopAll(sessionScopedBean, SessionScoped.class);
+    }
+
+    @Test
+    void restartConversationStopAll() {
+        Class<? extends Annotation> scope = RequestScoped.class;
+        contextControl.stopContext(scope);
+        contextControl.startContext(scope);
+        UUID uuid = conversationScopedBean.getUuid();
+        contextControl.stopContext(scope);
+        contextControl.startContext(scope);
+        UUID uuid2 = conversationScopedBean.getUuid();
+        assertEquals(uuid, uuid2);
     }
 
     @Test

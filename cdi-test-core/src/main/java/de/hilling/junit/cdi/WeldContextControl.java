@@ -121,7 +121,6 @@ public class WeldContextControl implements ContextControl {
             rcHolder.getBoundRequestContext().invalidate();
             rcHolder.getBoundRequestContext().deactivate();
             rcHolder.getBoundRequestContext().dissociate(rcHolder.getRequestMap());
-            requestContexts.set(null);
             requestContexts.remove();
         }
     }
@@ -144,7 +143,6 @@ public class WeldContextControl implements ContextControl {
             sessionContext.deactivate();
             sessionContext.dissociate(sessionMaps.get());
 
-            sessionMaps.set(null);
             sessionMaps.remove();
         }
     }

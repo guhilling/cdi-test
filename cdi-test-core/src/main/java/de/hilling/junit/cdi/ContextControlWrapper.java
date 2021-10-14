@@ -1,14 +1,20 @@
 package de.hilling.junit.cdi;
 
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
-import de.hilling.junit.cdi.util.UserLogger;
-import org.apache.deltaspike.cdise.api.CdiContainer;
-import org.apache.deltaspike.cdise.api.CdiContainerLoader;
-import org.apache.deltaspike.cdise.api.ContextControl;
+import static java.util.logging.Level.INFO;
 
+import java.lang.annotation.Annotation;
+import java.util.Set;
 import java.util.logging.Logger;
 
-import static java.util.logging.Level.INFO;
+import javax.enterprise.inject.spi.Bean;
+
+import org.jboss.weld.construction.api.WeldCreationalContext;
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
+import org.jboss.weld.manager.api.WeldManager;
+
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+import de.hilling.junit.cdi.util.UserLogger;
 
 /**
  * Singleton for booting the container and starting and stopping the standard CDI contexts.
@@ -17,9 +23,11 @@ import static java.util.logging.Level.INFO;
 public class ContextControlWrapper {
     private static final Logger LOG = UserLogger.getInstance();
 
-    private final ContextControl contextControl;
-
     private static final ContextControlWrapper INSTANCE = new ContextControlWrapper();
+    private final Weld weld;
+    private final WeldContainer weldContainer;
+    private final WeldManager weldManager;
+    private ContextControl contextControl;
 
     /**
      * Returns the singleton.
@@ -32,20 +40,25 @@ public class ContextControlWrapper {
     }
 
     private ContextControlWrapper() {
-        final CdiContainer cdiContainer = CdiContainerLoader.getCdiContainer();
-        if (!isCdiContainerBooted(cdiContainer)) {
-            LOG.info("booting cdi container");
-            long start = System.currentTimeMillis();
-            cdiContainer.boot();
-            long end = System.currentTimeMillis();
-            LOG.log(INFO, "booting cdi container finished in {0} ms", end - start);
+        weld = new Weld();
+        LOG.info("booting cdi container");
+        long start = System.currentTimeMillis();
+        weldContainer = weld.initialize();
+        long end = System.currentTimeMillis();
+        LOG.log(INFO, "booting cdi container finished in {0} ms", end - start);
+        if(!weldContainer.isRunning()) {
+            throw new CdiTestException("couldn't start weld");
         }
-        contextControl = cdiContainer.getContextControl();
+        weldManager = (WeldManager) weldContainer.getBeanManager();
+        contextControl = getContextualReference(ContextControl.class);
     }
 
-    private boolean isCdiContainerBooted(final CdiContainer cdiContainer) {
-        // For the time being, this simple check will reliably detect, if the container is up and running.
-        return cdiContainer.getBeanManager() != null;
+    @SuppressWarnings({ "unchecked" })
+    public <T> T getContextualReference(Class<T> beanType, Annotation ... qualifiers) {
+        WeldCreationalContext<T> creationalContext = weldManager.createCreationalContext(null);
+        Set<Bean<?>> beans = weldManager.getBeans(beanType, qualifiers);
+        Bean<T> bean = (Bean<T>) weldManager.resolve(beans);
+        return (T) weldManager.getReference(bean, beanType, creationalContext);
     }
 
     public void startContexts() {

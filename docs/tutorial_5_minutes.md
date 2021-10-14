@@ -23,19 +23,13 @@ Define dependencies on basic cdi-test features:
     <dependency>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-core</artifactId>
-        <version>2.0.0</version>
+        <version>3.3.0</version>
         <scope>test</scope>
     </dependency>
     <dependency>
         <groupId>org.jboss.weld.se</groupId>
         <artifactId>weld-se-core</artifactId>
-        <version>3.0.5.Final</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.deltaspike.cdictrl</groupId>
-        <artifactId>deltaspike-cdictrl-weld</artifactId>
-        <version>1.9.0</version>
+        <version>3.1.8.Final</version>
         <scope>test</scope>
     </dependency>
 </dependencies>

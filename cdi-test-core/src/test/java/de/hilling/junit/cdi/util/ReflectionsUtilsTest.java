@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -41,7 +40,6 @@ class ReflectionsUtilsTest {
     @Test
     void dontProxySystemClasses() {
         assertFalse(ReflectionsUtils.shouldProxyCdiType(Integer.class));
-        assertFalse(ReflectionsUtils.shouldProxyCdiType(CdiContainer.class));
         assertFalse(ReflectionsUtils.shouldProxyCdiType(ContextControlWrapper.class));
         assertFalse(ReflectionsUtils.shouldProxyCdiType(SampleEnum.class));
     }

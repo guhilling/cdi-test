@@ -11,13 +11,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Utilities for reflection access.
+ */
 public final class ReflectionsUtils {
 
-    private static final String[] SYSTEM_PACKAGES = {"java", "javax", "com.sun", "org.apache.deltaspike", "org.jboss"};
+    private static final String[] SYSTEM_PACKAGES = {"java", "javax", "com.sun", "org.apache.deltaspike", "org.jboss", "org.wildfly", "jakarta"};
 
     private ReflectionsUtils() {
     }
 
+    /**
+     * Get all fields in a class.
+     * @param clazz class.
+     * @return list of fields.
+     */
     public static List<Field> getAllFields(Class<?> clazz) {
         List<Field> result = new ArrayList<>(Arrays.asList(clazz.getDeclaredFields()));
         Class<?> superClass = clazz.getSuperclass();
@@ -49,7 +57,7 @@ public final class ReflectionsUtils {
      * Determine if a proxy should be created for the given class.
      * <p>The following classes will be excluded:</p>
      * <ul>
-     * <li>System classes, including those from weld and deltaspike.</li>
+     * <li>System classes, including those from weld.</li>
      * <li>Classes that are not proxyable.</li>
      * </ul>
      *

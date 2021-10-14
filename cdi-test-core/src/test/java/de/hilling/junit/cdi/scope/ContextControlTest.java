@@ -1,7 +1,6 @@
 package de.hilling.junit.cdi.scope;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.annotation.Annotation;
 import java.util.UUID;
@@ -10,8 +9,13 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
+import org.jboss.weld.context.ApplicationContext;
+import org.jboss.weld.context.bound.BoundConversationContext;
+import org.jboss.weld.context.bound.BoundRequestContext;
+import org.jboss.weld.context.bound.BoundSessionContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -36,6 +40,13 @@ class ContextControlTest {
     private ConversationScopedBean conversationScopedBean;
     @Inject
     private ContextControl         contextControl;
+
+    @Inject
+    private ApplicationContext applicationContext;
+    @Inject
+    private BoundSessionContext sessionContext;
+    @Inject
+    private BoundConversationContext conversationContext;
 
     @Test
     void restartRequestStopAll() {
@@ -73,6 +84,10 @@ class ContextControlTest {
     void startStopMultiple() {
         stopStartContext(RequestScoped.class);
         stopStartContext(ApplicationScoped.class);
+        stopStartContext(ConversationScoped.class);
+        stopStartContext(SessionScoped.class);
+        assertFalse(sessionContext.isActive());
+        assertFalse(conversationContext.isActive());
     }
 
     private void stopStartContext(Class<? extends Annotation> scopeClass) {

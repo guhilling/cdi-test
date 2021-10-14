@@ -1,5 +1,8 @@
 package de.hilling.junit.cdi;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Qualifier;
+
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
 import de.hilling.junit.cdi.scope.TestState;
@@ -8,12 +11,8 @@ import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
-import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.junit.jupiter.api.extension.*;
 import org.mockito.Mockito;
-
-import javax.inject.Inject;
-import javax.inject.Qualifier;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -24,7 +23,7 @@ import java.util.Optional;
  * JUnit 5 extension for cdi lifecycle management and injection into test cases. Detailed documentation available at <a
  * href="https://cdi-test.hilling.de">Github Pages</a>
  * <p>
- * {@link Mockito} will automatically added to the lifecycle so the {@link Mockito} JUnit Extension should <em>not</em> be added to the test
+ * {@link Mockito} will be automatically added to the lifecycle so the {@link Mockito} JUnit Extension should <em>not</em> be added to the test
  * additionally.
  * </p>
  */
@@ -41,8 +40,8 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
     private       TestEnvironment   testEnvironment;
 
     public CdiTestJunitExtension() {
-        invocationTargetManager = BeanProvider.getContextualReference(InvocationTargetManager.class, false);
-        lifecycleNotifier = BeanProvider.getContextualReference(LifecycleNotifier.class, false);
+        invocationTargetManager = contextControl.getContextualReference(InvocationTargetManager.class);
+        lifecycleNotifier = contextControl.getContextualReference(LifecycleNotifier.class);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
 
     @Override
     public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
-        testEnvironment = BeanProvider.getContextualReference(TestEnvironment.class);
+        testEnvironment = contextControl.getContextualReference(TestEnvironment.class);
         testEnvironment.setTestInstance(testInstance);
         for (Field field : ReflectionsUtils.getAllFields(testInstance.getClass())) {
             if (field.isAnnotationPresent(Inject.class)) {
@@ -76,9 +75,9 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
     private void setField(Object testInstance, Field field, Optional<Annotation> qualifierAnnotation) {
         Object bean;
         if(qualifierAnnotation.isPresent()) {
-            bean = BeanProvider.getContextualReference(field.getType(), qualifierAnnotation.get());
+            bean = contextControl.getContextualReference(field.getType(), qualifierAnnotation.get());
         } else {
-            bean = BeanProvider.getContextualReference(field.getType());
+            bean = contextControl.getContextualReference(field.getType());
         }
         ReflectionsUtils.setField(testInstance, bean, field);
     }

@@ -1,13 +1,14 @@
 package de.hilling.junit.cdi.scope.context;
 
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
-import de.hilling.junit.cdi.scope.TestScoped;
-import de.hilling.junit.cdi.scope.TestSuiteScoped;
+import jakarta.enterprise.context.spi.Context;
 
-import javax.enterprise.context.spi.Context;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
+
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+import de.hilling.junit.cdi.scope.TestScoped;
+import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 @BypassTestInterceptor
 @TestSuiteScoped

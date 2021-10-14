@@ -1,5 +1,9 @@
 package de.hilling.junit.cdi.scope;
 
+import jakarta.enterprise.event.Observes;
+import jakarta.enterprise.inject.spi.BeanManager;
+import jakarta.inject.Inject;
+
 import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
@@ -8,11 +12,6 @@ import de.hilling.junit.cdi.lifecycle.TestEvent;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.mockito.listeners.MockCreationListener;
 import org.mockito.mock.MockCreationSettings;
-
-import javax.enterprise.event.Observes;
-import javax.enterprise.inject.spi.AnnotatedType;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.inject.Inject;
 
 import java.util.*;
 
@@ -77,10 +76,8 @@ public class InvocationTargetManager implements MockCreationListener {
 
     public Class<?> alternativeFor(Class<?> javaClass) {
         for (Class<?> alternative : currentAlternativesSet()) {
-            AnnotatedType<?> type = beanManager.getExtension(TestScopeExtension.class)
-                    .decoratedTypeFor(alternative);
-            ActivatableTestImplementation activatableTestImplementation = type.getAnnotation(
-                    ActivatableTestImplementation.class);
+            ActivatableTestImplementation activatableTestImplementation = beanManager.getExtension(TestScopeExtension.class)
+                    .annotationsFor(alternative);
             for (Class<?> overridden : activatableTestImplementation.value()) {
                 if (overridden.equals(javaClass)) {
                     return alternative;

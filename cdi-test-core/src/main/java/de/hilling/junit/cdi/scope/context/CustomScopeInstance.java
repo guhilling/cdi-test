@@ -1,10 +1,10 @@
 package de.hilling.junit.cdi.scope.context;
 
+import jakarta.enterprise.context.spi.CreationalContext;
+import jakarta.enterprise.inject.spi.Bean;
+
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import org.immutables.value.Value;
-
-import javax.enterprise.context.spi.CreationalContext;
-import javax.enterprise.inject.spi.Bean;
 
 @BypassTestInterceptor
 @Value.Immutable

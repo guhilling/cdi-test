@@ -48,6 +48,8 @@ class InjectionTest {
     void checkTestInformation() throws Exception {
         assertNotNull(testInformation);
         assertEquals(InjectionTest.class, testInformation.getTestClass());
+        assertEquals("checkTestInformation()", testInformation.getTestName());
+        assertEquals(this, testInformation.getTestInstance());
         assertEquals(InjectionTest.class.getDeclaredMethod("checkTestInformation"), testInformation.getTestMethod());
     }
 

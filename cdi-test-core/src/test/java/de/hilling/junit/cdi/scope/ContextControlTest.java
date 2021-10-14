@@ -1,6 +1,7 @@
 package de.hilling.junit.cdi.scope;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.lang.annotation.Annotation;
@@ -12,6 +13,9 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 
+import org.jboss.weld.context.ApplicationContext;
+import org.jboss.weld.context.bound.BoundConversationContext;
+import org.jboss.weld.context.bound.BoundSessionContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -36,6 +40,13 @@ class ContextControlTest {
     private ConversationScopedBean conversationScopedBean;
     @Inject
     private ContextControl         contextControl;
+
+    @Inject
+    private ApplicationContext applicationContext;
+    @Inject
+    private BoundSessionContext sessionContext;
+    @Inject
+    private BoundConversationContext conversationContext;
 
     @Test
     void restartRequestStopAll() {
@@ -67,6 +78,24 @@ class ContextControlTest {
         contextControl.stopContext(RequestScoped.class);
         contextControl.startContext(SessionScoped.class);
         contextControl.startContext(ConversationScoped.class);
+    }
+
+    @Test
+    void startStopMultiple() {
+        stopStartContext(RequestScoped.class);
+        stopStartContext(ApplicationScoped.class);
+        stopStartContext(ConversationScoped.class);
+        stopStartContext(SessionScoped.class);
+        assertFalse(sessionContext.isActive());
+        assertFalse(conversationContext.isActive());
+    }
+
+    private void stopStartContext(Class<? extends Annotation> scopeClass) {
+        contextControl.stopContext(scopeClass);
+        contextControl.startContext(scopeClass);
+        contextControl.startContext(scopeClass);
+        contextControl.stopContext(scopeClass);
+        contextControl.stopContext(scopeClass);
     }
 
     @Test

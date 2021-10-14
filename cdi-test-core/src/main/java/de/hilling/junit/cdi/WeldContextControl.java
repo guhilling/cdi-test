@@ -42,7 +42,7 @@ public class WeldContextControl implements ContextControl {
         startApplicationScope();
         startSessionScope();
         startRequestScope();
-        startConversationScope(null);
+        startConversationScope();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class WeldContextControl implements ContextControl {
         } else if (scopeClass.isAssignableFrom(RequestScoped.class)) {
             startRequestScope();
         } else if (scopeClass.isAssignableFrom(ConversationScoped.class)) {
-            startConversationScope(null);
+            startConversationScope();
         }
     }
 
@@ -147,14 +147,14 @@ public class WeldContextControl implements ContextControl {
         }
     }
 
-    void startConversationScope(String cid) {
+    void startConversationScope() {
         WeldContextControl.RequestContextHolder rcHolder = requestContexts.get();
         if (rcHolder == null) {
             startRequestScope();
             rcHolder = requestContexts.get();
         }
         conversationContext.associate(new MutableBoundRequest(rcHolder.requestMap, sessionMaps.get()));
-        conversationContext.activate(cid);
+        conversationContext.activate();
     }
 
     void stopConversationScope() {

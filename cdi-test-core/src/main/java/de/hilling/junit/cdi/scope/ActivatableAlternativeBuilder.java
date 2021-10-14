@@ -26,12 +26,15 @@ class ActivatableAlternativeBuilder<X> {
         javaClass = type.getJavaClass();
     }
 
-    void invoke() {
+    ActivatableTestImplementation invoke() {
         ActivatableTestImplementation implementation = type.getAnnotation(ActivatableTestImplementation.class);
         AnnotatedTypeConfigurator<X> configureAnnotatedType = pat.configureAnnotatedType();
         if (implementation.value().length == 0) {
             configureAnnotatedType.remove((a) -> a.annotationType().equals(ActivatableTestImplementation.class));
-            configureAnnotatedType.add(ImmutableActivatableTestImplementation.builder().value(determineUniqueSuperclass()).build());
+            implementation = ImmutableActivatableTestImplementation.builder()
+                    .value(determineUniqueSuperclass())
+                    .build();
+            configureAnnotatedType.add(implementation);
         }
         configureAnnotatedType.add(new TypedLiteral() {
             @Override
@@ -39,6 +42,7 @@ class ActivatableAlternativeBuilder<X> {
                 return new Class[]{javaClass};
             }
         });
+        return implementation;
     }
 
     private Class<?> determineUniqueSuperclass() {

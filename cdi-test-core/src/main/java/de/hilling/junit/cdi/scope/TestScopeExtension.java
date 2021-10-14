@@ -10,6 +10,7 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.*;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +27,9 @@ import static java.util.logging.Level.FINE;
 public class TestScopeExtension implements Extension, Serializable {
 
     private static final    long                         serialVersionUID = 1L;
-    private static final    Logger                       LOG              = Logger.getLogger(
+    private static final    Logger                         LOG            = Logger.getLogger(
     TestScopeExtension.class.getCanonicalName());
-    private final transient Map<Class<?>, AnnotatedType<?>> decoratedTypes   = new HashMap<>();
+    private final transient Map<Class<?>, ActivatableTestImplementation> decoratedTypes = new HashMap<>();
 
     /**
      * Add contexts after bean discovery.
@@ -40,7 +41,7 @@ public class TestScopeExtension implements Extension, Serializable {
         afterBeanDiscovery.addContext(new TestContext());
     }
 
-    AnnotatedType<?> decoratedTypeFor(Class<?> clazz) {
+    ActivatableTestImplementation annotationsFor(Class<?> clazz) {
         return decoratedTypes.get(clazz);
     }
 
@@ -53,25 +54,16 @@ public class TestScopeExtension implements Extension, Serializable {
         afterTypeDiscovery.getAlternatives().add(GlobalTestImplementation.class);
     }
 
-    public <T> void replaceAnnotations(@Observes ProcessAnnotatedType<T> pat) {
+    // TODO check race conditions
+    public <X> void processAnnotatedTypes(@Observes ProcessAnnotatedType<X> pat) {
         LOG.log(FINE, "processing type {0}", pat);
         new AnnotationReplacementBuilder<>(pat).invoke();
-        updateDecoratedTypes(pat);
-    }
-
-    // TODO check race conditions
-    private <T> void updateDecoratedTypes(ProcessAnnotatedType<T> pat) {
-        decoratedTypes.put(pat.getAnnotatedType().getJavaClass(), pat.getAnnotatedType());
-    }
-
-    public <X> void processAnnotatedTypes(@Observes ProcessAnnotatedType<X> pat) {
         AnnotatedType<X> type = pat.getAnnotatedType();
         final Class<X> javaClass = type.getJavaClass();
         if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
-            new ActivatableAlternativeBuilder<>(pat).invoke();
+            decoratedTypes.put(pat.getAnnotatedType().getJavaClass(), new ActivatableAlternativeBuilder<>(pat).invoke());
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
             pat.configureAnnotatedType().add(ImmutableReplaceable.builder().build());
         }
-        updateDecoratedTypes(pat);
     }
 }

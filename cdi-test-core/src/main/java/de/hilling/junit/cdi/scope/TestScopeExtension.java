@@ -54,7 +54,6 @@ public class TestScopeExtension implements Extension, Serializable {
         afterTypeDiscovery.getAlternatives().add(GlobalTestImplementation.class);
     }
 
-    // TODO check race conditions
     public <X> void processAnnotatedTypes(@Observes ProcessAnnotatedType<X> pat) {
         LOG.log(FINE, "processing type {0}", pat);
         new AnnotationReplacementBuilder<>(pat).invoke();

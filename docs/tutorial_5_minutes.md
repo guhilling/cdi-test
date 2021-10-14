@@ -86,7 +86,4 @@ public class RequestScopeMockTest extends BaseTest {
 ## TODO
 
 * More extensions:
-    * dbunit
     * test data generator
-* switchable Mock-Providers
-

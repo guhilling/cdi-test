@@ -9,9 +9,10 @@
     <packaging>jar</packaging>
     <description>documentation for cdi-test (all included modules)</description>
     <name>cdi-test documentation</name>
-    <artifactId>cdi-test-docs</artifactId>
+    <artifactId>docs</artifactId>
 
     <properties>
         <sonar.skip>true</sonar.skip>
+        <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
     </properties>
 </project>

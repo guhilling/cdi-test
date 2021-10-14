@@ -57,6 +57,16 @@ class ContextControlTest {
         contextControl.startContext(scope);
         UUID uuid2 = conversationScopedBean.getUuid();
         assertEquals(uuid, uuid2);
+        contextControl.stopContext(ConversationScoped.class);
+        contextControl.stopContext(SessionScoped.class);
+        contextControl.startContext(SessionScoped.class);
+        contextControl.startContext(ConversationScoped.class);
+
+        contextControl.stopContext(ConversationScoped.class);
+        contextControl.stopContext(SessionScoped.class);
+        contextControl.stopContext(RequestScoped.class);
+        contextControl.startContext(SessionScoped.class);
+        contextControl.startContext(ConversationScoped.class);
     }
 
     @Test

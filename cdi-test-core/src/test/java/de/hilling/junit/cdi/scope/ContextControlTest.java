@@ -1,6 +1,8 @@
 package de.hilling.junit.cdi.scope;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.lang.annotation.Annotation;
 import java.util.UUID;
@@ -9,12 +11,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.jboss.weld.context.ApplicationContext;
 import org.jboss.weld.context.bound.BoundConversationContext;
-import org.jboss.weld.context.bound.BoundRequestContext;
 import org.jboss.weld.context.bound.BoundSessionContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

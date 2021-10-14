@@ -1,16 +1,20 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Proxy;
 import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import de.hilling.junit.cdi.scope.CaseScopedBean;
+import de.hilling.junit.cdi.service.OverriddenService;
+import de.hilling.junit.cdi.service.OverriddenServiceImpl;
 
 class AnnotationReplacementHolderTest {
 
@@ -41,6 +45,20 @@ class AnnotationReplacementHolderTest {
     @Test
     void classNotAnAnnotation() {
         assertThrows(RuntimeException.class, () -> createHolder("test-noannotation.properties"));
+    }
+
+    @Test
+    void invocationHandlerMethods() {
+        Object proxyInstance = Proxy.newProxyInstance(getClass().getClassLoader(),
+                                          new Class[]{OverriddenService.class},
+                                          new AnnotationReplacementHolder.AnnotationInvocationHandler(OverriddenService.class));
+        assertTrue(proxyInstance instanceof OverriddenService);
+        OverriddenService serviceProxy = (OverriddenService) proxyInstance;
+        assertNotEquals(serviceProxy, new OverriddenServiceImpl());
+        assertEquals(0, serviceProxy.hashCode());
+        assertEquals("de.hilling.junit.cdi.service.OverriddenService", serviceProxy.toString());
+        assertNull(serviceProxy.serviceMethod());
+        assertEquals(serviceProxy, serviceProxy);
     }
 
     private void createHolder(String resourceName) {

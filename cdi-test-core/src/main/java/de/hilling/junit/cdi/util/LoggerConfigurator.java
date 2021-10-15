@@ -33,6 +33,7 @@ public class LoggerConfigurator {
                 warnLoggerNotConfigured("file not found");
             } else {
                 LogManager logManager = LogManager.getLogManager();
+                // TODO revisit this.
                 logManager.readConfiguration(inputStream);
             }
         } catch (final IOException e) {

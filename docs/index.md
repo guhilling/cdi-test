@@ -71,9 +71,9 @@ not quite the same and not as easy to use and extend as cdi-test.
 ### Conclusion
 
 cdi-test shouldn't do everything and it's not the right tool if you want to create integration tests. In this case take
-a look at [Arquillian](http://arquillian.org) or [Testcontainers](https://www.testcontainers.org).
+a look at [Testcontainers](https://www.testcontainers.org) or maybe [Arquillian](http://arquillian.org).
 
-If you want to unit test your cdi application read on! I'll refer to the "test tests" (sorry ...) contained in the
+If you want to test the components of your cdi application read on! I'll refer to the tests contained in the
 cdi-test-core project. Maybe it's best to clone [cdi-test](https://github.com/guhilling/cdi-test.git) to play around
 with the tests.
 
@@ -110,13 +110,13 @@ environment, so you might have to pull them into the test scope manually. One ex
 
 ## First test
 
-First the (not so)obvious: Don't forget to include a ``beans.xml`` for your tests or cdi won't find any of your testing 
+First the (not so) obvious: Don't forget to include a ``beans.xml`` for your tests or cdi won't find any of your testing 
 components. However the test class itself is not a cdi bean but is created by junit. This is different from the version
-1.x of cdi-test when the test case was created using cdi.
+1.x of cdi-test where the test case was created using cdi.
 
 The junit engine is extended with ``CdiTestJunitExtension``. The extension takes care of injecting cdi beans into
-the test. Again: The test class itself _is not a cdi bean_, so it is not possible to use any cdi feature like 
-creating an event listener in it.
+the test. Again: The test class itself _is not a cdi bean_, so it is not possible to use every cdi feature like 
+creating an event listener in it. Only ``@Inject`` will work and Qualifieres will also be honored.
 
 In the example below we let the extension resolve and inject the ``SampleService`` which is under test, into the test.
 
@@ -141,7 +141,8 @@ Well ... there is one thing: All standard scopes are created and destroyed just 
 This way it is possible to run the tests with decent performance and have them isolated from each other anyway.
 
 The only beans that survive the test are the special ``@TestScoped`` and ``@TestSuiteScoped`` beans. These are used in
-cdi-test internally but you are certainly free to use them in your test support classes.
+cdi-test internally but you are certainly free to use them in your test support classes. This often makes sense for components
+that should be replaced globally an might be expensive to setup.
 
 ## Mocking beans
 
@@ -196,8 +197,8 @@ described [in the Mockito documentation](https://static.javadoc.io/org.mockito/m
 
 ### How is this done?
 
-Actually it is quite simple. During testing every bean call runs via an additional proxy object that dispatches the calls. This 
-proxy is configured by the ``CdiTestJunitExtension`` that analyzes the test class for mock definitions.
+Actually quite simple: During testing every bean call is executed with an additional interceptor that dispatches the calls. This 
+is configured by the ``CdiTestJunitExtension`` that analyzes the test class for mock definitions.
 
 So there is one fixed "method routing" defined per test class. In another module test you are free to use the actual
 ``BackendService`` together with ``SampleService``.
@@ -261,12 +262,12 @@ cdi-events:
     * ``@TestEvent`` is fired when tests are started and finished, see ``EventType``for details.
     * The junit ``ExtensionContext`` is delivered as the object with the event.
 
-[cdi-test-microprofile](https://github.com/guhilling/cdi-test-microprofile) should be a nice example
+[cdi-test-microprofile](https://github.com/guhilling/cdi-test/tree/master/cdi-test-microprofile) should be a nice example
 for a small but hopefully useful extension.
 
 ## Feedback and future development
 
-Feedback is always welcome. Feel free to ask for extensions an support for building your own!
+Feedback is always welcome. Feel free to ask for extensions and support for building your own!
 
 ## LICENSE
 

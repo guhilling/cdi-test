@@ -13,8 +13,5 @@
 
     <properties>
         <sonar.skip>true</sonar.skip>
-        <!--
-        <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-        -->
     </properties>
 </project>

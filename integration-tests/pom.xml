@@ -12,9 +12,6 @@
 
     <properties>
         <sonar.skip>true</sonar.skip>
-        <!--
-        <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-        -->
     </properties>
 
     <modules>
@@ -77,7 +74,7 @@
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <skip>true</skip>
+                    <skip>false</skip>
                 </configuration>
             </plugin>
             <plugin>

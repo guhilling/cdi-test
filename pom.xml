@@ -10,6 +10,7 @@
     <name>cdi-test</name>
     <description>junit extension for simple and efficient testing of cdi components</description>
 
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>

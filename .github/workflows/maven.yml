@@ -9,8 +9,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '8', '11' ]
+        java: [ '8', '11', '16' ]
         include:
+          - java: 8
+            extraargs: >
+              -Dmaven.javadoc.skip=true
           - java: 16
             extraargs: >
               jacoco:report

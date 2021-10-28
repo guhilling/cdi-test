@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '11' ]
+        java: [ '8', '11' ]
         include:
           - java: 16
             extraargs: >

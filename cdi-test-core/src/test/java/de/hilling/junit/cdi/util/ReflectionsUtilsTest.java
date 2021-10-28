@@ -23,7 +23,7 @@ class ReflectionsUtilsTest {
     @Test
     void getAllFields() {
         List<Field> allFields = ReflectionsUtils.getAllFields(BackendServiceTestImplementation.class);
-        assertEquals(4, allFields.size());
+        assertEquals(4, allFields.stream().filter(f -> !f.isSynthetic()).count());
     }
 
     @Test

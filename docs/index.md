@@ -86,7 +86,7 @@ Additional to the junit 5 library you need the following dependencies:
     <dependency>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-core</artifactId>
-        <version>3.2.2</version>
+        <version>3.3.5</version>
         <scope>test</scope>
     </dependency>
 ```

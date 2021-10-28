@@ -9,13 +9,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '11' ]
+        java: [ '8', '11', '16' ]
         include:
           - java: 8
-            extraargs: >
-              -Dmaven.javadoc.skip=true
+            extraargs: -Dmaven.javadoc.skip=true
           - java: 16
-            extraargs: >
+            extratestargs: >
               jacoco:report
               sonar:sonar
               -Dsonar.host.url=https://sonarcloud.io
@@ -35,9 +34,9 @@ jobs:
         java-version: ${{ matrix.java }}
         cache: maven
     - name: Maven Build JDK ${{ matrix.java }}
-      run: mvn -B package --file pom.xml -DskipTests
+      run: mvn -B package --file pom.xml -DskipTests ${{ matrix.extraargs }}
     - name: Maven Test JDK ${{ matrix.java }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn -B test --file pom.xml ${{ matrix.extraargs }}
+      run: mvn -B test --file pom.xml ${{ matrix.extraargs }}  ${{ matrix.extratestargs}}

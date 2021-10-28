@@ -9,11 +9,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '8', '11', '16' ]
+        java: [ '8', '11', '17' ]
         include:
           - java: 8
             extraargs: -Dmaven.javadoc.skip=true
-          - java: 16
+          - java: 17
             extratestargs: >
               jacoco:report
               sonar:sonar

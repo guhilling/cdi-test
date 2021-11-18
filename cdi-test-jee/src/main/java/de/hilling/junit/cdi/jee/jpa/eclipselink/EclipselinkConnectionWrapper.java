@@ -3,11 +3,11 @@ package de.hilling.junit.cdi.jee.jpa.eclipselink;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 
 import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;

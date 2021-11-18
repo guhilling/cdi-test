@@ -1,9 +1,14 @@
 package de.hilling.junit.cdi.scope;
 
-import org.immutables.value.Value;
+import jakarta.inject.Scope;
 
-import javax.inject.Scope;
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import org.immutables.value.Value;
 
 /**
  * Unit test scope valid for the execution of all unit tests.

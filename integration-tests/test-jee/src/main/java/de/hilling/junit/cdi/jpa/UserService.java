@@ -1,11 +1,11 @@
 package de.hilling.junit.cdi.jpa;
 
-import javax.ejb.Startup;
-import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import javax.persistence.EntityManager;
+import jakarta.ejb.Startup;
+import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import jakarta.persistence.EntityManager;
 
 @Startup
 @Singleton

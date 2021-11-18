@@ -6,8 +6,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Proxy;
 import java.util.Map;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.SessionScoped;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

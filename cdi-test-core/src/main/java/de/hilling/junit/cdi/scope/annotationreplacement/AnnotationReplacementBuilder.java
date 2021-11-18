@@ -1,12 +1,12 @@
 package de.hilling.junit.cdi.scope.annotationreplacement;
 
+import jakarta.enterprise.inject.Alternative;
+import jakarta.enterprise.inject.spi.AnnotatedType;
+import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
+import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
+
 import java.lang.annotation.Annotation;
 import java.util.Map;
-
-import javax.enterprise.inject.Alternative;
-import javax.enterprise.inject.spi.AnnotatedType;
-import javax.enterprise.inject.spi.ProcessAnnotatedType;
-import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
@@ -14,7 +14,7 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
 @Alternative
 public class AnnotationReplacementBuilder<T> {
     private final Map<Class<? extends Annotation>, Annotation> replacementMap;
-    private final AnnotatedTypeConfigurator<T> configurator;
+    private final AnnotatedTypeConfigurator<T>                 configurator;
 
     public AnnotationReplacementBuilder(ProcessAnnotatedType<T> pat) {
         this.configurator = pat.configureAnnotatedType();

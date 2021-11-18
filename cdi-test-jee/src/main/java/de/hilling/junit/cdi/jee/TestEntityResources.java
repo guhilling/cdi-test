@@ -3,11 +3,11 @@ package de.hilling.junit.cdi.jee;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.enterprise.event.Observes;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import jakarta.enterprise.event.Observes;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 

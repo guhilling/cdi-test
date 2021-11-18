@@ -1,9 +1,9 @@
 package de.hilling.junit.cdi.scope.context;
 
+import jakarta.enterprise.context.spi.Context;
+
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
-
-import javax.enterprise.context.spi.Context;
 
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;

@@ -18,9 +18,9 @@ package de.hilling.cdi.sampleapp.ejb;
 
 import de.hilling.cdi.sampleapp.UserRegistrationEntity;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import java.io.Serializable;
 
 @Stateless

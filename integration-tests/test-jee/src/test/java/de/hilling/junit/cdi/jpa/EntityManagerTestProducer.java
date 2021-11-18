@@ -1,9 +1,9 @@
 package de.hilling.junit.cdi.jpa;
 
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 import de.hilling.junit.cdi.jee.EntityManagerResourcesProvider;

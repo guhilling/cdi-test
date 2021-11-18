@@ -1,5 +1,8 @@
 package de.hilling.junit.cdi;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Qualifier;
+
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
 import de.hilling.junit.cdi.scope.TestState;
@@ -10,9 +13,6 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 import org.junit.jupiter.api.extension.*;
 import org.mockito.Mockito;
-
-import javax.inject.Inject;
-import javax.inject.Qualifier;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

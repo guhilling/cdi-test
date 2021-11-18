@@ -2,8 +2,8 @@ package de.hilling.junit.cdi.microprofile;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import javax.ejb.Singleton;
-import javax.inject.Inject;
+import jakarta.ejb.Singleton;
+import jakarta.inject.Inject;
 
 @Singleton
 public class EjbController {

@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.beans;
 
-import javax.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.RequestScoped;
 import java.util.UUID;
 
 @RequestScoped

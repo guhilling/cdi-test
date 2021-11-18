@@ -1,10 +1,10 @@
 package de.hilling.junit.cdi.scope;
 
-import javax.enterprise.inject.Typed;
-import javax.enterprise.inject.spi.AnnotatedType;
-import javax.enterprise.inject.spi.ProcessAnnotatedType;
-import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
-import javax.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.inject.Typed;
+import jakarta.enterprise.inject.spi.AnnotatedType;
+import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
+import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 import de.hilling.junit.cdi.CdiTestException;
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;

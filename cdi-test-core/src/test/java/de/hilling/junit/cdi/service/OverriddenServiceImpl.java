@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.service;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 public class OverriddenServiceImpl implements OverriddenService {
 

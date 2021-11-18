@@ -18,7 +18,9 @@
         <module>test-core</module>
         <module>test-jee</module>
         <module>test-jsf-war</module>
+        <!--
         <module>test-microprofile</module>
+        -->
     </modules>
 
     <dependencies>

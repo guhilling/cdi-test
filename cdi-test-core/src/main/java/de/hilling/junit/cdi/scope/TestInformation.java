@@ -1,10 +1,11 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
-import de.hilling.junit.cdi.lifecycle.TestEvent;
+import jakarta.enterprise.event.Observes;
+
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-import javax.enterprise.event.Observes;
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+import de.hilling.junit.cdi.lifecycle.TestEvent;
 
 @BypassTestInterceptor
 @TestSuiteScoped

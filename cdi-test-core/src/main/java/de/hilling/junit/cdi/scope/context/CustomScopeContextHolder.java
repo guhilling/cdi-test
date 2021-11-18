@@ -1,8 +1,9 @@
 package de.hilling.junit.cdi.scope.context;
 
+import jakarta.enterprise.inject.spi.Bean;
+
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 
-import javax.enterprise.inject.spi.Bean;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

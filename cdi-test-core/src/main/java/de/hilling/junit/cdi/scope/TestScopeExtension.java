@@ -1,5 +1,12 @@
 package de.hilling.junit.cdi.scope;
 
+import jakarta.enterprise.event.Observes;
+import jakarta.enterprise.inject.spi.AfterBeanDiscovery;
+import jakarta.enterprise.inject.spi.AfterTypeDiscovery;
+import jakarta.enterprise.inject.spi.AnnotatedType;
+import jakarta.enterprise.inject.spi.Extension;
+import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
+
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
@@ -7,9 +14,6 @@ import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementBui
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
-
-import javax.enterprise.event.Observes;
-import javax.enterprise.inject.spi.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -19,7 +23,7 @@ import java.util.logging.Logger;
 import static java.util.logging.Level.FINE;
 
 /**
- * CDI {@link javax.enterprise.inject.spi.Extension} to enable proxying of (nearly) all method invocations. <p> By
+ * CDI {@link Extension} to enable proxying of (nearly) all method invocations. <p> By
  * default, these are all classes, except: <ul> <li>Anonymous classes.</li> <li>Enums.</li> </ul> To preventing
  * <em>everything</em> from being proxied it is possible to define explicit packages.
  */
@@ -46,7 +50,7 @@ public class TestScopeExtension implements Extension, Serializable {
     }
 
     /**
-     * Use {@link javax.enterprise.inject.spi.AfterTypeDiscovery} to add Stereotype.
+     * Use {@link AfterTypeDiscovery} to add Stereotype.
      *
      * @param afterTypeDiscovery type meta information.
      */

@@ -6,7 +6,7 @@ import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-import javax.enterprise.event.Observes;
+import jakarta.enterprise.event.Observes;
 
 @BypassTestInterceptor
 @TestSuiteScoped

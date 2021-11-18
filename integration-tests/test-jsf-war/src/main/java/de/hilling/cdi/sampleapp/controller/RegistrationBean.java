@@ -18,9 +18,9 @@ package de.hilling.cdi.sampleapp.controller;
 
 import de.hilling.cdi.sampleapp.ejb.RegistrationService;
 
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import java.io.Serializable;
 
 @Named("registration")

@@ -1,7 +1,7 @@
 package de.hilling.junit.cdi.scopedbeans;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 @RequestScoped
 public class RequestScopedBean extends ScopedBean {

@@ -1,12 +1,12 @@
 package de.hilling.junit.cdi;
 
+import jakarta.enterprise.inject.spi.Bean;
+
 import static java.util.logging.Level.INFO;
 
 import java.lang.annotation.Annotation;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import javax.enterprise.inject.spi.Bean;
 
 import org.jboss.weld.construction.api.WeldCreationalContext;
 import org.jboss.weld.environment.se.Weld;

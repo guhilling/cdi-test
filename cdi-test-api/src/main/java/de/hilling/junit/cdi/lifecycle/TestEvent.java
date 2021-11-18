@@ -1,13 +1,15 @@
 package de.hilling.junit.cdi.lifecycle;
 
-import de.hilling.junit.cdi.scope.TestState;
-import org.immutables.value.Value;
+import jakarta.inject.Qualifier;
 
-import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import org.immutables.value.Value;
+
+import de.hilling.junit.cdi.scope.TestState;
 
 /**
  * Qualifier to mark test events defined in {@link TestState}

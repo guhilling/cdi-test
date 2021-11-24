@@ -39,8 +39,15 @@ jobs:
         cache: maven
     - name: Maven Build JDK ${{ matrix.java }}
       run: mvn -B package --file pom.xml -DskipTests ${{ matrix.extraargs }}
-    - name: Maven Test JDK ${{ matrix.java }}
+    - name: Maven Test with Sonar JDK ${{ matrix.java }}
+      if: github.event_name != 'pull_request'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: mvn -B test --file pom.xml ${{ matrix.extraargs }}  ${{ matrix.extratestargs}}
+    - name: Maven Test JDK ${{ matrix.java }} (Pull Request)
+      if: github.event_name == 'pull_request'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn -B test --file pom.xml ${{ matrix.extraargs }}

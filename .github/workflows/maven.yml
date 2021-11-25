@@ -1,6 +1,10 @@
 name: Build CDI Test
 
-on: [push]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 19 * * 6'
 
 jobs:
   build:
@@ -9,10 +13,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '11' ]
+        java: [ '8', '11', '17' ]
         include:
-          - java: 16
-            extraargs: >
+          - java: 8
+            extraargs: -Dmaven.javadoc.skip=true
+          - java: 17
+            extratestargs: >
               jacoco:report
               sonar:sonar
               -Dsonar.host.url=https://sonarcloud.io
@@ -32,8 +38,15 @@ jobs:
         java-version: ${{ matrix.java }}
         cache: maven
     - name: Maven Build JDK ${{ matrix.java }}
-      run: mvn -B package --file pom.xml -DskipTests
-    - name: Maven Test JDK ${{ matrix.java }}
+      run: mvn -B package --file pom.xml -DskipTests ${{ matrix.extraargs }}
+    - name: Maven Test with Sonar JDK ${{ matrix.java }}
+      if: github.event_name != 'pull_request'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn -B test --file pom.xml ${{ matrix.extraargs }}  ${{ matrix.extratestargs}}
+    - name: Maven Test JDK ${{ matrix.java }} (Pull Request)
+      if: github.event_name == 'pull_request'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

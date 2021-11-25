@@ -23,7 +23,7 @@ Define dependencies on basic cdi-test features:
     <dependency>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-core</artifactId>
-        <version>3.3.0</version>
+        <version>3.3.5</version>
         <scope>test</scope>
     </dependency>
     <dependency>

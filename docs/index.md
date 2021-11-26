@@ -1,6 +1,6 @@
 # cdi-test
 
-[![Build Status](https://travis-ci.org/guhilling/cdi-test.svg?branch=master)](https://travis-ci.org/guhilling/cdi-test)
+[![Build Status](https://travis-ci.org/guhilling/cdi-test.svg?branch=main)](https://travis-ci.org/guhilling/cdi-test)
 [![Coverage (Sonar)](https://sonarcloud.io/api/project_badges/measure?project=de.hilling.junit.cdi%3Acdi-test&metric=coverage)](https://sonarcloud.io/dashboard?id=de.hilling.junit.cdi%3Acdi-test)
 [![Status (Sonar)](https://sonarcloud.io/api/project_badges/measure?project=de.hilling.junit.cdi%3Acdi-test&metric=alert_status)](https://sonarcloud.io/dashboard?id=de.hilling.junit.cdi%3Acdi-test)
 [![Maintainability (Sonar)](https://sonarcloud.io/api/project_badges/measure?project=de.hilling.junit.cdi%3Acdi-test&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=de.hilling.junit.cdi%3Acdi-test)
@@ -262,7 +262,7 @@ cdi-events:
     * ``@TestEvent`` is fired when tests are started and finished, see ``EventType``for details.
     * The junit ``ExtensionContext`` is delivered as the object with the event.
 
-[cdi-test-microprofile](https://github.com/guhilling/cdi-test/tree/master/cdi-test-microprofile) should be a nice example
+[cdi-test-microprofile](https://github.com/guhilling/cdi-test/tree/main/cdi-test-microprofile) should be a nice example
 for a small but hopefully useful extension.
 
 ## Feedback and future development

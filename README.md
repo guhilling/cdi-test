@@ -21,7 +21,7 @@ cdi-test is available under the [The Apache Software License, Version 2.0](http:
 * Fast because the CDI-Container is started only once for the whole scenario.
 * Well tested.
 * Supports mocks and test alternatives for CDI beans. These can be activated per test class.
-* Support for Eclipse Microprofile Config via https://github.com/guhilling/cdi-test-microprofile.
+* Support for Eclipse Microprofile Config via https://github.com/guhilling/cdi-test/tree/main/cdi-test-microprofile.
 * Support for some EJB features to test JEE/Jakarta application components:
     * Inject EntityManager via ``@Inject`` or ``@PersistenceContext``
     * Injection of ``@Stateful`` and ``@Stateless`` ejbs.
@@ -29,7 +29,7 @@ cdi-test is available under the [The Apache Software License, Version 2.0](http:
 
 ## Usage
 
-See the [Documentation on github pages](http://guhilling.github.io/cdi-test/).
+See the [Documentation on github pages](https://cdi-test.hilling.de).
 
 ## LICENSE
 

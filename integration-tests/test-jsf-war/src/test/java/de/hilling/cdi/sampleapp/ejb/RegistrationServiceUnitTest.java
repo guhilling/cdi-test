@@ -24,7 +24,7 @@ public class RegistrationServiceUnitTest {
     private List<UserRegistrationEntity> allUsers;
 
     private void assertDatabaseSize(int expectedSize) {
-        allUsers = entityManager.createQuery("select e from UserRegistrationEntity e")
+        allUsers = entityManager.createQuery("select e from UserRegistrationEntity e", UserRegistrationEntity.class)
                                 .getResultList();
         assertEquals(expectedSize, allUsers.size());
     }

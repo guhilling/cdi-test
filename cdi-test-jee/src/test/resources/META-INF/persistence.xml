@@ -8,8 +8,8 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>de.hilling.junit.cdi.jee.UserEntity</class>
         <properties>
-            <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:h2:mem:test"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
@@ -19,8 +19,8 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>de.hilling.junit.cdi.jee.CustomerEntity</class>
         <properties>
-            <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:h2:mem:testb"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:testb"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
@@ -30,10 +30,10 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>de.hilling.junit.cdi.jee.UserEntity</class>
         <properties>
-            <property name="eclipselink.jdbc.url" value="jdbc:h2:mem:test"/>
-            <property name="eclipselink.jdbc.driver" value="org.h2.Driver"/>
-            <property name="eclipselink.target-database" value="Oracle"/>
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <property name="eclipselink.ddl-generation.output-mode" value="database"/>
         </properties>
     </persistence-unit>
@@ -41,10 +41,10 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>de.hilling.junit.cdi.jee.CustomerEntity</class>
         <properties>
-            <property name="eclipselink.jdbc.url" value="jdbc:h2:mem:testb"/>
-            <property name="eclipselink.jdbc.driver" value="org.h2.Driver"/>
-            <property name="eclipselink.target-database" value="Oracle"/>
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:testb"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <property name="eclipselink.ddl-generation.output-mode" value="database"/>
         </properties>
     </persistence-unit>

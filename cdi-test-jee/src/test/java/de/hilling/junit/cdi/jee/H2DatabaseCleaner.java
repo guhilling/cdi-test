@@ -1,9 +1,12 @@
-package de.hilling.cdi.sampleapp;
+package de.hilling.junit.cdi.jee;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
 
@@ -14,16 +17,16 @@ import de.hilling.junit.cdi.jee.jpa.DatabaseCleaner;
  * Brute force implementation.
  * </p>
  */
-public class CustomDatabaseCleaner implements DatabaseCleaner {
+public class H2DatabaseCleaner implements DatabaseCleaner {
 
     public static final String USER_TABLE_IDENTIFIER = "TABLE";
 
     public void run(Connection connection) throws SQLException {
         DatabaseMetaData metaData = connection.getMetaData();
-        ResultSet tables = metaData.getTables(null, null, null, new String[]{USER_TABLE_IDENTIFIER});
+        ResultSet tables = metaData.getTables(null, "PUBLIC", null, new String[]{USER_TABLE_IDENTIFIER});
         while (tables.next()) {
-            String tableName = tables.getString(3);
-            if (!tableName.equals("SEQUENCE")) {
+            String tableName = tables.getString("TABLE_NAME");
+            if(!tableName.equals("SEQUENCE")) {
                 connection.prepareStatement("delete from " + tableName).execute();
             }
         }

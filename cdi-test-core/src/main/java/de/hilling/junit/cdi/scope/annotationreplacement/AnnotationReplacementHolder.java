@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class AnnotationReplacementHolder {
     private static final String DEFAULT_ANNOTATION_FILE_NAME = "cdi-test-annotations.properties";
 
     private static final AnnotationReplacementHolder                  INSTANCE;
-    private              Map<Class<? extends Annotation>, Annotation> replacementMap = new HashMap<>();
+    private final        Map<Class<? extends Annotation>, Annotation> replacementMap = new HashMap<>();
 
     /**
      * The replacement map contains replacement annotations (the values) for existing annotations on the {@link javax.enterprise.inject.spi.Annotated}
@@ -48,7 +49,7 @@ public class AnnotationReplacementHolder {
     @SuppressWarnings("unchecked")
     private void addConfigurationFrom(URL url) throws IOException {
         try (BufferedReader in = new BufferedReader(
-                new InputStreamReader(url.openStream()))) {
+                new InputStreamReader(url.openStream(), StandardCharsets.UTF_8))) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 if (inputLine.trim().startsWith("#")) {

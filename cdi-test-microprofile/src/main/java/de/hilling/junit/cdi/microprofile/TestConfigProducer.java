@@ -11,6 +11,7 @@ import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 import java.util.*;
 
 @TestSuiteScoped
@@ -24,7 +25,7 @@ public class TestConfigProducer implements Serializable {
     @Produces
     @ConfigProperty
     String produceStringConfigProperty(InjectionPoint ip) {
-        return ConfigProducerUtil.getValue(ip, String.class, config);
+        return ConfigProducerUtil.getValue(ip, config);
     }
 
     @GlobalTestImplementation
@@ -32,7 +33,7 @@ public class TestConfigProducer implements Serializable {
     @Produces
     @ConfigProperty
     Long getLongValue(InjectionPoint ip) {
-        return ConfigProducerUtil.getValue(ip, Long.class, config);
+        return ConfigProducerUtil.getValue(ip, config);
     }
 
     @GlobalTestImplementation
@@ -40,7 +41,7 @@ public class TestConfigProducer implements Serializable {
     @Produces
     @ConfigProperty
     Integer getIntegerValue(InjectionPoint ip) {
-        return ConfigProducerUtil.getValue(ip, Integer.class, config);
+        return ConfigProducerUtil.getValue(ip, config);
     }
 
     @GlobalTestImplementation
@@ -48,7 +49,7 @@ public class TestConfigProducer implements Serializable {
     @Produces
     @ConfigProperty
     Float produceFloatConfigProperty(InjectionPoint ip) {
-        return ConfigProducerUtil.getValue(ip, Float.class, config);
+        return ConfigProducerUtil.getValue(ip, config);
     }
 
     @GlobalTestImplementation
@@ -56,7 +57,7 @@ public class TestConfigProducer implements Serializable {
     @Produces
     @ConfigProperty
     Double produceDoubleConfigProperty(InjectionPoint ip) {
-        return ConfigProducerUtil.getValue(ip, Double.class, config);
+        return ConfigProducerUtil.getValue(ip, config);
     }
 
     @GlobalTestImplementation
@@ -64,15 +65,15 @@ public class TestConfigProducer implements Serializable {
     @Produces
     @ConfigProperty
     Boolean produceBooleanConfigProperty(InjectionPoint ip) {
-        return ConfigProducerUtil.getValue(ip, Boolean.class, config);
+        return ConfigProducerUtil.getValue(ip, config);
     }
 
     @GlobalTestImplementation
     @Dependent
     @Produces
     @ConfigProperty
-    <T> Optional<T> produceOptionalConfigValue(InjectionPoint injectionPoint) {
-        return ConfigProducerUtil.optionalConfigValue(injectionPoint, config);
+    <T> Optional<T> produceOptionalConfigValue(InjectionPoint ip) {
+        return ConfigProducerUtil.getValue(ip, config);
     }
 
     @GlobalTestImplementation
@@ -80,7 +81,7 @@ public class TestConfigProducer implements Serializable {
     @Produces
     @ConfigProperty
     <T> Set<T> producesSetConfigProperty(InjectionPoint ip) {
-        return ConfigProducerUtil.collectionConfigProperty(ip, config, HashSet::new);
+        return ConfigProducerUtil.getValue(ip, config);
     }
 
     @GlobalTestImplementation
@@ -88,7 +89,17 @@ public class TestConfigProducer implements Serializable {
     @Produces
     @ConfigProperty
     <T> List<T> producesListConfigProperty(InjectionPoint ip) {
-        return ConfigProducerUtil.collectionConfigProperty(ip, config, ArrayList::new);
+        return ConfigProducerUtil.getValue(ip, config);
+    }
+
+    private static String getName(InjectionPoint injectionPoint) {
+        for (Annotation qualifier : injectionPoint.getQualifiers()) {
+            if (qualifier.annotationType().equals(ConfigProperty.class)) {
+                ConfigProperty configProperty = ((ConfigProperty) qualifier);
+                return getConfigKey(injectionPoint, configProperty);
+            }
+        }
+        return null;
     }
 
 }

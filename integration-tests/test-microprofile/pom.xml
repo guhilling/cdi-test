@@ -21,15 +21,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.eclipse.microprofile</groupId>
-            <artifactId>microprofile-spec</artifactId>
-            <type>pom</type>
-        </dependency>
-
-        <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile.config</groupId>
+            <artifactId>microprofile-config-api</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>de.hilling.junit.cdi</groupId>
             <artifactId>cdi-test-jee</artifactId>
@@ -39,11 +38,6 @@
             <groupId>de.hilling.junit.cdi</groupId>
             <artifactId>cdi-test-microprofile</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.microprofile.config</groupId>
-            <artifactId>microprofile-config-api</artifactId>
-            <version>3.0.1</version>
         </dependency>
 
         <dependency>

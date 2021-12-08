@@ -92,14 +92,4 @@ public class TestConfigProducer implements Serializable {
         return ConfigProducerUtil.getValue(ip, config);
     }
 
-    private static String getName(InjectionPoint injectionPoint) {
-        for (Annotation qualifier : injectionPoint.getQualifiers()) {
-            if (qualifier.annotationType().equals(ConfigProperty.class)) {
-                ConfigProperty configProperty = ((ConfigProperty) qualifier);
-                return getConfigKey(injectionPoint, configProperty);
-            }
-        }
-        return null;
-    }
-
 }

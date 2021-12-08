@@ -8,7 +8,7 @@
     <url>https://github.com/guhilling/cdi-test</url>
     <inceptionYear>2014</inceptionYear>
     <name>CDI Test</name>
-    <description>junit extension for simple and efficient testing of cdi components</description>
+    <description>JUnit extension for easy and efficient testing of CDI components</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

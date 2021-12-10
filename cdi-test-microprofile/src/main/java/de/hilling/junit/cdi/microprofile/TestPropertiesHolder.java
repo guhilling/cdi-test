@@ -13,8 +13,7 @@ import java.util.Map;
 @TestSuiteScoped
 public class TestPropertiesHolder {
 
-    private HashMap<String, String> properties = new HashMap<>();
-
+    private final HashMap<String, String> properties = new HashMap<>();
 
     Map<String, String> getProperties() {
         return Collections.unmodifiableMap(properties);

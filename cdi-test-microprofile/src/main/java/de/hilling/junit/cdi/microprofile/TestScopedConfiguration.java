@@ -1,11 +1,8 @@
 package de.hilling.junit.cdi.microprofile;
 
-import de.hilling.junit.cdi.ContextControlWrapper;
 import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
 import de.hilling.junit.cdi.scope.TestScoped;
 
-import io.smallrye.config.ConfigSourceContext;
-import io.smallrye.config.ConfigSourceFactory;
 import io.smallrye.config.PropertiesConfigSourceProvider;
 import io.smallrye.config.SmallRyeConfigBuilder;
 
@@ -20,41 +17,59 @@ import javax.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.OptionalInt;
 import java.util.Set;
 
+@Priority(10000)
+@TestScoped
 public class TestScopedConfiguration implements ConfigSource {
     public static final String TEST_CONFIGURATION_NAME = "TEST_CASE_MICROPROFILE_CONFIGURATION";
 
     private static final String META_INF_MICROPROFILE_CONFIG_PROPERTIES = "META-INF/microprofile-config.properties";
     private static final String WEB_INF_MICROPROFILE_CONFIG_PROPERTIES  = "WEB-INF/classes/META-INF/microprofile-config.properties";
-    public static final int PRIORITY = 10000;
 
-    private TestPropertiesHolder propertiesHolder;
+    @GlobalTestImplementation
+    @Dependent
+    @Produces
+    private Config testConfig;
 
-    private void init() {
-        if(propertiesHolder == null) {
-            ContextControlWrapper controlWrapper = ContextControlWrapper.getInstance();
-            propertiesHolder = controlWrapper.getContextualReference(TestPropertiesHolder.class);
-        }
+    @Inject
+    private TestPropertiesHolder properties;
+
+    private Map<String, String> testProperties;
+
+    @PostConstruct
+    protected void create() {
+        testProperties = properties.getProperties();
+
+        final ClassLoader classLoader = Thread.currentThread()
+                .getContextClassLoader();
+
+        ArrayList<ConfigSource> defaultSources = new ArrayList<>();
+        defaultSources.addAll(new PropertiesConfigSourceProvider(META_INF_MICROPROFILE_CONFIG_PROPERTIES, true, classLoader).getConfigSources(
+                classLoader));
+        defaultSources.addAll(new PropertiesConfigSourceProvider(WEB_INF_MICROPROFILE_CONFIG_PROPERTIES, true, classLoader).getConfigSources(
+                classLoader));
+        defaultSources.add(this);
+
+        testConfig = new SmallRyeConfigBuilder().addDefaultSources()
+                .withSources(defaultSources.toArray(new ConfigSource[0]))
+                .addDiscoveredConverters()
+                .build();
     }
 
     @Override
     public Map<String, String> getProperties() {
-        init();
-        return propertiesHolder.getProperties();
+        return testProperties;
     }
 
     @Override
     public Set<String> getPropertyNames() {
-        init();
-        return propertiesHolder.getProperties().keySet();
+        return testProperties.keySet();
     }
 
     @Override
     public String getValue(String propertyName) {
-        init();
-        return propertiesHolder.getProperties().get(propertyName);
+        return testProperties.get(propertyName);
     }
 
     @Override
@@ -62,4 +77,8 @@ public class TestScopedConfiguration implements ConfigSource {
         return TEST_CONFIGURATION_NAME;
     }
 
+    @Override
+    public int getOrdinal() {
+        return 10000;
+    }
 }

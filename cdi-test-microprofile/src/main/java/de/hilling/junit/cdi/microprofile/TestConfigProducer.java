@@ -11,7 +11,6 @@ import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
 import java.util.*;
 
 @TestSuiteScoped

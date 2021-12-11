@@ -26,11 +26,6 @@
             <version>${smallrye.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.smallrye.config</groupId>
-            <artifactId>smallrye-config-common</artifactId>
-            <version>${smallrye.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <scope>compile</scope>

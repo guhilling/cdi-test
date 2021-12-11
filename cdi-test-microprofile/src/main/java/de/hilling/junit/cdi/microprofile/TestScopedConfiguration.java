@@ -45,9 +45,9 @@ public class TestScopedConfiguration implements ConfigSource {
                 .getContextClassLoader();
 
         ArrayList<ConfigSource> defaultSources = new ArrayList<>();
-        defaultSources.addAll(new PropertiesConfigSourceProvider(META_INF_MICROPROFILE_CONFIG_PROPERTIES, true, classLoader).getConfigSources(
+        defaultSources.addAll(new PropertiesConfigSourceProvider(META_INF_MICROPROFILE_CONFIG_PROPERTIES, classLoader, true).getConfigSources(
                 classLoader));
-        defaultSources.addAll(new PropertiesConfigSourceProvider(WEB_INF_MICROPROFILE_CONFIG_PROPERTIES, true, classLoader).getConfigSources(
+        defaultSources.addAll(new PropertiesConfigSourceProvider(WEB_INF_MICROPROFILE_CONFIG_PROPERTIES, classLoader, true).getConfigSources(
                 classLoader));
         defaultSources.add(this);
 

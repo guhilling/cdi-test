@@ -24,10 +24,8 @@ public class ContextControlWrapper {
     private static final Logger LOG = UserLogger.getInstance();
 
     private static final ContextControlWrapper INSTANCE = new ContextControlWrapper();
-    private final Weld weld;
-    private final WeldContainer weldContainer;
-    private final WeldManager weldManager;
-    private ContextControl contextControl;
+    private final WeldManager    weldManager;
+    private final ContextControl contextControl;
 
     /**
      * Returns the singleton.
@@ -40,10 +38,10 @@ public class ContextControlWrapper {
     }
 
     private ContextControlWrapper() {
-        weld = new Weld();
+        Weld weld = new Weld();
         LOG.info("booting cdi container");
         long start = System.currentTimeMillis();
-        weldContainer = weld.initialize();
+        WeldContainer weldContainer = weld.initialize();
         long end = System.currentTimeMillis();
         LOG.log(INFO, "booting cdi container finished in {0} ms", end - start);
         if(!weldContainer.isRunning()) {

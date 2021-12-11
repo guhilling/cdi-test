@@ -8,18 +8,18 @@
     <url>https://github.com/guhilling/cdi-test</url>
     <inceptionYear>2014</inceptionYear>
     <name>CDI Test</name>
-    <description>junit extension for simple and efficient testing of cdi components</description>
+    <description>JUnit extension for easy and efficient testing of CDI components</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
 
-        <cdi-api.version>2.0.2</cdi-api.version>
-        <weld.version>3.1.8.Final</weld.version>
-        <microprofile-config.version>2.0</microprofile-config.version>
+        <cdi-api.version>3.0.0</cdi-api.version>
+        <weld.version>4.0.2.Final</weld.version>
+        <microprofile-config.version>3.0.1</microprofile-config.version>
 
         <immutables.version>2.8.9-ea-1</immutables.version>
-        <smallrye.version>2.5.1</smallrye.version>
+        <smallrye.version>2.7.0</smallrye.version>
         <mockito.version>4.1.0</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit.jupiter.version>5.8.2</junit.jupiter.version>
@@ -139,14 +139,14 @@
             <dependency>
                 <groupId>jakarta.enterprise</groupId>
                 <artifactId>jakarta.enterprise.cdi-api</artifactId>
-                <version>3.0.0</version>
-                <scope>compile</scope>
+                <version>${cdi-api.version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>jakarta.annotation</groupId>
                 <artifactId>jakarta.annotation-api</artifactId>
                 <version>2.0.0</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>jakarta.activation</groupId>
@@ -182,7 +182,7 @@
                 <groupId>jakarta.interceptor</groupId>
                 <artifactId>jakarta.interceptor-api</artifactId>
                 <version>2.0.0</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
@@ -200,7 +200,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core-jakarta</artifactId>
-                <version>5.6.1.Final</version>
+                <version>5.6.2.Final</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -209,13 +209,6 @@
                 <version>2.7.7</version>
                 <scope>provided</scope>
             </dependency>
-            <dependency>
-                <groupId>io.smallrye.config</groupId>
-                <artifactId>smallrye-config</artifactId>
-                <version>${smallrye.version}</version>
-            </dependency>
-
-
 
             <dependency>
                 <groupId>org.mockito</groupId>
@@ -232,7 +225,7 @@
             <dependency>
                 <groupId>org.jboss.weld</groupId>
                 <artifactId>weld-core-bom</artifactId>
-                <version>4.0.2.Final</version>
+                <version>${weld.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -245,10 +238,9 @@
             <dependency>
                 <groupId>org.eclipse.microprofile.config</groupId>
                 <artifactId>microprofile-config-api</artifactId>
-                <version>3.0.1</version>
+                <version>${microprofile-config.version}</version>
                 <scope>provided</scope>
             </dependency>
-
 
             <dependency>
                 <groupId>com.h2database</groupId>

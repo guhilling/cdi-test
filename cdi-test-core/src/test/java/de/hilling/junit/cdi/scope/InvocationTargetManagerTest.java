@@ -17,7 +17,7 @@ class InvocationTargetManagerTest {
 
     private InvocationTargetManager manager;
 
-    private Class<CaseScopedBean> mockedClass = CaseScopedBean.class;
+    private final Class<CaseScopedBean> mockedClass = CaseScopedBean.class;
 
     @Inject
     private BeanManager beanManager;

@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @TestSuiteScoped
 public class EntityManagerResourcesProvider {
-    private Map<String, EntityManagerFactory> factories = new HashMap<>();
+    private final Map<String, EntityManagerFactory> factories = new HashMap<>();
 
     @Inject
     private TestEntityResources testEntityResources;
@@ -41,6 +41,7 @@ public class EntityManagerResourcesProvider {
 
     private EntityManagerFactory createEntityManagerFactory(String persistenceUnit) {
         Map<String, Object> props = new HashMap<>();
+        props.put("jakarta.persistence.bean.manager", beanManager);
         props.put("javax.persistence.bean.manager", beanManager);
         return Persistence.createEntityManagerFactory(persistenceUnit, props);
     }

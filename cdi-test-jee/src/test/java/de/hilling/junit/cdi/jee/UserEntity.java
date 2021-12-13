@@ -1,8 +1,10 @@
 package de.hilling.junit.cdi.jee;
 
-import org.junit.jupiter.api.Test;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 @EntityListeners(TestEntityListener.class)

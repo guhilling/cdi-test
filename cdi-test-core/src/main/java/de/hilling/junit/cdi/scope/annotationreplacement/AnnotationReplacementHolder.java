@@ -26,7 +26,7 @@ public class AnnotationReplacementHolder {
     private final        Map<Class<? extends Annotation>, Annotation> replacementMap = new HashMap<>();
 
     /**
-     * The replacement map contains replacement annotations (the values) for existing annotations on the {@link javax.enterprise.inject.spi.Annotated}
+     * The replacement map contains replacement annotations (the values) for existing annotations on the {@link jakarta.enterprise.inject.spi.Annotated}
      * bean.
      *
      * @return replacement map.

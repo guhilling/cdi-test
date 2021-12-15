@@ -23,6 +23,7 @@
         <dependency>
             <groupId>io.smallrye.config</groupId>
             <artifactId>smallrye-config</artifactId>
+            <version>${smallrye.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

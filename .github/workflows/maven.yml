@@ -39,6 +39,14 @@ jobs:
         cache: maven
     - name: Maven Build JDK ${{ matrix.java }}
       run: mvn -B package --file pom.xml -DskipTests ${{ matrix.extraargs }}
+    - name: Debug
+      run: |
+        echo ${{github.event}}
+        echo ${{github.event_path}}
+        echo ${{github.event_name}}
+        echo ${{github.ref}}
+        echo ${{github.workspace}}
+        echo ${{github.workflow}}
     - name: Maven Test with Sonar JDK ${{ matrix.java }}
       if: github.event_name != 'pull_request'
       env:

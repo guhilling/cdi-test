@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-
+    name: Maven Build JDK ${{ matrix.java }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -24,7 +24,10 @@ jobs:
               -Dsonar.host.url=https://sonarcloud.io
               -Dsonar.organization=guhilling-github
               -Dsonar.projectKey=de.hilling.junit.cdi:cdi-test
-    name: Maven Build JDK ${{ matrix.java }}
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
 
     steps:
     - name: Checkout
@@ -40,14 +43,8 @@ jobs:
     - name: Maven Build JDK ${{ matrix.java }}
       run: mvn -B package --file pom.xml -DskipTests ${{ matrix.extraargs }}
     - name: Maven Test with Sonar JDK ${{ matrix.java }}
-      if: ${{ github.secrets.SONAR_TOKEN != '' }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      if: ${{ env.SONAR_TOKEN != '' }}
       run: mvn -B test --file pom.xml ${{ matrix.extraargs }}  ${{ matrix.extratestargs}}
     - name: Maven Test JDK ${{ matrix.java }} (Pull Request)
-      if: ${{ github.secrets.SONAR_TOKEN == '' }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      if: ${{ env.SONAR_TOKEN == '' }}
       run: mvn -B test --file pom.xml ${{ matrix.extraargs }}

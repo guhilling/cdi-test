@@ -26,7 +26,7 @@
         <hibernate-entitymanager.artifactId>hibernate-core-jakarta</hibernate-entitymanager.artifactId>
         <eclipselink.version>3.0.2</eclipselink.version>
 
-        <immutables.version>2.8.9-ea-1</immutables.version>
+        <immutables.version>2.9.0-rc1</immutables.version>
         <smallrye.version>3.0.0-RC1</smallrye.version>
         <mockito.version>4.2.0</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>

@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
 
-        <cdi-api.version>2.0.2</cdi-api.version>
+        <cdi-api.version>3.0.0</cdi-api.version>
         <weld.version>3.1.8.Final</weld.version>
         <microprofile-config.version>2.0</microprofile-config.version>
         <jakarta.jakartaee-api.version>8.0.0</jakarta.jakartaee-api.version>

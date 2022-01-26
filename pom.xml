@@ -21,7 +21,7 @@
         <jakarta.annotation-api.version>2.0.0</jakarta.annotation-api.version>
         <jakarta.persistence-api.version>3.0.0</jakarta.persistence-api.version>
         <jakarta.ejb-api.version>4.0.0</jakarta.ejb-api.version>
-        <jakarta.interceptor-api.version>2.0.0</jakarta.interceptor-api.version>
+        <jakarta.interceptor-api.version>2.0.1</jakarta.interceptor-api.version>
         <hibernate.version>5.6.4.Final</hibernate.version>
         <hibernate-entitymanager.artifactId>hibernate-core-jakarta</hibernate-entitymanager.artifactId>
         <eclipselink.version>3.0.2</eclipselink.version>
@@ -238,7 +238,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-jdk14</artifactId>
-                <version>1.7.33</version>
+                <version>1.7.35</version>
             </dependency>
 
             <dependency>

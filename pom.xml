@@ -22,7 +22,7 @@
         <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
         <jakarta.ejb-api.version>3.2.6</jakarta.ejb-api.version>
         <jakarta.interceptor-api.version>1.2.5</jakarta.interceptor-api.version>
-        <hibernate.version>5.6.4.Final</hibernate.version>
+        <hibernate.version>5.6.5.Final</hibernate.version>
         <hibernate-entitymanager.artifactId>hibernate-entitymanager</hibernate-entitymanager.artifactId>
         <eclipselink.version>2.7.7</eclipselink.version>
 

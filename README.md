@@ -7,6 +7,11 @@
 
 # cdi-test
 
+## Note regarding [Jakarta EE 9](https://jakarta.ee/release/9/)
+
+The new namespace introduced with Jakarta EE 9 will be supported starting with release 4.x
+Pre-releases are already available.
+
 ## A test framework for CDI based Java applications
 
 cdi-test is a junit-addon for easy and quick testing of cdi projects.

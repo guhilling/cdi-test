@@ -22,13 +22,13 @@
         <jakarta.persistence-api.version>3.0.0</jakarta.persistence-api.version>
         <jakarta.ejb-api.version>4.0.0</jakarta.ejb-api.version>
         <jakarta.interceptor-api.version>2.0.1</jakarta.interceptor-api.version>
-        <hibernate.version>5.6.4.Final</hibernate.version>
+        <hibernate.version>5.6.5.Final</hibernate.version>
         <hibernate-entitymanager.artifactId>hibernate-core-jakarta</hibernate-entitymanager.artifactId>
         <eclipselink.version>3.0.2</eclipselink.version>
 
         <immutables.version>2.9.0</immutables.version>
         <smallrye.version>3.0.0-RC1</smallrye.version>
-        <mockito.version>4.3.0</mockito.version>
+        <mockito.version>4.3.1</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit.jupiter.version>5.8.2</junit.jupiter.version>
         <annotation-literal.version>1.0.11</annotation-literal.version>

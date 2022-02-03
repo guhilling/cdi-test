@@ -1,10 +1,8 @@
 package de.hilling.junit.cdi.jpa;
 
-import javax.ejb.Startup;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import javax.persistence.EntityManager;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
 @RequestScoped
 public class RequestScopedUserService {

@@ -53,10 +53,20 @@ public class ContextControlWrapper {
 
     @SuppressWarnings({ "unchecked" })
     public <T> T getContextualReference(Class<T> beanType, Annotation ... qualifiers) {
+        Bean<T> bean = resolveBean(beanType, qualifiers);
         WeldCreationalContext<T> creationalContext = weldManager.createCreationalContext(null);
-        Set<Bean<?>> beans = weldManager.getBeans(beanType, qualifiers);
-        Bean<T> bean = (Bean<T>) weldManager.resolve(beans);
         return (T) weldManager.getReference(bean, beanType, creationalContext);
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private <T> Bean<T> resolveBean(Class<T> beanType, Annotation[] qualifiers) {
+        Set<Bean<?>> beans = weldManager.getBeans(beanType, qualifiers);
+        return (Bean<T>) weldManager.resolve(beans);
+    }
+
+    public <T> boolean hasNormalScope(Class<T> beanType, Annotation ... qualifiers) {
+        Class<? extends Annotation> bean = resolveBean(beanType, qualifiers).getScope();
+        return weldManager.isNormalScope(bean);
     }
 
     public void startContexts() {

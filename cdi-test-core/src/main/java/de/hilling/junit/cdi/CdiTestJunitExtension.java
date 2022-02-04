@@ -17,7 +17,10 @@ import org.mockito.Mockito;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * JUnit 5 extension for cdi lifecycle management and injection into test cases. Detailed documentation available at <a
@@ -29,8 +32,11 @@ import java.util.Optional;
  */
 public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
 
+    private static final Logger LOG;
+
     static {
         LoggerConfigurator.configure();
+        LOG = Logger.getLogger(CdiTestJunitExtension.class.getName());
     }
 
     private final InvocationTargetManager invocationTargetManager;
@@ -60,10 +66,15 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
     public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
         testEnvironment = contextControl.getContextualReference(TestEnvironment.class);
         testEnvironment.setTestInstance(testInstance);
+        TestContext.activate();
         for (Field field : ReflectionsUtils.getAllFields(testInstance.getClass())) {
             if (field.isAnnotationPresent(Inject.class)) {
                 Optional<Annotation> qualifier = Arrays.stream(field.getDeclaredAnnotations()).filter(this::isQualifier).findFirst();
-                setField(testInstance, field, qualifier);
+                if(qualifier.isPresent()) {
+                    setField(testInstance, field, new Annotation[]{qualifier.get()});
+                } else {
+                    setField(testInstance, field, new Annotation[0]);
+                }
             }
         }
     }
@@ -72,19 +83,18 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
         return annotation.annotationType().isAnnotationPresent(Qualifier.class);
     }
 
-    private void setField(Object testInstance, Field field, Optional<Annotation> qualifierAnnotation) {
-        Object bean;
-        if(qualifierAnnotation.isPresent()) {
-            bean = contextControl.getContextualReference(field.getType(), qualifierAnnotation.get());
-        } else {
-            bean = contextControl.getContextualReference(field.getType());
+    private void setField(Object testInstance, Field field, Annotation[] annotations) {
+        Object bean = contextControl.getContextualReference(field.getType(), annotations);
+        if(!contextControl.hasNormalScope(field.getType())) {
+            LOG.warning("injecting bean with scope 'dependant' '" + bean.getClass().getCanonicalName()
+                        + "' into test class '" + testInstance.getClass().getCanonicalName()
+                        + "' which might lead to unexpected behaviour");
         }
         ReflectionsUtils.setField(testInstance, bean, field);
     }
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        TestContext.activate();
         testEnvironment.setTestMethod(context.getRequiredTestMethod());
         testEnvironment.setTestName(context.getDisplayName());
         lifecycleNotifier.notify(TestState.STARTING, context);

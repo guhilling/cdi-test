@@ -107,6 +107,7 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
                 invocationTargetManager.activateAlternative(field.getType());
             }
         }
+        lifecycleNotifier.notify(TestState.STARTED, context);
     }
 
     @Override

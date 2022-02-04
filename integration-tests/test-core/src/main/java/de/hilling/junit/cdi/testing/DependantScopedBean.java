@@ -1,7 +1,7 @@
 package de.hilling.junit.cdi.testing;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
 
 public class DependantScopedBean {
 

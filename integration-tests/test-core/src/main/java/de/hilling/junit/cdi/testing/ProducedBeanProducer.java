@@ -1,9 +1,9 @@
 package de.hilling.junit.cdi.testing;
 
-import javax.ejb.Stateless;
-import javax.enterprise.inject.Produces;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.inject.Produces;
 
-@Stateless
+@RequestScoped
 public class ProducedBeanProducer {
 
     @Produces

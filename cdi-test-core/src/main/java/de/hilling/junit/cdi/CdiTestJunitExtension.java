@@ -66,17 +66,6 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
     public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
         testEnvironment = contextControl.getContextualReference(TestEnvironment.class);
         testEnvironment.setTestInstance(testInstance);
-        TestContext.activate();
-        for (Field field : ReflectionsUtils.getAllFields(testInstance.getClass())) {
-            if (field.isAnnotationPresent(Inject.class)) {
-                Optional<Annotation> qualifier = Arrays.stream(field.getDeclaredAnnotations()).filter(this::isQualifier).findFirst();
-                if(qualifier.isPresent()) {
-                    setField(testInstance, field, new Annotation[]{qualifier.get()});
-                } else {
-                    setField(testInstance, field, new Annotation[0]);
-                }
-            }
-        }
     }
 
     private boolean isQualifier(Annotation annotation) {
@@ -95,16 +84,28 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
 
     @Override
     public void beforeEach(ExtensionContext context) {
+        TestContext.activate();
+        Object testInstance = testEnvironment.getTestInstance();
         testEnvironment.setTestMethod(context.getRequiredTestMethod());
         testEnvironment.setTestName(context.getDisplayName());
         lifecycleNotifier.notify(TestState.STARTING, context);
         contextControl.startContexts();
-        lifecycleNotifier.notify(TestState.STARTED, context);
+        for (Field field : ReflectionsUtils.getAllFields(testInstance.getClass())) {
+            if (field.isAnnotationPresent(Inject.class)) {
+                Optional<Annotation> qualifier = Arrays.stream(field.getDeclaredAnnotations()).filter(this::isQualifier).findFirst();
+                if(qualifier.isPresent()) {
+                    setField(testInstance, field, new Annotation[]{qualifier.get()});
+                } else {
+                    setField(testInstance, field, new Annotation[0]);
+                }
+            }
+        }
         for (Field field : ReflectionsUtils.getAllFields(testEnvironment.getTestClass())) {
             if (isTestActivatable(field)) {
                 invocationTargetManager.activateAlternative(field.getType());
             }
         }
+        lifecycleNotifier.notify(TestState.STARTED, context);
     }
 
     @Override

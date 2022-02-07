@@ -64,11 +64,6 @@ public class ContextControlWrapper {
         return (Bean<T>) weldManager.resolve(beans);
     }
 
-    public <T> boolean hasNormalScope(Class<T> beanType, Annotation ... qualifiers) {
-        Class<? extends Annotation> bean = resolveBean(beanType, qualifiers).getScope();
-        return weldManager.isNormalScope(bean);
-    }
-
     public void startContexts() {
         contextControl.startContexts();
     }

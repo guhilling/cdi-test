@@ -1,29 +1,27 @@
-package de.hilling.junit.cdi;
+package de.hilling.junit.cdi.junit;
 
+import java.lang.reflect.Field;
+import java.util.logging.Logger;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.TestInstancePostProcessor;
+import org.mockito.Mockito;
+
+import de.hilling.junit.cdi.ContextControlWrapper;
+import de.hilling.junit.cdi.TestEnvironment;
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
-import de.hilling.junit.cdi.scope.TestScoped;
-import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.InvocationTargetManager;
+import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
-
-import org.junit.jupiter.api.extension.*;
-import org.mockito.Mockito;
-
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.inject.Inject;
-import javax.inject.Qualifier;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * JUnit 5 extension for cdi lifecycle management and injection into test cases. Detailed documentation available at <a

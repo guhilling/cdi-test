@@ -1,6 +1,7 @@
 package de.hilling.junit.cdi;
 
 import de.hilling.junit.cdi.beans.Person;
+import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
 import de.hilling.junit.cdi.service.BackendService;
 import de.hilling.junit.cdi.service.SampleService;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import javax.inject.Inject;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)

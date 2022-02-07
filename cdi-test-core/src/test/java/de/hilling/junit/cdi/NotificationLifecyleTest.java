@@ -7,6 +7,8 @@ import javax.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
+
 @ExtendWith(CdiTestJunitExtension.class)
 class NotificationLifecyleTest {
 

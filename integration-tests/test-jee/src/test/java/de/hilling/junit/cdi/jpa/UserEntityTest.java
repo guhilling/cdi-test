@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import de.hilling.junit.cdi.CdiTestJunitExtension;
+import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
 class UserEntityTest {

@@ -1,6 +1,8 @@
 package de.hilling.junit.cdi;
 
 import de.hilling.junit.cdi.beans.Request;
+import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

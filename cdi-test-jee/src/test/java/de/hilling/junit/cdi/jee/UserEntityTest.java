@@ -1,14 +1,13 @@
 package de.hilling.junit.cdi.jee;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import de.hilling.junit.cdi.CdiTestJunitExtension;
+import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
 class UserEntityTest {

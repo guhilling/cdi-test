@@ -1,6 +1,8 @@
 package de.hilling.junit.cdi;
 
 import de.hilling.junit.cdi.beans.Person;
+import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 

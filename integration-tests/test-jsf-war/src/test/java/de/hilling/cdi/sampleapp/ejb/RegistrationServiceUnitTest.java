@@ -1,7 +1,7 @@
 package de.hilling.cdi.sampleapp.ejb;
 
 import de.hilling.cdi.sampleapp.UserRegistrationEntity;
-import de.hilling.junit.cdi.CdiTestJunitExtension;
+import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 

@@ -1,6 +1,7 @@
 package de.hilling.junit.cdi;
 
 import de.hilling.junit.cdi.beans.Person;
+import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
 import de.hilling.junit.cdi.service.BackendServiceTestImplementation;
 import de.hilling.junit.cdi.service.SampleService;
 import org.junit.jupiter.api.Assertions;

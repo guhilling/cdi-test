@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import de.hilling.junit.cdi.CdiTestJunitExtension;
+import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 
 /**

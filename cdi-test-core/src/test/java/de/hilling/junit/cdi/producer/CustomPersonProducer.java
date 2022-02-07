@@ -1,7 +1,7 @@
 package de.hilling.junit.cdi.producer;
 
-import jakarta.enterprise.inject.Produces;
-import jakarta.enterprise.inject.spi.InjectionPoint;
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
 
 import de.hilling.junit.cdi.beans.Person;
 

@@ -5,6 +5,7 @@ import jakarta.inject.Qualifier;
 
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
+import de.hilling.junit.cdi.scope.TestScoped;
 import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.InvocationTargetManager;
 import de.hilling.junit.cdi.scope.context.TestContext;
@@ -68,36 +69,17 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
         testEnvironment.setTestInstance(testInstance);
     }
 
-    private boolean isQualifier(Annotation annotation) {
-        return annotation.annotationType().isAnnotationPresent(Qualifier.class);
-    }
-
-    private void setField(Object testInstance, Field field, Annotation[] annotations) {
-        Object bean = contextControl.getContextualReference(field.getType(), annotations);
-        if(!contextControl.hasNormalScope(field.getType())) {
-            LOG.warning("injecting bean with scope 'dependant' '" + bean.getClass().getCanonicalName()
-                        + "' into test class '" + testInstance.getClass().getCanonicalName()
-                        + "' which might lead to unexpected behaviour");
-        }
-        ReflectionsUtils.setField(testInstance, bean, field);
-    }
-
     @Override
     public void beforeEach(ExtensionContext context) {
         TestContext.activate();
-        Object testInstance = testEnvironment.getTestInstance();
         testEnvironment.setTestMethod(context.getRequiredTestMethod());
         testEnvironment.setTestName(context.getDisplayName());
         lifecycleNotifier.notify(TestState.STARTING, context);
         contextControl.startContexts();
-        for (Field field : ReflectionsUtils.getAllFields(testInstance.getClass())) {
+        testEnvironment.setCdiInstance(contextControl.getContextualReference(testEnvironment.getTestClass()));
+        for (Field field : ReflectionsUtils.getAllFields(testEnvironment.getTestClass())) {
             if (field.isAnnotationPresent(Inject.class)) {
-                Optional<Annotation> qualifier = Arrays.stream(field.getDeclaredAnnotations()).filter(this::isQualifier).findFirst();
-                if(qualifier.isPresent()) {
-                    setField(testInstance, field, new Annotation[]{qualifier.get()});
-                } else {
-                    setField(testInstance, field, new Annotation[0]);
-                }
+                copyField(field);
             }
         }
         for (Field field : ReflectionsUtils.getAllFields(testEnvironment.getTestClass())) {
@@ -106,6 +88,12 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
             }
         }
         lifecycleNotifier.notify(TestState.STARTED, context);
+    }
+
+    private void copyField(Field field) {
+        Object testInstance = testEnvironment.getTestInstance();
+        Object cdiInstance = testEnvironment.getCdiInstance();
+        ReflectionsUtils.copyField(cdiInstance, testInstance, field);
     }
 
     @Override

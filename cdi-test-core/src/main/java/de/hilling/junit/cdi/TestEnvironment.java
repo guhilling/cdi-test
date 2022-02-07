@@ -10,6 +10,7 @@ import de.hilling.junit.cdi.scope.TestSuiteScoped;
 public class TestEnvironment {
 
     private Object testInstance;
+    private Object cdiInstance;
     private Method testMethod;
     private String testName;
 
@@ -40,5 +41,13 @@ public class TestEnvironment {
 
     public Class<?> getTestClass() {
         return testInstance.getClass();
+    }
+
+    public Object getCdiInstance() {
+        return cdiInstance;
+    }
+
+    public void setCdiInstance(Object cdiInstance) {
+        this.cdiInstance = cdiInstance;
     }
 }

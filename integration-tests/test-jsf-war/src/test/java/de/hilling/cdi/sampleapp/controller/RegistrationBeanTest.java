@@ -1,7 +1,7 @@
 package de.hilling.cdi.sampleapp.controller;
 
 import de.hilling.cdi.sampleapp.ejb.RegistrationService;
-import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

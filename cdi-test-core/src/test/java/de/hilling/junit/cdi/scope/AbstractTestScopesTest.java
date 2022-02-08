@@ -2,7 +2,7 @@ package de.hilling.junit.cdi.scope;
 
 import java.util.UUID;
 
-import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;

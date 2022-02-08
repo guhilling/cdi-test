@@ -1,4 +1,4 @@
-package de.hilling.junit.cdi.junit;
+package de.hilling.junit.cdi;
 
 import java.lang.reflect.Field;
 import java.util.logging.Logger;
@@ -13,8 +13,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 import org.mockito.Mockito;
 
-import de.hilling.junit.cdi.ContextControlWrapper;
-import de.hilling.junit.cdi.TestEnvironment;
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
 import de.hilling.junit.cdi.scope.InvocationTargetManager;

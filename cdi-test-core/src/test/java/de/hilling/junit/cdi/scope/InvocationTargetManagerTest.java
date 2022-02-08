@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 import de.hilling.junit.cdi.service.OverridingServiceImpl;
 import de.hilling.junit.cdi.service.TestActivatedOverridenService;
 import org.junit.jupiter.api.BeforeEach;

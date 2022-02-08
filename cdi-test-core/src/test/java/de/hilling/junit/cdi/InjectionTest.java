@@ -4,7 +4,6 @@ import de.hilling.junit.cdi.beans.ConstructorInjected;
 import de.hilling.junit.cdi.beans.Person;
 import de.hilling.junit.cdi.beans.ResourceConstructorInjected;
 import de.hilling.junit.cdi.beans.ResourceInjected;
-import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
 import de.hilling.junit.cdi.producer.CustomPerson;
 import de.hilling.junit.cdi.service.BackendService;
 import de.hilling.junit.cdi.service.OverriddenService;

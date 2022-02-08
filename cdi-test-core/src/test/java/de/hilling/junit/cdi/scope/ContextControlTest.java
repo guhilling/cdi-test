@@ -19,7 +19,7 @@ import org.jboss.weld.context.bound.BoundSessionContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 import de.hilling.junit.cdi.ContextControl;
 import de.hilling.junit.cdi.scopedbeans.ApplicationScopedBean;
 import de.hilling.junit.cdi.scopedbeans.ConversationScopedBean;

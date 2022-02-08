@@ -1,6 +1,6 @@
 package de.hilling.junit.cdi.testing;
 
-import de.hilling.junit.cdi.junit.CdiTestJunitExtension;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 

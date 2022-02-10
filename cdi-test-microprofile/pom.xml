@@ -4,7 +4,7 @@
     <parent>
         <artifactId>cdi-test</artifactId>
         <groupId>de.hilling.junit.cdi</groupId>
-        <version>4.0.0-RC6-SNAPSHOT</version>
+        <version>4.0.0-RC5-SNAPSHOT</version>
     </parent>
 
     <description>support microprofile-config in cdi-test</description>

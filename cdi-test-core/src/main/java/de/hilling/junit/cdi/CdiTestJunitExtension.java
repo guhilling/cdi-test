@@ -9,6 +9,8 @@ import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
+import org.jboss.weld.manager.api.WeldManager;
+import org.jboss.weld.proxy.WeldClientProxy;
 import org.junit.jupiter.api.extension.*;
 import org.mockito.Mockito;
 
@@ -78,7 +80,12 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
         testEnvironment.setTestName(context.getDisplayName());
         lifecycleNotifier.notify(TestState.STARTING, context);
         contextControl.startContexts();
-        testEnvironment.setCdiInstance(contextControl.getContextualReference(testEnvironment.getTestClass()));
+        Object cdiInstance = contextControl.getContextualReference(testEnvironment.getTestClass());
+        if(cdiInstance instanceof WeldClientProxy) {
+            testEnvironment.setCdiInstance(((WeldClientProxy)cdiInstance).getMetadata().getContextualInstance());
+        } else {
+            testEnvironment.setCdiInstance(cdiInstance);
+        }
         for (Field field : ReflectionsUtils.getAllFields(testEnvironment.getTestClass())) {
             if (field.isAnnotationPresent(Inject.class)) {
                 copyField(field);

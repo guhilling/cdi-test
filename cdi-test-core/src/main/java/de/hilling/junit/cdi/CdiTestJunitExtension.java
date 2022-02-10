@@ -1,27 +1,25 @@
 package de.hilling.junit.cdi;
 
 import jakarta.inject.Inject;
-import jakarta.inject.Qualifier;
+
+import java.lang.reflect.Field;
+
+import org.jboss.weld.proxy.WeldClientProxy;
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.TestInstancePostProcessor;
+import org.mockito.Mockito;
 
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
-import de.hilling.junit.cdi.scope.TestScoped;
-import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.InvocationTargetManager;
+import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
-
-import org.junit.jupiter.api.extension.*;
-import org.mockito.Mockito;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * JUnit 5 extension for cdi lifecycle management and injection into test cases. Detailed documentation available at <a
@@ -33,11 +31,8 @@ import java.util.logging.Logger;
  */
 public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
 
-    private static final Logger LOG;
-
     static {
         LoggerConfigurator.configure();
-        LOG = Logger.getLogger(CdiTestJunitExtension.class.getName());
     }
 
     private final InvocationTargetManager invocationTargetManager;
@@ -76,7 +71,12 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
         testEnvironment.setTestName(context.getDisplayName());
         lifecycleNotifier.notify(TestState.STARTING, context);
         contextControl.startContexts();
-        testEnvironment.setCdiInstance(contextControl.getContextualReference(testEnvironment.getTestClass()));
+        Object cdiInstance = contextControl.getContextualReference(testEnvironment.getTestClass());
+        if(cdiInstance instanceof WeldClientProxy) {
+            testEnvironment.setCdiInstance(((WeldClientProxy)cdiInstance).getMetadata().getContextualInstance());
+        } else {
+            testEnvironment.setCdiInstance(cdiInstance);
+        }
         for (Field field : ReflectionsUtils.getAllFields(testEnvironment.getTestClass())) {
             if (field.isAnnotationPresent(Inject.class)) {
                 copyField(field);

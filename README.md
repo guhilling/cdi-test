@@ -12,7 +12,8 @@ cdi-test is available under the [The Apache Software License, Version 2.0](http:
 ## Why should you use it?
 
 If you're developing  [Jakarta EE (Java EE)](https://jakarta.ee) or just plain [CDI](http://weld.cdi-spec.org)
-applications or libraries you'll probably want to unit test you code.
+applications or libraries you'll probably want to unit test your code. If you don't you _really_ should.
+With cdi-test there's no excuse not to do it ;-)
 
 As CDI doesn't come with any "standard" unit test capabilities you need some way to test your components in your
 [JUnit 5](https://junit.org/junit5/) tests. This is not easily accomplished especially when compared with the junit
@@ -23,6 +24,12 @@ integration of [Spring Boot](https://spring.io/projects/spring-boot).
 cdi-test is targeted at running unit, component and integration tests at scale. It accomplishes this with:
 - Only booting the cdi container once for all unit tests. This allows for running a huge number of tests even 
   in big projects where booting might take some time.
+- cdi-test uses [Weld (the cdi reference implementation)](http://weld.cdi-spec.org) as cdi container. So you can 
+  use the exact same cdi container as in your application runtime in case you're running e.g.
+  [Wildfly](https://www.wildfly.org),
+  [JBoss EAP](https://www.redhat.com/en/technologies/jboss-middleware/application-platform),
+  [GlassFish](https://javaee.github.io/glassfish/) or
+  [Oracle WebLogic](https://www.oracle.com/middleware/technologies/weblogic.html).
 - cdi-test supports mocks and test alternatives for CDI beans. These can be activated per test class. So you can 
   freely choose what you want to test and need to mock test-by-test.
 - Well tested and maintained and used in real projects with thousands of unit tests.

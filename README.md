@@ -52,6 +52,12 @@ cdi-test is targeted at running unit, component and integration tests at scale. 
 
 ## Short example, please!
 
+Most basic:
+
+https://github.com/guhilling/cdi-test/blob/36a3302fa4cae9e66aa0c6fea369a2e92efba70c/cdi-test-core/src/test/java/de/hilling/junit/cdi/SimpleTest.java#L11-L22
+
+Using mocks:
+
 https://github.com/guhilling/cdi-test/blob/36a3302fa4cae9e66aa0c6fea369a2e92efba70c/cdi-test-core/src/test/java/de/hilling/junit/cdi/MockProxyTest.java#L16-L30
 
 # Documentation

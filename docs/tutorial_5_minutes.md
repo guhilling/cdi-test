@@ -1,41 +1,16 @@
 ## Usage
 
-I'm assuming you are using maven 3.0.5 for this tutorial as I am using it for my integration testing.
+I'm assuming you are using at least maven 3.6.x for this tutorial as I am using it for my integration testing.
 
-Furthermore a jdk >= 9 should be used. If in doubt check the testing matrix on
-[travis](https://travis-ci.org/guhilling/cdi-test).
+Furthermore a jdk >= 8 should be used. If in doubt check the testing matrix on
+[GitHub Actions](https://github.com/guhilling/cdi-test/blob/main/.github/workflows/maven.yml).
 
 
 ### Dependencies
 
-Define dependencies on basic cdi-test features:
+Define dependencies on basic cdi-test features as in the the integration-tests [pom.xml](../integration-tests/pom.xml):
 
-```xml
-<dependencies>
-   [...] 
-    <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-engine</artifactId>
-        <version>5.3.1</version>
-        <scope>test</scope>
-    </dependency>
-  [...] 
-    <dependency>
-        <groupId>de.hilling.junit.cdi</groupId>
-        <artifactId>cdi-test-core</artifactId>
-        <version>3.3.5</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.jboss.weld.se</groupId>
-        <artifactId>weld-se-core</artifactId>
-        <version>3.1.8.Final</version>
-        <scope>test</scope>
-    </dependency>
-</dependencies>
-```
-
-Again check [travis](https://travis-ci.org/guhilling/cdi-test) for tested combintations of weld and jdk.
+https://github.com/guhilling/cdi-test/blob/82e6e4c8df5a952798c9f4e91558baec473ecbc9/integration-tests/pom.xml#L24-L45
 
 ### Writing Tests
 
@@ -46,7 +21,7 @@ It is possible to select different mockito or test implementations in each test 
 
 ```java
 @ExtendWith(CdiTestJunitExtension.class)
-public class RequestScopeMockTest extends BaseTest {
+public class RequestScopeMockTest {
 
     private static final String SAMPLE = "sample";
 
@@ -81,9 +56,3 @@ public class RequestScopeMockTest extends BaseTest {
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
-
-## TODO
-
-* More extensions:
-    * test data generator

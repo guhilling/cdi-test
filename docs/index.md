@@ -97,15 +97,18 @@ environment, so you might have to pull them into the test scope manually. One ex
   https://github.com/guhilling/cdi-test/blob/82e6e4c8df5a952798c9f4e91558baec473ecbc9/integration-tests/pom.xml#L24-L45
 
 
-## First test
+## Some internals and first test.
 
 First the (not so) obvious: Don't forget to include a ``beans.xml`` for your tests or cdi won't find any of your testing 
-components. However the test class itself is not a cdi bean but is created by junit. This is different from the version
-1.x of cdi-test where the test case was created using cdi.
+components. However the test class itself _is not a cdi bean_ but is created by junit. This is different from the version
+1.x and 2.x of cdi-test where the test case was created using cdi.
 
-The junit engine is extended with ``CdiTestJunitExtension``. The extension takes care of injecting cdi beans into
-the test. Again: The test class itself _is not a cdi bean_, so it is not possible to use every cdi feature like 
-creating an event listener in it. Only ``@Inject`` will work and Qualifieres will also be honored.
+The junit engine is extended with ``CdiTestJunitExtension``.
+If you need to reference cdi components from your test case _you must use field injection_. Only this is supported 
+by cdi-test: It will use weld to resolve a second instance of the test class and then copy the ```@Inject```ed fields
+to the test instance. So producer methods and qualifiers _will_ be supported.
+
+The creation of a second instance will be removed in the future (Issue #215).
 
 In the example below we let the extension resolve and inject the ``SampleService`` which is under test, into the test.
 
@@ -129,9 +132,9 @@ The Service is resolved by the cdi implementation as usual. In the above test no
 Well ... there is one thing: All standard scopes are created and destroyed just before any single test that is run.
 This way it is possible to run the tests with decent performance and have them isolated from each other anyway.
 
-The only beans that survive the test are the special ``@TestScoped`` and ``@TestSuiteScoped`` beans. These are used in
+The only beans that survive the test are the special ``@TestSuiteScoped`` beans. These are used in
 cdi-test internally but you are certainly free to use them in your test support classes. This often makes sense for components
-that should be replaced globally an might be expensive to setup.
+that should be replaced globally an might be expensive to create.
 
 ## Mocking beans
 

@@ -94,7 +94,8 @@ Additional to the junit 5 library you need the following dependencies:
 * Remember that many libraries you are using in a jee or microprofile application are provided by the runtime
 environment, so you might have to pull them into the test scope manually. One example would be an implementation of JPA.
 * As a starting point you should probably check the pom.xml from the [integration-tests module](../integration-tests):
-  https://github.com/guhilling/cdi-test/blob/82e6e4c8df5a952798c9f4e91558baec473ecbc9/integration-tests/pom.xml#L24-L45
+
+https://github.com/guhilling/cdi-test/blob/82e6e4c8df5a952798c9f4e91558baec473ecbc9/integration-tests/pom.xml#L24-L45
 
 
 ## Some internals and first test.
@@ -108,7 +109,7 @@ If you need to reference cdi components from your test case _you must use field 
 by cdi-test: It will use weld to resolve a second instance of the test class and then copy the ```@Inject```ed fields
 to the test instance. So producer methods and qualifiers _will_ be supported.
 
-The creation of a second instance will be removed in the future (Issue #215).
+The creation of a second instance will eventually be removed in the future (see #215 ).
 
 In the example below we let the extension resolve and inject the ``SampleService`` which is under test, into the test.
 

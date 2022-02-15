@@ -9,6 +9,8 @@ import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 /**
+ * Implementation of context for {@link TestSuiteScoped} beans.
+ *
  * @see TestSuiteScoped
  */
 @BypassTestInterceptor

@@ -10,6 +10,8 @@ import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
 
 /**
+ *  Implementation of context for {@link TestScoped} beans.
+ *
  * @see TestScoped
  */
 @BypassTestInterceptor

@@ -94,7 +94,7 @@ Additional to the junit 5 library you need the following dependencies:
 * Remember that many libraries you are using in a jee or microprofile application are provided by the runtime
 environment, so you might have to pull them into the test scope manually. One example would be an implementation of JPA.
 * As a starting point you should probably check the pom.xml from the [integration-tests module](../integration-tests):
-    
+  https://github.com/guhilling/cdi-test/blob/82e6e4c8df5a952798c9f4e91558baec473ecbc9/integration-tests/pom.xml#L24-L45
 
 
 ## First test

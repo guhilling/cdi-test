@@ -155,12 +155,6 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>jakarta.activation</groupId>
-                <artifactId>jakarta.activation-api</artifactId>
-                <version>1.2.2</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
                 <groupId>jakarta.faces</groupId>
                 <artifactId>jakarta.faces-api</artifactId>
                 <version>2.3.2</version>

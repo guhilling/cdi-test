@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Store for beans in custom scopes.
+ */
 @BypassTestInterceptor
 public class CustomScopeContextHolder implements ScopeContextHolder {
     private final Map<Class<?>, CustomScopeInstance<?>> beans;

@@ -13,6 +13,9 @@ import javax.inject.Inject;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
+/**
+ * Show mock injection using test method arguments as supported by the Mockito extension.
+ */
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
 class MockProxyTest {

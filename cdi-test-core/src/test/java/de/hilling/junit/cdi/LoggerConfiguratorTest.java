@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import de.hilling.junit.cdi.util.LoggerConfigurator;
 
+/**
+ * Demo and test the {@link LoggerConfigurator}.
+ */
 class LoggerConfiguratorTest {
 
     @BeforeEach

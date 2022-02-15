@@ -14,6 +14,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * Interceptor to redirect method calls to beans in testing depending on the test case.
+ */
 @Replaceable
 @Interceptor
 @Dependent

@@ -25,7 +25,7 @@ public class CallRedirectionInterceptor implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Inject
-    private Instance<InvocationTargetManager> invocationTargetManager;
+    private transient Instance<InvocationTargetManager> invocationTargetManager;
 
     @AroundInvoke
     public Object invokeMockableBean(InvocationContext ctx) throws Throwable {

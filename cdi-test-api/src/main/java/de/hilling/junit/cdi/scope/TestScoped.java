@@ -3,11 +3,7 @@ package de.hilling.junit.cdi.scope;
 import jakarta.enterprise.context.NormalScope;
 import jakarta.inject.Scope;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 import org.immutables.value.Value;
 

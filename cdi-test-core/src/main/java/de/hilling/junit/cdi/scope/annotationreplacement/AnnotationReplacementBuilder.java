@@ -18,7 +18,7 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
 @Alternative
 public class AnnotationReplacementBuilder<T> {
     private final Map<Class<? extends Annotation>, Annotation> replacementMap;
-    private final AnnotatedTypeConfigurator<T>                 configurator;
+    private final AnnotatedTypeConfigurator<T> configurator;
 
     public AnnotationReplacementBuilder(ProcessAnnotatedType<T> pat) {
         this.configurator = pat.configureAnnotatedType();

@@ -1,8 +1,9 @@
-Enhancement proposals and bug reports are always welcome!
+# Enhancement proposals and bug reports are always welcome!
 
-For bug reports please create a test case as pull request.
-
-For enhancements see the template for issues.
+- Please tell me what is missing and what you are missing in cdi-test!
+- For bug reports please create a test case as pull request.
+- For enhancements see the template for issues.
+- Check for open issues first: https://github.com/guhilling/cdi-test/issues
 
 Be aware that:
 - I'm mostly doing this work in my free time.

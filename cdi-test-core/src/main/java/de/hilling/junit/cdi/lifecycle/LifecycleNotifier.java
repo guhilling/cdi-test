@@ -8,6 +8,12 @@ import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.scope.TestState;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
+
+/**
+ * Used for notifications for the test and injection phases.
+ *
+ * @see TestState
+ */
 @BypassTestInterceptor
 @TestSuiteScoped
 public class LifecycleNotifier {

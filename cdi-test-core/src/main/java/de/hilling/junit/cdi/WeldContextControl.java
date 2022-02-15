@@ -18,6 +18,12 @@ import org.jboss.weld.context.bound.BoundRequestContext;
 import org.jboss.weld.context.bound.BoundSessionContext;
 import org.jboss.weld.context.bound.MutableBoundRequest;
 
+/**
+ * Wrapper around the weld-se specific context methods.
+ * <p>
+ *     Originally taken from the Deltaspike project.
+ * </p>
+ */
 @Dependent
 public class WeldContextControl implements ContextControl {
     private static final ThreadLocal<WeldContextControl.RequestContextHolder> requestContexts = new ThreadLocal<>();

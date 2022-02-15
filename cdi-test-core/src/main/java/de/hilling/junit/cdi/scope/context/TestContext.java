@@ -10,6 +10,11 @@ import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.scope.TestScoped;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
+/**
+ * Implementation of context for {@link TestScoped} beans.
+ *
+ * @see TestScoped
+ */
 @BypassTestInterceptor
 @TestSuiteScoped
 public class TestContext extends AbstractScopeContext implements Context, Serializable {

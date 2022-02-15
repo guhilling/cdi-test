@@ -8,6 +8,9 @@ import jakarta.enterprise.inject.spi.Bean;
 import java.io.Serializable;
 import java.util.logging.Logger;
 
+/**
+ * Base implementation for custom scopes.
+ */
 public abstract class AbstractScopeContext implements Context, Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +44,6 @@ public abstract class AbstractScopeContext implements Context, Serializable {
                                           .getInstance();
     }
 
-    @SuppressWarnings("unchecked")
     private <T> T createNewInstance(final CreationalContext<T> creationalContext, Bean<T> bean) {
         LOG.fine("creating new bean of type " + bean.getBeanClass());
         T instance = bean.create(creationalContext);

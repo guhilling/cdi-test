@@ -12,6 +12,9 @@ import jakarta.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Demo and test test activation for alternatives.
+ */
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
 class ActivateAlternativeForAlternativeTest {

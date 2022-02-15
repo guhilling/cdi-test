@@ -8,6 +8,9 @@ import jakarta.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * Showcase for trivial test.
+ */
 @ExtendWith(CdiTestJunitExtension.class)
 class SimpleTest {
 

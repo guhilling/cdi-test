@@ -11,6 +11,9 @@ import jakarta.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Demo and test auto-wiring of {@link Inject}ed test implementations.
+ */
 @ExtendWith(CdiTestJunitExtension.class)
 class ActivateAlternativeForRegularBeanTest {
     @Inject
@@ -28,9 +31,7 @@ class ActivateAlternativeForRegularBeanTest {
     @BackendServiceException(RuntimeException.class)
     void callTestActivatedServiceWithBackendException() {
         Person person = new Person();
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            sampleService.storePerson(person);
-        });
+        Assertions.assertThrows(RuntimeException.class, () -> sampleService.storePerson(person));
     }
 
 }

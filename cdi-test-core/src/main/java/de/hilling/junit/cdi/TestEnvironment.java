@@ -5,6 +5,13 @@ import java.lang.reflect.Method;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
+/**
+ * Keep information about the currently running test available as cdi component.
+ * <p>
+ *     This bean must actually be {@link TestSuiteScoped} because it needs to be configured before
+ *     the {@link de.hilling.junit.cdi.scope.TestScoped} context is activated.
+ * </p>
+ */
 @BypassTestInterceptor
 @TestSuiteScoped
 public class TestEnvironment {

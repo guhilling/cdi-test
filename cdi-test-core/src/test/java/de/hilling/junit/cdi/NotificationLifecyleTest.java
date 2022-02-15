@@ -7,6 +7,9 @@ import javax.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * Test and demo lifecycle events.
+ */
 @ExtendWith(CdiTestJunitExtension.class)
 class NotificationLifecyleTest {
 

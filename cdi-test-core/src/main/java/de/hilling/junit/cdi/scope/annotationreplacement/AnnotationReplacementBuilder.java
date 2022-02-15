@@ -10,6 +10,10 @@ import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
+/**
+ * Support class for replacing annotations on certain beans.
+ * @param <T> bean class
+ */
 @SuppressWarnings("CdiManagedBeanInconsistencyInspection")
 @Alternative
 public class AnnotationReplacementBuilder<T> {

@@ -8,6 +8,9 @@ import javax.enterprise.context.spi.Context;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
+/**
+ * @see TestSuiteScoped
+ */
 @BypassTestInterceptor
 public class TestSuiteContext extends AbstractScopeContext implements Context, Serializable {
     private static final long serialVersionUID = 1L;

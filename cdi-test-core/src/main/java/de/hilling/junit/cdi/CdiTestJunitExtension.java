@@ -1,10 +1,10 @@
 package de.hilling.junit.cdi;
 
 import java.lang.reflect.Field;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
+import org.jboss.weld.proxy.WeldClientProxy;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -31,11 +31,8 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
  */
 public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
 
-    private static final Logger LOG;
-
     static {
         LoggerConfigurator.configure();
-        LOG = Logger.getLogger(CdiTestJunitExtension.class.getName());
     }
 
     private final InvocationTargetManager invocationTargetManager;
@@ -74,7 +71,12 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
         testEnvironment.setTestName(context.getDisplayName());
         lifecycleNotifier.notify(TestState.STARTING, context);
         contextControl.startContexts();
-        testEnvironment.setCdiInstance(contextControl.getContextualReference(testEnvironment.getTestClass()));
+        Object cdiInstance = contextControl.getContextualReference(testEnvironment.getTestClass());
+        if(cdiInstance instanceof WeldClientProxy) {
+            testEnvironment.setCdiInstance(((WeldClientProxy)cdiInstance).getMetadata().getContextualInstance());
+        } else {
+            testEnvironment.setCdiInstance(cdiInstance);
+        }
         for (Field field : ReflectionsUtils.getAllFields(testEnvironment.getTestClass())) {
             if (field.isAnnotationPresent(Inject.class)) {
                 copyField(field);

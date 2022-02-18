@@ -8,6 +8,11 @@ import javax.enterprise.event.Event;
 import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 
+/**
+ * Used for notifications for the test and injection phases.
+ *
+ * @see TestState
+ */
 @BypassTestInterceptor
 @TestSuiteScoped
 public class LifecycleNotifier {

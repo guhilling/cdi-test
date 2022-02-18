@@ -3,6 +3,9 @@ package de.hilling.junit.cdi;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test behaviour and creation of {@link CdiTestException}.
+ */
 class CdiTestExceptionTest {
 
     @Test

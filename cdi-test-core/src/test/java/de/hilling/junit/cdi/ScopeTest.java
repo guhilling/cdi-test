@@ -9,6 +9,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import javax.inject.Inject;
 import java.util.UUID;
 
+/**
+ * Test and demo different scopes in cdi-test.
+ */
 @ExtendWith(CdiTestJunitExtension.class)
 class ScopeTest {
 

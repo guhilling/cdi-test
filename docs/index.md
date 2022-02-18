@@ -1,30 +1,26 @@
 # cdi-test
 
-[![Build Status](https://travis-ci.org/guhilling/cdi-test.svg?branch=main)](https://travis-ci.org/guhilling/cdi-test)
+[![Build CDI Test](https://github.com/guhilling/cdi-test/actions/workflows/maven.yml/badge.svg)](https://github.com/guhilling/cdi-test/actions/workflows/maven.yml)
+[![CodeQL](https://github.com/guhilling/cdi-test/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/guhilling/cdi-test/actions/workflows/codeql-analysis.yml)
 [![Coverage (Sonar)](https://sonarcloud.io/api/project_badges/measure?project=de.hilling.junit.cdi%3Acdi-test&metric=coverage)](https://sonarcloud.io/dashboard?id=de.hilling.junit.cdi%3Acdi-test)
 [![Status (Sonar)](https://sonarcloud.io/api/project_badges/measure?project=de.hilling.junit.cdi%3Acdi-test&metric=alert_status)](https://sonarcloud.io/dashboard?id=de.hilling.junit.cdi%3Acdi-test)
 [![Maintainability (Sonar)](https://sonarcloud.io/api/project_badges/measure?project=de.hilling.junit.cdi%3Acdi-test&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=de.hilling.junit.cdi%3Acdi-test)
 [![Maven Central](https://img.shields.io/maven-central/v/de.hilling.junit.cdi/cdi-test.svg)](http://search.maven.org/#search|gav|1|g:"de.hilling.junit.cdi"%20AND%20a:"cdi-test")
 
-cdi-test is a junit 5 extension for unit testing cdi or jee projects.
-
-cdi-test can use different versions of [Weld](http://weld.cdi-spec.org) for the tests, so you should
-be able to use the same cdi implementation in your tests as in your production container.
-
 ## Main features:
 
-* Fast test execution. Even with hundreds of unit tests.
-* Short test start-up time that is basically dependent on the size of your project.
-* Supports junit 5. So it's easy to combine cdi-test with other junit extensions.
-* Plain cdi driven test, no classpath magic.
-* Uses interceptors for on-the-fly switching between mockito-mocks, test implementation and production implementations.
-* Extensible to support frameworks built with cdi.
-* Examples for extensions:
-    * JPA/JEE extension.
-    * Microprofile-Config support.
-    * Both extensionts are integrated in the cdi-test github repo.
-  
-All of "my" extensions are also available from this repository. So just use the same version for each module.
+cdi-test is targeted at running unit, component and integration tests at scale. It accomplishes this with:
+- Only booting the cdi container once for all unit tests. This allows for running a huge number of tests even
+  in big projects where booting might take some time.
+- cdi-test uses [Weld (the cdi reference implementation)](http://weld.cdi-spec.org) as cdi container. So you can
+  use the exact same cdi container as in your application runtime in case you're running e.g.
+  [Wildfly](https://www.wildfly.org),
+  [JBoss EAP](https://www.redhat.com/en/technologies/jboss-middleware/application-platform),
+  [GlassFish](https://javaee.github.io/glassfish/) or
+  [Oracle WebLogic](https://www.oracle.com/middleware/technologies/weblogic.html).
+- cdi-test supports mocks and test alternatives for CDI beans. These can be activated per test class. So you can
+  freely choose what you want to test and need to mock test-by-test.
+- Well tested and maintained and used in real projects with thousands of unit tests.
 
 ## Tutorial
 
@@ -40,7 +36,7 @@ briefly to give you an idea what this library is all about.
 Nowadays as we package everything as a docker container it's possible to setup integration testing solutions using docker and
 [Testcontainers](https://www.testcontainers.org) without too much fuss.
 
-However this approach is not well suited for unit tests.
+However this approach is not well suited for unit and component tests.
 
 ### Run the tests in a production-like container
 
@@ -50,23 +46,24 @@ This approach is taken by the [Arquillian](http://arquillian.org) framework. The
 * Furthermore arquillian can be used to run tests from _inside the test container_, which makes it quite unique afaik.
 
 However this approach also hase some disadvantages:
-* Every test run requires an archive to be built and deployed which makes the testing slower.
+* Every test run requires an archive to be built and deployed which makes the testing slower. Too slow if you
+  need to run thousends of test cases.
 * Creating the deployments, especially resolving the required artifacts and classes, is not trivial.
 * Setup tends to be complicated.
 
 ### Run unit and module tests in a test container
 
 This is what this library does and it is all about running light-weight tests with easy to define boundaries.
-I want my unit and module tests to start quick (startup/creation time) and to run fast even if there are hundreds of 
-tests in my project.
+I want my unit and module tests to start quick (startup/creation time) and to run fast even if there are
+hundreds or thousands of tests in my project.
 Indeed this is what this library was developed for in the first place.
 
 Why is there no testing support readily available with cdi as there is with spring? Well, hm ... Actually because
 spring is a product (one implementation) and this product has junit test support. cdi is just a standard in the first
 place and as it is an api it doesn't define any testing hooks. Maybe it should require them.
 
-[Apache DeltaSpike](https://deltaspike.apache.org) has a similar test runner as cdi-test but it's - at least imho - 
-not quite the same and not as easy to use and extend as cdi-test.
+[Apache DeltaSpike](https://deltaspike.apache.org) has a similar test runner as cdi-test but it's -
+at least imho - not quite the same and not as easy to use and extend as cdi-test.
 
 ### Conclusion
 
@@ -86,37 +83,33 @@ Additional to the junit 5 library you need the following dependencies:
     <dependency>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test-core</artifactId>
-        <version>3.3.5</version>
+        <version>3.4.0</version>
         <scope>test</scope>
     </dependency>
 ```
-* You need an actual cdi implementation for your tests. There is no predefined implementation of cdi and cdi-test 
-should work with any cdi-1.2 or 2.0 compliant implementation. However I'm only using [Weld](http://weld.cdi-spec.org)
-for my integration tests at the moment.
-* As cdi-test used [Apache DeltaSpike](https://deltaspike.apache.org) up to version 3.2.x to boot and control the actual cdi-container.
-This is done internally now so DeltaSpike is no longer needed.
-```xml
-    <dependency>
-        <groupId>org.jboss.weld.se</groupId>
-        <artifactId>weld-se-core</artifactId>
-        <version>3.1.8.Final</version>
-        <scope>test</scope>
-    </dependency>
-```
+* You need an actual cdi implementation for your tests. cdi-test must use [Weld](http://weld.cdi-spec.org) and
+  has a predefined version of [weld-se](https://search.maven.org/artifact/org.jboss.weld.se/weld-se-core) defined as a dependency. However you can override it with a different _minor_ or
+  _bugfix_ version.
+* [Apache DeltaSpike](https://deltaspike.apache.org) is no longer needed starting with cdi-test 3.3.x.
 * Remember that many libraries you are using in a jee or microprofile application are provided by the runtime
-environment, so you might have to pull them into the test scope manually. One example would be jpa.
+environment, so you might have to pull them into the test scope manually. One example would be an implementation of JPA.
+* As a starting point you should probably check the pom.xml from the [integration-tests module](../integration-tests):
+
+https://github.com/guhilling/cdi-test/blob/82e6e4c8df5a952798c9f4e91558baec473ecbc9/integration-tests/pom.xml#L24-L45
 
 
-
-## First test
+## Some internals and first test.
 
 First the (not so) obvious: Don't forget to include a ``beans.xml`` for your tests or cdi won't find any of your testing 
-components. However the test class itself is not a cdi bean but is created by junit. This is different from the version
-1.x of cdi-test where the test case was created using cdi.
+components. However the test class itself _is not a cdi bean_ but is created by junit. This is different from the version
+1.x and 2.x of cdi-test where the test case was created using cdi.
 
-The junit engine is extended with ``CdiTestJunitExtension``. The extension takes care of injecting cdi beans into
-the test. Again: The test class itself _is not a cdi bean_, so it is not possible to use every cdi feature like 
-creating an event listener in it. Only ``@Inject`` will work and Qualifieres will also be honored.
+The junit engine is extended with ``CdiTestJunitExtension``.
+If you need to reference cdi components from your test case _you must use field injection_. Only this is supported 
+by cdi-test: It will use weld to resolve a second instance of the test class and then copy the ```@Inject```ed fields
+to the test instance. So producer methods and qualifiers _will_ be supported.
+
+The creation of a second instance will eventually be removed in the future (see #215 ).
 
 In the example below we let the extension resolve and inject the ``SampleService`` which is under test, into the test.
 
@@ -140,9 +133,9 @@ The Service is resolved by the cdi implementation as usual. In the above test no
 Well ... there is one thing: All standard scopes are created and destroyed just before any single test that is run.
 This way it is possible to run the tests with decent performance and have them isolated from each other anyway.
 
-The only beans that survive the test are the special ``@TestScoped`` and ``@TestSuiteScoped`` beans. These are used in
+The only beans that survive the test are the special ``@TestSuiteScoped`` beans. These are used in
 cdi-test internally but you are certainly free to use them in your test support classes. This often makes sense for components
-that should be replaced globally an might be expensive to setup.
+that should be replaced globally an might be expensive to create.
 
 ## Mocking beans
 
@@ -214,7 +207,8 @@ This is actually easy to accomplish with cdi-test. First you annotate your test 
 ```java
 @ActivatableTestImplementation
 public class BackendServiceTestImplementation extends BackendService {
-[...]
+// your implementation
+}
 ```
 
 This implementation is by default not used when "routing" the method calls. You can however enable it in your tests by

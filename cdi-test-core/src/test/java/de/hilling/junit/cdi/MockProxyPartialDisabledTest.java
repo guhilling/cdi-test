@@ -12,6 +12,9 @@ import javax.inject.Inject;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * Deep bean replacement with mocks.
+ */
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
 class MockProxyPartialDisabledTest {

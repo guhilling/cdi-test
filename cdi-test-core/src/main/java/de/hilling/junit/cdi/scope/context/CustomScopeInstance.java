@@ -6,6 +6,10 @@ import org.immutables.value.Value;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 
+/**
+ * Generate an instance of custom scope.
+ * @param <T> scope type.
+ */
 @BypassTestInterceptor
 @Value.Immutable
 public interface CustomScopeInstance<T> {

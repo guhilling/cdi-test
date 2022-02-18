@@ -13,6 +13,9 @@ import javax.inject.Inject;
 
 import static org.mockito.Mockito.verify;
 
+/**
+ * Demo and test {@link de.hilling.junit.cdi.scope.TestScoped} and separation of test cases.
+ */
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
 class MultipleInvocationsTest {

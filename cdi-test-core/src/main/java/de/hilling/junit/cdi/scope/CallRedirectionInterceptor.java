@@ -14,6 +14,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * Interceptor to redirect method calls to beans in testing depending on the test case.
+ */
 @Replaceable
 @Interceptor
 @Dependent
@@ -22,7 +25,7 @@ public class CallRedirectionInterceptor implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Inject
-    private Instance<InvocationTargetManager> invocationTargetManager;
+    private transient Instance<InvocationTargetManager> invocationTargetManager;
 
     @AroundInvoke
     public Object invokeMockableBean(InvocationContext ctx) throws Throwable {

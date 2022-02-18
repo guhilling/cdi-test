@@ -2,6 +2,9 @@ package de.hilling.junit.cdi;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * API for access to weld internals.
+ */
 public interface ContextControl {
     void startContexts();
 

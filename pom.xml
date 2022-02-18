@@ -16,7 +16,7 @@
 
         <cdi-api.version>3.0.0</cdi-api.version>
         <weld.version>4.0.3.Final</weld.version>
-        <microprofile-config.version>3.0</microprofile-config.version>
+        <microprofile-config.version>3.0.1</microprofile-config.version>
         <jakarta.jakartaee-api.version>9.1.0</jakarta.jakartaee-api.version>
         <jakarta.annotation-api.version>2.0.0</jakarta.annotation-api.version>
         <jakarta.persistence-api.version>3.0.0</jakarta.persistence-api.version>
@@ -290,7 +290,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.3.2</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -306,7 +306,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.9.0</version>
+                <version>3.10.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -362,7 +362,7 @@
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.8</version>
+                    <version>1.6.10</version>
                     <extensions>true</extensions>
                     <configuration>
                         <serverId>ossrh</serverId>

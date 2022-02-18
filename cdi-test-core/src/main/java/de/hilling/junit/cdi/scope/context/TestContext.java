@@ -11,7 +11,7 @@ import de.hilling.junit.cdi.scope.TestScoped;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 /**
- * Implementation of context for {@link TestScoped} beans.
+ *  Implementation of context for {@link TestScoped} beans.
  *
  * @see TestScoped
  */

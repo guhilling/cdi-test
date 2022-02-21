@@ -1,22 +1,28 @@
 package de.hilling.junit.cdi.scope;
 
-import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
-import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
-import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementBuilder;
-import de.hilling.junit.cdi.scope.context.TestContext;
-import de.hilling.junit.cdi.scope.context.TestSuiteContext;
-import de.hilling.junit.cdi.util.ReflectionsUtils;
-
-import javax.enterprise.event.Observes;
-import javax.enterprise.inject.spi.*;
+import static java.util.logging.Level.FINE;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static java.util.logging.Level.FINE;
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.spi.AfterBeanDiscovery;
+import javax.enterprise.inject.spi.AfterTypeDiscovery;
+import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.inject.spi.Extension;
+import javax.enterprise.inject.spi.ProcessAnnotatedType;
+
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+import de.hilling.junit.cdi.annotations.GlobalTestImplementation;
+import de.hilling.junit.cdi.junit.CompanionClassResolver;
+import de.hilling.junit.cdi.scope.annotationreplacement.AnnotationReplacementBuilder;
+import de.hilling.junit.cdi.scope.context.TestContext;
+import de.hilling.junit.cdi.scope.context.TestSuiteContext;
+import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 /**
  * CDI {@link javax.enterprise.inject.spi.Extension} to enable proxying of (nearly) all method invocations. <p> By
@@ -26,19 +32,24 @@ import static java.util.logging.Level.FINE;
 @BypassTestInterceptor
 public class TestScopeExtension implements Extension, Serializable {
 
-    private static final    long                         serialVersionUID = 1L;
-    private static final    Logger                         LOG            = Logger.getLogger(
+    private static final    long                                         serialVersionUID = 1L;
+    private static final    Logger                                       LOG              = Logger.getLogger(
     TestScopeExtension.class.getCanonicalName());
-    private final transient Map<Class<?>, ActivatableTestImplementation> decoratedTypes = new HashMap<>();
+    private final transient Map<Class<?>, ActivatableTestImplementation> decoratedTypes   = new HashMap<>();
 
     /**
      * Add contexts after bean discovery.
      *
      * @param afterBeanDiscovery AfterBeanDiscovery
      */
-    public void afterBeanDiscovery(@Observes AfterBeanDiscovery afterBeanDiscovery) {
+    public void afterBeanDiscovery(@Observes AfterBeanDiscovery afterBeanDiscovery, BeanManager beanManager) {
         afterBeanDiscovery.addContext(new TestSuiteContext());
         afterBeanDiscovery.addContext(new TestContext());
+        CompanionClassResolver.loadClasses(Thread.currentThread().getContextClassLoader());
+        for (Class<?> companionClass : CompanionClassResolver.getAllCompanionClasses()) {
+            afterBeanDiscovery.addBean()
+                              .read(beanManager.createAnnotatedType(companionClass));
+        }
     }
 
     ActivatableTestImplementation annotationsFor(Class<?> clazz) {
@@ -60,7 +71,8 @@ public class TestScopeExtension implements Extension, Serializable {
         AnnotatedType<X> type = pat.getAnnotatedType();
         final Class<X> javaClass = type.getJavaClass();
         if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
-            decoratedTypes.put(pat.getAnnotatedType().getJavaClass(), new ActivatableAlternativeBuilder<>(pat).invoke());
+            decoratedTypes.put(pat.getAnnotatedType().getJavaClass(),
+                               new ActivatableAlternativeBuilder<>(pat).invoke());
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
             pat.configureAnnotatedType().add(ImmutableReplaceable.builder().build());
         }

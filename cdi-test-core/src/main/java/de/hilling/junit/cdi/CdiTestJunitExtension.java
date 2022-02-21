@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 import org.mockito.Mockito;
 
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.junit.CompanionClassResolver;
 import de.hilling.junit.cdi.lifecycle.LifecycleNotifier;
 import de.hilling.junit.cdi.scope.InvocationTargetManager;
 import de.hilling.junit.cdi.scope.TestState;
@@ -71,7 +72,8 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
         testEnvironment.setTestName(context.getDisplayName());
         lifecycleNotifier.notify(TestState.STARTING, context);
         contextControl.startContexts();
-        Object cdiInstance = contextControl.getContextualReference(testEnvironment.getTestClass());
+        Class<?> cdiInstanceClass = CompanionClassResolver.getCompanionClass(testEnvironment.getTestClass().getCanonicalName());
+        Object cdiInstance = contextControl.getContextualReference(cdiInstanceClass);
         if(cdiInstance instanceof WeldClientProxy) {
             testEnvironment.setCdiInstance(((WeldClientProxy)cdiInstance).getMetadata().getContextualInstance());
         } else {

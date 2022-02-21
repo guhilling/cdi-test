@@ -10,7 +10,7 @@ public class CustomPersonProducer {
     @CustomPerson
     public Person injectIntProperty(InjectionPoint injectionPoint) {
         Person person = new Person();
-        String beanName = injectionPoint.getBean().getName();
+        String beanName = injectionPoint.getMember().getName();
         person.setName(beanName);
         return person;
     }

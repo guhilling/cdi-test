@@ -135,11 +135,16 @@ public final class ReflectionsUtils {
         return true;
     }
 
+    @SuppressWarnings("java:S3011")
     public static void copyField(Object source, Object target, Field field) {
         field.setAccessible(true);
         try {
-            field.set(target, field.get(source));
-        } catch (IllegalAccessException e) {
+            Field sourceField = source.getClass().getDeclaredField(field.getName());
+            sourceField.setAccessible(true);
+            Object value = sourceField.get(source);
+            sourceField.setAccessible(false);
+            field.set(target,value);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
             throw new CdiTestException("setting field failed", e);
         } finally {
             field.setAccessible(false);

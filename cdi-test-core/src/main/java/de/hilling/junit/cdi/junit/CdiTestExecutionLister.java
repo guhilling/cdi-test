@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 
@@ -17,7 +18,7 @@ import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.launcher.TestPlan;
 
-import de.hilling.junit.cdi.scope.TestScoped;
+import de.hilling.junit.cdi.scope.TestScopeExtension;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
 public class CdiTestExecutionLister implements TestExecutionListener {
@@ -27,17 +28,16 @@ public class CdiTestExecutionLister implements TestExecutionListener {
     @Override
     public void testPlanExecutionStarted(TestPlan testPlan) {
         TestIdentifier next = testPlan.getRoots().iterator().next();
-        LOG.info(next.toString());
         String uniqueId = next.getUniqueId();
         Set<TestIdentifier> children = testPlan.getChildren(uniqueId);
-        children.stream().forEach(this::printTestIdentifier);
+        children.forEach(this::printTestIdentifier);
     }
 
     private void printTestIdentifier(TestIdentifier identifier) {
         Optional<TestSource> source = identifier.getSource();
-        if(source.isPresent()) {
+        if (source.isPresent()) {
             TestSource testSource = source.get();
-            if(testSource instanceof ClassSource) {
+            if (testSource instanceof ClassSource) {
                 ClassSource classSource = (ClassSource) testSource;
                 generateCompanionClass(classSource.getJavaClass());
                 LOG.info("found test class: " + classSource.getClassName());
@@ -46,19 +46,20 @@ public class CdiTestExecutionLister implements TestExecutionListener {
     }
 
     private void generateCompanionClass(Class<?> javaClass) {
-        AnnotationLiteral<TestScoped> testScopedAnnotationLiteral = new AnnotationLiteral<TestScoped>() {
+        AnnotationLiteral<Dependent> dependentAnnotationLiteral = new AnnotationLiteral<Dependent>() {
         };
+        String companionClassName = TestScopeExtension.class.getPackage().getName() + "." + javaClass.getSimpleName() + "$$Companion";
         DynamicType.Builder<Object> classBuilder = new ByteBuddy()
-                .subclass(Object.class)
-                .annotateType(testScopedAnnotationLiteral);
+            .subclass(Object.class)
+            .annotateType(dependentAnnotationLiteral)
+            .name(companionClassName);
         for (Field field : ReflectionsUtils.getAllFields(javaClass)) {
             if (field.isAnnotationPresent(Inject.class)) {
-                classBuilder.define(field);
+                classBuilder = classBuilder.define(field)
+                                           .annotateField(field.getAnnotations());
             }
         }
         DynamicType.Unloaded<Object> unloadedClass = classBuilder.make();
-        DynamicType.Loaded<Object> companionClass = unloadedClass.load(Thread.currentThread().getContextClassLoader());
-        Class<?> companionClassLoaded = companionClass.getLoaded();
-        CompanionClassResolver.putCompanionClass(javaClass.getCanonicalName(), companionClassLoaded);
+        CompanionClassResolver.putCompanionClass(javaClass.getCanonicalName(), unloadedClass);
     }
 }

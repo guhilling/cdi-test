@@ -1,9 +1,9 @@
 package de.hilling.junit.cdi;
 
+import jakarta.inject.Inject;
+
 import java.util.UUID;
 import java.util.stream.Stream;
-
-import javax.inject.Inject;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;

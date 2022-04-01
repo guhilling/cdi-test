@@ -18,7 +18,7 @@
         <weld.version>3.1.8.Final</weld.version>
         <microprofile-config.version>2.0.1</microprofile-config.version>
         <jakarta.jakartaee-api.version>8.0.0</jakarta.jakartaee-api.version>
-        <jakarta.annotation-api.version>1.3.5</jakarta.annotation-api.version>
+        <jakarta.annotation-api.version>2.1.0</jakarta.annotation-api.version>
         <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
         <jakarta.ejb-api.version>3.2.6</jakarta.ejb-api.version>
         <jakarta.interceptor-api.version>1.2.5</jakarta.interceptor-api.version>

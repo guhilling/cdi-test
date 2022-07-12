@@ -3,7 +3,7 @@
     <parent>
         <groupId>de.hilling.junit.cdi</groupId>
         <artifactId>cdi-test</artifactId>
-        <version>4.0.0-RC7-SNAPSHOT</version>
+        <version>4.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

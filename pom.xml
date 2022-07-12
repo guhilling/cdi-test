@@ -3,7 +3,7 @@
     
     <groupId>de.hilling.junit.cdi</groupId>
     <artifactId>cdi-test</artifactId>
-    <version>4.0.0-RC7-SNAPSHOT</version>
+    <version>4.0.0</version>
     <packaging>pom</packaging>
     <url>https://github.com/guhilling/cdi-test</url>
     <inceptionYear>2014</inceptionYear>
@@ -40,7 +40,7 @@
         <connection>scm:git:https://github.com/guhilling/cdi-test.git</connection>
         <developerConnection>scm:git:https://github.com/guhilling/cdi-test.git</developerConnection>
         <url>https://github.com/guhilling/cdi-test.git</url>
-        <tag>HEAD</tag>
+        <tag>cdi-test-4.0.0</tag>
     </scm>
 
     <licenses>

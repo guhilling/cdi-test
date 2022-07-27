@@ -24,7 +24,7 @@ class AbstractScopeContextTest {
     private static Map<Type, UUID> uuidMap;
 
     @BeforeAll
-    private static void reset() {
+    static void reset() {
         uuidMap = new HashMap<>();
     }
 

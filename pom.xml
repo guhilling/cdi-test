@@ -30,7 +30,7 @@
         <smallrye.version>3.0.0</smallrye.version>
         <mockito.version>4.4.0</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <junit.jupiter.version>5.8.2</junit.jupiter.version>
+        <junit.jupiter.version>5.9.0</junit.jupiter.version>
         <annotation-literal.version>1.0.11</annotation-literal.version>
 
         <github.global.server>github</github.global.server>

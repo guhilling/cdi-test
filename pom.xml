@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>8</java.version>
+        <java.version>11</java.version>
 
         <cdi-api.version>3.0.0</cdi-api.version>
         <weld.version>4.0.3.Final</weld.version>

@@ -17,7 +17,6 @@
         <cdi-api.version>3.0.0</cdi-api.version>
         <weld.version>4.0.3.Final</weld.version>
         <microprofile-config.version>3.0.1</microprofile-config.version>
-        <jakarta.jakartaee-api.version>10.0.0</jakarta.jakartaee-api.version>
         <jakarta.annotation-api.version>2.0.0</jakarta.annotation-api.version>
         <jakarta.persistence-api.version>3.0.0</jakarta.persistence-api.version>
         <jakarta.ejb-api.version>4.0.0</jakarta.ejb-api.version>
@@ -142,12 +141,6 @@
                 <scope>provided</scope>
             </dependency>
             <!-- provided -->
-            <dependency>
-                <groupId>jakarta.platform</groupId>
-                <artifactId>jakarta.jakartaee-api</artifactId>
-                <version>${jakarta.jakartaee-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
             <dependency>
                 <groupId>jakarta.enterprise</groupId>
                 <artifactId>jakarta.enterprise.cdi-api</artifactId>

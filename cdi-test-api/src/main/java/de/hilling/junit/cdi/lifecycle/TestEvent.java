@@ -20,6 +20,7 @@ import de.hilling.junit.cdi.scope.TestState;
 @Value.Immutable
 public @interface TestEvent {
     /**
+     * The current {@link TestState}.
      * @return current {@link TestState}
      */
     TestState value();

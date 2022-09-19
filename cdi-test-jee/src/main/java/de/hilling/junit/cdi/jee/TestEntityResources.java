@@ -1,13 +1,13 @@
 package de.hilling.junit.cdi.jee;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 
@@ -29,6 +29,7 @@ public class TestEntityResources {
     private Instance<ConnectionWrapper> connectionWrappers;
 
     /**
+     * State of the {@link EntityManager} for given persistence unit.
      * @param name persistence unit name.
      * @return true if {@link EntityManager} for given persistence unit is already available.
      */
@@ -37,6 +38,7 @@ public class TestEntityResources {
     }
 
     /**
+     * The {@link EntityManager} for given persistence unit.
      * @param name persistence unit name.
      * @return {@link EntityManager} for given persistence unit.
      */

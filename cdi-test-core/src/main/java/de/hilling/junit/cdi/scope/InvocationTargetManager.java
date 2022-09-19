@@ -4,16 +4,20 @@ import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.inject.Inject;
 
-import de.hilling.junit.cdi.CdiTestException;
-import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
-import de.hilling.junit.cdi.lifecycle.TestEvent;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.mockito.listeners.MockCreationListener;
 import org.mockito.mock.MockCreationSettings;
 
-import java.util.*;
+import de.hilling.junit.cdi.CdiTestException;
+import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
+import de.hilling.junit.cdi.lifecycle.TestEvent;
 
 /**
  * Book keeping for mocks. Thread safe.
@@ -36,7 +40,7 @@ public class InvocationTargetManager implements MockCreationListener {
     }
 
     @Override
-    public void onMockCreated(Object mock, MockCreationSettings settings) {
+    public synchronized void onMockCreated(Object mock, MockCreationSettings settings) {
         final Class<?> typeToMock = settings.getTypeToMock();
         final Map<Class<?>, Object> mocks = currentMockSet();
         if (mocks.containsKey(typeToMock)) {
@@ -74,7 +78,7 @@ public class InvocationTargetManager implements MockCreationListener {
         return alternativeFor(javaClass) != null;
     }
 
-    public Class<?> alternativeFor(Class<?> javaClass) {
+    public synchronized Class<?> alternativeFor(Class<?> javaClass) {
         for (Class<?> alternative : currentAlternativesSet()) {
             ActivatableTestImplementation activatableTestImplementation = beanManager.getExtension(TestScopeExtension.class)
                     .annotationsFor(alternative);

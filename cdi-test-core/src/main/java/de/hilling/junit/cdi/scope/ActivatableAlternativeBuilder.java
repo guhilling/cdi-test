@@ -13,7 +13,7 @@ import de.hilling.junit.cdi.annotations.ImmutableActivatableTestImplementation;
 /**
  * Prepare activatable alternatives.
  *
- * @param <X>
+ * @param <X> Class to be considered.
  */
 class ActivatableAlternativeBuilder<X> {
     private final ProcessAnnotatedType<X> pat;

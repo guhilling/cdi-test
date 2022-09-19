@@ -1,8 +1,5 @@
 package de.hilling.junit.cdi.util;
 
-import de.hilling.junit.cdi.CdiTestException;
-import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -10,6 +7,9 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import de.hilling.junit.cdi.CdiTestException;
+import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 
 /**
  * Utilities for reflection access.
@@ -103,10 +103,7 @@ public final class ReflectionsUtils {
         if (!hasPublicConstructor(javaClass)) {
             return false;
         }
-        if (hasFinalMethods(javaClass)) {
-            return false;
-        }
-        return !javaClass.isEnum();
+        return !hasFinalMethods(javaClass);
     }
 
     public static <X> boolean hasFinalMethods(Class<X> javaClass) {

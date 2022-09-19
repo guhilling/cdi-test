@@ -22,8 +22,8 @@ import de.hilling.junit.cdi.scope.TestState;
 @TestScoped
 public class TestEntityResources {
 
-    private Map<String, EntityManager>     entityManagers = new HashMap<>();
-    private Map<String, EntityTransaction> transactions   = new HashMap<>();
+    private final Map<String, EntityManager>     entityManagers = new HashMap<>();
+    private final Map<String, EntityTransaction> transactions   = new HashMap<>();
 
     @Inject
     private Instance<ConnectionWrapper> connectionWrappers;

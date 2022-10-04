@@ -15,7 +15,7 @@
         <java.version>11</java.version>
 
         <cdi-api.version>3.0.0</cdi-api.version>
-        <weld.version>4.0.3.Final</weld.version>
+        <weld.version>5.1.0.Final</weld.version>
         <microprofile-config.version>3.0.1</microprofile-config.version>
         <jakarta.annotation-api.version>2.0.0</jakarta.annotation-api.version>
         <jakarta.persistence-api.version>3.0.0</jakarta.persistence-api.version>

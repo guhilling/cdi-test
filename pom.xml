@@ -27,7 +27,7 @@
 
         <immutables.version>2.9.2</immutables.version>
         <smallrye.version>3.0.0</smallrye.version>
-        <mockito.version>4.8.1</mockito.version>
+        <mockito.version>4.9.0</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit.jupiter.version>5.9.1</junit.jupiter.version>
         <annotation-literal.version>1.0.11</annotation-literal.version>

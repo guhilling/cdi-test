@@ -26,7 +26,7 @@
         <eclipselink.version>4.0.0</eclipselink.version>
 
         <immutables.version>2.9.3</immutables.version>
-        <smallrye.version>3.1.1</smallrye.version>
+        <smallrye.version>3.1.2</smallrye.version>
         <mockito.version>5.1.1</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit.jupiter.version>5.9.2</junit.jupiter.version>

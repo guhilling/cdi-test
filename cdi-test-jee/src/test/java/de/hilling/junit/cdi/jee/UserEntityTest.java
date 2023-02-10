@@ -1,7 +1,6 @@
 package de.hilling.junit.cdi.jee;
 
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 
 import org.junit.jupiter.api.Assertions;
@@ -19,6 +18,9 @@ class UserEntityTest {
     @SecondEntityManager
     private EntityManager entityManagerB;
 
+    @Inject
+    private UserService userService;
+
     @Test
     void storeUserEntity() {
         UserEntity user = new UserEntity();
@@ -29,6 +31,13 @@ class UserEntityTest {
     void storeCustomerEntity() {
         CustomerEntity customer = new CustomerEntity();
         Assertions.assertNotSame(customer, entityManagerB.merge(customer));
+    }
+
+    @Test
+    void storeCustomerEntityTransactional() {
+        UserEntity user = new UserEntity();
+        userService.storeUser(user);
+        Assertions.assertNotSame(user, entityManagerB.merge(user));
     }
 
     @Test

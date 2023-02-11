@@ -14,19 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
 
-        <cdi-api.version>3.0.0</cdi-api.version>
-        <weld.version>4.0.3.Final</weld.version>
-        <microprofile-config.version>3.0.1</microprofile-config.version>
-        <jakarta.annotation-api.version>2.0.0</jakarta.annotation-api.version>
-        <jakarta.persistence-api.version>3.0.0</jakarta.persistence-api.version>
-        <jakarta.ejb-api.version>4.0.0</jakarta.ejb-api.version>
-        <jakarta.interceptor-api.version>2.0.1</jakarta.interceptor-api.version>
-        <hibernate.version>5.6.15.Final</hibernate.version>
-        <hibernate-entitymanager.artifactId>hibernate-core-jakarta</hibernate-entitymanager.artifactId>
-        <eclipselink.version>4.0.0</eclipselink.version>
-
         <immutables.version>2.9.3</immutables.version>
-        <smallrye.version>3.1.2</smallrye.version>
         <mockito.version>5.1.1</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit.jupiter.version>5.9.2</junit.jupiter.version>
@@ -86,6 +74,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>jakarta.platform</groupId>
+                <artifactId>jakarta.jakartaee-bom</artifactId>
+                <version>${jakartaee.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- testing -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
@@ -140,56 +135,12 @@
                 <version>${immutables.version}</version>
                 <scope>provided</scope>
             </dependency>
-            <!-- provided -->
-            <dependency>
-                <groupId>jakarta.enterprise</groupId>
-                <artifactId>jakarta.enterprise.cdi-api</artifactId>
-                <version>${cdi-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>jakarta.annotation</groupId>
-                <artifactId>jakarta.annotation-api</artifactId>
-                <version>${jakarta.annotation-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>jakarta.faces</groupId>
-                <artifactId>jakarta.faces-api</artifactId>
-                <version>2.3.2</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>jakarta.xml.bind</groupId>
-                <artifactId>jakarta.xml.bind-api</artifactId>
-                <version>3.0.1</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>jakarta.persistence</groupId>
-                <artifactId>jakarta.persistence-api</artifactId>
-                <version>${jakarta.persistence-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>jakarta.ejb</groupId>
-                <artifactId>jakarta.ejb-api</artifactId>
-                <version>${jakarta.ejb-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>jakarta.interceptor</groupId>
-                <artifactId>jakarta.interceptor-api</artifactId>
-                <version>${jakarta.interceptor-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
 
             <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
                 <artifactId>jaxb-runtime</artifactId>
                 <version>4.0.2</version>
             </dependency>
-
             <dependency>
                 <groupId>org.jboss</groupId>
                 <artifactId>jandex</artifactId>
@@ -386,6 +337,36 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>jakarta-ee-9</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <jakartaee.version>9.1.0</jakartaee.version>
+                <microprofile-config.version>3.0.1</microprofile-config.version>
+
+                <weld.version>4.0.3.Final</weld.version>
+                <hibernate.version>5.6.15.Final</hibernate.version>
+                <hibernate-entitymanager.artifactId>hibernate-core-jakarta</hibernate-entitymanager.artifactId>
+                <eclipselink.version>4.0.0</eclipselink.version>
+                <smallrye.version>3.1.2</smallrye.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>jakarta-ee-10</id>
+            <properties>
+                <jakartaee.version>10.0.0</jakartaee.version>
+                <!-- TODO: Fix these properties for J-10 -->
+                <microprofile-config.version>3.0.1</microprofile-config.version>
+
+                <weld.version>4.0.3.Final</weld.version>
+                <hibernate.version>5.6.15.Final</hibernate.version>
+                <hibernate-entitymanager.artifactId>hibernate-core-jakarta</hibernate-entitymanager.artifactId>
+                <eclipselink.version>4.0.0</eclipselink.version>
+                <smallrye.version>3.1.2</smallrye.version>
+            </properties>
+        </profile>
         <profile>
             <id>release</id>
             <build>

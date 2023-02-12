@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Maven Build JDK ${{ matrix.java }}
+    name: Maven Build JDK ${{ matrix.java }} Jakarta EE ${{ matrix.jakarta-ee }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

@@ -15,8 +15,7 @@ class UserEntityTest {
     private EntityManager entityManager;
 
     @Inject
-    @SecondEntityManager
-    private EntityManager entityManagerB;
+    private UserService userService;
 
     @Test
     void storeUserEntity() {
@@ -25,15 +24,10 @@ class UserEntityTest {
     }
 
     @Test
-    void storeCustomerEntity() {
-        CustomerEntity customer = new CustomerEntity();
-        Assertions.assertNotSame(customer, entityManagerB.merge(customer));
-    }
-
-    @Test
-    void storeBothEntitiesToDifferentDBs() {
-        storeCustomerEntity();
-        storeUserEntity();
+    void storeCustomerEntityTransactional() {
+        UserEntity user = new UserEntity();
+        userService.storeUser(user);
+        Assertions.assertNotSame(user, entityManager.merge(user));
     }
 
     @Test

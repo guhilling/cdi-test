@@ -7,18 +7,22 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <description>jee support for cdi-test, mainly persistence</description>
-    <name>cdi-test jee</name>
-    <artifactId>cdi-test-jee</artifactId>
+    <description>jta support for cdi-test, using cdi/weld integration</description>
+    <name>cdi-test JTA</name>
+    <artifactId>cdi-test-jta</artifactId>
+
+    <properties>
+        <version.narayana>6.0.0.CR1</version.narayana>
+    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
+            <groupId>org.jboss.weld.module</groupId>
+            <artifactId>weld-jta</artifactId>
         </dependency>
         <dependency>
-            <groupId>jakarta.ejb</groupId>
-            <artifactId>jakarta.ejb-api</artifactId>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
@@ -29,12 +33,24 @@
             <artifactId>jaxb-runtime</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>${hibernate-entitymanager.artifactId}</artifactId>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>cdi</artifactId>
+            <version>${version.narayana}</version>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>org.eclipse.persistence.jpa</artifactId>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>narayana-jta</artifactId>
+            <version>${version.narayana}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.logmanager</groupId>
+                    <artifactId>jboss-logmanager</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>${hibernate-entitymanager.artifactId}</artifactId>
         </dependency>
 
         <dependency>

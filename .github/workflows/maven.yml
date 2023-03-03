@@ -8,12 +8,13 @@ on:
 
 jobs:
   build:
-    name: Maven Build JDK ${{ matrix.java }}
+    name: Maven Build JDK ${{ matrix.java }} Jakarta EE ${{ matrix.jakarta-ee }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        java: [ '11', '17' ]
+        java: [ '11', '17', '19' ]
+        jakarta-ee: [ '9', '10' ]
         include:
           - java: 17
             extratestargs: >
@@ -38,11 +39,11 @@ jobs:
         distribution: adopt
         java-version: ${{ matrix.java }}
         cache: maven
-    - name: Maven Build JDK ${{ matrix.java }}
-      run: mvn -B package --file pom.xml -DskipTests ${{ matrix.extraargs }}
-    - name: Maven Test with Sonar JDK ${{ matrix.java }}
+    - name: Maven Build JDK ${{ matrix.java }} Jakarta EE ${{ matrix.jakarta-ee }}
+      run: mvn -B package -Pjakarta-ee-${{ matrix.jakarta-ee }} --file pom.xml -DskipTests ${{ matrix.extraargs }}
+    - name: Maven Test with Sonar JDK ${{ matrix.java }} Jakarta EE ${{ matrix.jakarta-ee }}
       if: ${{ env.SONAR_TOKEN != '' }}
-      run: mvn -B test --file pom.xml ${{ matrix.extraargs }}  ${{ matrix.extratestargs}}
-    - name: Maven Test JDK ${{ matrix.java }} (Pull Request)
+      run: mvn -B test -PPjakarta-ee-${{ matrix.jakarta-ee }} --file pom.xml ${{ matrix.extraargs }}  ${{ matrix.extratestargs}}
+    - name: Maven Test JDK ${{ matrix.java }} Jakarta EE ${{ matrix.jakarta-ee }} (Pull Request)
       if: ${{ env.SONAR_TOKEN == '' }}
-      run: mvn -B test --file pom.xml ${{ matrix.extraargs }}
+      run: mvn -B test -PPjakarta-ee-${{ matrix.jakarta-ee }} --file pom.xml ${{ matrix.extraargs }}

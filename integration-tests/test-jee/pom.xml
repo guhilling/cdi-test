@@ -21,7 +21,7 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core-jakarta</artifactId>
+            <artifactId>${hibernate-entitymanager.artifactId}</artifactId>
         </dependency>
         <dependency>
             <groupId>jakarta.ejb</groupId>

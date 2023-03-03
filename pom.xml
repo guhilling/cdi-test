@@ -3,7 +3,7 @@
     
     <groupId>de.hilling.junit.cdi</groupId>
     <artifactId>cdi-test</artifactId>
-    <version>4.1.1-SNAPSHOT</version>
+    <version>4.2.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>https://github.com/guhilling/cdi-test</url>
     <inceptionYear>2014</inceptionYear>
@@ -216,11 +216,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
+                <version>3.0.0-M7</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <useReleaseProfile>true</useReleaseProfile>
-                    <releaseProfiles>release,cdi-2</releaseProfiles>
+                    <releaseProfiles>release,jakarta-ee-9</releaseProfiles>
                     <goals>deploy</goals>
                 </configuration>
             </plugin>

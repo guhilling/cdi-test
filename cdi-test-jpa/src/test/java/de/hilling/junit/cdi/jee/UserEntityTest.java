@@ -27,7 +27,7 @@ class UserEntityTest {
     void storeCustomerEntityTransactional() {
         UserEntity user = new UserEntity();
         userService.storeUser(user);
-        Assertions.assertNotSame(user, entityManager.merge(user));
+        Assertions.assertSame(user, entityManager.merge(user));
     }
 
     @Test

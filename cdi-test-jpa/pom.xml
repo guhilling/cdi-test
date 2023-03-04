@@ -7,19 +7,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <description>jta support for cdi-test, using cdi/weld integration</description>
-    <name>cdi-test jta</name>
-    <artifactId>cdi-test-jta</artifactId>
+    <description>jpa support for cdi-test, using cdi/weld integration</description>
+    <name>cdi-test jpa</name>
+    <artifactId>cdi-test-jpa</artifactId>
 
     <properties>
         <version.narayana>6.0.0.CR1</version.narayana>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.jboss.weld.module</groupId>
-            <artifactId>weld-jta</artifactId>
-        </dependency>
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>

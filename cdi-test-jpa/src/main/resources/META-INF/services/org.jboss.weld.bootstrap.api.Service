@@ -1,1 +1,2 @@
 de.hilling.junit.cdi.jee.jpa.TestJpaInjectionServices
+de.hilling.junit.cdi.jee.jta.TestTransactionServices

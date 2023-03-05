@@ -10,8 +10,17 @@ public class UserService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void storeUser(UserEntity userEntity) {
         entityManager.persist(userEntity);
     }
+
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public void storeUserInNewTransaction(UserEntity userEntity) {
+        entityManager.persist(userEntity);
+    }
+
+    public UserEntity loadUser(long id) {
+        return entityManager.find(UserEntity.class, id);
+    }
+
 }

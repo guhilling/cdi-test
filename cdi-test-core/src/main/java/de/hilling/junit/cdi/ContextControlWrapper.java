@@ -5,9 +5,13 @@ import jakarta.enterprise.inject.spi.Bean;
 import static java.util.logging.Level.INFO;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.jboss.weld.bootstrap.api.Service;
 import org.jboss.weld.construction.api.WeldCreationalContext;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
@@ -24,6 +28,7 @@ public class ContextControlWrapper {
     private static final Logger LOG = UserLogger.getInstance();
 
     private static final ContextControlWrapper INSTANCE = new ContextControlWrapper();
+    private final Weld           weld;
     private final WeldManager    weldManager;
     private final ContextControl contextControl;
 
@@ -38,9 +43,10 @@ public class ContextControlWrapper {
     }
 
     private ContextControlWrapper() {
-        Weld weld = new Weld();
+        weld = new Weld();
         LOG.info("booting cdi container");
         long start = System.currentTimeMillis();
+        weld.addServices(resolveServices());
         WeldContainer weldContainer = weld.initialize();
         long end = System.currentTimeMillis();
         LOG.log(INFO, "booting cdi container finished in {0} ms", end - start);
@@ -49,6 +55,15 @@ public class ContextControlWrapper {
         }
         weldManager = (WeldManager) weldContainer.getBeanManager();
         contextControl = getContextualReference(ContextControl.class);
+    }
+
+    private Service[] resolveServices() {
+        ServiceLoader<Service> services = ServiceLoader.load(Service.class);
+        List<Service> serviceList = new ArrayList<>();
+        for (Service service : services) {
+            serviceList.add(service);
+        }
+        return serviceList.toArray(new Service[serviceList.size()]);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -77,4 +92,7 @@ public class ContextControlWrapper {
         contextControl.stopContexts();
     }
 
+    public void addServices(Service... services) {
+        weld.addServices(services);
+    }
 }

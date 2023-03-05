@@ -1,13 +1,13 @@
 package de.hilling.junit.cdi.jee;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class UserService {
-    @Inject
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)

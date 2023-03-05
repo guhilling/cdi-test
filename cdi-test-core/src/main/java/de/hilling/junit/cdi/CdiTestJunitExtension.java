@@ -1,8 +1,13 @@
 package de.hilling.junit.cdi;
 
 import jakarta.inject.Inject;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceUnit;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 import org.jboss.weld.proxy.WeldClientProxy;
 import org.junit.jupiter.api.extension.AfterAllCallback;
@@ -78,7 +83,7 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
             testEnvironment.setCdiInstance(cdiInstance);
         }
         for (Field field : ReflectionsUtils.getAllFields(testEnvironment.getTestClass())) {
-            if (field.isAnnotationPresent(Inject.class)) {
+            if (copyInjectedField(field)) {
                 copyField(field);
             }
         }
@@ -89,6 +94,16 @@ public class CdiTestJunitExtension implements TestInstancePostProcessor, BeforeA
         }
         lifecycleNotifier.notify(TestState.STARTED, context);
     }
+
+    private boolean copyInjectedField(Field field) {
+        return INJECTION_ANNOTATIONS.stream().anyMatch(field::isAnnotationPresent);
+    }
+
+    private static final List<Class<? extends Annotation>> INJECTION_ANNOTATIONS = Arrays.asList(
+        Inject.class,
+        PersistenceContext.class,
+        PersistenceUnit.class
+    );
 
     private void copyField(Field field) {
         Object testInstance = testEnvironment.getTestInstance();

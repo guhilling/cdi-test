@@ -42,7 +42,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>${hibernate-entitymanager.groupId}</groupId>
             <artifactId>${hibernate-entitymanager.artifactId}</artifactId>
             <scope>test</scope>
         </dependency>

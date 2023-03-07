@@ -58,23 +58,7 @@
             <artifactId>jaxb-runtime</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jboss.narayana.jta</groupId>
-            <artifactId>cdi</artifactId>
-            <version>${version.narayana}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.narayana.jta</groupId>
-            <artifactId>narayana-jta</artifactId>
-            <version>${version.narayana}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jboss.logmanager</groupId>
-                    <artifactId>jboss-logmanager</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>${hibernate-entitymanager.groupId}</groupId>
             <artifactId>${hibernate-entitymanager.artifactId}</artifactId>
         </dependency>
 

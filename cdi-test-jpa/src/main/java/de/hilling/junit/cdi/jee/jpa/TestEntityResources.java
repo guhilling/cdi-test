@@ -1,4 +1,4 @@
-package de.hilling.junit.cdi.jee;
+package de.hilling.junit.cdi.jee.jpa;
 
 import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.inject.Instance;
@@ -11,7 +11,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-import de.hilling.junit.cdi.jee.jpa.ConnectionWrapper;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.TestScoped;
 import de.hilling.junit.cdi.scope.TestState;

@@ -14,23 +14,25 @@ import org.jboss.weld.injection.spi.ResourceReferenceFactory;
 import de.hilling.junit.cdi.ContextControlWrapper;
 
 public class EntityManagerResourceFactory implements ResourceReferenceFactory<EntityManager> {
-    private final Map<String, EntityManagerFactory> factories = new HashMap<>();
+    private TestEntityResources testEntityResources;
 
     @Override
     public ResourceReference<EntityManager> createResource() {
-        return new ResourceReference<EntityManager>() {
-
-            private EntityManager entityManager;
-
+        if(testEntityResources==null) {
+            testEntityResources = ContextControlWrapper.getInstance().getContextualReference(TestEntityResources.class);
+        }
+        return new ResourceReference<>() {
             @Override
             public EntityManager getInstance() {
-                entityManager = createEntityManagerFactory("cdi-test").createEntityManager();
-                return entityManager;
+                if (!testEntityResources.hasEntityManager("cdi-test")) {
+                    testEntityResources.putEntityManager("cdi-test",
+                                                         createEntityManagerFactory("cdi-test").createEntityManager());
+                }
+                return testEntityResources.getEntityManager("cdi-test");
             }
-
             @Override
             public void release() {
-                entityManager.close();
+                // done otherwise
             }
         };
     }

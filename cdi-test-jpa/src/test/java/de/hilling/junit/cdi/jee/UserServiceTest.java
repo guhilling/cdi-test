@@ -8,7 +8,6 @@ import jakarta.transaction.UserTransaction;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -39,10 +38,12 @@ class UserServiceTest {
     void storeUser() throws Exception {
         userTransaction.begin();
         UserEntity userEntity = new UserEntity();
+        UserEntity userEntityTwo = new UserEntity();
         userService.storeUser(userEntity);
+        userService.storeUser(userEntityTwo);
         userTransaction.commit();
 
-        long id = userEntity.getId();
+        long id = userEntityTwo.getId();
         assertNotNull(userService.loadUser(id));
     }
 
@@ -57,7 +58,6 @@ class UserServiceTest {
         assertNull(userService.loadUser(id));
     }
 
-    @Disabled("TODO: fix this")
     @Test
     void storeUserNewTransaction() throws Exception {
         userTransaction.begin();

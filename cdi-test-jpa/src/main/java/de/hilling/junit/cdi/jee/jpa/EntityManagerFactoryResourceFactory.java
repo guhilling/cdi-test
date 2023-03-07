@@ -7,7 +7,6 @@ import jakarta.persistence.EntityManagerFactory;
 import org.jboss.weld.injection.spi.ResourceReference;
 import org.jboss.weld.injection.spi.ResourceReferenceFactory;
 
-import de.hilling.junit.cdi.jee.TestEntityResources;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
 @TestSuiteScoped

@@ -40,6 +40,7 @@ import org.jboss.weld.transaction.spi.TransactionServices;
 public class TestTransactionServices implements TransactionServices {
     private static final Logger LOG = Logger.getLogger(TestTransactionServices.class);
 
+
     @Override
     public void registerSynchronization(Synchronization synchronizedObserver) {
         try {

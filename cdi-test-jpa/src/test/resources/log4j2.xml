@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error" name="ColorConsoleConfig">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%highlight{%-4p}] [%d{H:mm:ss.SSS}] [%c] - %msg%n"/>
+        </Console>
+    </Appenders>
+    <HighlightColors>
+        <HighlightColor name="ERROR" foreground="RED"/>
+    </HighlightColors>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Logger name="com.arjuna" level="debug"/>
+    </Loggers>
+</Configuration>

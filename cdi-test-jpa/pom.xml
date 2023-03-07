@@ -12,7 +12,7 @@
     <artifactId>cdi-test-jpa</artifactId>
 
     <properties>
-        <version.narayana>6.0.0.CR1</version.narayana>
+        <version.narayana>6.0.0.Final</version.narayana>
     </properties>
 
     <dependencies>
@@ -91,8 +91,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.20.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -1,20 +1,25 @@
 package de.hilling.junit.cdi.jee;
 
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.UserTransaction;
+import jakarta.transaction.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import de.hilling.junit.cdi.CdiTestJunitExtension;
-
 @ExtendWith(CdiTestJunitExtension.class)
 class UserServiceTest {
+    private static final Logger LOG = Logger.getLogger(UserServiceTest.class.getCanonicalName());
+    @Inject
+    private TransactionManager transactionManager;
+
     @Inject
     private UserService userService;
 
@@ -23,6 +28,17 @@ class UserServiceTest {
 
     @Inject
     private UserTransaction userTransaction;
+
+    @AfterEach
+    void afterTest() throws SystemException {
+        final int status = transactionManager.getStatus();
+        if(status != Status.STATUS_NO_TRANSACTION) {
+            LOG.warning("TX status is " + status + ", rolling back");
+            transactionManager.rollback();
+        } else {
+            LOG.fine("TX status is " + status);
+        }
+    }
 
     @Test
     void assertPersistenceContextInjected() {
@@ -68,4 +84,14 @@ class UserServiceTest {
         long id = userEntity.getId();
         assertNotNull(userService.loadUser(id));
     }
+    @Test
+    void storeUserNewTransactionDontRollback() throws Exception {
+        userTransaction.begin();
+        UserEntity userEntity = new UserEntity();
+        userService.storeUserInNewTransaction(userEntity);
+
+        long id = userEntity.getId();
+        assertNotNull(userService.loadUser(id));
+    }
+
 }

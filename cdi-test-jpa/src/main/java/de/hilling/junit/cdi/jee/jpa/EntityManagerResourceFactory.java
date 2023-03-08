@@ -15,6 +15,11 @@ import de.hilling.junit.cdi.ContextControlWrapper;
 
 public class EntityManagerResourceFactory implements ResourceReferenceFactory<EntityManager> {
     private TestEntityResources testEntityResources;
+    private final String persistenceUnit;
+
+    public EntityManagerResourceFactory(String persistenceUnit) {
+        this.persistenceUnit = persistenceUnit;
+    }
 
     @Override
     public ResourceReference<EntityManager> createResource() {
@@ -24,11 +29,11 @@ public class EntityManagerResourceFactory implements ResourceReferenceFactory<En
         return new ResourceReference<>() {
             @Override
             public EntityManager getInstance() {
-                if (!testEntityResources.hasEntityManager("cdi-test")) {
-                    testEntityResources.putEntityManager("cdi-test",
-                                                         createEntityManagerFactory("cdi-test").createEntityManager());
+                if (!testEntityResources.hasEntityManager(persistenceUnit)) {
+                    testEntityResources.putEntityManager(persistenceUnit,
+                                                         createEntityManagerFactory(persistenceUnit).createEntityManager());
                 }
-                return testEntityResources.getEntityManager("cdi-test");
+                return testEntityResources.getEntityManager(persistenceUnit);
             }
             @Override
             public void release() {

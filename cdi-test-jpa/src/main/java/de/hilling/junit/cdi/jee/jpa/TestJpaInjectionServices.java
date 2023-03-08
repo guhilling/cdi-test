@@ -11,8 +11,8 @@ import org.jboss.weld.injection.spi.ResourceReferenceFactory;
 import de.hilling.junit.cdi.CdiTestException;
 
 public class TestJpaInjectionServices implements JpaInjectionServices {
+    public static final String DEFAULT_TEST_PERSISTENCE_UNIT = "cdi-test";
 
-    private EntityManagerResourceFactory entityManagerResourceFactory = new EntityManagerResourceFactory();
     private EntityManagerFactoryResourceFactory entityManagerFactoryResourceFactory = new EntityManagerFactoryResourceFactory();
 
     @Override
@@ -22,8 +22,16 @@ public class TestJpaInjectionServices implements JpaInjectionServices {
         if(persistenceContext==null) {
             throw new CdiTestException("no @PersistenceContext annotation found on injection point " + injectionPoint);
         }
-        String persistenceUnit = persistenceContext.unitName();
-        return entityManagerResourceFactory;
+        String persistenceUnit = resolveUnitName(persistenceContext);
+        return new EntityManagerResourceFactory(persistenceUnit);
+    }
+
+    private static String resolveUnitName(PersistenceContext persistenceContext) {
+        if(!persistenceContext.unitName().isEmpty()) {
+            return persistenceContext.unitName();
+        } else {
+            return DEFAULT_TEST_PERSISTENCE_UNIT;
+        }
     }
 
     @Override

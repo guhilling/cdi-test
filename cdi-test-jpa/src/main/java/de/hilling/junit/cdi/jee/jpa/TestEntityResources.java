@@ -2,15 +2,19 @@ package de.hilling.junit.cdi.jee.jpa;
 
 import jakarta.enterprise.event.Observes;
 import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 
+import de.hilling.junit.cdi.ContextControlWrapper;
 import de.hilling.junit.cdi.lifecycle.TestEvent;
 import de.hilling.junit.cdi.scope.TestScoped;
 import de.hilling.junit.cdi.scope.TestState;
@@ -22,19 +26,10 @@ import de.hilling.junit.cdi.scope.TestState;
 public class TestEntityResources {
 
     private final Map<String, EntityManager> entityManagers = new HashMap<>();
+    private final Map<String, EntityManagerFactory> entityManagerFactories = new HashMap<>();
 
     @Inject
     private Instance<ConnectionWrapper> connectionWrappers;
-
-    /**
-     * State of the {@link EntityManager} for given persistence unit.
-     *
-     * @param name persistence unit name.
-     * @return true if {@link EntityManager} for given persistence unit is already available.
-     */
-    public boolean hasEntityManager(String name) {
-        return entityManagers.containsKey(name);
-    }
 
     /**
      * The {@link EntityManager} for given persistence unit.
@@ -42,8 +37,27 @@ public class TestEntityResources {
      * @param name persistence unit name.
      * @return {@link EntityManager} for given persistence unit.
      */
-    public EntityManager getEntityManager(String name) {
-        return entityManagers.get(name);
+    public synchronized EntityManager resolveEntityManager(String name) {
+        return entityManagers.computeIfAbsent(name, this::createEntityManager);
+    }
+
+    private EntityManager createEntityManager(String name) {
+        EntityManagerFactory emf = resolveEntityManagerFactory(name);
+        EntityManager entityManager = emf.createEntityManager();
+        connectionWrappers.stream().forEach(cw -> cw.callDatabaseCleaner(entityManager));
+        return entityManager;
+    }
+
+    public EntityManagerFactory resolveEntityManagerFactory(String name) {
+        return entityManagerFactories.computeIfAbsent(name, this::createEntityManagerFactory);
+    }
+
+    private EntityManagerFactory createEntityManagerFactory(String persistenceUnit) {
+        BeanManager beanManager = ContextControlWrapper.getInstance().getContextualReference(BeanManager.class);
+        Map<String, Object> props = new HashMap<>();
+        props.put("jakarta.persistence.bean.manager", beanManager);
+        props.put("javax.persistence.bean.manager", beanManager);
+        return Persistence.createEntityManagerFactory(persistenceUnit, props);
     }
 
     /**
@@ -54,16 +68,7 @@ public class TestEntityResources {
     protected void finishResources(@Observes @TestEvent(TestState.FINISHING) ExtensionContext description) {
         entityManagers.values().forEach(EntityManager::close);
         entityManagers.clear();
+        entityManagerFactories.clear();
     }
 
-    /**
-     * Add new {@link EntityManager} for given unit name.
-     *
-     * @param name          unit name.
-     * @param entityManager manager.
-     */
-    public void putEntityManager(String name, EntityManager entityManager) {
-        entityManagers.put(name, entityManager);
-        connectionWrappers.stream().forEach(cw -> cw.callDatabaseCleaner(entityManager));
-    }
 }

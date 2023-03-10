@@ -1,12 +1,6 @@
 package de.hilling.junit.cdi.jee.jpa;
 
-import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.jboss.weld.injection.spi.ResourceReference;
 import org.jboss.weld.injection.spi.ResourceReferenceFactory;
@@ -29,11 +23,7 @@ public class EntityManagerResourceFactory implements ResourceReferenceFactory<En
         return new ResourceReference<>() {
             @Override
             public EntityManager getInstance() {
-                if (!testEntityResources.hasEntityManager(persistenceUnit)) {
-                    testEntityResources.putEntityManager(persistenceUnit,
-                                                         createEntityManagerFactory(persistenceUnit).createEntityManager());
-                }
-                return testEntityResources.getEntityManager(persistenceUnit);
+                return testEntityResources.resolveEntityManager(persistenceUnit);
             }
             @Override
             public void release() {
@@ -41,13 +31,4 @@ public class EntityManagerResourceFactory implements ResourceReferenceFactory<En
             }
         };
     }
-
-    private EntityManagerFactory createEntityManagerFactory(String persistenceUnit) {
-        BeanManager beanManager = ContextControlWrapper.getInstance().getContextualReference(BeanManager.class);
-        Map<String, Object> props = new HashMap<>();
-        props.put("jakarta.persistence.bean.manager", beanManager);
-        props.put("javax.persistence.bean.manager", beanManager);
-        return Persistence.createEntityManagerFactory(persistenceUnit, props);
-    }
-
 }

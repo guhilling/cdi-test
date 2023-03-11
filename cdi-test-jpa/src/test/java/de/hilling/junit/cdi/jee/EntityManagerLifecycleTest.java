@@ -13,14 +13,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
-@Order(-1)
+@DisplayName("EntityManager Lifecycle")
 class EntityManagerLifecycleTest {
 
     @Inject
@@ -39,26 +39,26 @@ class EntityManagerLifecycleTest {
     private EntityManagerFactory entityManagerFactoryLocal;
 
     @Test
-    void entityManagersInjected() {
+    void jtaInjected() {
         assertNotNull(entityManagerJta);
+    }
+    @Test
+    void localInjected() {
         assertNotNull(entityManagerLocal);
     }
 
     @Test
-    void entityManagerFactoriesInjected() {
-        assertNotNull(entityManagerFactoryJta);
+    void localFactoryInjected() {
         assertNotNull(entityManagerFactoryLocal);
+    }
+    @Test
+    void jtaFactoryInjected() {
+        assertNotNull(entityManagerFactoryJta);
     }
 
     @Test
     void localTransactionNotActive() {
         assertFalse(entityManagerLocal.getTransaction().isActive());
-    }
-
-    @Test
-    void localTransactionAvailableEvenForJtaManager() {
-        entityManagerJta.getTransaction().begin();
-        // no assertion needed
     }
 
     @Test

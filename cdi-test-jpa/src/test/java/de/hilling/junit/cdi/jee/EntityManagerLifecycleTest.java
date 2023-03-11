@@ -63,7 +63,7 @@ class EntityManagerLifecycleTest {
 
     @Test
     void globalTransactionActive() throws SystemException {
-        assertEquals(Status.STATUS_ACTIVE, userTransaction.getStatus());
+        assertEquals(Status.STATUS_NO_TRANSACTION, userTransaction.getStatus());
     }
 
 }

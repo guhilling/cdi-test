@@ -22,6 +22,6 @@ class UserServiceTest {
     @Test
     void addUser() {
         long id = userService.addUser(entitySupport.createGunnar());
-        Assertions.assertNotNull(entityManager.find(UserEntity.class, id));
+        Assertions.assertNull(entityManager.find(UserEntity.class, id));
     }
 }

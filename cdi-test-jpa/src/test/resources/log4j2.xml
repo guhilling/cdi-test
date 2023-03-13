@@ -13,5 +13,6 @@
             <AppenderRef ref="Console"/>
         </Root>
         <Logger name="com.arjuna" level="debug"/>
+        <Logger name="org.hibernate.internal.SessionImpl" level="trace"/>
     </Loggers>
 </Configuration>

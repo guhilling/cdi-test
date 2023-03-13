@@ -17,6 +17,7 @@
     <modules>
         <module>test-core</module>
         <module>test-jee</module>
+        <module>test-jpa</module>
         <module>test-jsf-war</module>
         <module>test-microprofile</module>
     </modules>
@@ -25,6 +26,10 @@
         <dependency>
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${hibernate-entitymanager.groupId}</groupId>
+            <artifactId>${hibernate-entitymanager.artifactId}</artifactId>
         </dependency>
         <dependency>
             <groupId>jakarta.inject</groupId>
@@ -37,6 +42,12 @@
         <dependency>
             <groupId>de.hilling.junit.cdi</groupId>
             <artifactId>cdi-test-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

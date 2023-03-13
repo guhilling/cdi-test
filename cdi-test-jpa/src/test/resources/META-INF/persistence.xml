@@ -16,7 +16,7 @@
             <property name="hibernate.transaction.jta.platform" value="JBossTS"/>
         </properties>
     </persistence-unit>
-    <persistence-unit name="cdi-test-local">
+    <persistence-unit name="cdi-test-local" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>de.hilling.junit.cdi.jee.CompanyEntity</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>

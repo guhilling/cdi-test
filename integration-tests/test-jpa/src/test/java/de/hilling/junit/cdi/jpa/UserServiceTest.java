@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
-class RequestScopedUserServiceTest {
+class UserServiceTest {
 
     @Inject
     private UserService   userService;

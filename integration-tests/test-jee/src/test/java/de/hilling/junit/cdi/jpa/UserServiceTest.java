@@ -1,22 +1,27 @@
 package de.hilling.junit.cdi.jpa;
 
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
-public class UserServiceTest {
+class UserServiceTest {
 
     @Inject
-    private UserService userService;
+    private UserService   userService;
     @Inject
-    private TestUtils testUtils;
+    private EntityManager entityManager;
+    @Inject
+    private EntitySupport testUtils;
 
     @Test
-    public void addUser() {
-        userService.addUser(testUtils.createGunnar());
+    void addUser() {
+        long id = userService.addUser(testUtils.createGunnar());
+        Assertions.assertNotNull(entityManager.find(UserEntity.class, id));
     }
 }

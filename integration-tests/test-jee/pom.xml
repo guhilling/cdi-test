@@ -5,7 +5,7 @@
     <parent>
         <artifactId>integration-tests</artifactId>
         <groupId>de.hilling.junit.cdi</groupId>
-        <version>4.2.1-SNAPSHOT</version>
+        <version>4.3.0</version>
     </parent>
 
     <artifactId>test-jee</artifactId>

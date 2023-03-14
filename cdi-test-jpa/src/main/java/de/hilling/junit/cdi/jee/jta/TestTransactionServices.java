@@ -26,6 +26,8 @@ import jakarta.transaction.UserTransaction;
 import org.jboss.logging.Logger;
 import org.jboss.weld.transaction.spi.TransactionServices;
 
+import com.arjuna.ats.jta.TransactionManager;
+
 /**
  * SPI extension point of the Weld for integrate with transaction manager.
  * If the interface is implemented by the deployment the Weld stops to show
@@ -44,7 +46,7 @@ public class TestTransactionServices implements TransactionServices {
     @Override
     public void registerSynchronization(Synchronization synchronizedObserver) {
         try {
-            com.arjuna.ats.jta.TransactionManager.transactionManager()
+            TransactionManager.transactionManager()
                 .getTransaction().registerSynchronization(synchronizedObserver);
         } catch (SystemException | IllegalStateException | RollbackException e) {
             throw new IllegalStateException("Cannot register synchronization observer " + synchronizedObserver
@@ -55,7 +57,7 @@ public class TestTransactionServices implements TransactionServices {
     @Override
     public boolean isTransactionActive() {
         try {
-            int status = com.arjuna.ats.jta.TransactionManager.transactionManager().getStatus();
+            int status = TransactionManager.transactionManager().getStatus();
             switch(status) {
                 case Status.STATUS_ACTIVE:
                 case Status.STATUS_COMMITTING:

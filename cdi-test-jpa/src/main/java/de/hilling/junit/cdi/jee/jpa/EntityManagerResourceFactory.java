@@ -34,8 +34,7 @@ public class EntityManagerResourceFactory implements ResourceReferenceFactory<En
             }
             @Override
             public void release() {
-                LOG.fine("closing EntityManager " + entityManager);
-                entityManager.close();
+                LOG.finest("closing EntityManager done by TestEntityResources");
             }
         };
     }

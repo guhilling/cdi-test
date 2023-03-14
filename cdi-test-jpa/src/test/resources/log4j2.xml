@@ -14,5 +14,6 @@
         </Root>
         <Logger name="com.arjuna" level="debug"/>
         <Logger name="org.hibernate.internal.SessionImpl" level="trace"/>
+        <Logger name="org.hibernate.SQL" level="trace"/>
     </Loggers>
 </Configuration>

@@ -1,7 +1,6 @@
 package de.hilling.junit.cdi.jee;
 
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 
 import org.junit.jupiter.api.Assertions;

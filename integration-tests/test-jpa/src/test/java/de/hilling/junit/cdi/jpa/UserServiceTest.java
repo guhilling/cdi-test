@@ -3,7 +3,8 @@ package de.hilling.junit.cdi.jpa;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -17,11 +18,11 @@ class UserServiceTest {
     @Inject
     private EntityManager entityManager;
     @Inject
-    private EntitySupport testUtils;
+    private EntitySupport entitySupport;
 
     @Test
     void addUser() {
-        long id = userService.addUser(testUtils.createGunnar());
-        Assertions.assertNotNull(entityManager.find(UserEntity.class, id));
+        long id = userService.addUser(entitySupport.createGunnar());
+        assertNotNull(entityManager.find(UserEntity.class, id));
     }
 }

@@ -15,7 +15,7 @@ class UserEntityTest {
     @Inject
     private EntityManager     entityManager;
     @Inject
-    private EntitySupport     testUtils;
+    private EntitySupport     entitySupport;
     @Inject
     private InvocationCounter counter;
 
@@ -27,13 +27,13 @@ class UserEntityTest {
 
     @Test
     void storeUserEntity() {
-        entityManager.persist(testUtils.createGunnar());
+        entityManager.persist(entitySupport.createGunnar());
         Assertions.assertEquals(1, counter.get());
     }
 
     @Test
     void storeAndRemoveUserEntity() {
-        UserEntity gunnar = testUtils.createGunnar();
+        UserEntity gunnar = entitySupport.createGunnar();
         entityManager.persist(gunnar);
         entityManager.remove(gunnar);
         Assertions.assertEquals(2, counter.get());

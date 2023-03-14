@@ -3,7 +3,7 @@ package de.hilling.junit.cdi.jpa;
 import java.time.LocalDate;
 import java.time.Month;
 
-public class TestUtils {
+public class EntitySupport {
 
     public UserEntity createGunnar() {
         UserEntity userEntity = new UserEntity();

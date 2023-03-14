@@ -8,7 +8,7 @@
         <version>4.2.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>test-jee</artifactId>
+    <artifactId>test-jpa</artifactId>
 
     <properties>
         <sonar.skip>true</sonar.skip>
@@ -18,10 +18,6 @@
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${hibernate-entitymanager.groupId}</groupId>
-            <artifactId>${hibernate-entitymanager.artifactId}</artifactId>
         </dependency>
         <dependency>
             <groupId>jakarta.ejb</groupId>
@@ -38,7 +34,7 @@
 
         <dependency>
             <groupId>de.hilling.junit.cdi</groupId>
-            <artifactId>cdi-test-jee</artifactId>
+            <artifactId>cdi-test-jpa</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>

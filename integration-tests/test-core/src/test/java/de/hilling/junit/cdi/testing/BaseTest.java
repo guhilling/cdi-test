@@ -1,11 +1,12 @@
 package de.hilling.junit.cdi.testing;
 
-import de.hilling.junit.cdi.CdiTestJunitExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import de.hilling.junit.cdi.CdiTestJunitExtension;
+
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
-public abstract class BaseTest {
+abstract class BaseTest {
 
 }

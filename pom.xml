@@ -19,6 +19,8 @@
         <hamcrest.version>2.2</hamcrest.version>
         <junit.jupiter.version>5.9.2</junit.jupiter.version>
         <annotation-literal.version>1.0.11</annotation-literal.version>
+        <slf4j.version>2.0.6</slf4j.version>
+        <log4j.version>2.20.0</log4j.version>
 
         <github.global.server>github</github.global.server>
     </properties>
@@ -113,6 +115,30 @@
                 <version>${hamcrest.version}</version>
                 <scope>test</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jdk14</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+
             <!-- internal -->
             <dependency>
                 <groupId>de.hilling.junit.cdi</groupId>
@@ -179,11 +205,6 @@
                 <version>${weld.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-jdk14</artifactId>
-                <version>2.0.6</version>
             </dependency>
 
             <dependency>

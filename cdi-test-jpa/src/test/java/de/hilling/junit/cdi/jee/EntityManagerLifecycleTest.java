@@ -9,10 +9,9 @@ import jakarta.transaction.Status;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.UserTransaction;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
+import org.jboss.weld.transaction.spi.TransactionServices;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,6 +21,9 @@ import de.hilling.junit.cdi.CdiTestJunitExtension;
 @ExtendWith(CdiTestJunitExtension.class)
 @DisplayName("EntityManager Lifecycle")
 class EntityManagerLifecycleTest {
+
+    @Inject
+    private TransactionServices transactionServices;
 
     @Inject
     private UserTransaction userTransaction;
@@ -63,6 +65,7 @@ class EntityManagerLifecycleTest {
 
     @Test
     void globalTransactionActive() throws SystemException {
+        assertTrue(transactionServices.isTransactionActive());
         assertEquals(Status.STATUS_ACTIVE, userTransaction.getStatus());
     }
 

@@ -8,10 +8,12 @@ import jakarta.transaction.SystemException;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.UserTransaction;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
+import org.jboss.weld.transaction.spi.TransactionServices;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,9 +22,12 @@ import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @Transactional(Transactional.TxType.NEVER)
-class ExecutionServiceTest {
+class TransactionalScopesTest {
     @Inject
     private ExecutionService executionService;
+
+    @Inject
+    private TransactionServices transactionServices;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -32,6 +37,14 @@ class ExecutionServiceTest {
 
     @Inject
     private UserTransaction userTransaction;
+
+    @Test
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    void userTransactionIdentical() {
+        String userTransactionDescription = userTransaction.toString();
+        String transactionServicesTransactionDescription = transactionServices.getUserTransaction().toString();
+        assertEquals(transactionServicesTransactionDescription, userTransactionDescription);
+    }
 
     @Test
     void finishTransactional() {

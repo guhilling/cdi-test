@@ -1,7 +1,7 @@
 package de.hilling.cdi.sampleapp.controller;
 
-import de.hilling.cdi.sampleapp.ejb.RegistrationService;
-import de.hilling.junit.cdi.CdiTestJunitExtension;
+import jakarta.inject.Inject;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,11 +10,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import jakarta.inject.Inject;
+import de.hilling.cdi.sampleapp.ejb.RegistrationService;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @ExtendWith(MockitoExtension.class)
-public class RegistrationBeanTest {
+class RegistrationBeanTest {
 
     @Inject
     private RegistrationBean registrationBean;
@@ -29,13 +30,13 @@ public class RegistrationBeanTest {
     }
 
     @Test
-    public void checkValues() {
+    void checkValues() {
         Assertions.assertEquals("Gunnar", registrationBean.getName());
         Assertions.assertEquals(10, registrationBean.getAge());
     }
 
     @Test
-    public void register() {
+    void register() {
         registrationBean.register();
         Mockito.verify(service).register("Gunnar");
     }

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
  * <p>Ask yourself: What is the expectation regarding the lifecycle of the instance?</p>
  * <p>In will actually be re-resolved in each test-run</p>
  */
-public class DependantScopedBeanTest extends BaseTest {
+class DependantScopedBeanTest extends BaseTest {
 
     @Inject
     private DependantScopedBean dependantScopedBean;
@@ -22,16 +22,16 @@ public class DependantScopedBeanTest extends BaseTest {
     private TestScopedBean testScopedBean;
 
     @Test
-    public void callTestScoped() {
+    void callTestScoped() {
         Assertions.assertEquals("hello", testScopedBean.getAttribute());    }
 
     @Test
-    public void getAttribute() {
+    void getAttribute() {
         Assertions.assertEquals("hello", dependantScopedBean.getAttribute());
     }
 
     @Test
-    public void setAttributeTransitive() {
+    void setAttributeTransitive() {
         applicationBean.setAttribute("world");
         Assertions.assertEquals("world", dependantScopedBean.getAttribute());
     }

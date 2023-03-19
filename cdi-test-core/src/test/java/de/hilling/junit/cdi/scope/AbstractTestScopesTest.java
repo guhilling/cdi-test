@@ -1,16 +1,15 @@
 package de.hilling.junit.cdi.scope;
 
+import jakarta.inject.Inject;
+
 import java.util.UUID;
 
-import de.hilling.junit.cdi.CdiTestJunitExtension;
-
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.inject.Inject;
+import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
 public abstract class AbstractTestScopesTest {
@@ -18,7 +17,7 @@ public abstract class AbstractTestScopesTest {
     protected static final Logger LOG = LoggerFactory.getLogger(AbstractTestScopesTest.class);
 
     @Inject
-    private CaseScopedBean caseScopedBean;
+    private CaseScopedBean  caseScopedBean;
     @Inject
     private SuiteScopedBean suiteScopedBean;
 
@@ -29,5 +28,4 @@ public abstract class AbstractTestScopesTest {
         UUID identifierSuiteScopedBean = suiteScopedBean.getIdentifier();
         LOG.info("suite: " + identifierSuiteScopedBean);
     }
-
 }

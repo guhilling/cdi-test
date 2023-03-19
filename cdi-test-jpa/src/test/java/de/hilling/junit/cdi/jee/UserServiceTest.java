@@ -6,8 +6,11 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.UserTransaction;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
+@Transactional(Transactional.TxType.REQUIRES_NEW)
 class UserServiceTest {
     @Inject
     private UserService userService;
@@ -62,13 +66,11 @@ class UserServiceTest {
     }
 
     @Test
-    void storeUserNewTransaction() throws Exception {
+    void storeUserRollbackIllegalWhenTransactional() {
         UserEntity userEntity = new UserEntity();
         userService.storeUserInNewTransaction(userEntity);
-        userTransaction.rollback();
-
-        long id = userEntity.getId();
-        assertNotNull(userService.loadUser(id));
+        IllegalStateException illegalStateException = assertThrows(IllegalStateException.class, () -> userTransaction.rollback());
+        assertThat(illegalStateException.getMessage(), equalTo("BaseTransaction.rollback - ARJUNA016074: no transaction!"));
     }
 
     @Transactional(Transactional.TxType.NEVER)

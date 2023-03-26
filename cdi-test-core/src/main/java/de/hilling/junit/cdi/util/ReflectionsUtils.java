@@ -131,16 +131,4 @@ public final class ReflectionsUtils {
         }
         return true;
     }
-
-    public static void copyField(Object source, Object target, Field field) {
-        field.setAccessible(true);
-        try {
-            field.set(target, field.get(source));
-        } catch (IllegalAccessException e) {
-            throw new CdiTestException("setting field failed", e);
-        } finally {
-            field.setAccessible(false);
-        }
-    }
-
 }

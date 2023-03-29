@@ -1,13 +1,13 @@
 package de.hilling.junit.cdi.testing;
 
-import static org.mockito.Mockito.verify;
-
 import jakarta.inject.Inject;
+
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-public class RequestScopeMockTest extends BaseTest {
+class RequestScopeMockTest extends BaseTest {
 
     private static final String SAMPLE = "sample";
 
@@ -18,7 +18,7 @@ public class RequestScopeMockTest extends BaseTest {
     private RequestBean requestBean;
 
     @Test
-    public void setAttributeTransitive() {
+    void setAttributeTransitive() {
         requestBean.setAttribute(SAMPLE);
         verify(applicationBean).setAttribute(SAMPLE);
     }

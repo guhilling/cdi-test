@@ -8,19 +8,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import jakarta.transaction.HeuristicMixedException;
-import jakarta.transaction.HeuristicRollbackException;
-import jakarta.transaction.NotSupportedException;
-import jakarta.transaction.RollbackException;
-import jakarta.transaction.Status;
 import jakarta.transaction.SystemException;
-import jakarta.transaction.Transactional;
 import jakarta.transaction.UserTransaction;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
+import org.jboss.weld.transaction.spi.TransactionServices;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import de.hilling.junit.cdi.CdiTestException;
@@ -34,7 +28,6 @@ import de.hilling.junit.cdi.scope.TestState;
  */
 @TestScoped
 public class TestEntityResources {
-    private static final Logger LOG = Logger.getLogger(TestEntityResources.class.getCanonicalName());
 
     private final Map<String, EntityManager>        entityManagers         = new HashMap<>();
     private final Map<String, EntityManagerFactory> entityManagerFactories = new HashMap<>();
@@ -44,6 +37,9 @@ public class TestEntityResources {
 
     @Inject
     private UserTransaction userTransaction;
+
+    @Inject
+    private TransactionServices transactionServices;
 
     /**
      * The {@link EntityManager} for given persistence unit.
@@ -74,64 +70,16 @@ public class TestEntityResources {
         return Persistence.createEntityManagerFactory(persistenceUnit, props);
     }
 
-    /**
-     * Cleanup when test finished.
-     *
-     * @param description only used for triggering observer.
-     */
-    protected void startTransactions(@Observes @TestEvent(TestState.STARTED) ExtensionContext description) {
-        if(getTxBehaviour(description) == Transactional.TxType.REQUIRES_NEW) {
-            try {
-                userTransaction.begin();
-            } catch (NotSupportedException | SystemException e) {
-                throw new CdiTestException("Starting user transaction failed", e);
-            }
-        }
-    }
-
     protected void finishResources(@Observes @TestEvent(TestState.FINISHING) ExtensionContext description) {
-        if(getTxBehaviour(description) == Transactional.TxType.REQUIRES_NEW) {
+        if(transactionServices.isTransactionActive()) {
             try {
-                final int status = userTransaction.getStatus();
-                if(status == Status.STATUS_ACTIVE) {
-                    LOG.fine("Committing TX");
-                    userTransaction.commit();
-                } else if (status == Status.STATUS_MARKED_ROLLBACK) {
-                    LOG.fine("Rolling back TX marked as rollback");
-                    userTransaction.rollback();
-                } else if (status == Status.STATUS_NO_TRANSACTION) {
-                    LOG.warning("No TX active though REQUIRES_NEW was set");
-                }
-            } catch (SystemException | RollbackException | HeuristicMixedException |
-                     HeuristicRollbackException e) {
-                throw new CdiTestException("Committing user transaction failed", e);
-            }
-        } else {
-            try {
-                if (userTransaction.getStatus() != Status.STATUS_NO_TRANSACTION) {
-                    LOG.warning("Closing open user transaction after test: " + userTransaction);
-                    userTransaction.rollback();
-                }
+                userTransaction.rollback();
             } catch (SystemException e) {
-                throw new CdiTestException("Closing user transaction failed", e);
+                throw new CdiTestException("cannot rollback", e);
             }
         }
         entityManagers.values().forEach(EntityManager::close);
         entityManagers.clear();
         entityManagerFactories.clear();
-    }
-
-    private Transactional.TxType getTxBehaviour(ExtensionContext description) {
-        Transactional classAnnotation = description.getRequiredTestMethod().getAnnotation(Transactional.class);
-        Transactional methodAnnotation = description.getRequiredTestClass().getAnnotation(Transactional.class);
-        if(methodAnnotation != null) {
-            return methodAnnotation.value();
-        } else {
-            if(classAnnotation == null) {
-                return Transactional.TxType.REQUIRES_NEW;
-            } else {
-                return classAnnotation.value();
-            }
-        }
     }
 }

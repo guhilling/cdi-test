@@ -5,11 +5,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceUnit;
-import jakarta.transaction.Status;
-import jakarta.transaction.SystemException;
-import jakarta.transaction.UserTransaction;
+import jakarta.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.jboss.weld.transaction.spi.TransactionServices;
 import org.junit.jupiter.api.DisplayName;
@@ -20,13 +19,11 @@ import de.hilling.junit.cdi.CdiTestJunitExtension;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @DisplayName("EntityManager Lifecycle")
+@Transactional(Transactional.TxType.REQUIRES_NEW)
 class EntityManagerLifecycleTest {
 
     @Inject
     private TransactionServices transactionServices;
-
-    @Inject
-    private UserTransaction userTransaction;
 
     @PersistenceContext(unitName = "cdi-test")
     private EntityManager entityManagerJta;
@@ -64,9 +61,11 @@ class EntityManagerLifecycleTest {
     }
 
     @Test
-    void globalTransactionActive() throws SystemException {
-        assertTrue(transactionServices.isTransactionActive());
-        assertEquals(Status.STATUS_ACTIVE, userTransaction.getStatus());
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    void globalTransactionActive() {
+        assertFalse(transactionServices.isTransactionActive());
+        entityManagerJta.persist(new UserEntity());
+        assertFalse(transactionServices.isTransactionActive());
     }
 
 }

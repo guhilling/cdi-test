@@ -3,6 +3,8 @@ package de.hilling.junit.cdi.jee;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.NotSupportedException;
+import jakarta.transaction.SystemException;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.UserTransaction;
 
@@ -50,6 +52,14 @@ class UserServiceTest {
         userTransaction.commit();
 
         long id = userEntityTwo.getId();
+        assertNotNull(userService.loadUser(id));
+    }
+
+    @Test
+    void storeUserTestCaseTransaction() throws SystemException, NotSupportedException {
+        UserEntity userEntity = new UserEntity();
+        userService.storeUser(userEntity);
+        long id = userEntity.getId();
         assertNotNull(userService.loadUser(id));
     }
 

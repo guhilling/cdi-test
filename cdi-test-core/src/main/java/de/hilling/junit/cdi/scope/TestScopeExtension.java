@@ -1,7 +1,18 @@
 package de.hilling.junit.cdi.scope;
 
 import jakarta.enterprise.event.Observes;
-import jakarta.enterprise.inject.spi.*;
+import jakarta.enterprise.inject.spi.AfterBeanDiscovery;
+import jakarta.enterprise.inject.spi.AfterTypeDiscovery;
+import jakarta.enterprise.inject.spi.AnnotatedType;
+import jakarta.enterprise.inject.spi.Extension;
+import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
+
+import static java.util.logging.Level.FINE;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import de.hilling.junit.cdi.annotations.ActivatableTestImplementation;
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
@@ -11,24 +22,17 @@ import de.hilling.junit.cdi.scope.context.TestContext;
 import de.hilling.junit.cdi.scope.context.TestSuiteContext;
 import de.hilling.junit.cdi.util.ReflectionsUtils;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
-
-import static java.util.logging.Level.FINE;
-
 /**
- * CDI {@link Extension} to enable proxying of (nearly) all method invocations. <p> By
- * default, these are all classes, except: <ul> <li>Anonymous classes.</li> <li>Enums.</li> </ul> To preventing
+ * CDI {@link Extension} to enable proxying of (nearly) all method invocations. <p> By default, these are all classes,
+ * except: <ul> <li>Anonymous classes.</li> <li>Enums.</li> </ul> To preventing
  * <em>everything</em> from being proxied it is possible to define explicit packages.
  */
 @BypassTestInterceptor
 public class TestScopeExtension implements Extension, Serializable {
 
-    private static final    long                         serialVersionUID = 1L;
-    private static final    Logger                         LOG            = Logger.getLogger(
-    TestScopeExtension.class.getCanonicalName());
+    private static final long   serialVersionUID = 1L;
+    private static final Logger LOG              = Logger.getLogger(TestScopeExtension.class.getCanonicalName());
+
     private final transient Map<Class<?>, ActivatableTestImplementation> decoratedTypes = new HashMap<>();
 
     /**
@@ -59,8 +63,12 @@ public class TestScopeExtension implements Extension, Serializable {
         new AnnotationReplacementBuilder<>(pat).invoke();
         AnnotatedType<X> type = pat.getAnnotatedType();
         final Class<X> javaClass = type.getJavaClass();
+        if (javaClass.getSimpleName().endsWith("Test")) {
+            pat.configureAnnotatedType().add(ImmutableTestScoped.builder().build());
+        }
         if (javaClass.isAnnotationPresent(ActivatableTestImplementation.class)) {
-            decoratedTypes.put(pat.getAnnotatedType().getJavaClass(), new ActivatableAlternativeBuilder<>(pat).invoke());
+            decoratedTypes.put(pat.getAnnotatedType().getJavaClass(),
+                               new ActivatableAlternativeBuilder<>(pat).invoke());
         } else if (ReflectionsUtils.shouldProxyCdiType(javaClass)) {
             pat.configureAnnotatedType().add(ImmutableReplaceable.builder().build());
         }

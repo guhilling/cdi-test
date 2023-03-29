@@ -1,9 +1,9 @@
 package de.hilling.junit.cdi;
 
+import jakarta.inject.Inject;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 
@@ -46,7 +46,7 @@ abstract class BaseInjectionTest {
         assertNotNull(testInformation);
         assertEquals(this.getClass(), testInformation.getTestClass());
         assertEquals("checkTestInformation()", testInformation.getTestName());
-        assertEquals(this, testInformation.getTestInstance());
+        assertEquals(this, testInformation.getTestTarget());
         assertEquals(BaseInjectionTest.class.getDeclaredMethod("checkTestInformation"), testInformation.getTestMethod());
     }
 

@@ -1,12 +1,17 @@
 package de.hilling.junit.cdi;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
 
+import org.jboss.weld.proxy.WeldClientProxy;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.InvocationInterceptor;
+import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestInstanceFactory;
 import org.junit.jupiter.api.extension.TestInstanceFactoryContext;
 import org.junit.jupiter.api.extension.TestInstantiationException;
@@ -28,7 +33,7 @@ import de.hilling.junit.cdi.util.ReflectionsUtils;
  * additionally.
  * </p>
  */
-public class CdiTestJunitExtension implements TestInstanceFactory, BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
+public class CdiTestJunitExtension implements TestInstanceFactory, InvocationInterceptor, BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
 
     static {
         LoggerConfigurator.configure();
@@ -51,11 +56,23 @@ public class CdiTestJunitExtension implements TestInstanceFactory, BeforeAllCall
         Class<?> testClass = factoryContext.getTestClass();
         TestContext.activate();
         contextControl.startContexts();
-        Object testInstance = contextControl.getContextualReference(testClass);
+        WeldClientProxy testInstance = (WeldClientProxy) contextControl.getContextualReference(testClass);
         testEnvironment = contextControl.getContextualReference(TestEnvironment.class);
         testEnvironment.setTestInstance(testInstance);
-        return testInstance;
+        return testInstance.getMetadata().getContextualInstance();
     }
+
+    @Override
+    public void interceptTestMethod(Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext,
+                                     ExtensionContext extensionContext) throws Throwable {
+        Object testProxy = testEnvironment.getTestInstance();
+        Method testMethod = testEnvironment.getTestMethod();
+        List<Object> arguments = invocationContext.getArguments();
+        testMethod.setAccessible(true);
+        testMethod.invoke(testProxy, arguments.toArray());
+        invocation.skip();
+    }
+
 
     @Override
     public void beforeEach(ExtensionContext context) {

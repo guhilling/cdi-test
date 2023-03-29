@@ -2,6 +2,8 @@ package de.hilling.junit.cdi;
 
 import java.lang.reflect.Method;
 
+import org.jboss.weld.proxy.WeldClientProxy;
+
 import de.hilling.junit.cdi.annotations.BypassTestInterceptor;
 import de.hilling.junit.cdi.scope.TestSuiteScoped;
 
@@ -16,12 +18,11 @@ import de.hilling.junit.cdi.scope.TestSuiteScoped;
 @TestSuiteScoped
 public class TestEnvironment {
 
-    private Object testInstance;
-    private Object cdiInstance;
+    private WeldClientProxy testInstance;
     private Method testMethod;
     private String testName;
 
-    public void setTestInstance(Object testInstance) {
+    public void setTestInstance(WeldClientProxy testInstance) {
         this.testInstance = testInstance;
     }
 
@@ -46,15 +47,11 @@ public class TestEnvironment {
         return testInstance;
     }
 
+    public Object getTestTarget() {
+        return testInstance.getMetadata().getContextualInstance();
+    }
+
     public Class<?> getTestClass() {
-        return testInstance.getClass();
-    }
-
-    public Object getCdiInstance() {
-        return cdiInstance;
-    }
-
-    public void setCdiInstance(Object cdiInstance) {
-        this.cdiInstance = cdiInstance;
+        return testInstance.getMetadata().getContextualInstance().getClass();
     }
 }

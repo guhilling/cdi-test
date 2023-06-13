@@ -8,6 +8,7 @@ import jakarta.transaction.SystemException;
 import jakarta.transaction.TransactionScoped;
 import jakarta.transaction.Transactional;
 
+import java.lang.reflect.Modifier;
 import java.util.logging.Logger;
 
 import com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionImple;
@@ -33,6 +34,9 @@ public class TestTransactionObserver {
         Class<?> testClass = testEnvironment.getTestClass();
         if(!testClass.isAnnotationPresent(Transactional.class)) {
             throw new CdiTestException("When using JTA, annotate the test class with @Transaction()");
+        }
+        if(!Modifier.isPublic(testClass.getModifiers())) {
+            throw new CdiTestException("When using JTA, test class must be public to support interceptors");
         }
     }
 

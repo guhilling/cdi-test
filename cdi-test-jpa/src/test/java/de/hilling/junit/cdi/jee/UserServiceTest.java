@@ -8,20 +8,20 @@ import jakarta.transaction.SystemException;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.UserTransaction;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.hilling.junit.cdi.CdiTestJunitExtension;
+import de.hilling.junit.cdi.scope.TestScoped;
 
 @ExtendWith(CdiTestJunitExtension.class)
 @Transactional(Transactional.TxType.REQUIRES_NEW)
-class UserServiceTest {
+@TestScoped
+public class UserServiceTest {
     @Inject
     private UserService userService;
 
@@ -56,11 +56,18 @@ class UserServiceTest {
     }
 
     @Test
-    void storeUserTestCaseTransaction() throws SystemException, NotSupportedException {
+    void storeUserTestCaseTransaction() {
         UserEntity userEntity = new UserEntity();
         userService.storeUser(userEntity);
         long id = userEntity.getId();
         assertNotNull(userService.loadUser(id));
+    }
+
+    @Test
+    void exceptionOnUserTransaction() {
+        assertThatThrownBy(() -> userTransaction.begin())
+                  .isInstanceOf(NotSupportedException.class)
+                  .hasMessageContaining("ARJUNA016051: thread is already associated with a transaction!");
     }
 
     @Transactional(Transactional.TxType.NEVER)
@@ -76,11 +83,12 @@ class UserServiceTest {
     }
 
     @Test
-    void storeUserRollbackIllegalWhenTransactional() {
-        UserEntity userEntity = new UserEntity();
-        userService.storeUserInNewTransaction(userEntity);
-        IllegalStateException illegalStateException = assertThrows(IllegalStateException.class, () -> userTransaction.rollback());
-        assertThat(illegalStateException.getMessage(), equalTo("BaseTransaction.rollback - ARJUNA016074: no transaction!"));
+    void storeUserRollbackIllegalWhenTransactional() throws SystemException {
+        userService.storeUserInNewTransaction(new UserEntity());
+        userTransaction.rollback();
+        assertThatThrownBy(() -> userTransaction.rollback())
+        .isInstanceOf(Throwable.class)
+        .hasMessageContaining("ARJUNA016051: thread is already associated with a transaction!");
     }
 
     @Transactional(Transactional.TxType.NEVER)

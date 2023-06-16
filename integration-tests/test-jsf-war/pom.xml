@@ -14,7 +14,7 @@
         <sonar.skip>true</sonar.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
-        <version.war.plugin>3.3.2</version.war.plugin>
+        <version.war.plugin>3.4.0</version.war.plugin>
     </properties>
 
     <dependencies>

@@ -363,7 +363,7 @@
                 <hibernate-entitymanager.groupId>org.hibernate</hibernate-entitymanager.groupId>
                 <hibernate-entitymanager.artifactId>hibernate-core-jakarta</hibernate-entitymanager.artifactId>
                 <eclipselink.version>4.0.2</eclipselink.version>
-                <smallrye.version>3.4.3</smallrye.version>
+                <smallrye.version>3.4.4</smallrye.version>
             </properties>
         </profile>
         <profile>

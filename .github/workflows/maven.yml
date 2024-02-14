@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '11', '17', '21' ]
+        java: [ '11', '17', '20' ]
         jakarta-ee: [ '9', '10' ]
         include:
           - java: 17

@@ -311,6 +311,7 @@
                 <version>3.2.5</version>
                 <configuration>
                     <threadCount>6</threadCount>
+                    <argLine>-Dnet.bytebuddy.experimental=true</argLine>
                 </configuration>
             </plugin>
         </plugins>

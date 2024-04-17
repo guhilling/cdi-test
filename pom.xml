@@ -379,7 +379,7 @@
                 <hibernate-entitymanager.groupId>org.hibernate.orm</hibernate-entitymanager.groupId>
                 <hibernate-entitymanager.artifactId>hibernate-core</hibernate-entitymanager.artifactId>
                 <eclipselink.version>4.0.0</eclipselink.version>
-                <smallrye.version>3.1.2</smallrye.version>
+                <smallrye.version>3.7.1</smallrye.version>
             </properties>
 
             <build>

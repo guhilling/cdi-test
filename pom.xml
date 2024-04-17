@@ -374,7 +374,7 @@
                 <microprofile-config.version>3.0.1</microprofile-config.version>
 
                 <weld.version>5.1.1.SP1</weld.version>
-                <cdi-api.version>4.0.1</cdi-api.version>
+                <cdi-api.version>4.1.0</cdi-api.version>
                 <hibernate.version>6.1.7.Final</hibernate.version>
                 <hibernate-entitymanager.groupId>org.hibernate.orm</hibernate-entitymanager.groupId>
                 <hibernate-entitymanager.artifactId>hibernate-core</hibernate-entitymanager.artifactId>

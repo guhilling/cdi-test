@@ -375,7 +375,7 @@
 
                 <weld.version>5.1.2.Final</weld.version>
                 <cdi-api.version>4.1.0</cdi-api.version>
-                <hibernate.version>6.5.1.Final</hibernate.version>
+                <hibernate.version>6.5.2.Final</hibernate.version>
                 <hibernate-entitymanager.groupId>org.hibernate.orm</hibernate-entitymanager.groupId>
                 <hibernate-entitymanager.artifactId>hibernate-core</hibernate-entitymanager.artifactId>
                 <eclipselink.version>4.0.2</eclipselink.version>

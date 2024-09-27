@@ -307,11 +307,22 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
                     <threadCount>6</threadCount>
-                    <argLine>-Dnet.bytebuddy.experimental=true</argLine>
+                    <argLine>@{argLine} -Dnet.bytebuddy.experimental=true -javaagent:${org.mockito:mockito-core:jar}</argLine>
                 </configuration>
             </plugin>
         </plugins>

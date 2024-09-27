@@ -10,7 +10,6 @@
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:test"/>
             <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.jpa.compliance.transaction" value="true"/>
             <property name="hibernate.jpa.compliance.closed" value="true"/>
@@ -24,7 +23,6 @@
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:test"/>
             <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.jpa.compliance.transaction" value="true"/>
             <property name="hibernate.jpa.compliance.closed" value="true"/>
@@ -37,7 +35,6 @@
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:test-local"/>
             <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.jpa.compliance.transaction" value="true"/>
             <property name="hibernate.jpa.compliance.closed" value="true"/>

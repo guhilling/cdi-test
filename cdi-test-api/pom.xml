@@ -4,7 +4,7 @@
     <parent>
         <artifactId>cdi-test</artifactId>
         <groupId>de.hilling.junit.cdi</groupId>
-        <version>5.0.1-SNAPSHOT</version>
+        <version>5.0.1</version>
     </parent>
 
     <description>Basic annotations and interfaces for cdi-test</description>

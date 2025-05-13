@@ -12,7 +12,7 @@
     <artifactId>cdi-test-jpa</artifactId>
 
     <properties>
-        <version.narayana>7.2.1.Final</version.narayana>
+        <version.narayana>7.2.2.Final</version.narayana>
     </properties>
 
     <dependencies>

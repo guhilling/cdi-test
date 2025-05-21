@@ -15,7 +15,7 @@
         <java.version>11</java.version>
 
         <immutables.version>2.10.1</immutables.version>
-        <mockito.version>5.17.0</mockito.version>
+        <mockito.version>5.18.0</mockito.version>
         <hamcrest.version>3.0</hamcrest.version>
         <junit.jupiter.version>5.12.2</junit.jupiter.version>
         <annotation-literal.version>1.0.11</annotation-literal.version>

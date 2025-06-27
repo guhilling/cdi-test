@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
 
-        <immutables.version>2.10.1</immutables.version>
+        <immutables.version>2.11.0</immutables.version>
         <mockito.version>5.18.0</mockito.version>
         <hamcrest.version>3.0</hamcrest.version>
         <junit.jupiter.version>5.13.2</junit.jupiter.version>
